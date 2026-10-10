@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -13,9 +14,14 @@ export default function Home() {
           Answers your customers on WhatsApp, explains your services and prices, and books appointments for you.
         </p>
       </div>
-      <Button variant="brand" disabled>
-        Dashboard coming in the next steps
-      </Button>
+      <div className="flex gap-3">
+        <Button variant="brand" asChild>
+          <Link href="/signup">Get started</Link>
+        </Button>
+        <Button variant="outline" asChild>
+          <Link href="/login">Sign in</Link>
+        </Button>
+      </div>
     </main>
   );
 }
