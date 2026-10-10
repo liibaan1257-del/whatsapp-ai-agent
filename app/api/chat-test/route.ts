@@ -2,6 +2,7 @@ import { connection, type NextRequest } from "next/server";
 import { handleCustomerMessage } from "@/lib/agent/engine";
 import { getOwner } from "@/lib/auth/session";
 import { testPhoneFor } from "@/lib/dashboard/chat-test";
+import { configStatus } from "@/lib/env";
 import { logger } from "@/lib/logger";
 
 export const maxDuration = 60;
@@ -41,6 +42,18 @@ export async function POST(request: NextRequest) {
   const message = typeof body.message === "string" ? body.message.trim() : "";
   if (!message) return Response.json({ error: "Type a message first." }, { status: 400 });
   if (message.length > MAX_CHARS) return Response.json({ error: `At most ${MAX_CHARS} characters.` }, { status: 400 });
+
+  // Say exactly which server setting is missing instead of a generic error.
+  const config = configStatus();
+  if (!config.serviceRole) {
+    return Response.json(
+      { error: "Setup needed: add SUPABASE_SERVICE_ROLE_KEY (Supabase → Project Settings → API Keys → Secret key) in Vercel as a Secret, then redeploy." },
+      { status: 503 },
+    );
+  }
+  if (!config.ai) {
+    return Response.json({ error: "Setup needed: add ANTHROPIC_API_KEY in Vercel as a Secret, then redeploy." }, { status: 503 });
+  }
 
   try {
     // businessId comes from the session, never from the request body.
