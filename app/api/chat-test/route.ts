@@ -2,6 +2,7 @@ import { connection, type NextRequest } from "next/server";
 import { handleCustomerMessage } from "@/lib/agent/engine";
 import { getOwner } from "@/lib/auth/session";
 import { testPhoneFor } from "@/lib/dashboard/chat-test";
+import { checkServiceRoleKey, SERVICE_KEY_HELP } from "@/lib/diagnostics";
 import { configStatus } from "@/lib/env";
 import { logger } from "@/lib/logger";
 
@@ -68,6 +69,11 @@ export async function POST(request: NextRequest) {
       return Response.json({ reply: result.reply, intent: result.intent, bookingId: result.bookingId });
     }
     if (result.status === "error") {
+      // A database error usually means the wrong secret key: say which problem it is.
+      if (result.code === "db_error") {
+        const key = await checkServiceRoleKey();
+        if (key !== "ok") return Response.json({ error: `Setup problem: ${SERVICE_KEY_HELP[key]}` }, { status: 503 });
+      }
       return Response.json({ error: `The AI couldn't answer (${result.code}). Please try again.` }, { status: 502 });
     }
     const info = NOT_REPLIED[result.status];
