@@ -45,6 +45,13 @@ export const knowledgeSchema = z.object({
   faqs: z.array(faqSchema).max(50).default([]),
   booking_policy: z.string().trim().max(3000).default(""),
   timezone: z.string().trim().min(1).max(64).default("UTC"),
+  // Meta WhatsApp "phone number ID" that routes incoming messages to this business.
+  whatsapp_phone_number_id: z
+    .string()
+    .trim()
+    .regex(/^[0-9]{5,30}$/, "Digits only (5–30), from Meta → WhatsApp → API Setup.")
+    .nullable()
+    .default(null),
   ai_enabled: z.boolean().default(true),
 });
 
