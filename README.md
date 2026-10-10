@@ -3,32 +3,93 @@
 AI customer support and booking agent for WhatsApp. Business owners describe
 their business (services, prices, hours, FAQs, booking policy); the agent
 answers customers on WhatsApp with Claude, detects what they want, and
-captures bookings into the database.
+captures bookings that the owner confirms from a dashboard.
 
 **Stack:** Next.js 16 (App Router) · TypeScript · Tailwind CSS 4 · shadcn/ui ·
-Supabase (Postgres, Auth, Realtime, RLS) · Claude (Anthropic) · WhatsApp
-Cloud API · Vercel.
+Supabase (Postgres, Auth, Realtime, RLS) · Claude (`claude-opus-5-5`) ·
+WhatsApp Cloud API (Meta) · Vercel.
+
+## Features
+
+| Where | What |
+| --- | --- |
+| `/signup`, `/login` | Email + password accounts. Each owner gets their own business (multi-tenant). |
+| `/dashboard` | Setup checklist, active conversations, leads, upcoming/pending bookings, recent chats. Updates live. |
+| `/dashboard/knowledge` | Business details, services & prices, opening hours, FAQs, booking policy, WhatsApp connection, preview of what the AI knows. |
+| `/dashboard/chat-test` | Chat as a customer against the real engine (separate "test" channel). |
+| `/dashboard/bookings` | Upcoming / pending / past bookings; confirm, cancel, complete (the customer gets a WhatsApp message); add bookings by hand. |
+| `/dashboard/conversations/[id]` | Full chat history with intents. |
+| `/api/whatsapp/webhook` | Meta webhook: verification (GET) and incoming messages (POST). |
+
+### How a WhatsApp message is handled
+
+1. Meta POSTs to `/api/whatsapp/webhook`. The `X-Hub-Signature-256` HMAC is
+   checked on the raw body; the route answers 200 immediately and continues
+   in `after()`.
+2. The business is found by its WhatsApp **phone number ID**; repeat
+   deliveries of the same message id are ignored.
+3. Claude gets the knowledge base as its system prompt plus the recent chat,
+   and returns structured output: `{ reply, intent, customer_name, booking }`.
+4. A booking is saved only after the server re-checks it: the service exists,
+   the time is in the future, inside opening hours (business time zone), and
+   doesn't overlap another booking. Otherwise the customer is told why.
+5. The reply is saved and sent through the Graph API. The dashboard updates
+   live via Supabase Realtime.
 
 ## Setup
 
-1. Create a Supabase project and run `supabase/migrations/*.sql` in order in
-   the SQL Editor. Optional check: run `supabase/tests/schema_test.sql`
-   (it rolls back) → "Success. No rows returned".
-2. Copy `.env.example` to `.env.local` and fill it in (see the comments).
-3. `npm install` then `npm run dev`.
+### 1. Supabase
+1. Create a project. In **SQL Editor**, run
+   `supabase/migrations/20261010100000_schema.sql`.
+   Optional check: run `supabase/tests/schema_test.sql` → "Success. No rows returned".
+2. **Authentication → URL Configuration**: set Site URL to your Vercel URL and
+   add `https://<your-app>/auth/confirm` to Redirect URLs.
 
-## Commands
+### 2. Environment variables (Vercel → Settings → Environment Variables)
+See `.env.example`. Mark every secret as **Sensitive**:
+
+| Variable | Secret? |
+| --- | --- |
+| `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` | public |
+| `SUPABASE_SERVICE_ROLE_KEY` | **secret** (server-only) |
+| `ANTHROPIC_API_KEY` | **secret** |
+| `WHATSAPP_VERIFY_TOKEN`, `WHATSAPP_APP_SECRET`, `WHATSAPP_ACCESS_TOKEN` | **secret** |
+
+Redeploy after changing them.
+
+### 3. WhatsApp (Meta for Developers)
+1. Create an app with the **WhatsApp** product.
+2. **WhatsApp → Configuration → Webhook**: Callback URL
+   `https://<your-app>/api/whatsapp/webhook`, Verify token = your
+   `WHATSAPP_VERIFY_TOKEN`. Subscribe to **messages**.
+3. Copy the **Phone number ID** (WhatsApp → API Setup) into the dashboard's
+   Knowledge base → WhatsApp connection.
+
+## Development
+
+```bash
+npm install
+cp .env.example .env.local   # fill in
+npm run dev
+```
 
 | Command | What |
 | --- | --- |
 | `npm run dev` | Development server |
 | `npm run build` | Production build |
-| `npm run lint` | ESLint |
-| `npm run typecheck` | TypeScript |
+| `npm run lint` / `npm run typecheck` | ESLint / TypeScript |
+| `npm test` | Unit tests (time zones, booking rules) |
 
 ## Security
 
-- Secrets (`SUPABASE_SERVICE_ROLE_KEY`, `ANTHROPIC_API_KEY`, `WHATSAPP_*`) are
-  server-only and never sent to the browser.
-- Every table has Row Level Security: an owner only ever sees their own
-  business's data.
+- Secrets are server-only. The service-role key is used only by server code
+  (`lib/supabase/admin.ts` imports `server-only`).
+- Row Level Security on every table: an owner only sees their own business.
+  Column-level grants limit what owners can change; messages and AI bookings
+  are written only by the server.
+- Webhook requests must carry a valid Meta signature; the chat tester and
+  dashboard actions take the business from the session, never from the
+  request.
+- Security headers (CSP, frame denial, HSTS…) in `lib/security/headers.ts`.
+- MVP limits: one appointment at a time per business (no staff calendars);
+  text messages only (media gets a polite reply).
