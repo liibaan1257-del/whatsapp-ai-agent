@@ -48,6 +48,12 @@ WhatsApp Cloud API (Meta) · Vercel.
   the picker in the sidebar / login page remembers the choice (cookie `lang`).
   Links like `/fr/dashboard` switch the language. Text lives in
   `lib/i18n/messages/*.ts`; TypeScript fails the build if a language misses a key.
+- **GDPR / privacy**: `/privacy` policy page (6 languages; set the optional
+  `NEXT_PUBLIC_CONTACT_EMAIL` to show your contact address). In **Settings**
+  owners download all their data (JSON) and can delete their account
+  permanently. A customer's conversation (messages + bookings) can be erased
+  from its page. Only necessary cookies (session, language): no cookie banner needed.
+- **Light / dark mode** toggle; follows the device until chosen.
 - **Any time zone, 12h or 24h**: new businesses start in the owner's browser
   time zone; opening hours, bookings and messages use it.
 

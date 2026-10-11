@@ -27,6 +27,7 @@ export const de: Messages = {
     notFoundTitle: "Seite nicht gefunden",
     notFoundBody: "Diese Seite existiert nicht oder Sie haben keinen Zugriff darauf.",
     backHome: "Zurück zum Dashboard",
+    privacy: "Datenschutzerklärung",
   },
   home: {
     tagline: "Antwortet Ihren Kunden auf WhatsApp in ihrer eigenen Sprache, erklärt Ihre Leistungen und Preise und bucht Termine für Sie.",
@@ -52,6 +53,7 @@ export const de: Messages = {
     signOut: "Abmelden",
     confirmFailed: "Dieser Bestätigungslink ist ungültig oder abgelaufen. Melden Sie sich an oder registrieren Sie sich erneut.",
     checkEmail: "Prüfen Sie {email}: Wir haben Ihnen einen Bestätigungslink geschickt. Melden Sie sich danach an.",
+    accountDeleted: "Ihr Konto und alle zugehörigen Daten wurden gelöscht.",
     errors: {
       emailRequired: "E-Mail ist erforderlich.",
       emailInvalid: "Geben Sie eine gültige E-Mail-Adresse ein.",
@@ -77,6 +79,7 @@ export const de: Messages = {
     knowledge: "Wissensdatenbank",
     chatTester: "Chat-Test",
     bookings: "Buchungen",
+    settings: "Einstellungen",
     menu: "Menü",
     openMenu: "Menü öffnen",
     closeMenu: "Menü schließen",
@@ -194,6 +197,9 @@ export const de: Messages = {
     noMessages: "Keine Nachrichten.",
     customer: "Kunde:",
     agent: "KI-Agent:",
+    delete: "Unterhaltung löschen",
+    deleteConfirm: "Diese Unterhaltung mit allen Nachrichten und Buchungen löschen? Verwenden Sie dies, wenn ein Kunde die Löschung seiner Daten verlangt. Dies kann nicht rückgängig gemacht werden.",
+    deleteFailed: "Die Unterhaltung konnte nicht gelöscht werden.",
   },
   chat: {
     title: "Chat-Test",
@@ -244,6 +250,67 @@ export const de: Messages = {
       rejected: "Dieses Supabase-Projekt lehnt SUPABASE_SERVICE_ROLE_KEY ab: Er stammt wahrscheinlich aus einem anderen Projekt. Kopieren Sie den geheimen Schlüssel aus dem Supabase-Projekt dieser App.",
       unreachable: "Supabase war nicht erreichbar, um den Schlüssel zu prüfen.",
     },
+  },
+  settings: {
+    title: "Einstellungen",
+    description: "Ihr Konto und Ihre Daten.",
+    account: "Konto",
+    email: "E-Mail",
+    name: "Name",
+    data: "Ihre Daten",
+    dataHint: "Laden Sie alles herunter, was für Ihr Unternehmen gespeichert ist: Einstellungen, Unterhaltungen, Nachrichten und Buchungen, als JSON-Datei.",
+    export: "Meine Daten herunterladen",
+    danger: "Konto löschen",
+    dangerHint: "Löscht Ihr Konto, die Unternehmenseinstellungen und alle Unterhaltungen, Nachrichten und Buchungen dauerhaft. Dies kann nicht rückgängig gemacht werden. Laden Sie Ihre Daten vorher herunter, falls Sie sie brauchen.",
+    confirmLabel: "Geben Sie zur Bestätigung Ihre E-Mail ({email}) ein",
+    deleteButton: "Mein Konto endgültig löschen",
+    deleting: "Wird gelöscht…",
+    errors: {
+      mismatch: "Die E-Mail stimmt nicht mit Ihrem Konto überein.",
+      notConfigured: "Für das Löschen von Konten braucht der Server SUPABASE_SERVICE_ROLE_KEY.",
+      failed: "Das Konto konnte nicht gelöscht werden. Bitte erneut versuchen.",
+    },
+  },
+  privacy: {
+    title: "Datenschutzerklärung",
+    updated: "Zuletzt aktualisiert: {date}",
+    intro: "Mit diesem Dienst beantworten Unternehmen ihre Kunden auf WhatsApp mit einem KI-Agenten und verwalten Buchungen. Diese Seite erklärt, welche Daten gespeichert werden, warum, wer sie verarbeitet und wie Sie Ihre Rechte ausüben (DSGVO, UK GDPR, CCPA und ähnliche Gesetze).",
+    contact: "Kontakt: {email}",
+    contactFallback: "Kontakt: das Unternehmen, das diesen Dienst nutzt (siehe dessen Website oder WhatsApp-Profil).",
+    sections: [
+      {
+        title: "Verantwortlicher",
+        body: "Für das Konto eines Unternehmens ist der Betreiber dieses Dienstes verantwortlich. Für die WhatsApp-Kunden eines Unternehmens ist dieses Unternehmen verantwortlich; dieser Dienst verarbeitet die Daten in seinem Auftrag.",
+      },
+      {
+        title: "Welche Daten",
+        body: "Unternehmen: E-Mail, Name, Passwort (von Supabase gehasht gespeichert) und die eingegebenen Unternehmensangaben. WhatsApp-Kunden: Telefonnummer, WhatsApp-Profilname, Nachrichtentext, die von der KI erkannte Sprache und Buchungen (Leistung, Datum und Uhrzeit, Notizen).",
+      },
+      {
+        title: "Zweck",
+        body: "Bereitstellung des Dienstes: Kundennachrichten beantworten, Buchungen aufnehmen und im Dashboard anzeigen (Vertrag / berechtigtes Interesse). Wir verkaufen keine Daten und nutzen sie nicht für Werbung.",
+      },
+      {
+        title: "Auftragsverarbeiter",
+        body: "Supabase (Datenbank und Anmeldung), Vercel (Hosting), Anthropic (das KI-Modell, das die Unterhaltung liest, um die Antwort zu schreiben) und Meta (WhatsApp-Zustellung). Diese Anbieter können Daten außerhalb Ihres Landes verarbeiten, auch in den USA, nach ihren eigenen Datenschutzbedingungen.",
+      },
+      {
+        title: "Speicherdauer",
+        body: "Bis das Unternehmen die Unterhaltung oder sein Konto löscht. Beim Löschen werden die Daten sofort aus der Datenbank entfernt; Backups der Anbieter laufen nach deren eigenem Zeitplan ab. Bereits über WhatsApp zugestellte Nachrichten bleiben auf den empfangenden Telefonen.",
+      },
+      {
+        title: "Ihre Rechte",
+        body: "Sie können Auskunft, eine Kopie, Berichtigung oder Löschung Ihrer Daten verlangen und der Nutzung widersprechen. Unternehmen können in den Einstellungen alle Daten herunterladen und ihr Konto löschen. WhatsApp-Kunden wenden sich an das Unternehmen, dem sie geschrieben haben; dieses kann die gesamte Unterhaltung im Dashboard löschen.",
+      },
+      {
+        title: "Cookies",
+        body: "Nur notwendige Cookies: die Anmeldesitzung und Ihre Sprachwahl. Hell-/Dunkelmodus wird in Ihrem Browser gespeichert. Keine Tracking- oder Werbe-Cookies.",
+      },
+      {
+        title: "Sicherheit",
+        body: "Verschlüsselte Verbindungen (HTTPS), jedes Unternehmen kann nur seine eigenen Daten lesen (Row-Level-Security), und geheime Schlüssel bleiben auf dem Server.",
+      },
+    ],
   },
   knowledge: {
     title: "Wissensdatenbank",

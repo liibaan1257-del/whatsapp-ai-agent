@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MessageCircle } from "lucide-react";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
+import { PrivacyLink } from "@/components/privacy-link";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { getMessages } from "@/lib/i18n/dictionaries";
@@ -28,6 +29,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       <div className="w-48 space-y-2">
         <LanguageSwitcher />
         <ThemeToggle />
+        <PrivacyLink />
       </div>
     </main>
   );

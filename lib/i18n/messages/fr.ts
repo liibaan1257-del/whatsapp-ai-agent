@@ -27,6 +27,7 @@ export const fr: Messages = {
     notFoundTitle: "Page introuvable",
     notFoundBody: "Cette page n'existe pas ou vous n'y avez pas accès.",
     backHome: "Retour au tableau de bord",
+    privacy: "Politique de confidentialité",
   },
   home: {
     tagline: "Répond à vos clients sur WhatsApp dans leur langue, présente vos services et vos prix, et prend les rendez-vous pour vous.",
@@ -52,6 +53,7 @@ export const fr: Messages = {
     signOut: "Se déconnecter",
     confirmFailed: "Ce lien de confirmation est invalide ou a expiré. Connectez-vous ou inscrivez-vous à nouveau.",
     checkEmail: "Consultez {email} : un lien de confirmation vous attend. Connectez-vous ensuite.",
+    accountDeleted: "Votre compte et toutes ses données ont été supprimés.",
     errors: {
       emailRequired: "L'e-mail est obligatoire.",
       emailInvalid: "Saisissez une adresse e-mail valide.",
@@ -77,6 +79,7 @@ export const fr: Messages = {
     knowledge: "Base de connaissances",
     chatTester: "Testeur de chat",
     bookings: "Réservations",
+    settings: "Paramètres",
     menu: "Menu",
     openMenu: "Ouvrir le menu",
     closeMenu: "Fermer le menu",
@@ -194,6 +197,9 @@ export const fr: Messages = {
     noMessages: "Aucun message.",
     customer: "Client :",
     agent: "Agent IA :",
+    delete: "Supprimer la conversation",
+    deleteConfirm: "Supprimer cette conversation, tous ses messages et ses réservations ? À utiliser quand un client demande l'effacement de ses données. Action irréversible.",
+    deleteFailed: "Impossible de supprimer la conversation.",
   },
   chat: {
     title: "Testeur de chat",
@@ -244,6 +250,67 @@ export const fr: Messages = {
       rejected: "Ce projet Supabase refuse SUPABASE_SERVICE_ROLE_KEY : elle vient probablement d'un autre projet. Copiez la clé secrète du projet Supabase de cette application.",
       unreachable: "Impossible de joindre Supabase pour vérifier la clé.",
     },
+  },
+  settings: {
+    title: "Paramètres",
+    description: "Votre compte et vos données.",
+    account: "Compte",
+    email: "E-mail",
+    name: "Nom",
+    data: "Vos données",
+    dataHint: "Téléchargez tout ce qui est enregistré pour votre entreprise : paramètres, conversations, messages et réservations, dans un fichier JSON.",
+    export: "Télécharger mes données",
+    danger: "Supprimer le compte",
+    dangerHint: "Supprime définitivement votre compte, les paramètres de l'entreprise et toutes les conversations, messages et réservations. Action irréversible. Téléchargez d'abord vos données si besoin.",
+    confirmLabel: "Saisissez votre e-mail ({email}) pour confirmer",
+    deleteButton: "Supprimer définitivement mon compte",
+    deleting: "Suppression…",
+    errors: {
+      mismatch: "L'e-mail ne correspond pas à votre compte.",
+      notConfigured: "La suppression de compte nécessite SUPABASE_SERVICE_ROLE_KEY sur le serveur.",
+      failed: "Impossible de supprimer le compte. Réessayez.",
+    },
+  },
+  privacy: {
+    title: "Politique de confidentialité",
+    updated: "Dernière mise à jour : {date}",
+    intro: "Ce service permet aux entreprises de répondre à leurs clients sur WhatsApp avec un agent IA et de gérer leurs réservations. Cette page explique quelles données sont conservées, pourquoi, qui les traite et comment exercer vos droits (RGPD, UK GDPR, CCPA et lois similaires).",
+    contact: "Contact : {email}",
+    contactFallback: "Contact : l'entreprise qui utilise ce service (voir son site ou son profil WhatsApp).",
+    sections: [
+      {
+        title: "Responsable du traitement",
+        body: "Pour le compte d'une entreprise, le responsable est l'exploitant de ce service. Pour les clients WhatsApp d'une entreprise, le responsable est cette entreprise, et ce service traite les données pour son compte.",
+      },
+      {
+        title: "Données conservées",
+        body: "Entreprises : e-mail, nom, mot de passe (stocké haché par Supabase) et les informations saisies sur l'entreprise. Clients WhatsApp : numéro de téléphone, nom du profil WhatsApp, texte des messages, langue détectée par l'IA et réservations (service, date et heure, notes).",
+      },
+      {
+        title: "Finalités",
+        body: "Fournir le service : répondre aux messages des clients, prendre les réservations et les afficher dans le tableau de bord (contrat / intérêt légitime). Nous ne vendons pas les données et ne les utilisons pas pour la publicité.",
+      },
+      {
+        title: "Sous-traitants",
+        body: "Supabase (base de données et connexion), Vercel (hébergement), Anthropic (le modèle d'IA qui lit la conversation pour rédiger la réponse) et Meta (envoi WhatsApp). Ces prestataires peuvent traiter des données hors de votre pays, notamment aux États-Unis, selon leurs propres conditions de protection des données.",
+      },
+      {
+        title: "Durée de conservation",
+        body: "Jusqu'à ce que l'entreprise supprime la conversation ou son compte. La suppression efface immédiatement les données de la base ; les sauvegardes des prestataires expirent selon leur propre calendrier. Les messages déjà remis sur WhatsApp restent sur les téléphones qui les ont reçus.",
+      },
+      {
+        title: "Vos droits",
+        body: "Vous pouvez demander l'accès, une copie, la rectification ou l'effacement de vos données, et vous opposer à leur utilisation. Les entreprises peuvent télécharger toutes leurs données et supprimer leur compte dans Paramètres. Les clients WhatsApp peuvent s'adresser à l'entreprise à laquelle ils ont écrit ; celle-ci peut supprimer toute la conversation depuis son tableau de bord.",
+      },
+      {
+        title: "Cookies",
+        body: "Uniquement des cookies nécessaires : la session de connexion et votre choix de langue. Le mode clair/sombre est enregistré dans votre navigateur. Aucun cookie de suivi ou de publicité.",
+      },
+      {
+        title: "Sécurité",
+        body: "Connexions chiffrées (HTTPS), chaque entreprise ne peut lire que ses propres données (sécurité au niveau des lignes) et les clés secrètes restent sur le serveur.",
+      },
+    ],
   },
   knowledge: {
     title: "Base de connaissances",

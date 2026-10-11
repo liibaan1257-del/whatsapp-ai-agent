@@ -37,5 +37,6 @@ async function LoginFormWithParams({ searchParams, m }: { searchParams: PageProp
   const params = await searchParams;
   const next = safeNextPath(typeof params.next === "string" ? params.next : undefined);
   const error = params.error === "confirm_failed" ? m.auth.confirmFailed : undefined;
-  return <LoginForm next={next} initialError={error} />;
+  const notice = params.deleted === "1" ? m.auth.accountDeleted : undefined;
+  return <LoginForm next={next} initialError={error} notice={notice} />;
 }

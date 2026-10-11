@@ -1,8 +1,11 @@
 "use server";
 
 import { refresh } from "next/cache";
+import { redirect } from "next/navigation";
 import { getOwner } from "@/lib/auth/session";
 import { testPhoneFor } from "@/lib/dashboard/chat-test";
+import { requestMessages } from "@/lib/i18n/server";
+import { logger } from "@/lib/logger";
 import { createClient } from "@/lib/supabase/server";
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -34,4 +37,26 @@ export async function resetTestConversation(): Promise<void> {
     await supabase.from("conversations").delete().eq("id", conv.id);
   }
   refresh();
+}
+
+export type DeleteConversationState = { error?: string };
+
+/**
+ * Erases one customer's conversation: its messages (cascade) and the bookings
+ * made in it. For "please delete my data" requests from a customer.
+ */
+export async function deleteConversation(_prev: DeleteConversationState, formData: FormData): Promise<DeleteConversationState> {
+  const m = await requestMessages();
+  const id = String(formData.get("id") ?? "");
+  if (!UUID.test(id)) return { error: m.conversation.deleteFailed };
+  if (!(await getOwner())) return { error: m.common.signInAgain };
+  const supabase = await createClient();
+  // RLS: both deletes only touch the owner's own rows.
+  const { error: bookingsError } = await supabase.from("bookings").delete().eq("conversation_id", id);
+  const { data, error } = await supabase.from("conversations").delete().eq("id", id).select("id");
+  if (bookingsError || error || !data?.length) {
+    logger.error("conversation_delete_failed", { conversationId: id, code: (bookingsError ?? error)?.code ?? "not_found" });
+    return { error: m.conversation.deleteFailed };
+  }
+  redirect("/dashboard");
 }

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { MessageCircle } from "lucide-react";
 import type { ReactNode } from "react";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
+import { PrivacyLink } from "@/components/privacy-link";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -37,6 +38,7 @@ export function AuthCard({
         <div className="mx-auto w-48 space-y-2">
           <LanguageSwitcher />
           <ThemeToggle />
+          <PrivacyLink />
         </div>
       </div>
     </main>

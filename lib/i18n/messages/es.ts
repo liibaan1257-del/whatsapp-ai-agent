@@ -27,6 +27,7 @@ export const es: Messages = {
     notFoundTitle: "Página no encontrada",
     notFoundBody: "Esta página no existe o no tienes acceso a ella.",
     backHome: "Volver al panel",
+    privacy: "Política de privacidad",
   },
   home: {
     tagline: "Responde a tus clientes en WhatsApp en su propio idioma, explica tus servicios y precios, y reserva citas por ti.",
@@ -52,6 +53,7 @@ export const es: Messages = {
     signOut: "Cerrar sesión",
     confirmFailed: "El enlace de confirmación no es válido o ha caducado. Inicia sesión o regístrate de nuevo.",
     checkEmail: "Revisa {email}: te enviamos un enlace de confirmación. Después, inicia sesión.",
+    accountDeleted: "Tu cuenta y todos sus datos se han eliminado.",
     errors: {
       emailRequired: "El correo es obligatorio.",
       emailInvalid: "Introduce un correo válido.",
@@ -77,6 +79,7 @@ export const es: Messages = {
     knowledge: "Base de conocimiento",
     chatTester: "Probar chat",
     bookings: "Reservas",
+    settings: "Ajustes",
     menu: "Menú",
     openMenu: "Abrir menú",
     closeMenu: "Cerrar menú",
@@ -194,6 +197,9 @@ export const es: Messages = {
     noMessages: "No hay mensajes.",
     customer: "Cliente:",
     agent: "Agente de IA:",
+    delete: "Eliminar conversación",
+    deleteConfirm: "¿Eliminar esta conversación, todos sus mensajes y sus reservas? Úsalo cuando un cliente te pida borrar sus datos. No se puede deshacer.",
+    deleteFailed: "No se pudo eliminar la conversación.",
   },
   chat: {
     title: "Probar chat",
@@ -244,6 +250,67 @@ export const es: Messages = {
       rejected: "Este proyecto de Supabase rechaza SUPABASE_SERVICE_ROLE_KEY: probablemente es de otro proyecto. Copia la clave secreta del proyecto de Supabase de esta app.",
       unreachable: "No se pudo contactar con Supabase para comprobar la clave.",
     },
+  },
+  settings: {
+    title: "Ajustes",
+    description: "Tu cuenta y tus datos.",
+    account: "Cuenta",
+    email: "Correo electrónico",
+    name: "Nombre",
+    data: "Tus datos",
+    dataHint: "Descarga todo lo guardado de tu negocio: ajustes, conversaciones, mensajes y reservas, en un archivo JSON.",
+    export: "Descargar mis datos",
+    danger: "Eliminar cuenta",
+    dangerHint: "Elimina para siempre tu cuenta, los ajustes del negocio y todas las conversaciones, mensajes y reservas. No se puede deshacer. Descarga antes tus datos si los necesitas.",
+    confirmLabel: "Escribe tu correo ({email}) para confirmar",
+    deleteButton: "Eliminar mi cuenta para siempre",
+    deleting: "Eliminando…",
+    errors: {
+      mismatch: "El correo no coincide con tu cuenta.",
+      notConfigured: "Para eliminar cuentas, el servidor necesita SUPABASE_SERVICE_ROLE_KEY.",
+      failed: "No se pudo eliminar la cuenta. Inténtalo de nuevo.",
+    },
+  },
+  privacy: {
+    title: "Política de privacidad",
+    updated: "Última actualización: {date}",
+    intro: "Este servicio permite a los negocios responder a sus clientes en WhatsApp con un agente de IA y gestionar reservas. Esta página explica qué datos guarda, para qué, quién los trata y cómo ejercer tus derechos (RGPD, UK GDPR, CCPA y leyes similares).",
+    contact: "Contacto: {email}",
+    contactFallback: "Contacto: el negocio que usa este servicio (consulta su web o su perfil de WhatsApp).",
+    sections: [
+      {
+        title: "Responsable",
+        body: "Para la cuenta de un negocio, el responsable es quien opera este servicio. Para los clientes de WhatsApp de un negocio, el responsable es ese negocio y este servicio trata los datos en su nombre.",
+      },
+      {
+        title: "Qué guardamos",
+        body: "Negocios: correo, nombre, contraseña (guardada cifrada por Supabase) y la información del negocio que introducen. Clientes de WhatsApp: número de teléfono, nombre del perfil de WhatsApp, texto de los mensajes, el idioma detectado por la IA y las reservas (servicio, fecha y hora, notas).",
+      },
+      {
+        title: "Para qué",
+        body: "Para prestar el servicio: responder a los mensajes de clientes, tomar reservas y mostrarlas en el panel (contrato / interés legítimo). No vendemos los datos ni los usamos para publicidad.",
+      },
+      {
+        title: "Quién los trata",
+        body: "Supabase (base de datos e inicio de sesión), Vercel (alojamiento), Anthropic (el modelo de IA que lee la conversación para escribir la respuesta) y Meta (entrega por WhatsApp). Estos proveedores pueden tratar datos fuera de tu país, incluido Estados Unidos, según sus propias condiciones de protección de datos.",
+      },
+      {
+        title: "Durante cuánto tiempo",
+        body: "Hasta que el negocio elimina la conversación o su cuenta. Al eliminar, los datos desaparecen de la base de datos al momento; las copias de seguridad de los proveedores caducan según su propio calendario. Los mensajes ya entregados por WhatsApp siguen en los teléfonos que los recibieron.",
+      },
+      {
+        title: "Tus derechos",
+        body: "Puedes pedir acceso, copia, corrección o eliminación de tus datos y oponerte a su uso. Los negocios pueden descargar todos sus datos y eliminar su cuenta en Ajustes. Los clientes de WhatsApp pueden pedirlo al negocio al que escribieron; el negocio puede eliminar la conversación completa desde su panel.",
+      },
+      {
+        title: "Cookies",
+        body: "Solo cookies necesarias: la sesión iniciada y tu idioma. El modo claro/oscuro se guarda en tu navegador. Sin cookies de seguimiento ni de publicidad.",
+      },
+      {
+        title: "Seguridad",
+        body: "Conexiones cifradas (HTTPS), cada negocio solo puede leer sus propios datos (seguridad a nivel de fila) y las claves secretas se quedan en el servidor.",
+      },
+    ],
   },
   knowledge: {
     title: "Base de conocimiento",

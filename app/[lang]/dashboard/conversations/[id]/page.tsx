@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { ArrowLeft } from "lucide-react";
 import { LiveRefresh } from "@/components/dashboard/live-refresh";
+import { DeleteConversation } from "@/components/settings/delete-conversation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -62,7 +63,7 @@ async function Conversation({ params }: { params: PageProps<"/[lang]/dashboard/c
             {conv.channel === "test" ? t.conversation.chatTester : <span dir="ltr">WhatsApp · {conv.customer_phone}</span>}
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           {conv.is_lead ? <Badge variant="brand">{t.common.lead}</Badge> : null}
           <LiveRefresh businessId={owner.businessId} tables={["messages"]} />
           <form action={setConversationStatus}>
@@ -72,6 +73,7 @@ async function Conversation({ params }: { params: PageProps<"/[lang]/dashboard/c
               {conv.status === "open" ? t.conversation.markClosed : t.conversation.reopen}
             </Button>
           </form>
+          <DeleteConversation id={conv.id} />
         </div>
       </div>
 

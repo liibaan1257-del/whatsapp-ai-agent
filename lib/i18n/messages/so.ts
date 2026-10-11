@@ -27,6 +27,7 @@ export const so: Messages = {
     notFoundTitle: "Boggan lama helin",
     notFoundBody: "Boggani ma jiro ama ogolaansho uma lihid.",
     backHome: "Ku noqo dashboard-ka",
+    privacy: "Siyaasadda xogta gaarka ah",
   },
   home: {
     tagline: "Wuxuu macaamiishaada WhatsApp-ka ugu jawaabaa luqaddooda, wuxuu sharxaa adeegyadaada iyo qiimayaashooda, oo ballamaha ayuu kuu qabtaa.",
@@ -52,6 +53,7 @@ export const so: Messages = {
     signOut: "Ka bax",
     confirmFailed: "Linkiga xaqiijinta ma shaqaynayo ama wuu dhacay. Gal ama mar kale is diiwaangeli.",
     checkEmail: "Fiiri {email}: waxaan kuu dirnay link xaqiijin ah. Kadib gal.",
+    accountDeleted: "Akoonkaaga iyo xogtiisa oo dhan waa la tirtiray.",
     errors: {
       emailRequired: "Email-ka waa loo baahan yahay.",
       emailInvalid: "Geli email sax ah.",
@@ -77,6 +79,7 @@ export const so: Messages = {
     knowledge: "Xogta ganacsiga",
     chatTester: "Tijaabi chat-ka",
     bookings: "Ballamaha",
+    settings: "Habaynta",
     menu: "Menu",
     openMenu: "Fur menu-ga",
     closeMenu: "Xidh menu-ga",
@@ -194,6 +197,9 @@ export const so: Messages = {
     noMessages: "Fariin ma jirto.",
     customer: "Macmiil:",
     agent: "Wakiilka AI:",
+    delete: "Tirtir wada-hadalka",
+    deleteConfirm: "Ma tirtirtaa wada-hadalkan, fariimihiisa oo dhan iyo ballamihiisa? Isticmaal marka macmiil ku weydiiyo inaad tirtirto xogtiisa. Dib looma soo celin karo.",
+    deleteFailed: "Wada-hadalka lama tirtiri karin.",
   },
   chat: {
     title: "Tijaabi chat-ka",
@@ -244,6 +250,67 @@ export const so: Messages = {
       rejected: "Mashruucan Supabase wuu diiday SUPABASE_SERVICE_ROLE_KEY: waxay u badan tahay inuu ka yimid mashruuc kale. Ka koobi garee furaha sirta ah mashruuca Supabase ee app-kan.",
       unreachable: "Lama gaari karin Supabase si furaha loo hubiyo.",
     },
+  },
+  settings: {
+    title: "Habaynta",
+    description: "Akoonkaaga iyo xogtaada.",
+    account: "Akoon",
+    email: "Email",
+    name: "Magac",
+    data: "Xogtaada",
+    dataHint: "Soo dejiso wax kasta oo ganacsigaaga loo kaydiyay: habaynta, wada-hadallada, fariimaha iyo ballamaha, fayl JSON ah.",
+    export: "Soo dejiso xogtayda",
+    danger: "Tirtir akoonka",
+    dangerHint: "Si joogto ah ayuu u tirtiraa akoonkaaga, habaynta ganacsiga iyo dhammaan wada-hadallada, fariimaha iyo ballamaha. Dib looma soo celin karo. Marka hore soo dejiso xogtaada haddii aad u baahan tahay.",
+    confirmLabel: "Qor email-kaaga ({email}) si aad u xaqiijiso",
+    deleteButton: "Si joogto ah u tirtir akoonkayga",
+    deleting: "Waa la tirtirayaa…",
+    errors: {
+      mismatch: "Email-ku kuma eka akoonkaaga.",
+      notConfigured: "Tirtirka akoonka wuxuu u baahan yahay SUPABASE_SERVICE_ROLE_KEY oo server-ka ku jira.",
+      failed: "Akoonka lama tirtiri karin. Mar kale isku day.",
+    },
+  },
+  privacy: {
+    title: "Siyaasadda xogta gaarka ah",
+    updated: "Markii ugu dambeysay la cusboonaysiiyay: {date}",
+    intro: "Adeeggan wuxuu u oggolaanayaa ganacsiyada inay macaamiishooda WhatsApp-ka ugu jawaabaan wakiil AI ah oo ay maamulaan ballamaha. Boggan wuxuu sharxayaa xogta la kaydiyo, sababta, cidda ka shaqaysa, iyo sida aad xuquuqdaada u isticmaali karto (GDPR, UK GDPR, CCPA iyo sharciyo la mid ah).",
+    contact: "La xiriir: {email}",
+    contactFallback: "La xiriir: ganacsiga adeeggan isticmaala (fiiri website-kiisa ama profile-kiisa WhatsApp).",
+    sections: [
+      {
+        title: "Cidda mas'uulka ah",
+        body: "Akoonka ganacsiga, mas'uulku waa cidda maamusha adeeggan. Macaamiisha WhatsApp ee ganacsi, mas'uulku waa ganacsigaas; adeeggan wuxuu xogta ka shaqeeyaa isagoo wakiil ka ah.",
+      },
+      {
+        title: "Waxa aan kaydinno",
+        body: "Ganacsiyada: email, magac, furaha sirta (Supabase ayaa u kaydiya si qarsoon) iyo macluumaadka ganacsiga ee ay geliyaan. Macaamiisha WhatsApp: lambarka taleefanka, magaca profile-ka WhatsApp, qoraalka fariimaha, luqadda AI-gu ogaado iyo ballamaha (adeeg, taariikh iyo saacad, qoraal).",
+      },
+      {
+        title: "Sababta",
+        body: "Si adeegga loo bixiyo: ka jawaabidda fariimaha macaamiisha, qabashada ballamaha iyo ku muujintooda dashboard-ka (heshiis / dan sharci ah). Xogta ma iibinno, xayaysiisna uma isticmaalno.",
+      },
+      {
+        title: "Cidda ka shaqaysa",
+        body: "Supabase (database iyo galitaanka), Vercel (hosting), Anthropic (moodeelka AI ee akhriya wada-hadalka si uu jawaabta u qoro) iyo Meta (gaarsiinta WhatsApp). Shirkadahan waxay xogta ka shaqayn karaan dalkaaga dibaddiisa, oo ay ku jirto Maraykanka, iyagoo raacaya shuruudahooda ilaalinta xogta.",
+      },
+      {
+        title: "Muddada",
+        body: "Ilaa ganacsigu tirtiro wada-hadalka ama akoonkiisa. Tirtiriddu isla markiiba ayay xogta ka saartaa database-ka; nuqullada kaydka (backups) ee shirkadaha waxay dhacaan jadwalkooda. Fariimaha WhatsApp-ka horay loogu gaarsiiyay waxay ku harayaan taleefannada helay.",
+      },
+      {
+        title: "Xuquuqdaada",
+        body: "Waxaad codsan kartaa inaad aragto xogtaada, nuqul ka mid ah, sixitaan ama tirtir, waadna diidi kartaa isticmaalkeeda. Ganacsiyadu waxay Habaynta ka soo dejisan karaan xogta oo dhan, kana tirtiri karaan akoonkooda. Macaamiisha WhatsApp waxay weydiisan karaan ganacsiga ay u qoreen; ganacsigu wuxuu dashboard-ka ka tirtiri karaa wada-hadalka oo dhan.",
+      },
+      {
+        title: "Cookies",
+        body: "Cookies lagama maarmaan ah oo keliya: fadhiga galitaanka iyo luqadda aad dooratay. Iftiinka/mugdiga waxaa lagu kaydiyaa browser-kaaga. Ma jiraan cookies raadraac ama xayaysiis.",
+      },
+      {
+        title: "Amniga",
+        body: "Isku xirnaan qarsoon (HTTPS), ganacsi kasta wuxuu akhrin karaa xogtiisa oo keliya (row-level security), furayaasha sirta ahna server-ka ayay ku jiraan.",
+      },
+    ],
   },
   knowledge: {
     title: "Xogta ganacsiga",
