@@ -36,12 +36,25 @@ WhatsApp Cloud API (Meta) · Vercel.
 5. The reply is saved and sent through the Graph API. The dashboard updates
    live via Supabase Realtime.
 
+## Worldwide use
+
+- **Any language**: the agent answers in the customer's language and remembers
+  it; booking confirmations/cancellations you send from the dashboard are
+  translated into that language too.
+- **Any currency**: pick one in the knowledge base (ISO 4217). Prices typed as
+  plain numbers ("25") are shown as "€25.00"; anything else is shown as typed.
+- **Any time zone, 12h or 24h**: new businesses start in the owner's browser
+  time zone; opening hours, bookings and messages use it.
+
 ## Setup
 
 ### 1. Supabase
-1. Create a project. In **SQL Editor**, run
-   `supabase/migrations/20261010100000_schema.sql`.
-   Optional check: run `supabase/tests/schema_test.sql` → "Success. No rows returned".
+1. Create a project. In **SQL Editor**, run the migrations in order:
+   `supabase/migrations/20261010100000_schema.sql`, then
+   `supabase/migrations/20261011100000_global.sql` (currency, 12h/24h time,
+   customer language, sign-up time zone).
+   Optional checks: `supabase/tests/schema_test.sql` and
+   `supabase/tests/global_test.sql` → "Success. No rows returned".
 2. **Authentication → URL Configuration**: set Site URL to your Vercel URL and
    add `https://<your-app>/auth/confirm` to Redirect URLs.
 

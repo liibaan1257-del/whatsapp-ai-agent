@@ -43,6 +43,7 @@ async function Bookings({ searchParams }: { searchParams: PageProps<"/dashboard/
   const view: View = typeof params.view === "string" && params.view in VIEWS ? (params.view as View) : "upcoming";
   const knowledge = await getKnowledge();
   const tz = knowledge?.timezone ?? "UTC";
+  const tf = knowledge?.time_format ?? "24h";
   const now = new Date().toISOString();
 
   const supabase = await createClient();
@@ -102,7 +103,7 @@ async function Bookings({ searchParams }: { searchParams: PageProps<"/dashboard/
               <TableBody>
                 {bookings.map((b) => (
                   <TableRow key={b.id}>
-                    <TableCell className="pl-4 font-medium">{formatDateTime(b.date_time, tz)}</TableCell>
+                    <TableCell className="pl-4 font-medium">{formatDateTime(b.date_time, tz, tf)}</TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
                         {b.customer_name}

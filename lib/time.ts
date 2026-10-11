@@ -57,18 +57,25 @@ export function zonedToUtc(date: string, time: string, timeZone: string): Date |
   return new Date(guess);
 }
 
-/** "Saturday 10 October 2026, 14:05" in the business's time zone. */
-export function formatInZone(date: Date, timeZone: string): string {
-  return new Intl.DateTimeFormat("en-GB", {
+/** "Saturday, 10 October 2026, 14:05" (or 2:05 PM) in the business's time zone. */
+export function formatInZone(date: Date, timeZone: string, timeFormat: "12h" | "24h" = "24h"): string {
+  return new Intl.DateTimeFormat(timeFormat === "12h" ? "en-US" : "en-GB", {
     timeZone,
     weekday: "long",
     day: "numeric",
     month: "long",
     year: "numeric",
-    hour: "2-digit",
+    hour: timeFormat === "12h" ? "numeric" : "2-digit",
     minute: "2-digit",
-    hourCycle: "h23",
+    ...(timeFormat === "12h" ? { hour12: true } : { hourCycle: "h23" as const }),
   }).format(date);
+}
+
+/** "14:00" → "2:00 PM" when the business uses 12-hour time. */
+export function displayHhmm(hhmm: string, timeFormat: "12h" | "24h"): string {
+  if (timeFormat === "24h") return hhmm;
+  const [h, m] = hhmm.split(":").map(Number);
+  return `${h % 12 || 12}:${String(m).padStart(2, "0")} ${h < 12 ? "AM" : "PM"}`;
 }
 
 /** "HH:MM" for an instant in a time zone. */

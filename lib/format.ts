@@ -1,14 +1,14 @@
 /** Display helpers (safe on server and client). */
 
-export function formatDateTime(iso: string, timeZone: string): string {
-  return new Intl.DateTimeFormat("en-GB", {
+export function formatDateTime(iso: string, timeZone: string, timeFormat: "12h" | "24h" = "24h"): string {
+  return new Intl.DateTimeFormat(timeFormat === "12h" ? "en-US" : "en-GB", {
     timeZone,
     weekday: "short",
     day: "numeric",
     month: "short",
-    hour: "2-digit",
+    hour: timeFormat === "12h" ? "numeric" : "2-digit",
     minute: "2-digit",
-    hourCycle: "h23",
+    ...(timeFormat === "12h" ? { hour12: true } : { hourCycle: "h23" as const }),
   }).format(new Date(iso));
 }
 
@@ -37,3 +37,16 @@ export const STATUS_STYLES: Record<string, string> = {
   cancelled: "bg-destructive/10 text-destructive",
   completed: "bg-secondary text-secondary-foreground",
 };
+
+/** "$15.00" for a number in a currency; the text as-is when it isn't a plain number. */
+export function formatPrice(price: string, currency: string): string {
+  // Only a plain number ("15", "15.50", "15,50") gets the currency; anything the
+  // owner typed with a symbol or words ("€15", "from 20") is shown as written.
+  const m = /^\s*(\d{1,9})(?:[.,](\d{1,2}))?\s*$/.exec(price);
+  if (!m) return price;
+  try {
+    return new Intl.NumberFormat("en", { style: "currency", currency }).format(Number(`${m[1]}.${m[2] ?? "0"}`));
+  } catch {
+    return price;
+  }
+}

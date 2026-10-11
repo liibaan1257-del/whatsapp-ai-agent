@@ -27,6 +27,9 @@ export async function saveKnowledge(payload: unknown): Promise<KnowledgeState> {
     return { error: "Please fix the highlighted fields.", fieldErrors };
   }
   const k = parsed.data;
+  if (!Intl.supportedValuesOf("currency").includes(k.currency)) {
+    return { error: "Choose a valid currency.", fieldErrors: { currency: "Unknown currency." } };
+  }
   if (!isValidTimeZone(k.timezone)) return { error: "Choose a valid time zone.", fieldErrors: { timezone: "Unknown time zone." } };
 
   // Closed days are stored as null so the AI sees every day explicitly.
@@ -41,6 +44,8 @@ export async function saveKnowledge(payload: unknown): Promise<KnowledgeState> {
       faqs: k.faqs,
       booking_policy: k.booking_policy,
       timezone: k.timezone,
+      currency: k.currency,
+      time_format: k.time_format,
       whatsapp_phone_number_id: k.whatsapp_phone_number_id || null,
       ai_enabled: k.ai_enabled,
     })

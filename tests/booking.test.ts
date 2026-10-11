@@ -2,7 +2,8 @@
 import assert from "node:assert/strict";
 import { checkBooking } from "@/lib/ai/booking";
 import { parseKnowledge } from "@/lib/knowledge";
-import { zonedToUtc, partsInZone } from "@/lib/time";
+import { formatPrice } from "@/lib/format";
+import { displayHhmm, zonedToUtc, partsInZone } from "@/lib/time";
 
 let n = 0;
 const test = (name: string, fn: () => void) => { fn(); n++; console.log("✅", name); };
@@ -72,5 +73,20 @@ test("missing name", () => {
 test("parseKnowledge keeps valid fields when one is bad", () => {
   const bad = parseKnowledge({ id: "x", business_name: "Ok", services: "nope", timezone: "UTC" });
   assert.equal(bad.business_name, "Ok"); assert.deepEqual(bad.services, []);
+});
+
+test("prices: plain numbers get the currency, typed text stays as written", () => {
+  assert.equal(formatPrice("15", "USD"), "$15.00");
+  assert.equal(formatPrice("15,50", "EUR"), "€15.50");
+  assert.equal(formatPrice("1500", "JPY"), "¥1,500");
+  assert.equal(formatPrice("€15", "USD"), "€15");
+  assert.equal(formatPrice("from 20", "GBP"), "from 20");
+  assert.equal(formatPrice("", "USD"), "");
+});
+
+test("12h / 24h opening times", () => {
+  assert.equal(displayHhmm("14:30", "24h"), "14:30");
+  assert.equal(displayHhmm("14:30", "12h"), "2:30 PM");
+  assert.equal(displayHhmm("00:15", "12h"), "12:15 AM");
 });
 console.log(`\n${n} passed`);

@@ -46,7 +46,7 @@ export function AddBooking({ services, timeZone }: { services: string[]; timeZon
       <CardContent>
         <form action={action} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {field("customer_name", "Customer name", <Input id="customer_name" name="customer_name" maxLength={120} required aria-invalid={fe.customer_name ? true : undefined} />)}
-          {field("phone_number", "Phone", <Input id="phone_number" name="phone_number" type="tel" placeholder="+252 61 000 0000" required aria-invalid={fe.phone_number ? true : undefined} />)}
+          {field("phone_number", "Phone", <Input id="phone_number" name="phone_number" type="tel" placeholder="+1 555 010 0100" required aria-invalid={fe.phone_number ? true : undefined} />)}
           {field(
             "service_selected",
             "Service",

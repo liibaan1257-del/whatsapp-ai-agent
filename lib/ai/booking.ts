@@ -1,6 +1,6 @@
 import type { AgentOutput } from "@/lib/ai/agent";
 import type { Knowledge, Service } from "@/lib/knowledge";
-import { formatInZone, hhmmInZone, partsInZone, zonedToUtc } from "@/lib/time";
+import { displayHhmm, formatInZone, hhmmInZone, partsInZone, zonedToUtc } from "@/lib/time";
 
 /**
  * Server-side checks for a booking the AI captured. The model is never
@@ -24,7 +24,9 @@ function findService(services: Service[], name: string): Service | null {
 
 function hoursText(k: Knowledge): string {
   const open = Object.entries(k.working_hours).filter(([, h]) => h);
-  return open.length ? open.map(([d, h]) => `${d} ${h!.open}–${h!.close}`).join(", ") : "our opening hours";
+  return open.length
+    ? open.map(([d, h]) => `${d} ${displayHhmm(h!.open, k.time_format)}–${displayHhmm(h!.close, k.time_format)}`).join(", ")
+    : "our opening hours";
 }
 
 export function checkBooking(
@@ -74,7 +76,7 @@ export function checkBooking(
       return {
         ok: false,
         reason: "closed",
-        message: `Sorry, we're not open for that time (${formatInZone(start, k.timezone)}). Our hours: ${hoursText(k)}. Which time works for you?`,
+        message: `Sorry, we're not open for that time (${formatInZone(start, k.timezone, k.time_format)}). Our hours: ${hoursText(k)}. Which time works for you?`,
       };
     }
   }

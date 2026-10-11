@@ -38,6 +38,7 @@ async function Conversation({ params }: { params: PageProps<"/dashboard/conversa
   ]);
   if (!conv) notFound(); // missing or another business's (RLS)
   const tz = knowledge?.timezone ?? "UTC";
+  const tf = knowledge?.time_format ?? "24h";
 
   return (
     <div className="space-y-4">
@@ -82,7 +83,7 @@ async function Conversation({ params }: { params: PageProps<"/dashboard/conversa
                 {m.content}
                 <span className="mt-1 flex items-center justify-end gap-2 text-[10px] text-muted-foreground">
                   {m.intent ? <span>{INTENT_LABELS[m.intent] ?? m.intent}</span> : null}
-                  {formatDateTime(m.created_at, tz)}
+                  {formatDateTime(m.created_at, tz, tf)}
                 </span>
               </div>
             </div>

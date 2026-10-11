@@ -32,12 +32,19 @@ async function KnowledgeEditor() {
   // Server-side list so server and browser render the same options.
   const zones = Intl.supportedValuesOf("timeZone");
   const timeZones = zones.includes(knowledge.timezone) ? zones : [knowledge.timezone, ...zones];
+  const names = new Intl.DisplayNames(["en"], { type: "currency" });
+  const codes = Intl.supportedValuesOf("currency");
+  const currencies = (codes.includes(knowledge.currency) ? codes : [knowledge.currency, ...codes]).map((code) => ({
+    code,
+    label: `${code} – ${names.of(code) ?? code}`,
+  }));
   const { ai, whatsappWebhook, whatsappSend, serviceRole } = configStatus();
 
   return (
     <KnowledgeForm
       initial={knowledge}
       timeZones={timeZones}
+      currencies={currencies}
       webhookUrl={`${proto}://${host}/api/whatsapp/webhook`}
       status={{ ai, whatsappWebhook, whatsappSend, serviceRole }}
     />

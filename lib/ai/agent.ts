@@ -27,6 +27,7 @@ const AgentOutput = z.object({
   reply: z.string().describe("The WhatsApp message to send to the customer."),
   intent: z.enum(INTENTS).describe("What the customer's latest message is mainly about."),
   customer_name: z.string().nullable().describe("The customer's name if they have told you, else null."),
+  language: z.string().describe("The language of the customer's latest message as a BCP 47 code, e.g. en, es, fr, ar, so, de, pt-BR."),
   booking: z
     .object({
       service: z.string().describe("Exact service name from the list."),
@@ -88,7 +89,13 @@ function toMessages(history: ChatTurn[]): Anthropic.Beta.BetaMessageParam[] {
 const REFUSAL_REPLY = "Sorry, I can't help with that here. A member of our team will get back to you.";
 
 /** Asks Claude for the next reply in a conversation. `history` ends with the customer's latest message. */
-export async function runAgent(knowledge: Knowledge, history: ChatTurn[], now = new Date()): Promise<AgentResult> {
+export async function runAgent(
+  knowledge: Knowledge,
+  history: ChatTurn[],
+  now = new Date(),
+  /** Extra instruction from the server (e.g. why a booking couldn't be saved). Never from the customer. */
+  serverNote?: string,
+): Promise<AgentResult> {
   const messages = toMessages(history);
   if (!messages.length) throw new Error("No customer message to answer.");
 
@@ -102,7 +109,8 @@ export async function runAgent(knowledge: Knowledge, history: ChatTurn[], now = 
       // Stable instructions + business info first (cacheable), the clock last.
       { type: "text", text: INSTRUCTIONS },
       { type: "text", text: describeBusiness(knowledge), cache_control: { type: "ephemeral" } },
-      { type: "text", text: `Current local date and time: ${formatInZone(now, knowledge.timezone)} (${knowledge.timezone}).` },
+      { type: "text", text: `Current local date and time: ${formatInZone(now, knowledge.timezone, knowledge.time_format)} (${knowledge.timezone}).` },
+      ...(serverNote ? [{ type: "text" as const, text: `Note from the booking system (not from the customer): ${serverNote}` }] : []),
     ],
     messages,
   });
@@ -119,7 +127,7 @@ export async function runAgent(knowledge: Knowledge, history: ChatTurn[], now = 
   );
   const refused = response.stop_reason === "refusal" || !response.parsed_output;
   const output: AgentOutput = refused
-    ? { reply: REFUSAL_REPLY, intent: "other", customer_name: null, booking: null }
+    ? { reply: REFUSAL_REPLY, intent: "other", customer_name: null, language: "en", booking: null }
     : { ...response.parsed_output!, reply: response.parsed_output!.reply.trim() || REFUSAL_REPLY };
 
   return {
@@ -138,4 +146,32 @@ export function describeAiError(error: unknown): string {
   if (error instanceof Anthropic.BadRequestError) return "ai_bad_request";
   if (error instanceof Anthropic.APIError) return "ai_unavailable";
   return "ai_error";
+}
+
+/**
+ * Puts an automatic message (e.g. "your booking is confirmed") into the
+ * customer's language. English, or any failure, returns the text unchanged.
+ */
+export async function inCustomerLanguage(text: string, language: string | null | undefined): Promise<string> {
+  const lang = (language ?? "").trim();
+  if (!lang || /^en\b/i.test(lang) || !isAiConfigured()) return text;
+  try {
+    const response = await getClient().messages.create({
+      model: MODEL,
+      max_tokens: 2000,
+      output_config: { effort: "low" },
+      system:
+        "Translate the WhatsApp message into the requested language. Keep names, service names, dates, times and prices exactly as given. Reply with the translation only.",
+      messages: [{ role: "user", content: `Language: ${lang}\n\nMessage:\n${text}` }],
+    });
+    if (response.stop_reason === "refusal") return text;
+    const out = response.content
+      .filter((b): b is Anthropic.TextBlock => b.type === "text")
+      .map((b) => b.text)
+      .join("")
+      .trim();
+    return out || text;
+  } catch {
+    return text;
+  }
 }

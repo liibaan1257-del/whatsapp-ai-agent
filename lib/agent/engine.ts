@@ -111,11 +111,13 @@ export async function handleCustomerMessage(msg: IncomingMessage): Promise<Engin
     return { status: "error", conversationId: conv.id, code };
   }
   let { reply } = result.output;
-  const { intent, booking, customer_name } = result.output;
+  const { intent, booking, customer_name, language } = result.output;
 
-  if (customer_name && !conv.customer_name && !name) {
-    await db.from("conversations").update({ customer_name: customer_name.slice(0, 120) }).eq("id", conv.id);
-  }
+  // Remember the customer's name and language (used for automatic messages later).
+  const convUpdate: Record<string, string> = {};
+  if (customer_name && !conv.customer_name && !name) convUpdate.customer_name = customer_name.slice(0, 120);
+  if (language && /^[A-Za-z]{2,3}(-[A-Za-z0-9]{2,8})*$/.test(language)) convUpdate.language = language.slice(0, 35);
+  if (Object.keys(convUpdate).length) await db.from("conversations").update(convUpdate).eq("id", conv.id);
 
   // 5. A confirmed booking: the server checks it before saving.
   let bookingId: string | null = null;
@@ -159,9 +161,21 @@ export async function handleCustomerMessage(msg: IncomingMessage): Promise<Engin
         }
       }
     } else {
-      // Don't let the customer think it's booked: answer with the reason instead.
-      reply = check.message;
+      // Don't let the customer think it's booked. Let the AI explain why in the
+      // customer's language; the English explanation is the fallback.
       logger.info("booking_rejected", { conversationId: conv.id, reason: check.reason });
+      reply = check.message;
+      try {
+        const retry = await runAgent(
+          knowledge,
+          history,
+          new Date(),
+          `The booking was NOT saved. Reason: ${check.message} Tell the customer this in their language, offer alternatives, and do not fill in "booking" in this reply.`,
+        );
+        if (!retry.refused && retry.output.reply) reply = retry.output.reply;
+      } catch (error) {
+        logger.warn("booking_rejection_reply_failed", { code: describeAiError(error) });
+      }
     }
   }
 

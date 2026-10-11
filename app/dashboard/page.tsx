@@ -28,6 +28,7 @@ async function Overview() {
   const owner = await requireOwner("/dashboard");
   const [{ stats, conversations, bookings }, knowledge] = await Promise.all([getOverview(), getKnowledge()]);
   const tz = knowledge?.timezone ?? "UTC";
+  const tf = knowledge?.time_format ?? "24h";
   const config = configStatus();
 
   const setup = [
@@ -123,7 +124,7 @@ async function Overview() {
                 <TableBody>
                   {bookings.map((b) => (
                     <TableRow key={b.id}>
-                      <TableCell>{formatDateTime(b.date_time, tz)}</TableCell>
+                      <TableCell>{formatDateTime(b.date_time, tz, tf)}</TableCell>
                       <TableCell>
                         {b.customer_name}
                         {b.conversations?.channel === "test" ? (

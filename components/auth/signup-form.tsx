@@ -5,6 +5,16 @@ import { Field } from "@/components/auth/field";
 import { Button } from "@/components/ui/button";
 import { signup, type AuthState } from "@/lib/auth/actions";
 
+/** The new business starts in the owner's own time zone (changeable later; the server falls back to UTC). */
+function withTimeZone(fd: FormData): FormData {
+  try {
+    fd.set("timezone", Intl.DateTimeFormat().resolvedOptions().timeZone ?? "");
+  } catch {
+    // Older browsers: no time zone sent.
+  }
+  return fd;
+}
+
 export function SignupForm() {
   const [state, action, pending] = useActionState<AuthState, FormData>(signup, {});
   const [fullName, setFullName] = useState("");
@@ -19,7 +29,7 @@ export function SignupForm() {
   }
 
   return (
-    <form action={action} className="space-y-4" noValidate>
+    <form action={(fd) => action(withTimeZone(fd))} className="space-y-4" noValidate>
       <Field
         id="fullName"
         label="Your name"

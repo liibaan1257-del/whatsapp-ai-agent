@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { LOGIN_PATH, safeNextPath } from "@/lib/auth/redirect";
 import { isSupabaseConfigured } from "@/lib/env";
+import { isValidTimeZone } from "@/lib/knowledge";
 import { createClient } from "@/lib/supabase/server";
 
 export type AuthState = {
@@ -45,6 +46,9 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
   const fullName = String(formData.get("fullName") ?? "").trim();
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const password = String(formData.get("password") ?? "");
+  // Only a name the runtime knows is passed on; the database checks it again.
+  const tz = String(formData.get("timezone") ?? "").trim();
+  const timezone = tz && tz.length <= 64 && isValidTimeZone(tz) ? tz : "UTC";
 
   const fieldErrors: AuthState["fieldErrors"] = { email: checkEmail(email) };
   if (fullName.length > 100) fieldErrors.fullName = "At most 100 characters.";
@@ -61,7 +65,7 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
     email,
     password,
     options: {
-      data: { full_name: fullName },
+      data: { full_name: fullName, timezone },
       emailRedirectTo: `${origin}/auth/confirm?next=/dashboard`,
     },
   });

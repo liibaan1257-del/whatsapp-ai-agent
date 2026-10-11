@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { describeBusiness } from "@/lib/ai/prompt";
 import { saveKnowledge, type KnowledgeState } from "@/lib/dashboard/knowledge-actions";
-import { DAY_LABELS, DAYS, type Day, type Faq, type Knowledge, type Service } from "@/lib/knowledge";
+import { DAY_LABELS, DAYS, type Day, type Faq, type Knowledge, type Service, type TimeFormat } from "@/lib/knowledge";
 import { cn } from "@/lib/utils";
 
 type Hours = Record<Day, { open: boolean; from: string; to: string }>;
@@ -34,17 +34,21 @@ function ErrorText({ msg }: { msg?: string }) {
 export function KnowledgeForm({
   initial,
   timeZones,
+  currencies,
   webhookUrl,
   status,
 }: {
   initial: Knowledge;
   timeZones: string[];
+  currencies: { code: string; label: string }[];
   webhookUrl: string;
   status: Status;
 }) {
   const [name, setName] = useState(initial.business_name);
   const [description, setDescription] = useState(initial.description);
   const [timezone, setTimezone] = useState(initial.timezone);
+  const [currency, setCurrency] = useState(initial.currency);
+  const [timeFormat, setTimeFormat] = useState<TimeFormat>(initial.time_format);
   const [aiEnabled, setAiEnabled] = useState(initial.ai_enabled);
   const [services, setServices] = useState<Service[]>(initial.services);
   const [hours, setHours] = useState<Hours>(() => toHours(initial));
@@ -61,6 +65,8 @@ export function KnowledgeForm({
       business_name: name,
       description,
       timezone,
+      currency,
+      time_format: timeFormat,
       ai_enabled: aiEnabled,
       services,
       working_hours: Object.fromEntries(DAYS.map((d) => [d, hours[d].open ? { open: hours[d].from, close: hours[d].to } : null])),
@@ -68,7 +74,7 @@ export function KnowledgeForm({
       booking_policy: policy,
       whatsapp_phone_number_id: phoneId.trim() || null,
     }),
-    [name, description, timezone, aiEnabled, services, hours, faqs, policy, phoneId],
+    [name, description, timezone, currency, timeFormat, aiEnabled, services, hours, faqs, policy, phoneId],
   );
   const preview = useMemo(() => describeBusiness({ ...(payload as unknown as Knowledge), id: initial.id }), [payload, initial.id]);
 
@@ -97,7 +103,7 @@ export function KnowledgeForm({
         <CardContent className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="business_name">Business name</Label>
-            <Input id="business_name" value={name} maxLength={120} onChange={(e) => setName(e.target.value)} placeholder="Amina Beauty Salon" />
+            <Input id="business_name" value={name} maxLength={120} onChange={(e) => setName(e.target.value)} placeholder="Bella Hair Studio" />
             <ErrorText msg={fe.business_name} />
           </div>
           <div className="space-y-2">
@@ -111,6 +117,24 @@ export function KnowledgeForm({
             </select>
             <ErrorText msg={fe.timezone} />
           </div>
+          <div className="space-y-2">
+            <Label htmlFor="currency">Currency</Label>
+            <select id="currency" className={select} value={currency} onChange={(e) => setCurrency(e.target.value)}>
+              {currencies.map((c) => (
+                <option key={c.code} value={c.code}>
+                  {c.label}
+                </option>
+              ))}
+            </select>
+            <ErrorText msg={fe.currency} />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="time_format">Time format</Label>
+            <select id="time_format" className={select} value={timeFormat} onChange={(e) => setTimeFormat(e.target.value as TimeFormat)}>
+              <option value="24h">24-hour (14:30)</option>
+              <option value="12h">12-hour (2:30 PM)</option>
+            </select>
+          </div>
           <div className="space-y-2 md:col-span-2">
             <Label htmlFor="description">About the business</Label>
             <Textarea
@@ -118,7 +142,7 @@ export function KnowledgeForm({
               value={description}
               maxLength={2000}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Hair and beauty salon in Hodan, Mogadishu. Women only. Parking available."
+              placeholder="Hair and beauty salon in the city centre. Free parking. Card and cash accepted."
             />
           </div>
           <label className="flex items-start gap-3 md:col-span-2">
@@ -147,7 +171,7 @@ export function KnowledgeForm({
               </div>
               <div className="space-y-1">
                 <Label htmlFor={`svc-price-${i}`} className="text-xs text-muted-foreground">Price</Label>
-                <Input id={`svc-price-${i}`} value={s.price} maxLength={50} onChange={(e) => updateService(i, { price: e.target.value })} placeholder="$15" />
+                <Input id={`svc-price-${i}`} value={s.price} maxLength={50} onChange={(e) => updateService(i, { price: e.target.value })} placeholder={`15 (${currency})`} />
               </div>
               <div className="space-y-1">
                 <Label htmlFor={`svc-dur-${i}`} className="text-xs text-muted-foreground">Minutes</Label>
