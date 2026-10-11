@@ -1,3 +1,5 @@
+import { contactWhatsapp } from "@/lib/contact";
+
 /**
  * Plans and access (manual billing: the customer pays the operator, who then
  * extends access on the Admin page). Safe on server and client.
@@ -36,7 +38,6 @@ export function isActive(accessUntil: string | Date, now: Date = new Date()): bo
 
 /** wa.me link to the operator with a ready-made message, or null if no number is set. */
 export function contactWhatsappLink(text: string): string | null {
-  const digits = (process.env.NEXT_PUBLIC_CONTACT_WHATSAPP ?? "").replace(/[\s()+-]/g, "");
-  if (!/^[1-9][0-9]{6,14}$/.test(digits)) return null;
-  return `https://wa.me/${digits}?text=${encodeURIComponent(text)}`;
+  const contact = contactWhatsapp();
+  return contact ? `${contact.link}?text=${encodeURIComponent(text)}` : null;
 }
