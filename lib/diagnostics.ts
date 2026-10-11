@@ -11,6 +11,7 @@ export type ServiceKeyStatus =
   | "missing"
   | "is_publishable_key" // the public key was pasted instead of the secret one
   | "is_anon_key"
+  | "malformed" // copied with hidden dots (••••), spaces or extra characters
   | "rejected" // key from another project, or mistyped
   | "unreachable";
 
@@ -30,6 +31,10 @@ export async function checkServiceRoleKey(): Promise<ServiceKeyStatus> {
   const key = serverEnv.supabaseServiceRoleKey();
   if (!key) return "missing";
   if (key.startsWith("sb_publishable_")) return "is_publishable_key";
+  // Real keys are plain ASCII with no spaces; masked copies contain "•".
+  if (!/^[A-Za-z0-9._-]+$/.test(key) || key.length < 30 || (key.includes("sb_secret_") && !key.startsWith("sb_secret_"))) {
+    return "malformed";
+  }
   const role = jwtRole(key);
   if (role && role !== "service_role") return "is_anon_key";
   if (!isSupabaseConfigured()) return "unreachable";
@@ -52,6 +57,8 @@ export const SERVICE_KEY_HELP: Record<ServiceKeyStatus, string> = {
   missing: "SUPABASE_SERVICE_ROLE_KEY is not set in Vercel.",
   is_publishable_key: "SUPABASE_SERVICE_ROLE_KEY contains the PUBLIC key (sb_publishable_…). Use the SECRET key (sb_secret_…) from Supabase → Project Settings → API Keys.",
   is_anon_key: "SUPABASE_SERVICE_ROLE_KEY contains the anon key. Use the secret / service_role key.",
+  malformed:
+    "SUPABASE_SERVICE_ROLE_KEY looks wrong: it contains dots (••••), spaces or extra characters, or is too short. In Supabase → API Keys → Secret keys, use the copy button (📋) and paste the whole key; it must start with sb_secret_.",
   rejected: "This Supabase project rejects SUPABASE_SERVICE_ROLE_KEY: it's probably from another project (e.g. ServiceIT). Copy the secret key from the whatsapp-ai-agent project.",
   unreachable: "Couldn't reach Supabase to check the key.",
 };
