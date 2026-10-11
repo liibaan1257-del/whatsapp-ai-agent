@@ -27,6 +27,7 @@ export const fr: Messages = {
     notFoundTitle: "Page introuvable",
     notFoundBody: "Cette page n'existe pas ou vous n'y avez pas accès.",
     backHome: "Retour au tableau de bord",
+    whatsappContact: "Écrivez-nous sur WhatsApp",
     privacy: "Politique de confidentialité",
   },
   home: {

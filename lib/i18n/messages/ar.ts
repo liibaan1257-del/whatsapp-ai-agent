@@ -27,6 +27,7 @@ export const ar: Messages = {
     notFoundTitle: "الصفحة غير موجودة",
     notFoundBody: "هذه الصفحة غير موجودة أو ليس لديك صلاحية الوصول إليها.",
     backHome: "العودة إلى لوحة التحكم",
+    whatsappContact: "تواصل معنا عبر واتساب",
     privacy: "سياسة الخصوصية",
   },
   home: {

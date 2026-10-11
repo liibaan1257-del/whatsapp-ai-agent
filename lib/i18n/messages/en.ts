@@ -26,6 +26,7 @@ export const en = {
     notFoundTitle: "Page not found",
     notFoundBody: "This page doesn't exist or you don't have access to it.",
     backHome: "Back to the dashboard",
+    whatsappContact: "Chat with us on WhatsApp",
     privacy: "Privacy policy",
   },
   home: {

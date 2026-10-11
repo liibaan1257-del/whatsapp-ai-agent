@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { contactEmail, contactWhatsapp } from "@/lib/contact";
 import { fmt } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n/dictionaries";
 import { localeFrom } from "@/lib/i18n/server";
@@ -17,7 +18,8 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
   const m = getMessages(locale);
   const p = m.privacy;
   // The operator's contact address (public, set in Vercel). Optional.
-  const contact = process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim();
+  const contact = contactEmail();
+  const whatsapp = contactWhatsapp();
   const date = new Intl.DateTimeFormat(locale, { dateStyle: "long", timeZone: "UTC" }).format(new Date(`${UPDATED}T00:00:00Z`));
 
   return (
@@ -43,9 +45,14 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
               {contact}
             </a>
           </>
-        ) : (
+        ) : whatsapp ? null : (
           p.contactFallback
         )}
+        {whatsapp ? (
+          <a href={whatsapp.link} target="_blank" rel="noopener noreferrer" className="mt-2 block underline underline-offset-4">
+            {m.common.whatsappContact}: <bdi dir="ltr">{whatsapp.display}</bdi>
+          </a>
+        ) : null}
       </p>
     </main>
   );

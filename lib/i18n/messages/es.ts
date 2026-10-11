@@ -27,6 +27,7 @@ export const es: Messages = {
     notFoundTitle: "Página no encontrada",
     notFoundBody: "Esta página no existe o no tienes acceso a ella.",
     backHome: "Volver al panel",
+    whatsappContact: "Escríbenos por WhatsApp",
     privacy: "Política de privacidad",
   },
   home: {

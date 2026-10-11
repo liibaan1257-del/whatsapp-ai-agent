@@ -80,7 +80,7 @@ See `.env.example`. Mark every secret as **Sensitive**:
 | `ANTHROPIC_API_KEY` | **secret** |
 | `WHATSAPP_VERIFY_TOKEN`, `WHATSAPP_APP_SECRET`, `WHATSAPP_ACCESS_TOKEN` | **secret** (Meta) |
 | `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN` | **secret** (Twilio, optional) |
-| `NEXT_PUBLIC_CONTACT_EMAIL` | public, optional (privacy page) |
+| `NEXT_PUBLIC_CONTACT_EMAIL`, `NEXT_PUBLIC_CONTACT_WHATSAPP` | public, optional (contact links on home + privacy page) |
 
 Redeploy after changing them.
 

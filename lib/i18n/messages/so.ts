@@ -27,6 +27,7 @@ export const so: Messages = {
     notFoundTitle: "Boggan lama helin",
     notFoundBody: "Boggani ma jiro ama ogolaansho uma lihid.",
     backHome: "Ku noqo dashboard-ka",
+    whatsappContact: "WhatsApp nagala soo xiriir",
     privacy: "Siyaasadda xogta gaarka ah",
   },
   home: {
