@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState, useState } from "react";
 import { Field } from "@/components/auth/field";
 import { useI18n } from "@/components/i18n/provider";
@@ -31,6 +32,11 @@ export function LoginForm({ next, initialError, notice }: { next: string; initia
         error={state.fieldErrors?.email}
       />
       <Field id="password" label={m.auth.password} type="password" autoComplete="current-password" required error={state.fieldErrors?.password} />
+      <div className="-mt-2 text-end">
+        <Link href="/forgot-password" className="text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline">
+          {m.auth.forgot}
+        </Link>
+      </div>
       {state.error ? (
         <p role="alert" className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
           {state.error}

@@ -21,7 +21,9 @@ export async function GET(request: NextRequest) {
       ? await supabase.auth.verifyOtp({ token_hash: tokenHash, type })
       : { error: new Error("missing_token") };
 
-  const target = new URL(error ? LOGIN_PATH : next, url.origin);
-  if (error) target.searchParams.set("error", "confirm_failed");
+  // A failed password-reset link goes back to "forgot password" to ask for a new one.
+  const failedReset = error && next.startsWith("/reset-password");
+  const target = new URL(error ? (failedReset ? "/forgot-password" : LOGIN_PATH) : next, url.origin);
+  if (error) target.searchParams.set("error", failedReset ? "link_expired" : "confirm_failed");
   return NextResponse.redirect(target);
 }

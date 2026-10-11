@@ -92,6 +92,53 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
   redirect("/dashboard");
 }
 
+/**
+ * "Forgot password": emails a reset link. Always gives the same answer so the
+ * form can't be used to find out which emails have accounts.
+ */
+export async function requestPasswordReset(_prev: AuthState, formData: FormData): Promise<AuthState> {
+  const m = await requestMessages();
+  const e = m.auth.errors;
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const emailError = checkEmail(email, m);
+  if (emailError) return { fieldErrors: { email: emailError } };
+  if (!isSupabaseConfigured()) return { error: e.signInNotConfigured };
+
+  const h = await headers();
+  const origin = h.get("origin") ?? `${h.get("x-forwarded-proto") ?? "https"}://${h.get("host")}`;
+  const supabase = await createClient();
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${origin}/auth/confirm?next=/reset-password`,
+  });
+  if (error && (error.code === "over_email_send_rate_limit" || error.code === "over_request_rate_limit")) {
+    return { error: e.tooManyAttempts };
+  }
+  return { notice: fmt(m.auth.resetSent, { email }) };
+}
+
+/** Sets a new password for the user signed in through a reset link. */
+export async function updatePassword(_prev: AuthState, formData: FormData): Promise<AuthState> {
+  const m = await requestMessages();
+  const e = m.auth.errors;
+  const password = String(formData.get("password") ?? "");
+  const repeat = String(formData.get("repeat") ?? "");
+  if (password.length < MIN_PASSWORD) return { fieldErrors: { password: fmt(e.passwordShort, { min: MIN_PASSWORD }) } };
+  if (password.length > 72) return { fieldErrors: { password: e.passwordLong } };
+  if (password !== repeat) return { fieldErrors: { password: e.passwordsDiffer } };
+  if (!isSupabaseConfigured()) return { error: e.signInNotConfigured };
+
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getClaims();
+  if (!data?.claims?.sub) return { error: e.linkExpired };
+  const { error } = await supabase.auth.updateUser({ password });
+  if (error) {
+    if (error.code === "same_password") return { fieldErrors: { password: e.samePassword } };
+    if (error.code === "weak_password") return { fieldErrors: { password: e.weakPassword } };
+    return { error: fmt(e.resetFailed, { code: error.code ?? `status ${error.status ?? "unknown"}` }) };
+  }
+  redirect("/dashboard");
+}
+
 export async function logout(): Promise<void> {
   if (isSupabaseConfigured()) {
     const supabase = await createClient();
