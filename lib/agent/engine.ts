@@ -1,6 +1,7 @@
 import "server-only";
 import { describeAiError, isAiConfigured, runAgent, type ChatTurn, type Intent } from "@/lib/ai/agent";
 import { checkBooking } from "@/lib/ai/booking";
+import { isActive, monthStart, replyLimit } from "@/lib/billing";
 import { parseKnowledge } from "@/lib/knowledge";
 import { logger } from "@/lib/logger";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -32,7 +33,10 @@ export type IncomingMessage = {
 
 export type EngineResult =
   | { status: "replied"; conversationId: string; reply: string; intent: Intent; bookingId: string | null }
-  | { status: "duplicate" | "ai_disabled" | "ai_not_configured" | "rate_limited"; conversationId: string | null }
+  | {
+      status: "duplicate" | "ai_disabled" | "ai_not_configured" | "rate_limited" | "inactive" | "quota_exceeded";
+      conversationId: string | null;
+    }
   | { status: "error"; conversationId: string | null; code: string };
 
 /** Messages of history sent to the model. */
@@ -87,6 +91,22 @@ export async function handleCustomerMessage(msg: IncomingMessage): Promise<Engin
   if (!row) return { status: "error", conversationId: conv.id, code: "business_not_found" };
   const knowledge = parseKnowledge(row);
   if (!knowledge.ai_enabled) return { status: "ai_disabled", conversationId: conv.id };
+
+  // Plan: access must not have ended, and the month's AI replies must be left.
+  if (!isActive(String(row.access_until ?? 0))) {
+    logger.info("agent_inactive", { businessId: msg.businessId });
+    return { status: "inactive", conversationId: conv.id };
+  }
+  const { count: used } = await db
+    .from("messages")
+    .select("id", { count: "exact", head: true })
+    .eq("business_id", msg.businessId)
+    .eq("role", "assistant")
+    .gte("created_at", monthStart().toISOString());
+  if ((used ?? 0) >= replyLimit(String(row.plan))) {
+    logger.info("agent_quota_exceeded", { businessId: msg.businessId, used });
+    return { status: "quota_exceeded", conversationId: conv.id };
+  }
   if (!isAiConfigured()) return { status: "ai_not_configured", conversationId: conv.id };
 
   const since = new Date(Date.now() - 10 * 60_000).toISOString();

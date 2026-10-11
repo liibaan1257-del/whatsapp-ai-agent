@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense, type ReactNode } from "react";
+import { PlanBanner } from "@/components/billing/plan-banner";
 import { DashboardShell } from "@/components/dashboard/shell";
 import { requireOwner } from "@/lib/auth/session";
 import { isSupabaseConfigured } from "@/lib/env";
@@ -37,5 +38,10 @@ async function Gate({ children, m }: { children: ReactNode; m: Messages }) {
     );
   }
   const owner = await requireOwner();
-  return <DashboardShell owner={{ email: owner.email, businessName: owner.businessName }}>{children}</DashboardShell>;
+  return (
+    <DashboardShell owner={{ email: owner.email, businessName: owner.businessName, isAdmin: owner.isAdmin }}>
+      <PlanBanner m={m} plan={owner.plan} accessUntil={owner.accessUntil} email={owner.email} />
+      {children}
+    </DashboardShell>
+  );
 }

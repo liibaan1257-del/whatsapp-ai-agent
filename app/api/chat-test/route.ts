@@ -17,6 +17,8 @@ const NOT_REPLIED = {
   ai_not_configured: { status: 503, key: "aiNotConfigured" },
   rate_limited: { status: 429, key: "rateLimited" },
   duplicate: { status: 409, key: "duplicate" },
+  inactive: { status: 402, key: "inactive" },
+  quota_exceeded: { status: 429, key: "quota" },
 } as const;
 
 /**

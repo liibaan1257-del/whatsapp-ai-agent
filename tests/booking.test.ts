@@ -2,6 +2,7 @@
 import assert from "node:assert/strict";
 import { checkBooking } from "@/lib/ai/booking";
 import { parseKnowledge } from "@/lib/knowledge";
+import { daysLeft, isActive, monthStart, replyLimit } from "@/lib/billing";
 import { formatPrice } from "@/lib/format";
 import { displayHhmm, zonedToUtc, partsInZone } from "@/lib/time";
 
@@ -89,4 +90,16 @@ test("12h / 24h opening times", () => {
   assert.equal(displayHhmm("14:30", "12h"), "2:30 PM");
   assert.equal(displayHhmm("00:15", "12h"), "12:15 AM");
 });
+test("plans: days left, active, monthly limits", () => {
+  const now = new Date("2026-10-11T12:00:00Z");
+  assert.equal(daysLeft(new Date(now.getTime() + 14 * 86400e3 - 5000), now), 14);
+  assert.equal(daysLeft(new Date(now.getTime() + 3600e3), now), 1);
+  assert.equal(daysLeft(new Date(now.getTime() - 1), now), -1);
+  assert.equal(isActive("2026-10-11T12:00:01Z", now), true);
+  assert.equal(isActive("2026-10-11T12:00:00Z", now), false);
+  assert.equal(replyLimit("starter"), 500);
+  assert.equal(replyLimit("bogus"), 200);
+  assert.equal(monthStart(now).toISOString(), "2026-10-01T00:00:00.000Z");
+});
+
 console.log(`\n${n} passed`);

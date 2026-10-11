@@ -12,12 +12,12 @@ import { Button } from "@/components/ui/button";
 import { logout } from "@/lib/auth/actions";
 import { cn } from "@/lib/utils";
 
-function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
+function NavLinks({ onNavigate, isAdmin }: { onNavigate?: () => void; isAdmin: boolean }) {
   const pathname = usePathname();
   const { m } = useI18n();
   return (
     <nav aria-label={m.nav.label} className="flex flex-col gap-1">
-      {NAV.map(({ href, key, icon: Icon, exact }) => {
+      {NAV.filter((item) => isAdmin || !("adminOnly" in item)).map(({ href, key, icon: Icon, exact }) => {
         const active = exact ? pathname === href : pathname === href || pathname.startsWith(`${href}/`);
         return (
           <Link
@@ -74,7 +74,7 @@ function SignOut({ email }: { email: string | null }) {
 }
 
 /** Sidebar layout for /dashboard; a drawer on small screens. */
-export function DashboardShell({ owner, children }: { owner: { email: string | null; businessName: string }; children: ReactNode }) {
+export function DashboardShell({ owner, children }: { owner: { email: string | null; businessName: string; isAdmin: boolean }; children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const { m } = useI18n();
 
@@ -92,7 +92,7 @@ export function DashboardShell({ owner, children }: { owner: { email: string | n
           <Brand businessName={owner.businessName} />
         </div>
         <div className="flex-1 px-3">
-          <NavLinks />
+          <NavLinks isAdmin={owner.isAdmin} />
         </div>
         <SignOut email={owner.email} />
       </aside>
@@ -108,7 +108,7 @@ export function DashboardShell({ owner, children }: { owner: { email: string | n
               </Button>
             </div>
             <div className="flex-1 px-3">
-              <NavLinks onNavigate={() => setOpen(false)} />
+              <NavLinks isAdmin={owner.isAdmin} onNavigate={() => setOpen(false)} />
             </div>
             <SignOut email={owner.email} />
           </aside>

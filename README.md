@@ -53,6 +53,12 @@ WhatsApp Cloud API (Meta) · Vercel.
   owners download all their data (JSON) and can delete their account
   permanently. A customer's conversation (messages + bookings) can be erased
   from its page. Only necessary cookies (session, language): no cookie banner needed.
+- **Plans & manual billing**: every new business gets a 14-day free trial
+  (200 AI replies/month); Starter 500, Pro 2,000. When access ends the AI stops
+  replying (messages are still saved) and the dashboard shows "Contact us on
+  WhatsApp" with a ready-made payment message (`NEXT_PUBLIC_CONTACT_WHATSAPP`).
+  The customer pays you (Mobile Money, Waafi, bank…), and you press **+1 month**,
+  **+1 year**, **Pause** or change the plan on the **Admin** page.
 - **Light / dark mode** toggle; follows the device until chosen.
 - **Any time zone, 12h or 24h**: new businesses start in the owner's browser
   time zone; opening hours, bookings and messages use it.
@@ -64,9 +70,12 @@ WhatsApp Cloud API (Meta) · Vercel.
    `supabase/migrations/20261010100000_schema.sql`, then
    `supabase/migrations/20261011100000_global.sql` (currency, 12h/24h time,
    customer language, sign-up time zone), then
-   `supabase/migrations/20261012100000_twilio.sql` (Twilio number, provider).
-   Optional checks: `supabase/tests/schema_test.sql`, `global_test.sql` and
-   `twilio_test.sql` → "Success. No rows returned".
+   `supabase/migrations/20261012100000_twilio.sql` (Twilio number, provider), then
+   `supabase/migrations/20261013100000_billing.sql` (plans, access, admin flag).
+   Optional checks: `supabase/tests/schema_test.sql`, `global_test.sql`,
+   `twilio_test.sql` and `billing_test.sql` → "Success. No rows returned".
+   Make yourself the operator:
+   `update public.profiles set is_platform_admin = true where email = 'you@example.com';`
 2. **Authentication → URL Configuration**: set Site URL to your Vercel URL and
    add `https://<your-app>/auth/confirm` to Redirect URLs.
 
