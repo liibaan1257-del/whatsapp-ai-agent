@@ -4,6 +4,7 @@ import { I18nProvider } from "@/components/i18n/provider";
 import { dirOf, LOCALES } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n/dictionaries";
 import { localeFrom } from "@/lib/i18n/server";
+import { THEME_SCRIPT } from "@/lib/theme";
 import "../globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin", "latin-ext"] });
@@ -25,8 +26,12 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
 export default async function RootLayout({ children, params }: LayoutProps<"/[lang]">) {
   const locale = localeFrom((await params).lang);
   return (
-    <html lang={locale} dir={dirOf(locale)} className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col font-sans">
+    // suppressHydrationWarning: THEME_SCRIPT adds the "dark" class before React loads.
+    <html lang={locale} dir={dirOf(locale)} className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
+      <body className="flex min-h-full flex-col bg-background font-sans text-foreground">
         <I18nProvider locale={locale} messages={getMessages(locale)}>
           {children}
         </I18nProvider>

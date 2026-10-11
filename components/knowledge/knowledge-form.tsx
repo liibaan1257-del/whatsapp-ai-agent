@@ -348,7 +348,7 @@ export function KnowledgeForm({
         <pre dir="ltr" className="mt-3 max-h-96 overflow-auto rounded-md bg-muted p-3 text-xs whitespace-pre-wrap">{preview}</pre>
       </details>
 
-      <div className="fixed inset-x-0 bottom-0 z-20 border-t bg-background/95 backdrop-blur lg:ps-60">
+      <div className="fixed start-0 end-0 bottom-0 z-20 border-t bg-background/95 backdrop-blur lg:start-60">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-3 sm:px-6">
           <Button type="submit" variant="brand" disabled={pending}>
             {pending ? m.common.saving : t.save}

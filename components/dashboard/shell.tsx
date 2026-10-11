@@ -7,6 +7,7 @@ import { LogOut, Menu, MessageCircle, X } from "lucide-react";
 import { NAV } from "@/components/dashboard/nav";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 import { useI18n } from "@/components/i18n/provider";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { logout } from "@/lib/auth/actions";
 import { cn } from "@/lib/utils";
@@ -58,6 +59,7 @@ function SignOut({ email }: { email: string | null }) {
   return (
     <div className="space-y-3 border-t p-4">
       <LanguageSwitcher />
+      <ThemeToggle />
       <p className="truncate text-xs text-muted-foreground" title={email ?? undefined}>
         {email}
       </p>

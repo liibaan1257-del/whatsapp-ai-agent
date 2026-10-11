@@ -7,6 +7,9 @@ export const es: Messages = {
     dashboard: "Panel",
   },
   common: {
+    theme: "Tema",
+    light: "Claro",
+    dark: "Oscuro",
     language: "Idioma",
     yourBusiness: "Tu negocio",
     test: "Prueba",

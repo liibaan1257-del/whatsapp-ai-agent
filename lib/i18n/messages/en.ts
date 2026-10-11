@@ -6,6 +6,9 @@ export const en = {
     dashboard: "Dashboard",
   },
   common: {
+    theme: "Theme",
+    light: "Light",
+    dark: "Dark",
     language: "Language",
     yourBusiness: "Your business",
     test: "Test",

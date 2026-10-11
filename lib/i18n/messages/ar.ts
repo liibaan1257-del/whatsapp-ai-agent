@@ -7,6 +7,9 @@ export const ar: Messages = {
     dashboard: "لوحة التحكم",
   },
   common: {
+    theme: "المظهر",
+    light: "فاتح",
+    dark: "داكن",
     language: "اللغة",
     yourBusiness: "نشاطك التجاري",
     test: "تجربة",

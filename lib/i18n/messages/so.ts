@@ -7,6 +7,9 @@ export const so: Messages = {
     dashboard: "Dashboard",
   },
   common: {
+    theme: "Muuqaalka",
+    light: "Iftiin",
+    dark: "Mugdi",
     language: "Luqadda",
     yourBusiness: "Ganacsigaaga",
     test: "Tijaabo",
