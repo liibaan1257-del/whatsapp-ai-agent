@@ -84,6 +84,9 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
     }
     return { error: fmt(e.signUpFailed, { code: error.code ?? `status ${error.status ?? "unknown"}` }) };
   }
+  // Supabase answers an already-registered email with a user that has no
+  // identities and sends no email (it hides which emails exist): say so.
+  if (data.user && data.user.identities?.length === 0) return { error: e.userExists };
   // Email confirmation on: no session yet.
   if (!data.session) return { notice: fmt(m.auth.checkEmail, { email }) };
   redirect("/dashboard");
