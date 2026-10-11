@@ -35,6 +35,9 @@ export const serverEnv = {
   whatsappAppSecret: () => clean(process.env.WHATSAPP_APP_SECRET),
   whatsappAccessToken: () => clean(process.env.WHATSAPP_ACCESS_TOKEN),
   whatsappGraphVersion: () => clean(process.env.WHATSAPP_GRAPH_VERSION) || "v23.0",
+  // Twilio (optional second WhatsApp provider).
+  twilioAccountSid: () => clean(process.env.TWILIO_ACCOUNT_SID),
+  twilioAuthToken: () => clean(process.env.TWILIO_AUTH_TOKEN),
 };
 
 /** Which server-side features are configured (names only, never values). */
@@ -45,5 +48,6 @@ export function configStatus() {
     ai: Boolean(serverEnv.anthropicApiKey()),
     whatsappWebhook: Boolean(serverEnv.whatsappVerifyToken() && serverEnv.whatsappAppSecret()),
     whatsappSend: Boolean(serverEnv.whatsappAccessToken()),
+    twilio: Boolean(serverEnv.twilioAccountSid() && serverEnv.twilioAuthToken()),
   };
 }

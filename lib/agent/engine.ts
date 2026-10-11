@@ -26,6 +26,8 @@ export type IncomingMessage = {
   text: string;
   /** Provider message id; repeated deliveries of the same id are ignored. */
   externalId?: string | null;
+  /** WhatsApp provider the message came through (replies sent later use the same). */
+  provider?: "meta" | "twilio";
 };
 
 export type EngineResult =
@@ -48,7 +50,13 @@ export async function handleCustomerMessage(msg: IncomingMessage): Promise<Engin
   const { data: conv, error: convError } = await db
     .from("conversations")
     .upsert(
-      { business_id: msg.businessId, channel: msg.channel, customer_phone: msg.customerPhone, status: "open" },
+      {
+        business_id: msg.businessId,
+        channel: msg.channel,
+        customer_phone: msg.customerPhone,
+        status: "open",
+        ...(msg.provider ? { provider: msg.provider } : {}),
+      },
       { onConflict: "business_id,channel,customer_phone" },
     )
     .select("id, customer_name")

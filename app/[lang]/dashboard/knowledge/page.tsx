@@ -45,7 +45,7 @@ async function KnowledgeEditor({ locale, m }: { locale: Locale; m: Messages }) {
     code,
     label: `${code} – ${names.of(code) ?? code}`,
   }));
-  const { ai, whatsappWebhook, whatsappSend, serviceRole } = configStatus();
+  const { ai, whatsappWebhook, whatsappSend, serviceRole, twilio } = configStatus();
 
   return (
     <KnowledgeForm
@@ -53,7 +53,8 @@ async function KnowledgeEditor({ locale, m }: { locale: Locale; m: Messages }) {
       timeZones={timeZones}
       currencies={currencies}
       webhookUrl={`${proto}://${host}/api/whatsapp/webhook`}
-      status={{ ai, whatsappWebhook, whatsappSend, serviceRole }}
+      twilioWebhookUrl={`${proto}://${host}/api/whatsapp/twilio`}
+      status={{ ai, whatsappWebhook, whatsappSend, serviceRole, twilio }}
     />
   );
 }

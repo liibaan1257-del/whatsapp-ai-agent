@@ -63,9 +63,10 @@ WhatsApp Cloud API (Meta) · Vercel.
 1. Create a project. In **SQL Editor**, run the migrations in order:
    `supabase/migrations/20261010100000_schema.sql`, then
    `supabase/migrations/20261011100000_global.sql` (currency, 12h/24h time,
-   customer language, sign-up time zone).
-   Optional checks: `supabase/tests/schema_test.sql` and
-   `supabase/tests/global_test.sql` → "Success. No rows returned".
+   customer language, sign-up time zone), then
+   `supabase/migrations/20261012100000_twilio.sql` (Twilio number, provider).
+   Optional checks: `supabase/tests/schema_test.sql`, `global_test.sql` and
+   `twilio_test.sql` → "Success. No rows returned".
 2. **Authentication → URL Configuration**: set Site URL to your Vercel URL and
    add `https://<your-app>/auth/confirm` to Redirect URLs.
 
@@ -77,7 +78,9 @@ See `.env.example`. Mark every secret as **Sensitive**:
 | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` | public |
 | `SUPABASE_SERVICE_ROLE_KEY` | **secret** (server-only) |
 | `ANTHROPIC_API_KEY` | **secret** |
-| `WHATSAPP_VERIFY_TOKEN`, `WHATSAPP_APP_SECRET`, `WHATSAPP_ACCESS_TOKEN` | **secret** |
+| `WHATSAPP_VERIFY_TOKEN`, `WHATSAPP_APP_SECRET`, `WHATSAPP_ACCESS_TOKEN` | **secret** (Meta) |
+| `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN` | **secret** (Twilio, optional) |
+| `NEXT_PUBLIC_CONTACT_EMAIL` | public, optional (privacy page) |
 
 Redeploy after changing them.
 
@@ -88,6 +91,16 @@ Redeploy after changing them.
    `WHATSAPP_VERIFY_TOKEN`. Subscribe to **messages**.
 3. Copy the **Phone number ID** (WhatsApp → API Setup) into the dashboard's
    Knowledge base → WhatsApp connection.
+
+### 3b. Or: WhatsApp through Twilio
+1. Set `TWILIO_ACCOUNT_SID` and `TWILIO_AUTH_TOKEN` (Twilio Console → Account
+   Info) in Vercel and redeploy.
+2. Twilio Console → Messaging → WhatsApp senders (or the Sandbox): set
+   **When a message comes in** to `https://<your-app>/api/whatsapp/twilio`
+   (HTTP POST). Requests are verified with `X-Twilio-Signature`.
+3. Enter the Twilio WhatsApp number (E.164, e.g. `+14155238886`) in Knowledge
+   base → WhatsApp connection. Replies and booking confirmations go back
+   through the provider the customer wrote in on.
 
 ## Development
 

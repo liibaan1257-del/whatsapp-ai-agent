@@ -18,6 +18,7 @@ function fieldMessage(path: PropertyKey[], e: Messages["knowledge"]["errors"]): 
   if (last === "duration_minutes") return e.duration;
   if (last === "name" || last === "question" || last === "answer") return e.required;
   if (top === "whatsapp_phone_number_id") return e.phoneDigits;
+  if (top === "twilio_whatsapp_number") return e.twilioFormat;
   if (top === "currency") return e.currency;
   if (top === "timezone") return e.timezone;
   return e.invalid;
@@ -64,11 +65,15 @@ export async function saveKnowledge(payload: unknown): Promise<KnowledgeState> {
       currency: k.currency,
       time_format: k.time_format,
       whatsapp_phone_number_id: k.whatsapp_phone_number_id || null,
+      twilio_whatsapp_number: k.twilio_whatsapp_number || null,
       ai_enabled: k.ai_enabled,
     })
     .eq("owner_id", owner.id);
 
   if (error) {
+    if (error.code === "23505" && error.message.includes("twilio")) {
+      return { error: e.twilioInUse, fieldErrors: { twilio_whatsapp_number: e.inUse } };
+    }
     if (error.code === "23505") {
       return { error: e.phoneInUse, fieldErrors: { whatsapp_phone_number_id: e.inUse } };
     }

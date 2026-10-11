@@ -55,6 +55,13 @@ export const knowledgeSchema = z.object({
     .regex(/^[0-9]{5,30}$/, "Digits only (5–30), from Meta → WhatsApp → API Setup.")
     .nullable()
     .default(null),
+  // Twilio WhatsApp number (E.164) that routes Twilio messages to this business.
+  twilio_whatsapp_number: z
+    .string()
+    .trim()
+    .regex(/^\+[1-9][0-9]{6,14}$/, "Use + and the country code, e.g. +14155238886.")
+    .nullable()
+    .default(null),
   ai_enabled: z.boolean().default(true),
 });
 

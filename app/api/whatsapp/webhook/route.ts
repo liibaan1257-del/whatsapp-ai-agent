@@ -89,6 +89,7 @@ async function processMessages(messages: InboundMessage[]) {
         customerName: m.name,
         text: m.text,
         externalId: m.messageId,
+        provider: "meta",
       });
       if (result.status === "replied") await sendText(m.phoneNumberId, m.from, result.reply);
       else logger.info("webhook_no_reply", { status: result.status, conversationId: result.conversationId });

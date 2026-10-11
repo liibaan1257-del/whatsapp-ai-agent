@@ -44,7 +44,11 @@ async function Overview({ locale, m }: { locale: Locale; m: Messages }) {
     { done: Boolean(knowledge?.services.length), label: o.setupServices, href: "/dashboard/knowledge" },
     { done: Boolean(knowledge && Object.values(knowledge.working_hours).some(Boolean)), label: o.setupHours, href: "/dashboard/knowledge" },
     { done: config.ai, label: o.setupAi, href: null },
-    { done: Boolean(knowledge?.whatsapp_phone_number_id) && config.whatsappWebhook && config.whatsappSend, label: o.setupWhatsapp, href: "/dashboard/knowledge" },
+    {
+      done:
+        (Boolean(knowledge?.whatsapp_phone_number_id) && config.whatsappWebhook && config.whatsappSend) ||
+        (Boolean(knowledge?.twilio_whatsapp_number) && config.twilio),
+      label: o.setupWhatsapp, href: "/dashboard/knowledge" },
   ];
   const setupDone = setup.every((s) => s.done);
 

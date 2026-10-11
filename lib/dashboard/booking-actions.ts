@@ -10,7 +10,7 @@ import { logger } from "@/lib/logger";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { formatInZone, zonedToUtc } from "@/lib/time";
-import { sendText } from "@/lib/whatsapp/meta";
+import { sendToCustomer, type Provider } from "@/lib/whatsapp/send";
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 type Status = "pending" | "confirmed" | "cancelled" | "completed";
@@ -41,7 +41,7 @@ export async function updateBookingStatus(_prev: BookingActionState, formData: F
   const supabase = await createClient();
   const { data: booking } = await supabase
     .from("bookings")
-    .select("id, status, customer_name, service_selected, date_time, phone_number, conversation_id, conversations(channel, language)")
+    .select("id, status, customer_name, service_selected, date_time, phone_number, conversation_id, conversations(channel, language, provider)")
     .eq("id", id)
     .maybeSingle();
   if (!booking) return { error: e.notFound };
@@ -54,10 +54,10 @@ export async function updateBookingStatus(_prev: BookingActionState, formData: F
   }
 
   let notice: string | undefined;
-  const conv = booking.conversations as unknown as { channel: string; language: string | null } | null;
+  const conv = booking.conversations as unknown as { channel: string; language: string | null; provider: Provider | null } | null;
   const channel = conv?.channel;
   if ((status === "confirmed" || status === "cancelled") && channel === "whatsapp" && booking.conversation_id) {
-    notice = (await notifyCustomer(owner.businessId, booking, status, conv?.language ?? null)) ? e.notified : e.notifyFailed;
+    notice = (await notifyCustomer(owner.businessId, booking, status, conv?.language ?? null, conv?.provider ?? null)) ? e.notified : e.notifyFailed;
   }
   refresh();
   return { ok: true, notice };
@@ -68,10 +68,10 @@ async function notifyCustomer(
   b: { customer_name: string; service_selected: string; date_time: string; phone_number: string; conversation_id: string | null },
   status: "confirmed" | "cancelled",
   language: string | null,
+  provider: Provider | null,
 ): Promise<boolean> {
   const knowledge = await getKnowledge();
-  const phoneNumberId = knowledge?.whatsapp_phone_number_id;
-  if (!knowledge || !phoneNumberId) return false;
+  if (!knowledge) return false;
   const when = formatInZone(new Date(b.date_time), knowledge.timezone, knowledge.time_format);
   const english =
     status === "confirmed"
@@ -79,7 +79,8 @@ async function notifyCustomer(
       : `Hi ${b.customer_name}, your booking for ${b.service_selected} on ${when} has been cancelled. Reply here if you'd like a new time.`;
   // Written in the language the customer used in the chat.
   const text = await inCustomerLanguage(english, language);
-  const sent = await sendText(phoneNumberId, b.phone_number, text);
+  // Same provider the customer wrote in on (Meta or Twilio).
+  const sent = await sendToCustomer(knowledge, provider, b.phone_number.replace(/^\+/, ""), text);
   if (sent && b.conversation_id) {
     // Keep the chat history complete (messages are server-written only).
     await createAdminClient().from("messages").insert({

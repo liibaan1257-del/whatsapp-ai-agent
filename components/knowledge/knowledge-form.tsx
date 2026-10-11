@@ -15,7 +15,7 @@ import { DAYS, type Day, type Faq, type Knowledge, type Service, type TimeFormat
 import { cn } from "@/lib/utils";
 
 type Hours = Record<Day, { open: boolean; from: string; to: string }>;
-type Status = { ai: boolean; whatsappWebhook: boolean; whatsappSend: boolean; serviceRole: boolean };
+type Status = { ai: boolean; whatsappWebhook: boolean; whatsappSend: boolean; serviceRole: boolean; twilio: boolean };
 
 const select =
   "h-9 w-full rounded-md border border-input bg-transparent px-3 text-sm shadow-xs outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50";
@@ -29,6 +29,32 @@ function toHours(k: Knowledge): Hours {
   ) as Hours;
 }
 
+/** Read-only URL with a copy button. */
+function CopyField({ id, label, copyLabel, value }: { id: string; label: string; copyLabel: string; value: string }) {
+  const [copied, setCopied] = useState(false);
+  return (
+    <div className="space-y-2">
+      <Label htmlFor={id}>{label}</Label>
+      <div className="flex max-w-xl gap-2">
+        <Input id={id} dir="ltr" readOnly value={value} className="font-mono text-xs" />
+        <Button
+          type="button"
+          variant="outline"
+          size="icon"
+          aria-label={copyLabel}
+          onClick={() => {
+            void navigator.clipboard?.writeText(value);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1500);
+          }}
+        >
+          {copied ? <Check /> : <Copy />}
+        </Button>
+      </div>
+    </div>
+  );
+}
+
 function ErrorText({ msg }: { msg?: string }) {
   return msg ? <p className="text-xs text-destructive">{msg}</p> : null;
 }
@@ -38,12 +64,14 @@ export function KnowledgeForm({
   timeZones,
   currencies,
   webhookUrl,
+  twilioWebhookUrl,
   status,
 }: {
   initial: Knowledge;
   timeZones: string[];
   currencies: { code: string; label: string }[];
   webhookUrl: string;
+  twilioWebhookUrl: string;
   status: Status;
 }) {
   const { m } = useI18n();
@@ -59,9 +87,9 @@ export function KnowledgeForm({
   const [faqs, setFaqs] = useState<Faq[]>(initial.faqs);
   const [policy, setPolicy] = useState(initial.booking_policy);
   const [phoneId, setPhoneId] = useState(initial.whatsapp_phone_number_id ?? "");
+  const [twilioNumber, setTwilioNumber] = useState(initial.twilio_whatsapp_number ?? "");
   const [state, setState] = useState<KnowledgeState>({});
   const [pending, startTransition] = useTransition();
-  const [copied, setCopied] = useState(false);
   const fe = state.fieldErrors ?? {};
 
   const payload = useMemo(
@@ -77,8 +105,9 @@ export function KnowledgeForm({
       faqs,
       booking_policy: policy,
       whatsapp_phone_number_id: phoneId.trim() || null,
+      twilio_whatsapp_number: twilioNumber.trim() || null,
     }),
-    [name, description, timezone, currency, timeFormat, aiEnabled, services, hours, faqs, policy, phoneId],
+    [name, description, timezone, currency, timeFormat, aiEnabled, services, hours, faqs, policy, phoneId, twilioNumber],
   );
   const preview = useMemo(() => describeBusiness({ ...(payload as unknown as Knowledge), id: initial.id }), [payload, initial.id]);
 
@@ -298,43 +327,39 @@ export function KnowledgeForm({
       <Card>
         <CardHeader>
           <CardTitle>{t.whatsapp}</CardTitle>
-          <CardDescription>{t.whatsappHint}</CardDescription>
+          <CardDescription>{t.twilioHint}</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="whatsapp_phone_number_id">{t.phoneId}</Label>
-            <Input id="whatsapp_phone_number_id" inputMode="numeric" value={phoneId} onChange={(e) => setPhoneId(e.target.value.replace(/\s/g, ""))} placeholder={t.phoneIdPlaceholder} className="max-w-xs" aria-invalid={fe.whatsapp_phone_number_id ? true : undefined} />
-            <ErrorText msg={fe.whatsapp_phone_number_id} />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="webhook_url">{t.callbackUrl}</Label>
-            <div className="flex max-w-xl gap-2">
-              <Input id="webhook_url" dir="ltr" readOnly value={webhookUrl} className="font-mono text-xs" />
-              <Button
-                type="button"
-                variant="outline"
-                size="icon"
-                aria-label={t.copyCallback}
-                onClick={() => {
-                  void navigator.clipboard?.writeText(webhookUrl);
-                  setCopied(true);
-                  setTimeout(() => setCopied(false), 1500);
-                }}
-              >
-                {copied ? <Check /> : <Copy />}
-              </Button>
+        <CardContent className="space-y-6">
+          <section className="space-y-4">
+            <h3 className="text-sm font-semibold">{t.metaHeading}</h3>
+            <p className="text-xs text-muted-foreground">{t.whatsappHint}</p>
+            <div className="space-y-2">
+              <Label htmlFor="whatsapp_phone_number_id">{t.phoneId}</Label>
+              <Input id="whatsapp_phone_number_id" dir="ltr" inputMode="numeric" value={phoneId} onChange={(e) => setPhoneId(e.target.value.replace(/\s/g, ""))} placeholder={t.phoneIdPlaceholder} className="max-w-xs" aria-invalid={fe.whatsapp_phone_number_id ? true : undefined} />
+              <ErrorText msg={fe.whatsapp_phone_number_id} />
             </div>
+            <CopyField id="webhook_url" label={t.callbackUrl} copyLabel={t.copyCallback} value={webhookUrl} />
             <p className="text-xs text-muted-foreground">{t.verifyHint}</p>
-          </div>
-          <ul className="grid gap-1 text-sm sm:grid-cols-2">
+          </section>
+          <section className="space-y-4 border-t pt-6">
+            <h3 className="text-sm font-semibold">{t.twilioHeading}</h3>
+            <div className="space-y-2">
+              <Label htmlFor="twilio_whatsapp_number">{t.twilioNumber}</Label>
+              <Input id="twilio_whatsapp_number" dir="ltr" type="tel" value={twilioNumber} onChange={(e) => setTwilioNumber(e.target.value.replace(/[\s()-]/g, ""))} placeholder="+14155238886" className="max-w-xs" aria-invalid={fe.twilio_whatsapp_number ? true : undefined} />
+              <ErrorText msg={fe.twilio_whatsapp_number} />
+            </div>
+            <CopyField id="twilio_webhook_url" label={t.twilioCallback} copyLabel={t.copyTwilioCallback} value={twilioWebhookUrl} />
+          </section>
+          <ul className="grid gap-1 border-t pt-4 text-sm sm:grid-cols-2">
             {[
               [t.statusAi, status.ai],
               [t.statusDb, status.serviceRole],
               [t.statusWebhook, status.whatsappWebhook],
               [t.statusSend, status.whatsappSend],
+              [t.statusTwilio, status.twilio],
             ].map(([label, ok]) => (
               <li key={String(label)} className="flex items-center gap-2">
-                <span className={cn("size-2 rounded-full", ok ? "bg-brand" : "bg-destructive")} aria-hidden="true" />
+                <span className={cn("size-2 shrink-0 rounded-full", ok ? "bg-brand" : "bg-destructive")} aria-hidden="true" />
                 <span className={ok ? "" : "text-muted-foreground"}>{label}</span>
                 <span className="sr-only">{ok ? t.isSet : t.isMissing}</span>
               </li>
