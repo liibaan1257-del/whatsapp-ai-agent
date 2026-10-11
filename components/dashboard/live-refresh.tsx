@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useI18n } from "@/components/i18n/provider";
 import { createClient } from "@/lib/supabase/client";
 
 /**
@@ -10,6 +11,7 @@ import { createClient } from "@/lib/supabase/client";
  */
 export function LiveRefresh({ businessId, tables }: { businessId: string; tables: ("conversations" | "messages" | "bookings")[] }) {
   const router = useRouter();
+  const { m } = useI18n();
   const [status, setStatus] = useState<"connecting" | "live" | "offline">("connecting");
 
   useEffect(() => {
@@ -50,7 +52,7 @@ export function LiveRefresh({ businessId, tables }: { businessId: string; tables
   return (
     <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground" role="status">
       <span className={`size-2 rounded-full ${status === "live" ? "bg-brand" : status === "offline" ? "bg-destructive" : "bg-amber-500"}`} />
-      {status === "live" ? "Live" : status === "offline" ? "Offline" : "Connecting…"}
+      {status === "live" ? m.common.live : status === "offline" ? m.common.offline : m.common.connecting}
     </span>
   );
 }

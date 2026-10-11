@@ -1,7 +1,9 @@
 /** Display helpers (safe on server and client). */
 
-export function formatDateTime(iso: string, timeZone: string, timeFormat: "12h" | "24h" = "24h"): string {
-  return new Intl.DateTimeFormat(timeFormat === "12h" ? "en-US" : "en-GB", {
+/** Short date and time in the business's time zone, written in the dashboard language. */
+export function formatDateTime(iso: string, timeZone: string, timeFormat: "12h" | "24h" = "24h", locale = "en"): string {
+  const tag = locale === "en" ? (timeFormat === "12h" ? "en-US" : "en-GB") : locale;
+  return new Intl.DateTimeFormat(tag, {
     timeZone,
     weekday: "short",
     day: "numeric",
@@ -12,24 +14,15 @@ export function formatDateTime(iso: string, timeZone: string, timeFormat: "12h" 
   }).format(new Date(iso));
 }
 
-/** "5m ago", "3h ago", "2d ago" relative to `now`. */
-export function timeAgo(iso: string, now: Date = new Date()): string {
+/** "5 min ago" / "hace 5 min" relative to `now`, in the dashboard language. */
+export function timeAgo(iso: string, locale = "en", now: Date = new Date()): string {
   const s = Math.max(0, Math.round((now.getTime() - new Date(iso).getTime()) / 1000));
-  if (s < 60) return "just now";
-  if (s < 3600) return `${Math.floor(s / 60)}m ago`;
-  if (s < 86400) return `${Math.floor(s / 3600)}h ago`;
-  return `${Math.floor(s / 86400)}d ago`;
+  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto", style: "short" });
+  if (s < 60) return rtf.format(0, "second");
+  if (s < 3600) return rtf.format(-Math.floor(s / 60), "minute");
+  if (s < 86400) return rtf.format(-Math.floor(s / 3600), "hour");
+  return rtf.format(-Math.floor(s / 86400), "day");
 }
-
-export const INTENT_LABELS: Record<string, string> = {
-  booking: "Booking",
-  services: "Services",
-  pricing: "Pricing",
-  hours: "Hours",
-  faq: "FAQ",
-  greeting: "Greeting",
-  other: "Other",
-};
 
 export const STATUS_STYLES: Record<string, string> = {
   pending: "bg-amber-500/15 text-amber-700 dark:text-amber-300",

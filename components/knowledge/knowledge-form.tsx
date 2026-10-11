@@ -8,8 +8,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { describeBusiness } from "@/lib/ai/prompt";
+import { useI18n } from "@/components/i18n/provider";
 import { saveKnowledge, type KnowledgeState } from "@/lib/dashboard/knowledge-actions";
-import { DAY_LABELS, DAYS, type Day, type Faq, type Knowledge, type Service, type TimeFormat } from "@/lib/knowledge";
+import { fmt } from "@/lib/i18n/config";
+import { DAYS, type Day, type Faq, type Knowledge, type Service, type TimeFormat } from "@/lib/knowledge";
 import { cn } from "@/lib/utils";
 
 type Hours = Record<Day, { open: boolean; from: string; to: string }>;
@@ -44,6 +46,8 @@ export function KnowledgeForm({
   webhookUrl: string;
   status: Status;
 }) {
+  const { m } = useI18n();
+  const t = m.knowledge;
   const [name, setName] = useState(initial.business_name);
   const [description, setDescription] = useState(initial.description);
   const [timezone, setTimezone] = useState(initial.timezone);
@@ -97,17 +101,17 @@ export function KnowledgeForm({
     >
       <Card>
         <CardHeader>
-          <CardTitle>Business</CardTitle>
-          <CardDescription>The basics the agent introduces you with.</CardDescription>
+          <CardTitle>{t.business}</CardTitle>
+          <CardDescription>{t.businessHint}</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
-            <Label htmlFor="business_name">Business name</Label>
-            <Input id="business_name" value={name} maxLength={120} onChange={(e) => setName(e.target.value)} placeholder="Bella Hair Studio" />
+            <Label htmlFor="business_name">{t.businessName}</Label>
+            <Input id="business_name" value={name} maxLength={120} onChange={(e) => setName(e.target.value)} placeholder={t.businessNamePlaceholder} />
             <ErrorText msg={fe.business_name} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="timezone">Time zone</Label>
+            <Label htmlFor="timezone">{t.timezone}</Label>
             <select id="timezone" className={select} value={timezone} onChange={(e) => setTimezone(e.target.value)}>
               {timeZones.map((tz) => (
                 <option key={tz} value={tz}>
@@ -118,7 +122,7 @@ export function KnowledgeForm({
             <ErrorText msg={fe.timezone} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="currency">Currency</Label>
+            <Label htmlFor="currency">{t.currency}</Label>
             <select id="currency" className={select} value={currency} onChange={(e) => setCurrency(e.target.value)}>
               {currencies.map((c) => (
                 <option key={c.code} value={c.code}>
@@ -129,27 +133,27 @@ export function KnowledgeForm({
             <ErrorText msg={fe.currency} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="time_format">Time format</Label>
+            <Label htmlFor="time_format">{t.timeFormat}</Label>
             <select id="time_format" className={select} value={timeFormat} onChange={(e) => setTimeFormat(e.target.value as TimeFormat)}>
-              <option value="24h">24-hour (14:30)</option>
-              <option value="12h">12-hour (2:30 PM)</option>
+              <option value="24h">{t.format24}</option>
+              <option value="12h">{t.format12}</option>
             </select>
           </div>
           <div className="space-y-2 md:col-span-2">
-            <Label htmlFor="description">About the business</Label>
+            <Label htmlFor="description">{t.about}</Label>
             <Textarea
               id="description"
               value={description}
               maxLength={2000}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Hair and beauty salon in the city centre. Free parking. Card and cash accepted."
+              placeholder={t.aboutPlaceholder}
             />
           </div>
           <label className="flex items-start gap-3 md:col-span-2">
             <input type="checkbox" checked={aiEnabled} onChange={(e) => setAiEnabled(e.target.checked)} className="mt-0.5 size-4 accent-[var(--brand)]" />
             <span>
-              <span className="block text-sm font-medium">AI replies on</span>
-              <span className="block text-xs text-muted-foreground">Turn off to stop automatic WhatsApp replies (messages are still saved).</span>
+              <span className="block text-sm font-medium">{t.aiOn}</span>
+              <span className="block text-xs text-muted-foreground">{t.aiOnHint}</span>
             </span>
           </label>
         </CardContent>
@@ -157,24 +161,24 @@ export function KnowledgeForm({
 
       <Card>
         <CardHeader>
-          <CardTitle>Services &amp; prices</CardTitle>
-          <CardDescription>Customers can only book services from this list.</CardDescription>
+          <CardTitle>{t.services}</CardTitle>
+          <CardDescription>{t.servicesHint}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
-          {services.length === 0 ? <p className="text-sm text-muted-foreground">No services yet.</p> : null}
+          {services.length === 0 ? <p className="text-sm text-muted-foreground">{t.noServices}</p> : null}
           {services.map((s, i) => (
             <div key={i} className="grid gap-2 rounded-lg border p-3 sm:grid-cols-[2fr_1fr_1fr_auto]">
               <div className="space-y-1">
-                <Label htmlFor={`svc-name-${i}`} className="text-xs text-muted-foreground">Service</Label>
-                <Input id={`svc-name-${i}`} value={s.name} maxLength={100} onChange={(e) => updateService(i, { name: e.target.value })} placeholder="Haircut" aria-invalid={fe[`services.${i}.name`] ? true : undefined} />
+                <Label htmlFor={`svc-name-${i}`} className="text-xs text-muted-foreground">{t.service}</Label>
+                <Input id={`svc-name-${i}`} value={s.name} maxLength={100} onChange={(e) => updateService(i, { name: e.target.value })} placeholder={t.servicePlaceholder} aria-invalid={fe[`services.${i}.name`] ? true : undefined} />
                 <ErrorText msg={fe[`services.${i}.name`]} />
               </div>
               <div className="space-y-1">
-                <Label htmlFor={`svc-price-${i}`} className="text-xs text-muted-foreground">Price</Label>
+                <Label htmlFor={`svc-price-${i}`} className="text-xs text-muted-foreground">{t.price}</Label>
                 <Input id={`svc-price-${i}`} value={s.price} maxLength={50} onChange={(e) => updateService(i, { price: e.target.value })} placeholder={`15 (${currency})`} />
               </div>
               <div className="space-y-1">
-                <Label htmlFor={`svc-dur-${i}`} className="text-xs text-muted-foreground">Minutes</Label>
+                <Label htmlFor={`svc-dur-${i}`} className="text-xs text-muted-foreground">{t.minutes}</Label>
                 <Input
                   id={`svc-dur-${i}`}
                   type="number"
@@ -188,13 +192,13 @@ export function KnowledgeForm({
                 <ErrorText msg={fe[`services.${i}.duration_minutes`]} />
               </div>
               <div className="flex items-end">
-                <Button type="button" variant="ghost" size="icon" aria-label={`Remove ${s.name || "service"}`} onClick={() => setServices((x) => x.filter((_, j) => j !== i))}>
+                <Button type="button" variant="ghost" size="icon" aria-label={fmt(t.remove, { name: s.name || t.serviceFallback })} onClick={() => setServices((x) => x.filter((_, j) => j !== i))}>
                   <Trash2 />
                 </Button>
               </div>
               <div className="space-y-1 sm:col-span-4">
-                <Label htmlFor={`svc-desc-${i}`} className="text-xs text-muted-foreground">Details (optional)</Label>
-                <Input id={`svc-desc-${i}`} value={s.description} maxLength={500} onChange={(e) => updateService(i, { description: e.target.value })} placeholder="Wash, cut and blow-dry" />
+                <Label htmlFor={`svc-desc-${i}`} className="text-xs text-muted-foreground">{t.details}</Label>
+                <Input id={`svc-desc-${i}`} value={s.description} maxLength={500} onChange={(e) => updateService(i, { description: e.target.value })} placeholder={t.detailsPlaceholder} />
               </div>
             </div>
           ))}
@@ -205,15 +209,15 @@ export function KnowledgeForm({
             disabled={services.length >= 50}
             onClick={() => setServices((x) => [...x, { name: "", price: "", duration_minutes: 30, description: "" }])}
           >
-            <Plus /> Add service
+            <Plus /> {t.addService}
           </Button>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader>
-          <CardTitle>Opening hours</CardTitle>
-          <CardDescription>Bookings are only accepted inside these hours ({timezone}).</CardDescription>
+          <CardTitle>{t.hours}</CardTitle>
+          <CardDescription>{fmt(t.hoursHint, { tz: timezone })}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-2">
           {DAYS.map((d) => (
@@ -225,17 +229,17 @@ export function KnowledgeForm({
                   onChange={(e) => setHours((h) => ({ ...h, [d]: { ...h[d], open: e.target.checked } }))}
                   className="size-4 accent-[var(--brand)]"
                 />
-                {DAY_LABELS[d]}
+                {m.days[d]}
               </label>
               {hours[d].open ? (
                 <>
-                  <Input type="time" aria-label={`${DAY_LABELS[d]} opens`} className="w-32" value={hours[d].from} onChange={(e) => setHours((h) => ({ ...h, [d]: { ...h[d], from: e.target.value } }))} />
-                  <span className="text-sm text-muted-foreground">to</span>
-                  <Input type="time" aria-label={`${DAY_LABELS[d]} closes`} className="w-32" value={hours[d].to} onChange={(e) => setHours((h) => ({ ...h, [d]: { ...h[d], to: e.target.value } }))} />
+                  <Input type="time" aria-label={fmt(t.opens, { day: m.days[d] })} className="w-32" value={hours[d].from} onChange={(e) => setHours((h) => ({ ...h, [d]: { ...h[d], from: e.target.value } }))} />
+                  <span className="text-sm text-muted-foreground">{t.to}</span>
+                  <Input type="time" aria-label={fmt(t.closes, { day: m.days[d] })} className="w-32" value={hours[d].to} onChange={(e) => setHours((h) => ({ ...h, [d]: { ...h[d], to: e.target.value } }))} />
                   <ErrorText msg={fe[`working_hours.${d}`] ?? fe[`working_hours.${d}.open`] ?? fe[`working_hours.${d}.close`]} />
                 </>
               ) : (
-                <span className="text-sm text-muted-foreground">Closed</span>
+                <span className="text-sm text-muted-foreground">{t.closed}</span>
               )}
             </div>
           ))}
@@ -244,73 +248,73 @@ export function KnowledgeForm({
 
       <Card>
         <CardHeader>
-          <CardTitle>FAQs</CardTitle>
-          <CardDescription>Common questions and your exact answers.</CardDescription>
+          <CardTitle>{t.faqs}</CardTitle>
+          <CardDescription>{t.faqsHint}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
-          {faqs.length === 0 ? <p className="text-sm text-muted-foreground">No FAQs yet.</p> : null}
+          {faqs.length === 0 ? <p className="text-sm text-muted-foreground">{t.noFaqs}</p> : null}
           {faqs.map((f, i) => (
             <div key={i} className="space-y-2 rounded-lg border p-3">
               <div className="flex items-start gap-2">
                 <div className="flex-1 space-y-1">
-                  <Label htmlFor={`faq-q-${i}`} className="text-xs text-muted-foreground">Question</Label>
-                  <Input id={`faq-q-${i}`} value={f.question} maxLength={300} onChange={(e) => updateFaq(i, { question: e.target.value })} placeholder="Do you accept walk-ins?" aria-invalid={fe[`faqs.${i}.question`] ? true : undefined} />
+                  <Label htmlFor={`faq-q-${i}`} className="text-xs text-muted-foreground">{t.question}</Label>
+                  <Input id={`faq-q-${i}`} value={f.question} maxLength={300} onChange={(e) => updateFaq(i, { question: e.target.value })} placeholder={t.questionPlaceholder} aria-invalid={fe[`faqs.${i}.question`] ? true : undefined} />
                   <ErrorText msg={fe[`faqs.${i}.question`]} />
                 </div>
-                <Button type="button" variant="ghost" size="icon" className="mt-5" aria-label="Remove FAQ" onClick={() => setFaqs((x) => x.filter((_, j) => j !== i))}>
+                <Button type="button" variant="ghost" size="icon" className="mt-5" aria-label={t.removeFaq} onClick={() => setFaqs((x) => x.filter((_, j) => j !== i))}>
                   <Trash2 />
                 </Button>
               </div>
               <div className="space-y-1">
-                <Label htmlFor={`faq-a-${i}`} className="text-xs text-muted-foreground">Answer</Label>
-                <Textarea id={`faq-a-${i}`} value={f.answer} maxLength={2000} onChange={(e) => updateFaq(i, { answer: e.target.value })} placeholder="Yes, but booked customers come first." aria-invalid={fe[`faqs.${i}.answer`] ? true : undefined} />
+                <Label htmlFor={`faq-a-${i}`} className="text-xs text-muted-foreground">{t.answer}</Label>
+                <Textarea id={`faq-a-${i}`} value={f.answer} maxLength={2000} onChange={(e) => updateFaq(i, { answer: e.target.value })} placeholder={t.answerPlaceholder} aria-invalid={fe[`faqs.${i}.answer`] ? true : undefined} />
                 <ErrorText msg={fe[`faqs.${i}.answer`]} />
               </div>
             </div>
           ))}
           <Button type="button" variant="outline" size="sm" disabled={faqs.length >= 50} onClick={() => setFaqs((x) => [...x, { question: "", answer: "" }])}>
-            <Plus /> Add FAQ
+            <Plus /> {t.addFaq}
           </Button>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader>
-          <CardTitle>Booking policy</CardTitle>
-          <CardDescription>Deposits, cancellations, lateness: the agent explains this when booking.</CardDescription>
+          <CardTitle>{t.policy}</CardTitle>
+          <CardDescription>{t.policyHint}</CardDescription>
         </CardHeader>
         <CardContent>
-          <Label htmlFor="booking_policy" className="sr-only">Booking policy</Label>
+          <Label htmlFor="booking_policy" className="sr-only">{t.policy}</Label>
           <Textarea
             id="booking_policy"
             value={policy}
             maxLength={3000}
             onChange={(e) => setPolicy(e.target.value)}
-            placeholder="Please arrive 5 minutes early. Cancel at least 24 hours before. Late more than 15 minutes = rebook."
+            placeholder={t.policyPlaceholder}
           />
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader>
-          <CardTitle>WhatsApp connection</CardTitle>
-          <CardDescription>Meta → WhatsApp → API Setup and Configuration → Webhook.</CardDescription>
+          <CardTitle>{t.whatsapp}</CardTitle>
+          <CardDescription>{t.whatsappHint}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="whatsapp_phone_number_id">Phone number ID</Label>
-            <Input id="whatsapp_phone_number_id" inputMode="numeric" value={phoneId} onChange={(e) => setPhoneId(e.target.value.replace(/\s/g, ""))} placeholder="e.g. 109876543210987" className="max-w-xs" aria-invalid={fe.whatsapp_phone_number_id ? true : undefined} />
+            <Label htmlFor="whatsapp_phone_number_id">{t.phoneId}</Label>
+            <Input id="whatsapp_phone_number_id" inputMode="numeric" value={phoneId} onChange={(e) => setPhoneId(e.target.value.replace(/\s/g, ""))} placeholder={t.phoneIdPlaceholder} className="max-w-xs" aria-invalid={fe.whatsapp_phone_number_id ? true : undefined} />
             <ErrorText msg={fe.whatsapp_phone_number_id} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="webhook_url">Callback URL (paste into Meta)</Label>
+            <Label htmlFor="webhook_url">{t.callbackUrl}</Label>
             <div className="flex max-w-xl gap-2">
-              <Input id="webhook_url" readOnly value={webhookUrl} className="font-mono text-xs" />
+              <Input id="webhook_url" dir="ltr" readOnly value={webhookUrl} className="font-mono text-xs" />
               <Button
                 type="button"
                 variant="outline"
                 size="icon"
-                aria-label="Copy callback URL"
+                aria-label={t.copyCallback}
                 onClick={() => {
                   void navigator.clipboard?.writeText(webhookUrl);
                   setCopied(true);
@@ -320,19 +324,19 @@ export function KnowledgeForm({
                 {copied ? <Check /> : <Copy />}
               </Button>
             </div>
-            <p className="text-xs text-muted-foreground">Verify token: the value of WHATSAPP_VERIFY_TOKEN in your Vercel settings. Subscribe the webhook to “messages”.</p>
+            <p className="text-xs text-muted-foreground">{t.verifyHint}</p>
           </div>
           <ul className="grid gap-1 text-sm sm:grid-cols-2">
             {[
-              ["AI key (ANTHROPIC_API_KEY)", status.ai],
-              ["Database writes (SUPABASE_SERVICE_ROLE_KEY)", status.serviceRole],
-              ["Webhook secrets (VERIFY_TOKEN + APP_SECRET)", status.whatsappWebhook],
-              ["Sending replies (WHATSAPP_ACCESS_TOKEN)", status.whatsappSend],
+              [t.statusAi, status.ai],
+              [t.statusDb, status.serviceRole],
+              [t.statusWebhook, status.whatsappWebhook],
+              [t.statusSend, status.whatsappSend],
             ].map(([label, ok]) => (
               <li key={String(label)} className="flex items-center gap-2">
                 <span className={cn("size-2 rounded-full", ok ? "bg-brand" : "bg-destructive")} aria-hidden="true" />
                 <span className={ok ? "" : "text-muted-foreground"}>{label}</span>
-                <span className="sr-only">{ok ? "set" : "missing"}</span>
+                <span className="sr-only">{ok ? t.isSet : t.isMissing}</span>
               </li>
             ))}
           </ul>
@@ -340,20 +344,20 @@ export function KnowledgeForm({
       </Card>
 
       <details className="rounded-xl border bg-card p-4 text-sm">
-        <summary className="cursor-pointer font-medium">Preview: what the AI knows about your business</summary>
-        <pre className="mt-3 max-h-96 overflow-auto rounded-md bg-muted p-3 text-xs whitespace-pre-wrap">{preview}</pre>
+        <summary className="cursor-pointer font-medium">{t.preview}</summary>
+        <pre dir="ltr" className="mt-3 max-h-96 overflow-auto rounded-md bg-muted p-3 text-xs whitespace-pre-wrap">{preview}</pre>
       </details>
 
-      <div className="fixed inset-x-0 bottom-0 z-20 border-t bg-background/95 backdrop-blur lg:pl-60">
+      <div className="fixed inset-x-0 bottom-0 z-20 border-t bg-background/95 backdrop-blur lg:ps-60">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-3 sm:px-6">
           <Button type="submit" variant="brand" disabled={pending}>
-            {pending ? "Saving…" : "Save changes"}
+            {pending ? m.common.saving : t.save}
           </Button>
           <span aria-live="polite" className="text-sm">
             {state.error ? (
               <span role="alert" className="text-destructive">{state.error}</span>
             ) : state.ok && !pending ? (
-              <span className="text-brand">Saved. The agent uses this from the next message.</span>
+              <span className="text-brand">{t.saved}</span>
             ) : null}
           </span>
         </div>

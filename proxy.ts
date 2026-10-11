@@ -1,26 +1,50 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { DASHBOARD_HOME, LOGIN_PATH, SIGNUP_PATH } from "@/lib/auth/redirect";
 import { isSupabaseConfigured } from "@/lib/env";
+import { isLocale, LOCALE_COOKIE, matchLocale } from "@/lib/i18n/config";
 import { updateSession } from "@/lib/supabase/proxy";
 
+const YEAR = 60 * 60 * 24 * 365;
+
 /**
- * Keeps the Supabase session fresh and redirects signed-out visitors away
- * from /dashboard. A UX layer only: dashboard pages check the user again on
- * the server (lib/auth/session.ts), and RLS protects the data itself.
+ * 1. Language: serves /<lang>/… internally (from the `lang` cookie, else the
+ *    browser's languages) so URLs stay the same. /fr/dashboard-style links set
+ *    the language and redirect to the clean URL.
+ * 2. Keeps the Supabase session fresh and redirects signed-out visitors away
+ *    from /dashboard. A UX layer only: dashboard pages check the user again on
+ *    the server (lib/auth/session.ts), and RLS protects the data itself.
  */
 export async function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
+
+  const prefix = pathname.split("/")[1];
+  if (isLocale(prefix)) {
+    const url = request.nextUrl.clone();
+    url.pathname = pathname.slice(prefix.length + 1) || "/";
+    const res = NextResponse.redirect(url);
+    res.cookies.set(LOCALE_COOKIE, prefix, { path: "/", maxAge: YEAR, sameSite: "lax" });
+    return res;
+  }
+
+  // Route handlers (email confirmation) have no language version.
+  const localized = !pathname.startsWith("/auth/") && !pathname.startsWith("/_next/");
+  const cookieLocale = request.cookies.get(LOCALE_COOKIE)?.value;
+  const locale = isLocale(cookieLocale) ? cookieLocale : matchLocale(request.headers.get("accept-language"));
+  const target = request.nextUrl.clone();
+  target.pathname = `/${locale}${pathname === "/" ? "" : pathname}`;
+  const respond = (req: NextRequest) => (localized ? NextResponse.rewrite(target, { request: req }) : NextResponse.next({ request: req }));
+
   const isDashboard = pathname === DASHBOARD_HOME || pathname.startsWith(`${DASHBOARD_HOME}/`);
   const isAuthPage = pathname === LOGIN_PATH || pathname === SIGNUP_PATH;
 
-  if (!isSupabaseConfigured()) return NextResponse.next();
+  if (!isSupabaseConfigured()) return respond(request);
 
   let session: Awaited<ReturnType<typeof updateSession>>;
   try {
-    session = await updateSession(request);
+    session = await updateSession(request, respond);
   } catch (error) {
     console.error(JSON.stringify({ level: "error", message: "session_refresh_failed", error: String(error) }));
-    return NextResponse.next();
+    return respond(request);
   }
 
   if (isDashboard && !session.isAuthenticated) {
@@ -49,5 +73,5 @@ function withCookies(redirect: NextResponse, from: NextResponse) {
 
 export const config = {
   // Pages only: skip API routes (the webhook has its own auth), static files and images.
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt|xml)$).*)"],
 };

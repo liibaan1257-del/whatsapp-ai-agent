@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MessageCircle } from "lucide-react";
 import type { ReactNode } from "react";
+import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 /** Centered card used by the login and sign-up pages. */
@@ -32,6 +33,7 @@ export function AuthCard({
           <CardContent>{children}</CardContent>
           <CardFooter className="justify-center text-sm text-muted-foreground">{footer}</CardFooter>
         </Card>
+        <LanguageSwitcher className="mx-auto w-48" />
       </div>
     </main>
   );

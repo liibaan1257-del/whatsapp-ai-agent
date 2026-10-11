@@ -2,20 +2,22 @@ import { connection, type NextRequest } from "next/server";
 import { handleCustomerMessage } from "@/lib/agent/engine";
 import { getOwner } from "@/lib/auth/session";
 import { testPhoneFor } from "@/lib/dashboard/chat-test";
-import { checkServiceRoleKey, SERVICE_KEY_HELP } from "@/lib/diagnostics";
+import { checkServiceRoleKey } from "@/lib/diagnostics";
 import { configStatus } from "@/lib/env";
+import { fmt } from "@/lib/i18n/config";
+import { requestMessages } from "@/lib/i18n/server";
 import { logger } from "@/lib/logger";
 
 export const maxDuration = 60;
 
 const MAX_CHARS = 4000;
 
-const NOT_REPLIED: Record<string, { status: number; message: string }> = {
-  ai_disabled: { status: 409, message: "AI replies are turned off. Turn them on in the Knowledge base." },
-  ai_not_configured: { status: 503, message: "The AI isn't set up yet: add ANTHROPIC_API_KEY in Vercel and redeploy." },
-  rate_limited: { status: 429, message: "Too many test messages in 10 minutes. Wait a bit or reset the conversation." },
-  duplicate: { status: 409, message: "Duplicate message." },
-};
+const NOT_REPLIED = {
+  ai_disabled: { status: 409, key: "aiDisabled" },
+  ai_not_configured: { status: 503, key: "aiNotConfigured" },
+  rate_limited: { status: 429, key: "rateLimited" },
+  duplicate: { status: 409, key: "duplicate" },
+} as const;
 
 /**
  * POST /api/chat-test — the dashboard's chat tester.
@@ -24,36 +26,39 @@ const NOT_REPLIED: Record<string, { status: number; message: string }> = {
  */
 export async function POST(request: NextRequest) {
   await connection();
+  // Errors are shown to the owner in the dashboard language.
+  const m = await requestMessages();
+  const e = m.chat.errors;
   // Cookie-authenticated: refuse cross-site requests.
   const origin = request.headers.get("origin");
-  if (origin && origin !== request.nextUrl.origin) return Response.json({ error: "Cross-site requests are not allowed." }, { status: 403 });
+  if (origin && origin !== request.nextUrl.origin) return Response.json({ error: e.crossSite }, { status: 403 });
   if (!request.headers.get("content-type")?.includes("application/json")) {
-    return Response.json({ error: "Content-Type must be application/json." }, { status: 415 });
+    return Response.json({ error: e.contentType }, { status: 415 });
   }
 
   const owner = await getOwner();
-  if (!owner) return Response.json({ error: "Please sign in." }, { status: 401 });
+  if (!owner) return Response.json({ error: e.signIn }, { status: 401 });
 
   let body: { message?: unknown };
   try {
     body = await request.json();
   } catch {
-    return Response.json({ error: "Invalid JSON." }, { status: 400 });
+    return Response.json({ error: e.invalidJson }, { status: 400 });
   }
   const message = typeof body.message === "string" ? body.message.trim() : "";
-  if (!message) return Response.json({ error: "Type a message first." }, { status: 400 });
-  if (message.length > MAX_CHARS) return Response.json({ error: `At most ${MAX_CHARS} characters.` }, { status: 400 });
+  if (!message) return Response.json({ error: e.empty }, { status: 400 });
+  if (message.length > MAX_CHARS) return Response.json({ error: fmt(e.tooLong, { max: MAX_CHARS }) }, { status: 400 });
 
   // Say exactly which server setting is missing instead of a generic error.
   const config = configStatus();
   if (!config.serviceRole) {
     return Response.json(
-      { error: "Setup needed: add SUPABASE_SERVICE_ROLE_KEY (Supabase → Project Settings → API Keys → Secret key) in Vercel as a Secret, then redeploy." },
+      { error: e.setupServiceKey },
       { status: 503 },
     );
   }
   if (!config.ai) {
-    return Response.json({ error: "Setup needed: add ANTHROPIC_API_KEY in Vercel as a Secret, then redeploy." }, { status: 503 });
+    return Response.json({ error: e.setupAi }, { status: 503 });
   }
 
   try {
@@ -72,14 +77,14 @@ export async function POST(request: NextRequest) {
       // A database error usually means the wrong secret key: say which problem it is.
       if (result.code === "db_error") {
         const key = await checkServiceRoleKey();
-        if (key !== "ok") return Response.json({ error: `Setup problem: ${SERVICE_KEY_HELP[key]}` }, { status: 503 });
+        if (key !== "ok") return Response.json({ error: fmt(e.setupProblem, { detail: m.chat.serviceKey[key] }) }, { status: 503 });
       }
-      return Response.json({ error: `The AI couldn't answer (${result.code}). Please try again.` }, { status: 502 });
+      return Response.json({ error: fmt(e.aiFailed, { code: result.code }) }, { status: 502 });
     }
     const info = NOT_REPLIED[result.status];
-    return Response.json({ error: info.message }, { status: info.status });
+    return Response.json({ error: e[info.key] }, { status: info.status });
   } catch (error) {
     logger.error("chat_test_failed", { error: error instanceof Error ? error.message : String(error) });
-    return Response.json({ error: "Something went wrong. Please try again." }, { status: 500 });
+    return Response.json({ error: e.generic }, { status: 500 });
   }
 }

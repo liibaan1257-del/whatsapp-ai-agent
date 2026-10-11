@@ -43,6 +43,11 @@ WhatsApp Cloud API (Meta) · Vercel.
   translated into that language too.
 - **Any currency**: pick one in the knowledge base (ISO 4217). Prices typed as
   plain numbers ("25") are shown as "€25.00"; anything else is shown as typed.
+- **Dashboard in 6 languages**: English, Español, Français, Deutsch, العربية
+  (right-to-left) and Soomaali. The first visit follows the browser's language;
+  the picker in the sidebar / login page remembers the choice (cookie `lang`).
+  Links like `/fr/dashboard` switch the language. Text lives in
+  `lib/i18n/messages/*.ts`; TypeScript fails the build if a language misses a key.
 - **Any time zone, 12h or 24h**: new businesses start in the owner's browser
   time zone; opening hours, bookings and messages use it.
 

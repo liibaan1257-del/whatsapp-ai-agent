@@ -7,24 +7,31 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { requireOwner } from "@/lib/auth/session";
 import { getKnowledge } from "@/lib/dashboard/data";
 import { configStatus } from "@/lib/env";
+import type { Locale } from "@/lib/i18n/config";
+import { getMessages, type Messages } from "@/lib/i18n/dictionaries";
+import { localeFrom } from "@/lib/i18n/server";
 
-export const metadata: Metadata = { title: "Knowledge base" };
+export async function generateMetadata({ params }: PageProps<"/[lang]/dashboard/knowledge">): Promise<Metadata> {
+  return { title: getMessages(localeFrom((await params).lang)).knowledge.title };
+}
 
-export default function KnowledgePage() {
+export default async function KnowledgePage({ params }: PageProps<"/[lang]/dashboard/knowledge">) {
+  const locale = localeFrom((await params).lang);
+  const m = getMessages(locale);
   return (
     <>
-      <PageHeader title="Knowledge base" description="Everything your AI agent knows about your business. It reads this before every reply." />
+      <PageHeader title={m.knowledge.title} description={m.knowledge.description} />
       <Suspense fallback={<Skeleton className="h-[600px] rounded-xl" />}>
-        <KnowledgeEditor />
+        <KnowledgeEditor locale={locale} m={m} />
       </Suspense>
     </>
   );
 }
 
-async function KnowledgeEditor() {
+async function KnowledgeEditor({ locale, m }: { locale: Locale; m: Messages }) {
   await requireOwner("/dashboard/knowledge");
   const knowledge = await getKnowledge();
-  if (!knowledge) return <p className="text-sm text-muted-foreground">Your business record is missing. Run the database migration.</p>;
+  if (!knowledge) return <p className="text-sm text-muted-foreground">{m.knowledge.missing}</p>;
 
   const h = await headers();
   const host = h.get("x-forwarded-host") ?? h.get("host") ?? "your-app.vercel.app";
@@ -32,7 +39,7 @@ async function KnowledgeEditor() {
   // Server-side list so server and browser render the same options.
   const zones = Intl.supportedValuesOf("timeZone");
   const timeZones = zones.includes(knowledge.timezone) ? zones : [knowledge.timezone, ...zones];
-  const names = new Intl.DisplayNames(["en"], { type: "currency" });
+  const names = new Intl.DisplayNames([locale, "en"], { type: "currency" });
   const codes = Intl.supportedValuesOf("currency");
   const currencies = (codes.includes(knowledge.currency) ? codes : [knowledge.currency, ...codes]).map((code) => ({
     code,

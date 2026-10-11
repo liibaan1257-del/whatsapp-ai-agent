@@ -15,32 +15,42 @@ import { requireOwner } from "@/lib/auth/session";
 import { deleteBooking } from "@/lib/dashboard/booking-actions";
 import { getKnowledge, type BookingRow } from "@/lib/dashboard/data";
 import { formatDateTime, STATUS_STYLES } from "@/lib/format";
+import { fmt, type Locale } from "@/lib/i18n/config";
+import { getMessages, type Messages } from "@/lib/i18n/dictionaries";
+import { localeFrom } from "@/lib/i18n/server";
 import { createClient } from "@/lib/supabase/server";
 import { cn } from "@/lib/utils";
 
-export const metadata: Metadata = { title: "Bookings" };
+export async function generateMetadata({ params }: PageProps<"/[lang]/dashboard/bookings">): Promise<Metadata> {
+  return { title: getMessages(localeFrom((await params).lang)).bookings.title };
+}
 
-const VIEWS = {
-  upcoming: "Upcoming",
-  pending: "Needs confirmation",
-  past: "Past",
-  all: "All",
-} as const;
-type View = keyof typeof VIEWS;
+const VIEWS = ["upcoming", "pending", "past", "all"] as const;
+type View = (typeof VIEWS)[number];
 const LIMIT = 100;
 
-export default function BookingsPage({ searchParams }: PageProps<"/dashboard/bookings">) {
+export default async function BookingsPage({ params, searchParams }: PageProps<"/[lang]/dashboard/bookings">) {
+  const locale = localeFrom((await params).lang);
   return (
     <Suspense fallback={<Skeleton className="h-96 rounded-xl" />}>
-      <Bookings searchParams={searchParams} />
+      <Bookings searchParams={searchParams} locale={locale} m={getMessages(locale)} />
     </Suspense>
   );
 }
 
-async function Bookings({ searchParams }: { searchParams: PageProps<"/dashboard/bookings">["searchParams"] }) {
+async function Bookings({
+  searchParams,
+  locale,
+  m,
+}: {
+  searchParams: PageProps<"/[lang]/dashboard/bookings">["searchParams"];
+  locale: Locale;
+  m: Messages;
+}) {
+  const t = m.bookings;
   const owner = await requireOwner("/dashboard/bookings");
   const params = await searchParams;
-  const view: View = typeof params.view === "string" && params.view in VIEWS ? (params.view as View) : "upcoming";
+  const view: View = typeof params.view === "string" && (VIEWS as readonly string[]).includes(params.view) ? (params.view as View) : "upcoming";
   const knowledge = await getKnowledge();
   const tz = knowledge?.timezone ?? "UTC";
   const tf = knowledge?.time_format ?? "24h";
@@ -60,8 +70,8 @@ async function Bookings({ searchParams }: { searchParams: PageProps<"/dashboard/
   return (
     <>
       <PageHeader
-        title="Bookings"
-        description={`Appointments captured by your AI agent or added by you. Times in ${tz}.`}
+        title={t.title}
+        description={fmt(t.description, { tz })}
         actions={
           <div className="flex items-center gap-3">
             <LiveRefresh businessId={owner.businessId} tables={["bookings"]} />
@@ -70,11 +80,11 @@ async function Bookings({ searchParams }: { searchParams: PageProps<"/dashboard/
         }
       />
 
-      <nav aria-label="Filter bookings" className="mb-4 flex flex-wrap gap-2">
-        {(Object.keys(VIEWS) as View[]).map((v) => (
+      <nav aria-label={t.filter} className="mb-4 flex flex-wrap gap-2">
+        {VIEWS.map((v) => (
           <Button key={v} variant={v === view ? "default" : "outline"} size="sm" asChild>
             <Link href={v === "upcoming" ? "/dashboard/bookings" : `/dashboard/bookings?view=${v}`} aria-current={v === view ? "page" : undefined}>
-              {VIEWS[v]}
+              {t.views[v]}
             </Link>
           </Button>
         ))}
@@ -84,57 +94,57 @@ async function Bookings({ searchParams }: { searchParams: PageProps<"/dashboard/
         <CardContent className="px-0">
           {error ? (
             <p role="alert" className="p-6 text-sm text-destructive">
-              Couldn&apos;t load bookings.
+              {t.loadFailed}
             </p>
           ) : bookings.length === 0 ? (
-            <p className="p-10 text-center text-sm text-muted-foreground">No bookings here yet.</p>
+            <p className="p-10 text-center text-sm text-muted-foreground">{t.empty}</p>
           ) : (
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="pl-4">When</TableHead>
-                  <TableHead>Customer</TableHead>
-                  <TableHead>Service</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Source</TableHead>
-                  <TableHead className="pr-4">Actions</TableHead>
+                  <TableHead className="ps-4">{m.table.when}</TableHead>
+                  <TableHead>{m.table.customer}</TableHead>
+                  <TableHead>{m.table.service}</TableHead>
+                  <TableHead>{m.table.status}</TableHead>
+                  <TableHead>{m.table.source}</TableHead>
+                  <TableHead className="pe-4">{m.table.actions}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {bookings.map((b) => (
                   <TableRow key={b.id}>
-                    <TableCell className="pl-4 font-medium">{formatDateTime(b.date_time, tz, tf)}</TableCell>
+                    <TableCell className="ps-4 font-medium">{formatDateTime(b.date_time, tz, tf, locale)}</TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
                         {b.customer_name}
-                        {b.conversations?.channel === "test" ? <Badge variant="outline">Test</Badge> : null}
+                        {b.conversations?.channel === "test" ? <Badge variant="outline">{m.common.test}</Badge> : null}
                       </div>
-                      <div className="text-xs text-muted-foreground">{b.phone_number}</div>
+                      <div className="text-xs text-muted-foreground"><bdi dir="ltr">{b.phone_number}</bdi></div>
                       {b.notes ? <div className="max-w-56 truncate text-xs text-muted-foreground" title={b.notes}>{b.notes}</div> : null}
                     </TableCell>
                     <TableCell>{b.service_selected}</TableCell>
                     <TableCell>
-                      <span className={cn("rounded-md px-2 py-0.5 text-xs font-medium capitalize", STATUS_STYLES[b.status])}>{b.status}</span>
+                      <span className={cn("rounded-md px-2 py-0.5 text-xs font-medium", STATUS_STYLES[b.status])}>{m.status[b.status]}</span>
                     </TableCell>
                     <TableCell className="text-xs text-muted-foreground">
                       {b.source === "ai" ? (
                         b.conversation_id ? (
                           <Link href={`/dashboard/conversations/${b.conversation_id}`} className="underline-offset-4 hover:underline">
-                            AI chat
+                            {t.aiChat}
                           </Link>
                         ) : (
-                          "AI"
+                          t.ai
                         )
                       ) : (
-                        "Manual"
+                        t.manual
                       )}
                     </TableCell>
-                    <TableCell className="pr-4">
+                    <TableCell className="pe-4">
                       {b.status === "cancelled" ? (
                         <form action={deleteBooking}>
                           <input type="hidden" name="id" value={b.id} />
-                          <Button type="submit" variant="ghost" size="sm" aria-label={`Delete cancelled booking for ${b.customer_name}`}>
-                            <Trash2 /> Delete
+                          <Button type="submit" variant="ghost" size="sm" aria-label={fmt(t.deleteLabel, { name: b.customer_name })}>
+                            <Trash2 /> {m.common.delete}
                           </Button>
                         </form>
                       ) : (
@@ -148,7 +158,7 @@ async function Bookings({ searchParams }: { searchParams: PageProps<"/dashboard/
           )}
         </CardContent>
       </Card>
-      {bookings.length === LIMIT ? <p className="mt-2 text-xs text-muted-foreground">Showing the first {LIMIT}.</p> : null}
+      {bookings.length === LIMIT ? <p className="mt-2 text-xs text-muted-foreground">{fmt(t.showingFirst, { n: LIMIT })}</p> : null}
     </>
   );
 }

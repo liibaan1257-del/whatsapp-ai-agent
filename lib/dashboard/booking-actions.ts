@@ -4,6 +4,8 @@ import { refresh } from "next/cache";
 import { getOwner } from "@/lib/auth/session";
 import { getKnowledge } from "@/lib/dashboard/data";
 import { inCustomerLanguage } from "@/lib/ai/agent";
+import { fmt } from "@/lib/i18n/config";
+import { requestMessages } from "@/lib/i18n/server";
 import { logger } from "@/lib/logger";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
@@ -28,11 +30,13 @@ export type BookingActionState = { ok?: boolean; error?: string; notice?: string
  * WhatsApp bookings, confirming or cancelling also messages the customer.
  */
 export async function updateBookingStatus(_prev: BookingActionState, formData: FormData): Promise<BookingActionState> {
+  const m = await requestMessages();
+  const e = m.bookings.errors;
   const id = String(formData.get("id") ?? "");
   const status = String(formData.get("status") ?? "") as Status;
-  if (!UUID.test(id) || !(status in NEXT)) return { error: "Invalid request." };
+  if (!UUID.test(id) || !(status in NEXT)) return { error: e.invalid };
   const owner = await getOwner();
-  if (!owner) return { error: "Please sign in again." };
+  if (!owner) return { error: m.common.signInAgain };
 
   const supabase = await createClient();
   const { data: booking } = await supabase
@@ -40,20 +44,20 @@ export async function updateBookingStatus(_prev: BookingActionState, formData: F
     .select("id, status, customer_name, service_selected, date_time, phone_number, conversation_id, conversations(channel, language)")
     .eq("id", id)
     .maybeSingle();
-  if (!booking) return { error: "Booking not found." };
-  if (!NEXT[booking.status as Status].includes(status)) return { error: `A ${booking.status} booking can't become ${status}.` };
+  if (!booking) return { error: e.notFound };
+  if (!NEXT[booking.status as Status].includes(status)) return { error: fmt(e.badTransition, { from: m.status[booking.status as Status], to: m.status[status] }) };
 
   const { error } = await supabase.from("bookings").update({ status }).eq("id", id).eq("status", booking.status);
   if (error) {
     logger.error("booking_status_failed", { bookingId: id, code: error.code });
-    return { error: "Couldn't update the booking." };
+    return { error: e.updateFailed };
   }
 
   let notice: string | undefined;
   const conv = booking.conversations as unknown as { channel: string; language: string | null } | null;
   const channel = conv?.channel;
   if ((status === "confirmed" || status === "cancelled") && channel === "whatsapp" && booking.conversation_id) {
-    notice = (await notifyCustomer(owner.businessId, booking, status, conv?.language ?? null)) ? "Customer notified on WhatsApp." : "Saved, but the WhatsApp message couldn't be sent.";
+    notice = (await notifyCustomer(owner.businessId, booking, status, conv?.language ?? null)) ? e.notified : e.notifyFailed;
   }
   refresh();
   return { ok: true, notice };
@@ -102,8 +106,10 @@ export type AddBookingState = { ok?: boolean; error?: string; fieldErrors?: Reco
 
 /** Adds a booking by hand (phone or walk-in). Opening hours aren't enforced: the owner decides. */
 export async function addBooking(_prev: AddBookingState, formData: FormData): Promise<AddBookingState> {
+  const m = await requestMessages();
+  const e = m.bookings.errors;
   const owner = await getOwner();
-  if (!owner) return { error: "Please sign in again." };
+  if (!owner) return { error: m.common.signInAgain };
   const knowledge = await getKnowledge();
   const tz = knowledge?.timezone ?? "UTC";
 
@@ -116,12 +122,12 @@ export async function addBooking(_prev: AddBookingState, formData: FormData): Pr
   const status = formData.get("status") === "pending" ? "pending" : "confirmed";
 
   const fieldErrors: Record<string, string> = {};
-  if (!customer || customer.length > 120) fieldErrors.customer_name = "Enter the customer's name (max 120).";
-  if (!/^\+?[0-9 ()-]{6,32}$/.test(phone)) fieldErrors.phone_number = "Enter a phone number with country code, e.g. +1 555 010 0100.";
-  if (!service || service.length > 200) fieldErrors.service_selected = "Choose a service.";
-  if (notes.length > 1000) fieldErrors.notes = "At most 1000 characters.";
+  if (!customer || customer.length > 120) fieldErrors.customer_name = e.nameRequired;
+  if (!/^\+?[0-9 ()-]{6,32}$/.test(phone)) fieldErrors.phone_number = e.phoneInvalid;
+  if (!service || service.length > 200) fieldErrors.service_selected = e.serviceRequired;
+  if (notes.length > 1000) fieldErrors.notes = e.notesLong;
   const start = zonedToUtc(date, time, tz);
-  if (!start) fieldErrors.date = "Choose a valid date and time.";
+  if (!start) fieldErrors.date = e.dateInvalid;
   if (Object.keys(fieldErrors).length) return { fieldErrors };
 
   const supabase = await createClient();
@@ -137,7 +143,7 @@ export async function addBooking(_prev: AddBookingState, formData: FormData): Pr
   });
   if (error) {
     logger.error("booking_add_failed", { code: error.code });
-    return { error: "Couldn't add the booking." };
+    return { error: e.addFailed };
   }
   refresh();
   return { ok: true };

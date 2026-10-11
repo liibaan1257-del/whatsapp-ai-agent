@@ -5,14 +5,19 @@ import { PageHeader } from "@/components/dashboard/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import { requireOwner } from "@/lib/auth/session";
 import { testPhoneFor } from "@/lib/dashboard/chat-test";
+import { getMessages } from "@/lib/i18n/dictionaries";
+import { localeFrom } from "@/lib/i18n/server";
 import { createClient } from "@/lib/supabase/server";
 
-export const metadata: Metadata = { title: "Chat tester" };
+export async function generateMetadata({ params }: PageProps<"/[lang]/dashboard/chat-test">): Promise<Metadata> {
+  return { title: getMessages(localeFrom((await params).lang)).chat.title };
+}
 
-export default function ChatTestPage() {
+export default async function ChatTestPage({ params }: PageProps<"/[lang]/dashboard/chat-test">) {
+  const m = getMessages(localeFrom((await params).lang));
   return (
     <>
-      <PageHeader title="Chat tester" description="Try your agent before customers do. Same AI, knowledge base and booking rules as WhatsApp." />
+      <PageHeader title={m.chat.title} description={m.chat.description} />
       <Suspense fallback={<Skeleton className="h-[480px] rounded-xl" />}>
         <Tester />
       </Suspense>

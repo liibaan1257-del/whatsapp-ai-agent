@@ -2,7 +2,9 @@
 
 import { useActionState, useState } from "react";
 import { Plus } from "lucide-react";
+import { useI18n } from "@/components/i18n/provider";
 import { Button } from "@/components/ui/button";
+import { fmt } from "@/lib/i18n/config";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,6 +16,8 @@ const select =
 /** Manual booking form (phone calls, walk-ins). */
 export function AddBooking({ services, timeZone }: { services: string[]; timeZone: string }) {
   const [open, setOpen] = useState(false);
+  const { m } = useI18n();
+  const t = m.bookings.add;
   const [state, action, pending] = useActionState<AddBookingState, FormData>(async (prev, fd) => {
     const result = await addBooking(prev, fd);
     if (result.ok) setOpen(false);
@@ -24,7 +28,7 @@ export function AddBooking({ services, timeZone }: { services: string[]; timeZon
   if (!open) {
     return (
       <Button variant="brand" onClick={() => setOpen(true)}>
-        <Plus aria-hidden="true" /> Add booking
+        <Plus aria-hidden="true" /> {t.button}
       </Button>
     );
   }
@@ -40,16 +44,16 @@ export function AddBooking({ services, timeZone }: { services: string[]; timeZon
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Add a booking</CardTitle>
-        <CardDescription>For phone calls and walk-ins. Time in {timeZone}.</CardDescription>
+        <CardTitle>{t.title}</CardTitle>
+        <CardDescription>{fmt(t.description, { tz: timeZone })}</CardDescription>
       </CardHeader>
       <CardContent>
         <form action={action} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {field("customer_name", "Customer name", <Input id="customer_name" name="customer_name" maxLength={120} required aria-invalid={fe.customer_name ? true : undefined} />)}
-          {field("phone_number", "Phone", <Input id="phone_number" name="phone_number" type="tel" placeholder="+1 555 010 0100" required aria-invalid={fe.phone_number ? true : undefined} />)}
+          {field("customer_name", t.customerName, <Input id="customer_name" name="customer_name" maxLength={120} required aria-invalid={fe.customer_name ? true : undefined} />)}
+          {field("phone_number", t.phone, <Input id="phone_number" name="phone_number" type="tel" placeholder="+1 555 010 0100" required aria-invalid={fe.phone_number ? true : undefined} />)}
           {field(
             "service_selected",
-            "Service",
+            t.service,
             services.length ? (
               <select id="service_selected" name="service_selected" className={select} required>
                 {services.map((s) => (
@@ -62,23 +66,23 @@ export function AddBooking({ services, timeZone }: { services: string[]; timeZon
               <Input id="service_selected" name="service_selected" maxLength={200} required />
             ),
           )}
-          {field("date", "Date", <Input id="date" name="date" type="date" required aria-invalid={fe.date ? true : undefined} />)}
-          {field("time", "Time", <Input id="time" name="time" type="time" required />)}
+          {field("date", t.date, <Input id="date" name="date" type="date" required aria-invalid={fe.date ? true : undefined} />)}
+          {field("time", t.time, <Input id="time" name="time" type="time" required />)}
           {field(
             "status",
-            "Status",
+            t.status,
             <select id="status" name="status" className={select} defaultValue="confirmed">
-              <option value="confirmed">Confirmed</option>
-              <option value="pending">Pending</option>
+              <option value="confirmed">{m.status.confirmed}</option>
+              <option value="pending">{m.status.pending}</option>
             </select>,
           )}
-          <div className="sm:col-span-2 lg:col-span-3">{field("notes", "Notes (optional)", <Input id="notes" name="notes" maxLength={1000} />)}</div>
+          <div className="sm:col-span-2 lg:col-span-3">{field("notes", t.notes, <Input id="notes" name="notes" maxLength={1000} />)}</div>
           <div className="flex flex-wrap items-center gap-2 sm:col-span-2 lg:col-span-3">
             <Button type="submit" variant="brand" disabled={pending}>
-              {pending ? "Saving…" : "Save booking"}
+              {pending ? m.common.saving : t.save}
             </Button>
             <Button type="button" variant="ghost" onClick={() => setOpen(false)}>
-              Cancel
+              {m.common.cancel}
             </Button>
             {state.error ? <p role="alert" className="text-sm text-destructive">{state.error}</p> : null}
           </div>

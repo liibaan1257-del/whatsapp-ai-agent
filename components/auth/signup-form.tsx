@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { Field } from "@/components/auth/field";
+import { useI18n } from "@/components/i18n/provider";
 import { Button } from "@/components/ui/button";
 import { signup, type AuthState } from "@/lib/auth/actions";
 
@@ -16,6 +17,7 @@ function withTimeZone(fd: FormData): FormData {
 }
 
 export function SignupForm() {
+  const { m } = useI18n();
   const [state, action, pending] = useActionState<AuthState, FormData>(signup, {});
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -32,7 +34,7 @@ export function SignupForm() {
     <form action={(fd) => action(withTimeZone(fd))} className="space-y-4" noValidate>
       <Field
         id="fullName"
-        label="Your name"
+        label={m.auth.yourName}
         autoComplete="name"
         maxLength={100}
         value={fullName}
@@ -41,7 +43,7 @@ export function SignupForm() {
       />
       <Field
         id="email"
-        label="Email"
+        label={m.auth.email}
         type="email"
         autoComplete="email"
         required
@@ -51,7 +53,7 @@ export function SignupForm() {
       />
       <Field
         id="password"
-        label="Password (8+ characters)"
+        label={m.auth.passwordNew}
         type="password"
         autoComplete="new-password"
         required
@@ -64,7 +66,7 @@ export function SignupForm() {
         </p>
       ) : null}
       <Button type="submit" variant="brand" className="w-full" disabled={pending}>
-        {pending ? "Creating account…" : "Create account"}
+        {pending ? m.auth.creatingAccount : m.auth.createAccount}
       </Button>
     </form>
   );
