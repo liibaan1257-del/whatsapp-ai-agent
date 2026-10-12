@@ -22,7 +22,27 @@ const FALLBACK_BETA = "server-side-fallback-2026-07-01";
 export const INTENTS = ["booking", "services", "pricing", "hours", "faq", "greeting", "other"] as const;
 export type Intent = (typeof INTENTS)[number];
 
-/** What Claude must return for every customer message. */
+/**
+ * What Claude must return for every customer message. booking.service names
+ * the exact services, so a reply written in Somali or Spanish still books
+ * "Haircut" rather than a translation of it.
+ */
+function agentOutputSchema(serviceNames: string[]) {
+  const names = [...new Set(serviceNames.map((n) => n.trim()).filter(Boolean))];
+  // A plain string (an enum would make a slightly-off answer fail to parse);
+  // the exact names are spelled out, and checkBooking verifies them anyway.
+  const service = z
+    .string()
+    .describe(
+      names.length
+        ? `Exactly one of: ${names.map((n) => JSON.stringify(n)).join(", ")}. Copy it as written, never translated.`
+        : "Exact service name from the list.",
+    );
+  return AgentOutput.extend({
+    booking: AgentOutput.shape.booking.unwrap().extend({ service }).nullable().describe(AgentOutput.shape.booking.description ?? ""),
+  });
+}
+
 const AgentOutput = z.object({
   reply: z.string().describe("The WhatsApp message to send to the customer."),
   intent: z.enum(INTENTS).describe("What the customer's latest message is mainly about."),
@@ -55,7 +75,7 @@ const INSTRUCTIONS = `You are the WhatsApp assistant for a business. You talk to
 
 What you do:
 - Answer questions about the business, its services, prices, opening hours, FAQs and booking policy, using only the business information below. If something isn't covered, say you'll check with the team instead of guessing. Never invent services, prices, discounts or availability.
-- Help customers book appointments. To book you need: the service (one from the list), the date, the start time and the customer's name. Ask for whatever is missing, one or two questions at a time. Bookings must be in the future and inside opening hours.
+- Help customers book appointments. To book you need: the service (one from the list), the date, the start time and the customer's name. In "booking", write the service name exactly as it appears in the list, even when you talk to the customer in another language. Ask for whatever is missing, one or two questions at a time. Bookings must be in the future and inside opening hours.
 - Before booking, repeat the details back (service, day and date, time, name) and ask the customer to confirm. Only fill in "booking" after the customer clearly says yes to those exact details. Then reply that the booking request is received and the team will confirm it. Never claim a booking is final.
 
 Style:
@@ -104,7 +124,7 @@ export async function runAgent(
     max_tokens: 16000,
     betas: [FALLBACK_BETA],
     fallbacks: "default",
-    output_config: { effort: "medium", format: betaZodOutputFormat(AgentOutput) },
+    output_config: { effort: "medium", format: betaZodOutputFormat(agentOutputSchema(knowledge.services.map((s) => s.name))) },
     system: [
       // Stable instructions + business info first (cacheable), the clock last.
       { type: "text", text: INSTRUCTIONS },
