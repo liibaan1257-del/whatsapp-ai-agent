@@ -553,7 +553,7 @@ export const so: Messages = {
     template: "Magaca template-ka Meta",
     templateLang: "Luqadda template-ka",
     templateHint: "WhatsApp wuxuu oggol yahay fariimo xor ah oo keliya 24 saacadood gudahood kadib fariintii ugu dambaysay ee macmiilka. Wada-hadallada ka duqoobay, template-kan ka samee Meta → WhatsApp Manager → Message templates (nooca Utility), kuna qor qoraalka hoose, kadib sug inta la oggolaanayo:",
-    templateBody: "Hi {{1}}, a reminder of your {{2}} appointment at {{3}} on {{4}}. Reply here if you need to change it.",
+    templateBody: "Salaan {{1}} 👋 Kani waa xasuusin saaxiibtinimo oo ku saabsan ballantaada {{2}} ee {{3}} 📅 {{4}}. Waan ku sugaynaa, soo dhawoow! ✨ Ma rabtaa inaad waqtiga beddesho? Kaliya ku jawaab fariintan.",
     sent: "Xasuusin waa la diray",
     failed: "Xasuusintu way fashilantay",
     errTemplate: "Xarfo yaryar, lambarro iyo _ oo keliya.",

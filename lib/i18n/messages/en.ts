@@ -555,7 +555,7 @@ export const en = {
     template: "Meta template name",
     templateLang: "Template language",
     templateHint: "WhatsApp only allows free messages within 24 hours of the customer's last message. For older chats, create this template in Meta → WhatsApp Manager → Message templates (category Utility) with the body below, and wait for approval:",
-    templateBody: "Hi {{1}}, a reminder of your {{2}} appointment at {{3}} on {{4}}. Reply here if you need to change it.",
+    templateBody: "Hi {{1}} 👋 Just a friendly reminder of your {{2}} appointment at {{3}} 📅 {{4}}. We're looking forward to seeing you! ✨ Need to change the time? Simply reply to this message.",
     sent: "Reminder sent",
     failed: "Reminder failed",
     errTemplate: "Lowercase letters, numbers and _ only.",

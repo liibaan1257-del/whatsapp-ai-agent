@@ -92,11 +92,11 @@ async function remind(
   let sent = false;
   let text: string;
   if (insideWindow) {
-    const english = `Reminder: Hi ${b.customer_name}, your ${b.service_selected} appointment at ${business} is on ${when}. See you then! Reply here if you need to change it.`;
+    const english = `Hi ${b.customer_name} 👋\n\nJust a friendly reminder of your ${b.service_selected} appointment at ${business} 📅 ${when}\n\nWe're looking forward to seeing you! ✨\nNeed to change the time? Simply reply to this message.`;
     text = await inCustomerLanguage(english, b.conversations?.language ?? null);
     sent = await sendToCustomer(k, b.conversations?.provider ?? null, to, text);
   } else if (k.whatsapp_phone_number_id && b.conversations?.provider !== "twilio") {
-    // Template body: "Hi {{1}}, a reminder of your {{2}} appointment at {{3}} on {{4}}. …"
+    // Template body: "Hi {{1}} 👋 … your {{2}} appointment at {{3}} 📅 {{4}} …"
     text = `Reminder: ${b.customer_name}, ${b.service_selected}, ${business}, ${when}`;
     sent = await sendTemplate(k.whatsapp_phone_number_id, to, k.reminder_template, k.reminder_template_lang, [b.customer_name, b.service_selected, business, when]);
   } else {
