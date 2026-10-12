@@ -59,6 +59,11 @@ WhatsApp Cloud API (Meta) · Vercel.
   WhatsApp" with a ready-made payment message (`NEXT_PUBLIC_CONTACT_WHATSAPP`).
   The customer pays you (Mobile Money, Waafi, bank…), and you press **+1 month**,
   **+1 year**, **Pause** or change the plan on the **Admin** page.
+- **Appointment reminders**: every morning (06:00 UTC, `vercel.json`) confirmed
+  bookings in the next day get a WhatsApp reminder: free text in the customer's
+  language inside WhatsApp's 24-hour window, otherwise the business's approved
+  Meta template (`appointment_reminder` by default, body
+  "Hi {{1}}, a reminder of your {{2}} appointment at {{3}} on {{4}}…").
 - **Light / dark mode** toggle; follows the device until chosen.
 - **Any time zone, 12h or 24h**: new businesses start in the owner's browser
   time zone; opening hours, bookings and messages use it.
@@ -71,7 +76,8 @@ WhatsApp Cloud API (Meta) · Vercel.
    `supabase/migrations/20261011100000_global.sql` (currency, 12h/24h time,
    customer language, sign-up time zone), then
    `supabase/migrations/20261012100000_twilio.sql` (Twilio number, provider), then
-   `supabase/migrations/20261013100000_billing.sql` (plans, access, admin flag).
+   `supabase/migrations/20261013100000_billing.sql` (plans, access, admin flag), then
+   `supabase/migrations/20261014100000_reminders.sql` (appointment reminders).
    Optional checks: `supabase/tests/schema_test.sql`, `global_test.sql`,
    `twilio_test.sql` and `billing_test.sql` → "Success. No rows returned".
    Make yourself the operator:
@@ -89,6 +95,7 @@ See `.env.example`. Mark every secret as **Sensitive**:
 | `ANTHROPIC_API_KEY` | **secret** |
 | `WHATSAPP_VERIFY_TOKEN`, `WHATSAPP_APP_SECRET`, `WHATSAPP_ACCESS_TOKEN` | **secret** (Meta) |
 | `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN` | **secret** (Twilio, optional) |
+| `CRON_SECRET` | **secret** (daily reminder job; any long random string) |
 | `NEXT_PUBLIC_CONTACT_EMAIL`, `NEXT_PUBLIC_CONTACT_WHATSAPP` | public, optional (contact links on home + privacy page) |
 
 Redeploy after changing them.

@@ -63,6 +63,18 @@ export const knowledgeSchema = z.object({
     .nullable()
     .default(null),
   ai_enabled: z.boolean().default(true),
+  // Appointment reminders (sent by the daily job a day before).
+  reminders_enabled: z.boolean().default(true),
+  reminder_template: z
+    .string()
+    .trim()
+    .regex(/^[a-z0-9_]{1,512}$/, "Lowercase letters, numbers and _ only.")
+    .default("appointment_reminder"),
+  reminder_template_lang: z
+    .string()
+    .trim()
+    .regex(/^[a-z]{2,3}(_[A-Z]{2})?$/, "A language code like en or en_US.")
+    .default("en"),
 });
 
 export type Service = z.infer<typeof serviceSchema>;

@@ -11,7 +11,7 @@ import { createClient } from "@/lib/supabase/server";
 export type KnowledgeState = { ok?: boolean; error?: string; fieldErrors?: Record<string, string> };
 
 /** A validation problem in the dashboard language, chosen by the field it's about. */
-function fieldMessage(path: PropertyKey[], e: Messages["knowledge"]["errors"]): string {
+function fieldMessage(path: PropertyKey[], e: Messages["knowledge"]["errors"], r: Messages["reminders"]): string {
   const [top] = path;
   const last = path.at(-1);
   if (top === "working_hours") return last === "open" || last === "close" ? e.hhmm : e.hoursOrder;
@@ -19,6 +19,8 @@ function fieldMessage(path: PropertyKey[], e: Messages["knowledge"]["errors"]): 
   if (last === "name" || last === "question" || last === "answer") return e.required;
   if (top === "whatsapp_phone_number_id") return e.phoneDigits;
   if (top === "twilio_whatsapp_number") return e.twilioFormat;
+  if (top === "reminder_template") return r.errTemplate;
+  if (top === "reminder_template_lang") return r.errLang;
   if (top === "currency") return e.currency;
   if (top === "timezone") return e.timezone;
   return e.invalid;
@@ -40,7 +42,7 @@ export async function saveKnowledge(payload: unknown): Promise<KnowledgeState> {
     const fieldErrors: Record<string, string> = {};
     for (const issue of parsed.error.issues) {
       const key = issue.path.join(".");
-      fieldErrors[key] ??= fieldMessage(issue.path, e);
+      fieldErrors[key] ??= fieldMessage(issue.path, e, m.reminders);
     }
     return { error: e.fix, fieldErrors };
   }
@@ -66,6 +68,9 @@ export async function saveKnowledge(payload: unknown): Promise<KnowledgeState> {
       time_format: k.time_format,
       whatsapp_phone_number_id: k.whatsapp_phone_number_id || null,
       twilio_whatsapp_number: k.twilio_whatsapp_number || null,
+      reminders_enabled: k.reminders_enabled,
+      reminder_template: k.reminder_template,
+      reminder_template_lang: k.reminder_template_lang,
       ai_enabled: k.ai_enabled,
     })
     .eq("owner_id", owner.id);

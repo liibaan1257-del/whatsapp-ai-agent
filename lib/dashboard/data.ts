@@ -36,6 +36,7 @@ export type BookingRow = {
   notes: string;
   source: "ai" | "manual";
   created_at: string;
+  reminder_status?: "sent" | "failed" | "skipped" | null;
   conversations?: { channel: string } | null;
 };
 

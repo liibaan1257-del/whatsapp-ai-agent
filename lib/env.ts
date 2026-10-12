@@ -60,6 +60,8 @@ export const serverEnv = {
   // Twilio (optional second WhatsApp provider).
   twilioAccountSid: () => clean(process.env.TWILIO_ACCOUNT_SID),
   twilioAuthToken: () => clean(process.env.TWILIO_AUTH_TOKEN),
+  // Vercel Cron sends it as "Authorization: Bearer <CRON_SECRET>".
+  cronSecret: () => clean(process.env.CRON_SECRET),
 };
 
 /** Which server-side features are configured (names only, never values). */

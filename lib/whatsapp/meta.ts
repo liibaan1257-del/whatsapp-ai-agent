@@ -124,3 +124,44 @@ export async function sendText(phoneNumberId: string, to: string, body: string):
     return false;
   }
 }
+
+/**
+ * Sends an approved message template (needed outside WhatsApp's 24-hour
+ * window). Body parameters fill {{1}}, {{2}}, … in order.
+ */
+export async function sendTemplate(phoneNumberId: string, to: string, name: string, language: string, params: string[]): Promise<boolean> {
+  const token = serverEnv.whatsappAccessToken();
+  if (!token) {
+    logger.warn("whatsapp_send_skipped", { reason: "WHATSAPP_ACCESS_TOKEN not set" });
+    return false;
+  }
+  const base = (process.env.WHATSAPP_API_BASE ?? "https://graph.facebook.com").replace(/\/+$/, "");
+  const url = `${base}/${serverEnv.whatsappGraphVersion()}/${encodeURIComponent(phoneNumberId)}/messages`;
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        messaging_product: "whatsapp",
+        recipient_type: "individual",
+        to,
+        type: "template",
+        template: {
+          name,
+          language: { code: language },
+          components: [{ type: "body", parameters: params.map((text) => ({ type: "text", text: text.slice(0, 1000) })) }],
+        },
+      }),
+      signal: AbortSignal.timeout(15_000),
+    });
+    if (!res.ok) {
+      const detail = await res.json().catch(() => null);
+      logger.error("whatsapp_template_failed", { status: res.status, code: detail?.error?.code, template: name });
+      return false;
+    }
+    return true;
+  } catch (error) {
+    logger.error("whatsapp_template_failed", { error: error instanceof Error ? error.message : String(error) });
+    return false;
+  }
+}

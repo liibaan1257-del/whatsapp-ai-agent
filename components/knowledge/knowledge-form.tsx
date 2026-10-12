@@ -88,6 +88,9 @@ export function KnowledgeForm({
   const [policy, setPolicy] = useState(initial.booking_policy);
   const [phoneId, setPhoneId] = useState(initial.whatsapp_phone_number_id ?? "");
   const [twilioNumber, setTwilioNumber] = useState(initial.twilio_whatsapp_number ?? "");
+  const [reminders, setReminders] = useState(initial.reminders_enabled);
+  const [template, setTemplate] = useState(initial.reminder_template);
+  const [templateLang, setTemplateLang] = useState(initial.reminder_template_lang);
   const [state, setState] = useState<KnowledgeState>({});
   const [pending, startTransition] = useTransition();
   const fe = state.fieldErrors ?? {};
@@ -106,8 +109,11 @@ export function KnowledgeForm({
       booking_policy: policy,
       whatsapp_phone_number_id: phoneId.trim() || null,
       twilio_whatsapp_number: twilioNumber.trim() || null,
+      reminders_enabled: reminders,
+      reminder_template: template.trim(),
+      reminder_template_lang: templateLang.trim(),
     }),
-    [name, description, timezone, currency, timeFormat, aiEnabled, services, hours, faqs, policy, phoneId, twilioNumber],
+    [name, description, timezone, currency, timeFormat, aiEnabled, services, hours, faqs, policy, phoneId, twilioNumber, reminders, template, templateLang],
   );
   const preview = useMemo(() => describeBusiness({ ...(payload as unknown as Knowledge), id: initial.id }), [payload, initial.id]);
 
@@ -365,6 +371,39 @@ export function KnowledgeForm({
               </li>
             ))}
           </ul>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>{m.reminders.title}</CardTitle>
+          <CardDescription>{m.reminders.hint}</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <label className="flex items-center gap-3">
+            <input type="checkbox" checked={reminders} onChange={(e) => setReminders(e.target.checked)} className="size-4 accent-[var(--brand)]" />
+            <span className="text-sm font-medium">{m.reminders.enabled}</span>
+          </label>
+          {reminders ? (
+            <>
+              <div className="grid gap-4 sm:grid-cols-[2fr_1fr]">
+                <div className="space-y-2">
+                  <Label htmlFor="reminder_template">{m.reminders.template}</Label>
+                  <Input id="reminder_template" dir="ltr" value={template} maxLength={512} onChange={(e) => setTemplate(e.target.value)} aria-invalid={fe.reminder_template ? true : undefined} />
+                  <ErrorText msg={fe.reminder_template} />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="reminder_template_lang">{m.reminders.templateLang}</Label>
+                  <Input id="reminder_template_lang" dir="ltr" value={templateLang} maxLength={6} onChange={(e) => setTemplateLang(e.target.value)} aria-invalid={fe.reminder_template_lang ? true : undefined} />
+                  <ErrorText msg={fe.reminder_template_lang} />
+                </div>
+              </div>
+              <div className="space-y-2 rounded-lg bg-muted p-3 text-xs">
+                <p className="text-muted-foreground">{m.reminders.templateHint}</p>
+                <p dir="ltr" className="font-mono select-all">{m.reminders.templateBody}</p>
+              </div>
+            </>
+          ) : null}
         </CardContent>
       </Card>
 

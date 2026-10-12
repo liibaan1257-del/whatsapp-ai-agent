@@ -59,7 +59,7 @@ async function Bookings({
   const supabase = await createClient();
   let query = supabase
     .from("bookings")
-    .select("id, conversation_id, customer_name, phone_number, service_selected, date_time, status, notes, source, created_at, conversations(channel)");
+    .select("id, conversation_id, customer_name, phone_number, service_selected, date_time, status, notes, source, created_at, reminder_status, conversations(channel)");
   if (view === "upcoming") query = query.gte("date_time", now).in("status", ["pending", "confirmed"]).order("date_time");
   else if (view === "pending") query = query.eq("status", "pending").order("date_time");
   else if (view === "past") query = query.lt("date_time", now).order("date_time", { ascending: false });
@@ -125,6 +125,11 @@ async function Bookings({
                     <TableCell>{b.service_selected}</TableCell>
                     <TableCell>
                       <span className={cn("rounded-md px-2 py-0.5 text-xs font-medium", STATUS_STYLES[b.status])}>{m.status[b.status]}</span>
+                      {b.reminder_status === "sent" || b.reminder_status === "failed" ? (
+                        <div className={cn("mt-1 text-xs", b.reminder_status === "sent" ? "text-muted-foreground" : "text-destructive")}>
+                          🔔 {b.reminder_status === "sent" ? m.reminders.sent : m.reminders.failed}
+                        </div>
+                      ) : null}
                     </TableCell>
                     <TableCell className="text-xs text-muted-foreground">
                       {b.source === "ai" ? (
