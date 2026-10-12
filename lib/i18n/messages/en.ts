@@ -37,6 +37,122 @@ export const en = {
     getStarted: "Get started",
     signIn: "Sign in",
   },
+  landing: {
+    nav: {
+      features: "Features",
+      pricing: "Pricing",
+      faq: "FAQ",
+    },
+    badge: "AI assistant for WhatsApp",
+    heroTitle: "Your business answers on WhatsApp, 24/7",
+    heroSubtitle: "An AI agent that replies to your customers in their own language, explains your services and prices, and books appointments while you work or sleep.",
+    ctaStart: "Start free for 14 days",
+    ctaWhatsapp: "Talk to us on WhatsApp",
+    noCard: "No card needed. Ready in 10 minutes.",
+    demo: {
+      business: "Bella Salon",
+      online: "online",
+      c1: "Hi! How much is a haircut?",
+      a1: "Hi 😊 A haircut is $15 and takes 30 minutes. Would you like to book one?",
+      c2: "Yes please, Saturday at 10am. My name is Amina.",
+      a2: "Done ✅ Haircut on Saturday at 10:00 for Amina. We'll confirm shortly!",
+      booked: "Booking saved",
+    },
+    featuresTitle: "Everything a busy business needs",
+    features: [
+      {
+        title: "Replies 24/7",
+        body: "Every message gets an answer in seconds, at night and on weekends too.",
+      },
+      {
+        title: "Books appointments",
+        body: "Checks your opening hours and free times, then saves the booking for you.",
+      },
+      {
+        title: "Speaks their language",
+        body: "Somali, English, Arabic, French, Spanish and more: it answers in the language the customer writes.",
+      },
+      {
+        title: "Simple dashboard",
+        body: "See every conversation, lead and booking in one place, live.",
+      },
+      {
+        title: "Your real WhatsApp",
+        body: "Works with the WhatsApp Business API through Meta or Twilio.",
+      },
+      {
+        title: "Private and secure",
+        body: "Each business sees only its own data. Delete or export it any time.",
+      },
+    ],
+    stepsTitle: "Up and running in 3 steps",
+    steps: [
+      {
+        title: "Create your account",
+        body: "Sign up free and add your services, prices and opening hours.",
+      },
+      {
+        title: "Test the agent",
+        body: "Chat with it in the dashboard and see exactly what customers will get.",
+      },
+      {
+        title: "Connect WhatsApp",
+        body: "We help you connect your number. From then on, the agent answers for you.",
+      },
+    ],
+    pricingTitle: "Simple pricing",
+    pricingSubtitle: "Start free. Pay by Mobile Money, Waafi, card or bank transfer.",
+    perMonth: "/month",
+    popular: "Most popular",
+    free: "Free",
+    plans: {
+      trial: {
+        name: "Free trial",
+        desc: "14 days to try everything.",
+      },
+      starter: {
+        name: "Starter",
+        desc: "For a small business.",
+      },
+      pro: {
+        name: "Pro",
+        desc: "For busy businesses with many customers.",
+      },
+    },
+    repliesPerMonth: "{n} AI replies a month",
+    planFeatures: [
+      "Knowledge base and chat tester",
+      "Bookings dashboard",
+      "All 6 languages",
+    ],
+    choose: "Get started",
+    faqTitle: "Frequently asked questions",
+    faqs: [
+      {
+        q: "Do I need a new phone number?",
+        a: "You need a WhatsApp Business API number through Meta or Twilio. We help you set it up, and it can often be your existing business number.",
+      },
+      {
+        q: "What if the AI doesn't know an answer?",
+        a: "It only uses the information you give it. If something isn't covered, it says the team will get back to the customer instead of guessing.",
+      },
+      {
+        q: "Can I see and control the conversations?",
+        a: "Yes. Every conversation and booking appears in your dashboard. You confirm or cancel bookings, and you can turn the AI off at any time.",
+      },
+      {
+        q: "How do I pay?",
+        a: "After the free trial, pay monthly by Mobile Money, Waafi, card or bank transfer. Contact us on WhatsApp and we activate your plan right away.",
+      },
+      {
+        q: "Is my data safe?",
+        a: "Yes. Each business can only see its own data, connections are encrypted, and you can export or delete everything from Settings.",
+      },
+    ],
+    finalTitle: "Let your WhatsApp work for you",
+    finalBody: "Start your free 14-day trial today. No card needed.",
+    rights: "All rights reserved.",
+  },
   auth: {
     signInTitle: "Sign in",
     signInDescription: "Manage your WhatsApp AI agent.",

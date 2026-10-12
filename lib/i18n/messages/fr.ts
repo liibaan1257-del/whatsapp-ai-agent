@@ -38,6 +38,122 @@ export const fr: Messages = {
     getStarted: "Commencer",
     signIn: "Se connecter",
   },
+  landing: {
+    nav: {
+      features: "Fonctionnalités",
+      pricing: "Tarifs",
+      faq: "FAQ",
+    },
+    badge: "Assistant IA pour WhatsApp",
+    heroTitle: "Votre entreprise répond sur WhatsApp, 24 h/24",
+    heroSubtitle: "Un agent IA qui répond à vos clients dans leur langue, présente vos services et vos prix, et prend les rendez-vous pendant que vous travaillez ou dormez.",
+    ctaStart: "Essai gratuit de 14 jours",
+    ctaWhatsapp: "Parlez-nous sur WhatsApp",
+    noCard: "Sans carte. Prêt en 10 minutes.",
+    demo: {
+      business: "Salon Bella",
+      online: "en ligne",
+      c1: "Bonjour ! Combien coûte une coupe ?",
+      a1: "Bonjour 😊 Une coupe coûte 15 $ et dure 30 minutes. Voulez-vous réserver ?",
+      c2: "Oui, samedi à 10 h. Je m'appelle Amina.",
+      a2: "C'est noté ✅ Coupe samedi à 10:00 pour Amina. Nous confirmons très vite !",
+      booked: "Réservation enregistrée",
+    },
+    featuresTitle: "Tout ce dont une entreprise occupée a besoin",
+    features: [
+      {
+        title: "Répond 24 h/24",
+        body: "Chaque message reçoit une réponse en quelques secondes, même la nuit et le week-end.",
+      },
+      {
+        title: "Prend les rendez-vous",
+        body: "Vérifie vos horaires et créneaux libres, puis enregistre la réservation.",
+      },
+      {
+        title: "Parle leur langue",
+        body: "Somali, anglais, arabe, français, espagnol et plus : il répond dans la langue du client.",
+      },
+      {
+        title: "Tableau de bord simple",
+        body: "Voyez chaque conversation, prospect et réservation au même endroit, en direct.",
+      },
+      {
+        title: "Votre vrai WhatsApp",
+        body: "Fonctionne avec l'API WhatsApp Business via Meta ou Twilio.",
+      },
+      {
+        title: "Privé et sécurisé",
+        body: "Chaque entreprise ne voit que ses données. Exportez-les ou supprimez-les à tout moment.",
+      },
+    ],
+    stepsTitle: "Opérationnel en 3 étapes",
+    steps: [
+      {
+        title: "Créez votre compte",
+        body: "Inscrivez-vous gratuitement et ajoutez vos services, prix et horaires.",
+      },
+      {
+        title: "Testez l'agent",
+        body: "Discutez avec lui dans le tableau de bord et voyez ce que recevront vos clients.",
+      },
+      {
+        title: "Connectez WhatsApp",
+        body: "Nous vous aidons à connecter votre numéro. Ensuite, l'agent répond pour vous.",
+      },
+    ],
+    pricingTitle: "Des tarifs simples",
+    pricingSubtitle: "Commencez gratuitement. Payez par Mobile Money, Waafi, carte ou virement.",
+    perMonth: "/mois",
+    popular: "Le plus choisi",
+    free: "Gratuit",
+    plans: {
+      trial: {
+        name: "Essai gratuit",
+        desc: "14 jours pour tout essayer.",
+      },
+      starter: {
+        name: "Starter",
+        desc: "Pour une petite entreprise.",
+      },
+      pro: {
+        name: "Pro",
+        desc: "Pour les entreprises avec beaucoup de clients.",
+      },
+    },
+    repliesPerMonth: "{n} réponses IA par mois",
+    planFeatures: [
+      "Base de connaissances et testeur de chat",
+      "Tableau des réservations",
+      "Les 6 langues",
+    ],
+    choose: "Commencer",
+    faqTitle: "Questions fréquentes",
+    faqs: [
+      {
+        q: "Faut-il un nouveau numéro ?",
+        a: "Il faut un numéro de l'API WhatsApp Business via Meta ou Twilio. Nous vous aidons à le configurer ; ce peut souvent être votre numéro actuel.",
+      },
+      {
+        q: "Et si l'IA ne connaît pas la réponse ?",
+        a: "Elle n'utilise que les informations que vous fournissez. Sinon, elle dit que l'équipe reviendra vers le client au lieu d'inventer.",
+      },
+      {
+        q: "Puis-je voir et contrôler les conversations ?",
+        a: "Oui. Chaque conversation et réservation apparaît dans votre tableau de bord. Vous confirmez ou annulez, et pouvez couper l'IA à tout moment.",
+      },
+      {
+        q: "Comment payer ?",
+        a: "Après l'essai, payez chaque mois par Mobile Money, Waafi, carte ou virement. Écrivez-nous sur WhatsApp et nous activons votre formule tout de suite.",
+      },
+      {
+        q: "Mes données sont-elles en sécurité ?",
+        a: "Oui. Chaque entreprise ne voit que ses données, les connexions sont chiffrées, et vous pouvez tout exporter ou supprimer depuis les Paramètres.",
+      },
+    ],
+    finalTitle: "Laissez WhatsApp travailler pour vous",
+    finalBody: "Commencez votre essai gratuit de 14 jours aujourd'hui. Sans carte.",
+    rights: "Tous droits réservés.",
+  },
   auth: {
     signInTitle: "Se connecter",
     signInDescription: "Gérez votre agent IA WhatsApp.",

@@ -38,6 +38,122 @@ export const so: Messages = {
     getStarted: "Bilow",
     signIn: "Gal",
   },
+  landing: {
+    nav: {
+      features: "Astaamaha",
+      pricing: "Qiimaha",
+      faq: "Su'aalo",
+    },
+    badge: "Kaaliye AI ah oo WhatsApp",
+    heroTitle: "Ganacsigaagu wuxuu ku jawaabaa WhatsApp, 24/7",
+    heroSubtitle: "Wakiil AI ah oo macaamiishaada ugu jawaaba luqaddooda, u sharxa adeegyadaada iyo qiimayaashooda, oo ballamaha qabta inta aad shaqaynayso ama hurdo.",
+    ctaStart: "Bilow bilaash, 14 maalmood",
+    ctaWhatsapp: "WhatsApp nagala soo xiriir",
+    noCard: "Kaar looma baahna. 10 daqiiqo ayuu ku diyaar yahay.",
+    demo: {
+      business: "Bella Salon",
+      online: "online",
+      c1: "Salaan! Timo-jarku immisa ayuu yahay?",
+      a1: "Salaan 😊 Timo-jarku waa $15, wuxuuna qaataa 30 daqiiqo. Ma rabtaa inaan kuu qabto ballan?",
+      c2: "Haa, Sabtida saacadda 10-ka subaxnimo. Magacaygu waa Amina.",
+      a2: "Waa la qabtay ✅ Timo-jar, Sabti 10:00, Amina. Dhawaan ayaan kuu xaqiijin doonnaa!",
+      booked: "Ballanta waa la kaydiyay",
+    },
+    featuresTitle: "Wax kasta oo ganacsi mashquul ahi u baahan yahay",
+    features: [
+      {
+        title: "Jawaab 24/7",
+        body: "Fariin kasta waxay helaysaa jawaab ilbiriqsiyo gudahood, xitaa habeenkii iyo fasaxa.",
+      },
+      {
+        title: "Wuxuu qabtaa ballamaha",
+        body: "Wuxuu hubiyaa saacadaha shaqada iyo waqtiyada bannaan, kadibna ballanta wuu kuu kaydiyaa.",
+      },
+      {
+        title: "Luqaddooda ayuu ku hadlaa",
+        body: "Soomaali, Ingiriis, Carabi, Faransiis, Isbaanish iyo kuwo kale: wuxuu ku jawaabaa luqadda macmiilku ku qoro.",
+      },
+      {
+        title: "Dashboard fudud",
+        body: "Ka arag wada-hadal kasta, macmiil kasta iyo ballan kasta hal meel, si toos ah.",
+      },
+      {
+        title: "WhatsApp-kaaga dhabta ah",
+        body: "Wuxuu la shaqeeyaa WhatsApp Business API, adigoo isticmaalaya Meta ama Twilio.",
+      },
+      {
+        title: "Gaar ah oo ammaan ah",
+        body: "Ganacsi kastaa wuxuu arkaa xogtiisa oo keliya. Mar kasta waad soo dejisan kartaa ama tirtiri kartaa.",
+      },
+    ],
+    stepsTitle: "3 tallaabo ayuu ku shaqaynayaa",
+    steps: [
+      {
+        title: "Samee akoonkaaga",
+        body: "Bilaash isku diiwaangeli, kadib geli adeegyadaada, qiimayaasha iyo saacadaha shaqada.",
+      },
+      {
+        title: "Tijaabi wakiilka",
+        body: "Dashboard-ka kula hadal, oo arag waxa macaamiishu helayaan.",
+      },
+      {
+        title: "Ku xidh WhatsApp",
+        body: "Waxaan kaa caawinaynaa inaad lambarkaaga ku xidho. Intaas kadib wakiilka ayaa kuu jawaabaya.",
+      },
+    ],
+    pricingTitle: "Qiimo fudud",
+    pricingSubtitle: "Bilaash ku bilow. Ku bixi Mobile Money, Waafi, kaar ama bank transfer.",
+    perMonth: "/bishii",
+    popular: "Kan ugu caansan",
+    free: "Bilaash",
+    plans: {
+      trial: {
+        name: "Tijaabo bilaash ah",
+        desc: "14 maalmood oo aad wax walba ku tijaabiso.",
+      },
+      starter: {
+        name: "Starter",
+        desc: "Ganacsi yar.",
+      },
+      pro: {
+        name: "Pro",
+        desc: "Ganacsiyada mashquulka ah ee macaamiil badan leh.",
+      },
+    },
+    repliesPerMonth: "{n} jawaabood AI bishii",
+    planFeatures: [
+      "Xogta ganacsiga iyo Chat tester",
+      "Dashboard-ka ballamaha",
+      "Dhammaan 6-da luqadood",
+    ],
+    choose: "Bilow",
+    faqTitle: "Su'aalaha badanaa la is weydiiyo",
+    faqs: [
+      {
+        q: "Ma u baahanahay lambar taleefan oo cusub?",
+        a: "Waxaad u baahan tahay lambar WhatsApp Business API ah oo Meta ama Twilio ah. Waan kaa caawinaynaa, inta badanna waxay noqon kartaa lambarka ganacsigaaga ee hadda.",
+      },
+      {
+        q: "Maxaa dhacaya haddii AI-gu jawaabta garan waayo?",
+        a: "Wuxuu isticmaalaa xogta aad siiso oo keliya. Haddii wax aan la sheegin la weydiiyo, wuxuu dhahaa kooxda ayaa kuu soo jawaabi doonta, ma qiyaaso.",
+      },
+      {
+        q: "Ma arki karaa oo ma maamuli karaa wada-hadallada?",
+        a: "Haa. Wada-hadal kasta iyo ballan kasta waxay ka muuqdaan dashboard-kaaga. Ballamaha adiga ayaa xaqiijiya ama baajiya, AI-gana mar kasta waad dami kartaa.",
+      },
+      {
+        q: "Sideen u bixiyaa?",
+        a: "Tijaabada bilaashka ah kadib, bil kasta ku bixi Mobile Money, Waafi, kaar ama bank transfer. WhatsApp nagala soo xiriir, isla markiiba qorshahaaga ayaan shidaynaa.",
+      },
+      {
+        q: "Xogtaydu ma ammaan baa?",
+        a: "Haa. Ganacsi kastaa wuxuu arkaa xogtiisa oo keliya, isku xirnaantu waa qarsoon tahay, Habaynta ayaadna wax walba ka soo dejin kartaa ama ka tirtiri kartaa.",
+      },
+    ],
+    finalTitle: "WhatsApp-kaagu ha kuu shaqeeyo",
+    finalBody: "Maanta bilow tijaabadaada 14-ka maalmood ee bilaashka ah. Kaar looma baahna.",
+    rights: "Xuquuqda oo dhan way dhowran tahay.",
+  },
   auth: {
     signInTitle: "Gal",
     signInDescription: "Maamul wakiilkaaga AI ee WhatsApp.",

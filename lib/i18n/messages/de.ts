@@ -38,6 +38,122 @@ export const de: Messages = {
     getStarted: "Loslegen",
     signIn: "Anmelden",
   },
+  landing: {
+    nav: {
+      features: "Funktionen",
+      pricing: "Preise",
+      faq: "FAQ",
+    },
+    badge: "KI-Assistent für WhatsApp",
+    heroTitle: "Ihr Unternehmen antwortet auf WhatsApp, rund um die Uhr",
+    heroSubtitle: "Ein KI-Agent, der Ihren Kunden in ihrer Sprache antwortet, Ihre Leistungen und Preise erklärt und Termine bucht, während Sie arbeiten oder schlafen.",
+    ctaStart: "14 Tage kostenlos testen",
+    ctaWhatsapp: "Schreiben Sie uns auf WhatsApp",
+    noCard: "Keine Karte nötig. In 10 Minuten startklar.",
+    demo: {
+      business: "Salon Bella",
+      online: "online",
+      c1: "Hallo! Was kostet ein Haarschnitt?",
+      a1: "Hallo 😊 Ein Haarschnitt kostet 15 $ und dauert 30 Minuten. Möchten Sie einen Termin?",
+      c2: "Ja, Samstag um 10 Uhr. Ich heiße Amina.",
+      a2: "Erledigt ✅ Haarschnitt am Samstag um 10:00 für Amina. Wir bestätigen gleich!",
+      booked: "Buchung gespeichert",
+    },
+    featuresTitle: "Alles, was ein volles Geschäft braucht",
+    features: [
+      {
+        title: "Antwortet rund um die Uhr",
+        body: "Jede Nachricht bekommt in Sekunden eine Antwort, auch nachts und am Wochenende.",
+      },
+      {
+        title: "Bucht Termine",
+        body: "Prüft Öffnungszeiten und freie Zeiten und speichert die Buchung für Sie.",
+      },
+      {
+        title: "Spricht ihre Sprache",
+        body: "Somali, Englisch, Arabisch, Französisch, Spanisch und mehr: Er antwortet in der Sprache des Kunden.",
+      },
+      {
+        title: "Einfaches Dashboard",
+        body: "Sehen Sie jede Unterhaltung, jeden Interessenten und jede Buchung an einem Ort, live.",
+      },
+      {
+        title: "Ihr echtes WhatsApp",
+        body: "Funktioniert mit der WhatsApp Business API über Meta oder Twilio.",
+      },
+      {
+        title: "Privat und sicher",
+        body: "Jedes Unternehmen sieht nur seine Daten. Jederzeit exportieren oder löschen.",
+      },
+    ],
+    stepsTitle: "In 3 Schritten startklar",
+    steps: [
+      {
+        title: "Konto erstellen",
+        body: "Kostenlos registrieren und Leistungen, Preise und Öffnungszeiten eintragen.",
+      },
+      {
+        title: "Agent testen",
+        body: "Im Dashboard mit ihm chatten und genau sehen, was Kunden bekommen.",
+      },
+      {
+        title: "WhatsApp verbinden",
+        body: "Wir helfen beim Verbinden Ihrer Nummer. Danach antwortet der Agent für Sie.",
+      },
+    ],
+    pricingTitle: "Einfache Preise",
+    pricingSubtitle: "Kostenlos starten. Bezahlen per Mobile Money, Waafi, Karte oder Überweisung.",
+    perMonth: "/Monat",
+    popular: "Am beliebtesten",
+    free: "Kostenlos",
+    plans: {
+      trial: {
+        name: "Kostenloser Test",
+        desc: "14 Tage, um alles auszuprobieren.",
+      },
+      starter: {
+        name: "Starter",
+        desc: "Für ein kleines Unternehmen.",
+      },
+      pro: {
+        name: "Pro",
+        desc: "Für Unternehmen mit vielen Kunden.",
+      },
+    },
+    repliesPerMonth: "{n} KI-Antworten pro Monat",
+    planFeatures: [
+      "Wissensdatenbank und Chat-Test",
+      "Buchungs-Dashboard",
+      "Alle 6 Sprachen",
+    ],
+    choose: "Loslegen",
+    faqTitle: "Häufige Fragen",
+    faqs: [
+      {
+        q: "Brauche ich eine neue Nummer?",
+        a: "Sie brauchen eine Nummer der WhatsApp Business API über Meta oder Twilio. Wir helfen bei der Einrichtung; oft kann es Ihre bisherige Geschäftsnummer sein.",
+      },
+      {
+        q: "Was, wenn die KI eine Antwort nicht weiß?",
+        a: "Sie nutzt nur Ihre Angaben. Ist etwas nicht abgedeckt, sagt sie, dass sich das Team meldet, statt zu raten.",
+      },
+      {
+        q: "Kann ich die Unterhaltungen sehen und steuern?",
+        a: "Ja. Jede Unterhaltung und Buchung erscheint im Dashboard. Sie bestätigen oder stornieren Buchungen und können die KI jederzeit ausschalten.",
+      },
+      {
+        q: "Wie bezahle ich?",
+        a: "Nach dem Test monatlich per Mobile Money, Waafi, Karte oder Überweisung. Schreiben Sie uns auf WhatsApp, wir aktivieren Ihren Tarif sofort.",
+      },
+      {
+        q: "Sind meine Daten sicher?",
+        a: "Ja. Jedes Unternehmen sieht nur seine Daten, Verbindungen sind verschlüsselt, und Sie können alles in den Einstellungen exportieren oder löschen.",
+      },
+    ],
+    finalTitle: "Lassen Sie WhatsApp für sich arbeiten",
+    finalBody: "Starten Sie heute Ihren kostenlosen 14-Tage-Test. Keine Karte nötig.",
+    rights: "Alle Rechte vorbehalten.",
+  },
   auth: {
     signInTitle: "Anmelden",
     signInDescription: "Verwalten Sie Ihren WhatsApp-KI-Agenten.",

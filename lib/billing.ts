@@ -10,6 +10,8 @@ export const PLANS = {
   pro: { replies: 2000 },
 } as const;
 export type Plan = keyof typeof PLANS;
+/** Monthly price in USD shown on the home page (payment itself is manual). */
+export const PRICES_USD: Record<Plan, number> = { trial: 0, starter: 19, pro: 49 };
 export const PLAN_NAMES = Object.keys(PLANS) as Plan[];
 
 export function isPlan(value: unknown): value is Plan {
