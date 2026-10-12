@@ -453,6 +453,58 @@ export const es: Messages = {
     notConfigured: "La página Admin necesita SUPABASE_SERVICE_ROLE_KEY en el servidor.",
     actionsFor: "Facturación de {name}",
   },
+  terms: {
+    title: "Términos del servicio",
+    link: "Términos del servicio",
+    intro: "Estos términos se aplican cuando creas una cuenta o usas este servicio. Al registrarte los aceptas. Léelos junto con nuestra Política de privacidad.",
+    agree: "Al crear una cuenta aceptas los {terms} y la {privacy}.",
+    sections: [
+      {
+        title: "1. El servicio",
+        body: "Un agente de IA que responde a tus clientes en WhatsApp con la información de negocio que proporcionas, recibe solicitudes de reserva y las muestra en un panel.",
+      },
+      {
+        title: "2. Tu cuenta",
+        body: "Debes dar un correo correcto y proteger tu contraseña. Eres responsable de todo lo que se haga con tu cuenta. Una cuenta corresponde a un negocio.",
+      },
+      {
+        title: "3. Prueba gratis y planes",
+        body: "Las cuentas nuevas tienen 14 días de prueba gratis. Después, el servicio continúa con un plan de pago (Starter o Pro). Cada plan incluye un número mensual de respuestas de IA; cuando termina el acceso o se agotan, la IA deja de responder hasta renovar, pero tus mensajes se siguen guardando.",
+      },
+      {
+        title: "4. Pago y reembolsos",
+        body: "Los planes se pagan por adelantado, mensual o anualmente, con los métodos que ofrecemos (por ejemplo Mobile Money, Waafi, tarjeta o transferencia). No se reembolsan periodos ya iniciados, salvo cuando la ley lo exija. Los precios pueden cambiar; te avisaremos antes de aplicarte un cambio.",
+      },
+      {
+        title: "5. Uso aceptable",
+        body: "Usa el servicio solo para mensajes comerciales legales. No envíes spam, no engañes a clientes ni compartas contenido ilegal. Debes cumplir las políticas de WhatsApp Business y Commerce y los términos de Meta o Twilio, y escribir solo a clientes que te contactaron o aceptaron recibir mensajes.",
+      },
+      {
+        title: "6. Respuestas de la IA",
+        body: "La IA puede equivocarse. Solo usa la información que introduces, así que mantén correctos tus servicios, precios y horarios. Eres responsable de lo que ofrece tu negocio y debes revisar y confirmar las reservas.",
+      },
+      {
+        title: "7. Tus datos",
+        body: "La información de tu negocio y las conversaciones con tus clientes te pertenecen. Solo las tratamos para prestar el servicio, como se describe en la Política de privacidad. Puedes exportarlas o borrarlas en Ajustes cuando quieras.",
+      },
+      {
+        title: "8. Disponibilidad",
+        body: "Trabajamos para mantener el servicio activo, pero no podemos garantizar que esté siempre disponible o sin errores. Depende de terceros como WhatsApp, Meta, Twilio, nuestro proveedor de IA y nuestro alojamiento.",
+      },
+      {
+        title: "9. Limitación de responsabilidad",
+        body: "En la medida en que la ley lo permita, no respondemos por pérdidas indirectas como beneficios perdidos o reservas no realizadas, y nuestra responsabilidad total se limita a lo que nos pagaste en los últimos 3 meses.",
+      },
+      {
+        title: "10. Fin del servicio",
+        body: "Puedes dejarlo cuando quieras y borrar tu cuenta en Ajustes. Podemos suspender o cerrar una cuenta que incumpla estos términos o no pague, avisándote cuando sea posible.",
+      },
+      {
+        title: "11. Cambios",
+        body: "Podemos actualizar estos términos. Si un cambio es importante, te avisaremos con antelación; seguir usando el servicio después significa que aceptas los nuevos términos.",
+      },
+    ],
+  },
   privacy: {
     title: "Política de privacidad",
     updated: "Última actualización: {date}",

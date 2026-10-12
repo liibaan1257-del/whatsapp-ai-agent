@@ -453,6 +453,58 @@ export const de: Messages = {
     notConfigured: "Die Admin-Seite braucht SUPABASE_SERVICE_ROLE_KEY auf dem Server.",
     actionsFor: "Abrechnung für {name}",
   },
+  terms: {
+    title: "Nutzungsbedingungen",
+    link: "Nutzungsbedingungen",
+    intro: "Diese Bedingungen gelten, wenn Sie ein Konto erstellen oder diesen Dienst nutzen. Mit der Registrierung stimmen Sie ihnen zu. Bitte lesen Sie sie zusammen mit unserer Datenschutzerklärung.",
+    agree: "Mit dem Erstellen eines Kontos akzeptieren Sie die {terms} und die {privacy}.",
+    sections: [
+      {
+        title: "1. Der Dienst",
+        body: "Ein KI-Agent, der Ihren Kunden auf WhatsApp anhand Ihrer Unternehmensangaben antwortet, Buchungsanfragen annimmt und in einem Dashboard anzeigt.",
+      },
+      {
+        title: "2. Ihr Konto",
+        body: "Sie müssen eine korrekte E-Mail angeben und Ihr Passwort schützen. Sie sind für alles verantwortlich, was mit Ihrem Konto geschieht. Ein Konto gilt für ein Unternehmen.",
+      },
+      {
+        title: "3. Kostenloser Test und Tarife",
+        body: "Neue Konten erhalten einen 14-tägigen kostenlosen Test. Danach läuft der Dienst mit einem bezahlten Tarif (Starter oder Pro) weiter. Jeder Tarif enthält eine monatliche Anzahl KI-Antworten; endet der Zugang oder sind sie aufgebraucht, antwortet die KI bis zur Verlängerung nicht mehr, Ihre Nachrichten werden aber weiter gespeichert.",
+      },
+      {
+        title: "4. Zahlung und Erstattung",
+        body: "Tarife werden im Voraus monatlich oder jährlich über die angebotenen Wege bezahlt (z. B. Mobile Money, Waafi, Karte oder Überweisung). Bereits begonnene Zeiträume werden nicht erstattet, außer wenn das Gesetz es verlangt. Preise können sich ändern; wir informieren Sie, bevor eine Änderung für Sie gilt.",
+      },
+      {
+        title: "5. Zulässige Nutzung",
+        body: "Nutzen Sie den Dienst nur für rechtmäßige geschäftliche Nachrichten. Kein Spam, keine Irreführung von Kunden, keine illegalen Inhalte. Sie müssen die WhatsApp Business- und Commerce-Richtlinien sowie die Bedingungen von Meta oder Twilio einhalten und nur Kunden schreiben, die Sie kontaktiert oder zugestimmt haben.",
+      },
+      {
+        title: "6. KI-Antworten",
+        body: "Die KI kann Fehler machen. Sie nutzt nur Ihre Angaben, halten Sie Leistungen, Preise und Zeiten also aktuell. Sie sind für das Angebot Ihres Unternehmens verantwortlich und sollten Buchungen prüfen und bestätigen.",
+      },
+      {
+        title: "7. Ihre Daten",
+        body: "Ihre Unternehmensangaben und die Unterhaltungen Ihrer Kunden gehören Ihnen. Wir verarbeiten sie nur zur Erbringung des Dienstes, wie in der Datenschutzerklärung beschrieben. Sie können sie jederzeit in den Einstellungen exportieren oder löschen.",
+      },
+      {
+        title: "8. Verfügbarkeit",
+        body: "Wir sorgen dafür, dass der Dienst läuft, können aber nicht garantieren, dass er immer verfügbar oder fehlerfrei ist. Er hängt von Dritten wie WhatsApp, Meta, Twilio, unserem KI-Anbieter und unserem Hosting ab.",
+      },
+      {
+        title: "9. Haftungsbeschränkung",
+        body: "Soweit gesetzlich zulässig, haften wir nicht für indirekte Schäden wie entgangenen Gewinn oder verpasste Buchungen, und unsere Gesamthaftung ist auf den Betrag begrenzt, den Sie uns in den letzten 3 Monaten gezahlt haben.",
+      },
+      {
+        title: "10. Beendigung",
+        body: "Sie können jederzeit aufhören und Ihr Konto in den Einstellungen löschen. Wir können ein Konto sperren oder schließen, das gegen diese Bedingungen verstößt oder nicht zahlt, und informieren Sie nach Möglichkeit vorher.",
+      },
+      {
+        title: "11. Änderungen",
+        body: "Wir können diese Bedingungen aktualisieren. Bei wichtigen Änderungen informieren wir Sie vorab; wenn Sie den Dienst danach weiter nutzen, akzeptieren Sie die neuen Bedingungen.",
+      },
+    ],
+  },
   privacy: {
     title: "Datenschutzerklärung",
     updated: "Zuletzt aktualisiert: {date}",

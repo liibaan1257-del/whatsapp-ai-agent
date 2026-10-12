@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import Link from "next/link";
+import { Fragment, useActionState, useState } from "react";
 import { Field } from "@/components/auth/field";
 import { useI18n } from "@/components/i18n/provider";
 import { Button } from "@/components/ui/button";
@@ -68,6 +69,22 @@ export function SignupForm() {
       <Button type="submit" variant="brand" className="w-full" disabled={pending}>
         {pending ? m.auth.creatingAccount : m.auth.createAccount}
       </Button>
+      <p className="text-center text-xs text-muted-foreground">
+        {/* "By creating an account you agree to the {terms} and the {privacy}." with links */}
+        {m.terms.agree.split(/(\{terms\}|\{privacy\})/).map((part, i) =>
+          part === "{terms}" ? (
+            <Link key={i} href="/terms" className="underline underline-offset-4 hover:text-foreground">
+              {m.terms.link}
+            </Link>
+          ) : part === "{privacy}" ? (
+            <Link key={i} href="/privacy" className="underline underline-offset-4 hover:text-foreground">
+              {m.common.privacy}
+            </Link>
+          ) : (
+            <Fragment key={i}>{part}</Fragment>
+          ),
+        )}
+      </p>
     </form>
   );
 }

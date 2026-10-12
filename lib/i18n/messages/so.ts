@@ -453,6 +453,58 @@ export const so: Messages = {
     notConfigured: "Bogga Admin wuxuu u baahan yahay SUPABASE_SERVICE_ROLE_KEY server-ka.",
     actionsFor: "Lacag bixinta {name}",
   },
+  terms: {
+    title: "Shuruudaha Adeegga",
+    link: "Shuruudaha Adeegga",
+    intro: "Shuruudahan waxay khuseeyaan marka aad akoon samaysato ama aad isticmaasho adeeggan. Markaad is diiwaangeliso, waad aqbashay. Fadlan la akhri Siyaasadda Xogta Gaarka ah.",
+    agree: "Markaad akoon samaysato, waxaad aqbashay {terms} iyo {privacy}.",
+    sections: [
+      {
+        title: "1. Adeegga",
+        body: "Wakiil AI ah oo macaamiishaada WhatsApp-ka ugu jawaaba isagoo isticmaalaya xogta ganacsiga ee aad geliso, qaata codsiyada ballamaha, kuna muujiya dashboard.",
+      },
+      {
+        title: "2. Akoonkaaga",
+        body: "Waa inaad bixisaa email sax ah oo aad ilaalisaa furaha sirta. Adiga ayaa mas'uul ka ah wax kasta oo akoonkaaga lagu sameeyo. Hal akoon waa hal ganacsi.",
+      },
+      {
+        title: "3. Tijaabada bilaashka ah iyo qorshayaasha",
+        body: "Akoon kasta oo cusub wuxuu helaa 14 maalmood oo tijaabo bilaash ah. Kadib adeeggu wuxuu ku socdaa qorshe lacag leh (Starter ama Pro). Qorshe kastaa wuxuu leeyahay tiro jawaabo AI ah bishii; marka waqtigu dhammaado ama jawaabaha la isticmaalo, AI-gu wuu joojiyaa ilaa qorshaha la cusboonaysiiyo, laakiin fariimahaagu weli waa la kaydinayaa.",
+      },
+      {
+        title: "4. Lacag bixinta iyo celinta",
+        body: "Qorshayaasha waxaa la bixiyaa horay, bil kasta ama sanad kasta, hababka aan bixinno (tusaale Mobile Money, Waafi, kaar ama bank transfer). Lacagta muddo bilaabatay lama celiyo, marka laga reebo meesha sharcigu ku waajibiyo. Qiimayaashu way isbeddeli karaan; waan kuu sheegaynaa ka hor inta aan kugu dhaqan gelin.",
+      },
+      {
+        title: "5. Isticmaalka la oggol yahay",
+        body: "Adeegga u isticmaal fariimo ganacsi oo sharci ah oo keliya. Ha dirin spam, ha khiyaanayn macaamiisha, hana wadaagin wax sharci darro ah. Waa inaad raacdaa xeerarka WhatsApp Business iyo Commerce iyo shuruudaha Meta ama Twilio, una qortaa oo keliya macaamiisha kula soo xiriiray ama oggolaaday.",
+      },
+      {
+        title: "6. Jawaabaha AI-ga",
+        body: "AI-gu wuu qaldami karaa. Wuxuu isticmaalaa xogta aad geliso oo keliya, markaa adeegyadaada, qiimayaasha iyo saacadaha sax ka dhig. Adiga ayaa mas'uul ka ah waxa ganacsigaagu bixiyo, waana inaad hubiso oo xaqiijiso ballamaha.",
+      },
+      {
+        title: "7. Xogtaada",
+        body: "Xogta ganacsigaaga iyo wada-hadallada macaamiishaadu adiga ayay kuu leeyihiin. Waxaan ka shaqaynaa oo keliya si aan adeegga u bixinno, sida ku qoran Siyaasadda Xogta Gaarka ah. Mar kasta waad ka soo dejisan kartaa ama ka tirtiri kartaa xogtaada Habaynta.",
+      },
+      {
+        title: "8. Helitaanka adeegga",
+        body: "Waxaan isku daynaa inaan adeegga shaqaynno, laakiin ma ballan qaadi karno inuu mar walba diyaar yahay ama cillad la'aan yahay. Wuxuu ku tiirsan yahay dhinacyo kale sida WhatsApp, Meta, Twilio, shirkadda AI-ga iyo hosting-ka.",
+      },
+      {
+        title: "9. Xadka mas'uuliyadda",
+        body: "Inta sharcigu oggol yahay, mas'uul kama nihin khasaarooyin aan toos ahayn sida faa'iido lumay ama ballamo la seegay, mas'uuliyaddayada guudna waxay ku eg tahay lacagta aad na siisay 3-dii bilood ee u dambeeyay.",
+      },
+      {
+        title: "10. Joojinta adeegga",
+        body: "Mar kasta waad joojin kartaa oo akoonkaaga ka tirtiri kartaa Habaynta. Waxaan hakin ama xidhi karnaa akoon jebiya shuruudahan ama aan bixin lacagta, annagoo kuu sheegayna marka ay suurtagal tahay.",
+      },
+      {
+        title: "11. Isbeddellada",
+        body: "Waxaan cusboonaysiin karnaa shuruudahan. Haddii isbeddel muhiim ah yahay, horay ayaan kuu sheegaynaa; haddii aad sii isticmaasho adeegga intaas kadib, waxaad aqbashay shuruudaha cusub.",
+      },
+    ],
+  },
   privacy: {
     title: "Siyaasadda xogta gaarka ah",
     updated: "Markii ugu dambeysay la cusboonaysiiyay: {date}",

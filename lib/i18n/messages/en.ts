@@ -454,6 +454,58 @@ export const en = {
     notConfigured: "The Admin page needs SUPABASE_SERVICE_ROLE_KEY on the server.",
     actionsFor: "Billing for {name}",
   },
+  terms: {
+    title: "Terms of Service",
+    link: "Terms of Service",
+    intro: "These terms apply when you create an account or use this service. By signing up you agree to them. Please read them together with our Privacy Policy.",
+    agree: "By creating an account you agree to the {terms} and the {privacy}.",
+    sections: [
+      {
+        title: "1. The service",
+        body: "An AI agent that answers your customers on WhatsApp using the business information you provide, takes booking requests and shows them in a dashboard.",
+      },
+      {
+        title: "2. Your account",
+        body: "You must give a correct email and keep your password safe. You are responsible for everything done with your account. One account is for one business.",
+      },
+      {
+        title: "3. Free trial and plans",
+        body: "New accounts get a 14-day free trial. After that the service continues on a paid plan (Starter or Pro). Each plan includes a monthly number of AI replies; when access ends or the replies are used up, the AI stops answering until the plan is renewed, but your messages are still saved.",
+      },
+      {
+        title: "4. Payment and refunds",
+        body: "Plans are paid in advance, monthly or yearly, by the methods we offer (for example Mobile Money, Waafi, card or bank transfer). Payments are not refunded for a period already started, except where the law requires it. Prices may change; we tell you before a change applies to you.",
+      },
+      {
+        title: "5. Acceptable use",
+        body: "Use the service only for lawful business messages. Do not send spam, mislead customers or share illegal content. You must follow WhatsApp's Business and Commerce policies and the terms of Meta or Twilio, and only message customers who contacted you or agreed to hear from you.",
+      },
+      {
+        title: "6. AI answers",
+        body: "The AI can make mistakes. It only uses the information you enter, so keep your services, prices and hours correct. You are responsible for what your business offers, and you should check and confirm bookings.",
+      },
+      {
+        title: "7. Your data",
+        body: "Your business information and your customers' conversations belong to you. We process them only to provide the service, as described in the Privacy Policy. You can export or delete your data at any time in Settings.",
+      },
+      {
+        title: "8. Availability",
+        body: "We work to keep the service running but cannot promise it will always be available or error-free. It depends on third parties such as WhatsApp, Meta, Twilio, our AI provider and our hosting.",
+      },
+      {
+        title: "9. Limitation of liability",
+        body: "As far as the law allows, we are not liable for indirect losses such as lost profits or missed bookings, and our total liability is limited to what you paid us in the last 3 months.",
+      },
+      {
+        title: "10. Ending the service",
+        body: "You can stop at any time and delete your account in Settings. We may suspend or close an account that breaks these terms or does not pay, after telling you when possible.",
+      },
+      {
+        title: "11. Changes",
+        body: "We may update these terms. If a change is important, we tell you in advance; continuing to use the service after that means you accept the new terms.",
+      },
+    ],
+  },
   privacy: {
     title: "Privacy policy",
     updated: "Last updated: {date}",

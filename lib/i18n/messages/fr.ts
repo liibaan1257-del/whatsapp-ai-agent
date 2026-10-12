@@ -453,6 +453,58 @@ export const fr: Messages = {
     notConfigured: "La page Admin nécessite SUPABASE_SERVICE_ROLE_KEY sur le serveur.",
     actionsFor: "Facturation de {name}",
   },
+  terms: {
+    title: "Conditions d'utilisation",
+    link: "Conditions d'utilisation",
+    intro: "Ces conditions s'appliquent lorsque vous créez un compte ou utilisez ce service. En vous inscrivant, vous les acceptez. Lisez-les avec notre Politique de confidentialité.",
+    agree: "En créant un compte, vous acceptez les {terms} et la {privacy}.",
+    sections: [
+      {
+        title: "1. Le service",
+        body: "Un agent IA qui répond à vos clients sur WhatsApp à partir des informations que vous fournissez, reçoit les demandes de réservation et les affiche dans un tableau de bord.",
+      },
+      {
+        title: "2. Votre compte",
+        body: "Vous devez fournir un e-mail exact et protéger votre mot de passe. Vous êtes responsable de tout ce qui est fait avec votre compte. Un compte correspond à une entreprise.",
+      },
+      {
+        title: "3. Essai gratuit et formules",
+        body: "Les nouveaux comptes bénéficient d'un essai gratuit de 14 jours. Ensuite, le service continue avec une formule payante (Starter ou Pro). Chaque formule comprend un nombre mensuel de réponses IA ; quand l'accès prend fin ou que les réponses sont épuisées, l'IA cesse de répondre jusqu'au renouvellement, mais vos messages restent enregistrés.",
+      },
+      {
+        title: "4. Paiement et remboursements",
+        body: "Les formules se paient d'avance, au mois ou à l'année, par les moyens proposés (par exemple Mobile Money, Waafi, carte ou virement). Une période commencée n'est pas remboursée, sauf obligation légale. Les prix peuvent changer ; nous vous prévenons avant qu'un changement s'applique à vous.",
+      },
+      {
+        title: "5. Utilisation acceptable",
+        body: "Utilisez le service uniquement pour des messages professionnels légaux. Pas de spam, pas de tromperie des clients, pas de contenu illégal. Vous devez respecter les politiques WhatsApp Business et Commerce et les conditions de Meta ou Twilio, et n'écrire qu'aux clients qui vous ont contacté ou ont accepté vos messages.",
+      },
+      {
+        title: "6. Réponses de l'IA",
+        body: "L'IA peut se tromper. Elle n'utilise que les informations que vous saisissez : gardez vos services, prix et horaires à jour. Vous êtes responsable de ce que propose votre entreprise et devez vérifier et confirmer les réservations.",
+      },
+      {
+        title: "7. Vos données",
+        body: "Les informations de votre entreprise et les conversations de vos clients vous appartiennent. Nous ne les traitons que pour fournir le service, comme décrit dans la Politique de confidentialité. Vous pouvez les exporter ou les supprimer à tout moment dans les Paramètres.",
+      },
+      {
+        title: "8. Disponibilité",
+        body: "Nous faisons en sorte que le service fonctionne, sans pouvoir garantir qu'il soit toujours disponible ou sans erreur. Il dépend de tiers comme WhatsApp, Meta, Twilio, notre fournisseur d'IA et notre hébergeur.",
+      },
+      {
+        title: "9. Limitation de responsabilité",
+        body: "Dans la mesure permise par la loi, nous ne sommes pas responsables des pertes indirectes comme un manque à gagner ou des réservations manquées, et notre responsabilité totale est limitée à ce que vous nous avez payé au cours des 3 derniers mois.",
+      },
+      {
+        title: "10. Fin du service",
+        body: "Vous pouvez arrêter à tout moment et supprimer votre compte dans les Paramètres. Nous pouvons suspendre ou fermer un compte qui enfreint ces conditions ou ne paie pas, en vous prévenant si possible.",
+      },
+      {
+        title: "11. Modifications",
+        body: "Nous pouvons mettre à jour ces conditions. En cas de changement important, nous vous prévenons à l'avance ; continuer à utiliser le service ensuite vaut acceptation des nouvelles conditions.",
+      },
+    ],
+  },
   privacy: {
     title: "Politique de confidentialité",
     updated: "Dernière mise à jour : {date}",

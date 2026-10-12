@@ -104,6 +104,9 @@ async function Settings({ m, locale }: { m: Messages; locale: Locale }) {
           <Link href="/privacy" className="text-sm underline-offset-4 hover:underline">
             {m.common.privacy}
           </Link>
+          <Link href="/terms" className="text-sm underline-offset-4 hover:underline">
+            {m.terms.link}
+          </Link>
         </CardContent>
       </Card>
 

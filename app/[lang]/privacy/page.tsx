@@ -54,6 +54,11 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
           </a>
         ) : null}
       </p>
+      <p className="mt-2 text-sm">
+        <Link href="/terms" className="underline underline-offset-4">
+          {m.terms.link}
+        </Link>
+      </p>
     </main>
   );
 }
