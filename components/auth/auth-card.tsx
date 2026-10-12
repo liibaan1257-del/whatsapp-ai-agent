@@ -25,7 +25,7 @@ export function AuthCard({
           <span className="grid size-8 place-items-center rounded-lg bg-brand/15 text-brand">
             <MessageCircle className="size-4" aria-hidden="true" />
           </span>
-          WhatsApp AI Agent
+          ReplyBooker
         </Link>
         <Card>
           <CardHeader>

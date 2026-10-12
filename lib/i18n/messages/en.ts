@@ -1,7 +1,7 @@
 /** English: the source text. Every other language has exactly these keys (checked by TypeScript). */
 export const en = {
   meta: {
-    appName: "WhatsApp AI Agent",
+    appName: "ReplyBooker",
     description: "AI customer support and booking agent for WhatsApp.",
     dashboard: "Dashboard",
   },
@@ -418,7 +418,7 @@ export const en = {
     expiresSoon: "Your plan ends in {days} days. Contact us to renew.",
     contact: "Contact us on WhatsApp",
     contactEmail: "Email us",
-    waMessage: "Hello, I want to pay for WhatsApp AI Agent. My account: {email}",
+    waMessage: "Hello, I want to pay for ReplyBooker. My account: {email}",
     planTitle: "Plan",
     plan: "Plan",
     activeUntil: "Active until",

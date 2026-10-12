@@ -2,7 +2,7 @@ import type { Messages } from "./en";
 
 export const ar: Messages = {
   meta: {
-    appName: "WhatsApp AI Agent",
+    appName: "ReplyBooker",
     description: "وكيل ذكاء اصطناعي لخدمة العملاء والحجوزات على واتساب.",
     dashboard: "لوحة التحكم",
   },
@@ -417,7 +417,7 @@ export const ar: Messages = {
     expiresSoon: "تنتهي خطتك خلال {days} أيام. تواصل معنا للتجديد.",
     contact: "تواصل معنا عبر واتساب",
     contactEmail: "راسلنا عبر البريد",
-    waMessage: "مرحبًا، أريد الدفع مقابل WhatsApp AI Agent. حسابي: {email}",
+    waMessage: "مرحبًا، أريد الدفع مقابل ReplyBooker. حسابي: {email}",
     planTitle: "الخطة",
     plan: "الخطة",
     activeUntil: "نشط حتى",

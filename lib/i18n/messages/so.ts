@@ -2,7 +2,7 @@ import type { Messages } from "./en";
 
 export const so: Messages = {
   meta: {
-    appName: "WhatsApp AI Agent",
+    appName: "ReplyBooker",
     description: "Wakiil AI ah oo macaamiisha u adeega oo ballamaha ku qabta WhatsApp.",
     dashboard: "Dashboard",
   },
@@ -417,7 +417,7 @@ export const so: Messages = {
     expiresSoon: "Qorshahaagu wuxuu dhammaanayaa {days} maalmood gudahood. Nala soo xiriir si aad u cusboonaysiiso.",
     contact: "WhatsApp nagala soo xiriir",
     contactEmail: "Email noo soo dir",
-    waMessage: "Salaan, waxaan rabaa inaan lacagta WhatsApp AI Agent bixiyo. Akoonkayga: {email}",
+    waMessage: "Salaan, waxaan rabaa inaan lacagta ReplyBooker bixiyo. Akoonkayga: {email}",
     planTitle: "Qorshaha",
     plan: "Qorshe",
     activeUntil: "Wuu shaqaynayaa ilaa",

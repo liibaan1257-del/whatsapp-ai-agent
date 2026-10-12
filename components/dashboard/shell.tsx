@@ -48,7 +48,7 @@ function Brand({ businessName }: { businessName: string }) {
       </span>
       <span className="min-w-0 leading-tight">
         <span className="block truncate text-sm font-semibold">{businessName || m.common.yourBusiness}</span>
-        <span className="block text-xs text-muted-foreground">WhatsApp AI Agent</span>
+        <span className="block text-xs text-muted-foreground">ReplyBooker</span>
       </span>
     </Link>
   );

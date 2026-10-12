@@ -1,4 +1,4 @@
-# WhatsApp AI Agent
+# ReplyBooker — WhatsApp AI Agent
 
 AI customer support and booking agent for WhatsApp. Business owners describe
 their business (services, prices, hours, FAQs, booking policy); the agent
