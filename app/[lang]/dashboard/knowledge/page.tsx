@@ -34,8 +34,11 @@ async function KnowledgeEditor({ locale, m }: { locale: Locale; m: Messages }) {
   if (!knowledge) return <p className="text-sm text-muted-foreground">{m.knowledge.missing}</p>;
 
   const h = await headers();
-  const host = h.get("x-forwarded-host") ?? h.get("host") ?? "your-app.vercel.app";
-  const proto = h.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
+  // In production, show the stable main domain, not the per-deployment URL
+  // (which changes on every deploy and would break the Meta/Twilio webhook).
+  const stable = process.env.VERCEL_ENV === "production" ? process.env.VERCEL_PROJECT_PRODUCTION_URL : undefined;
+  const host = stable ?? h.get("x-forwarded-host") ?? h.get("host") ?? "your-app.vercel.app";
+  const proto = stable ? "https" : (h.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https"));
   // Server-side list so server and browser render the same options.
   const zones = Intl.supportedValuesOf("timeZone");
   const timeZones = zones.includes(knowledge.timezone) ? zones : [knowledge.timezone, ...zones];
