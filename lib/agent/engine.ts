@@ -66,7 +66,8 @@ export async function handleCustomerMessage(msg: IncomingMessage): Promise<Engin
     .select("id, customer_name")
     .single();
   if (convError || !conv) {
-    logger.error("conversation_upsert_failed", { businessId: msg.businessId, code: convError?.code });
+    // The message names the problem (e.g. "Invalid API key"); it never contains the key itself.
+    logger.error("conversation_upsert_failed", { businessId: msg.businessId, code: convError?.code, error: convError?.message });
     return { status: "error", conversationId: null, code: "db_error" };
   }
   if (name && !conv.customer_name) await db.from("conversations").update({ customer_name: name }).eq("id", conv.id);
