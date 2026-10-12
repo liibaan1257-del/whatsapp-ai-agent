@@ -42,10 +42,17 @@ export function extractServiceKey(raw: string | undefined): string {
   return value;
 }
 
+/** The Anthropic key out of whatever was pasted (same tolerance as the Supabase key). */
+export function extractAnthropicKey(raw: string | undefined): string {
+  const value = clean(raw);
+  const key = /sk-ant-[A-Za-z0-9_-]{20,}/.exec(value);
+  return key ? key[0] : value;
+}
+
 /** Server-only secrets, read lazily so a missing one fails only the feature that needs it. */
 export const serverEnv = {
   supabaseServiceRoleKey: () => extractServiceKey(process.env.SUPABASE_SERVICE_ROLE_KEY),
-  anthropicApiKey: () => clean(process.env.ANTHROPIC_API_KEY),
+  anthropicApiKey: () => extractAnthropicKey(process.env.ANTHROPIC_API_KEY),
   whatsappVerifyToken: () => clean(process.env.WHATSAPP_VERIFY_TOKEN),
   whatsappAppSecret: () => clean(process.env.WHATSAPP_APP_SECRET),
   whatsappAccessToken: () => clean(process.env.WHATSAPP_ACCESS_TOKEN),

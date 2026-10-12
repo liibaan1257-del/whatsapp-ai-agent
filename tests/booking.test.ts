@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { checkBooking } from "@/lib/ai/booking";
 import { parseKnowledge } from "@/lib/knowledge";
 import { daysLeft, isActive, monthStart, replyLimit } from "@/lib/billing";
-import { extractServiceKey } from "@/lib/env";
+import { extractAnthropicKey, extractServiceKey } from "@/lib/env";
 import { formatPrice } from "@/lib/format";
 import { displayHhmm, zonedToUtc, partsInZone } from "@/lib/time";
 
@@ -112,6 +112,9 @@ test("service key: cleaned from common paste mistakes", () => {
   assert.equal(extractServiceKey("sb_secret_KW5NA••••••"), "sb_secret_KW5NA••••••"); // masked: can't be fixed
   const jwt = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIn0.abc_DEF-123";
   assert.equal(extractServiceKey(`key: ${jwt} `), jwt);
+  const ak = "sk-ant-api03-ABCDEFGHIJKLMNOPQRSTUVWX_yz-123";
+  assert.equal(extractAnthropicKey(`ANTHROPIC_API_KEY=${ak}\n`), ak);
+  assert.equal(extractAnthropicKey(` "${ak}" `), ak);
 });
 
 console.log(`\n${n} passed`);

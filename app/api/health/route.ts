@@ -1,5 +1,5 @@
 import { connection } from "next/server";
-import { checkServiceRoleKey, describeServiceKeyShape, SERVICE_KEY_HELP } from "@/lib/diagnostics";
+import { checkAnthropicKey, checkServiceRoleKey, describeServiceKeyShape, SERVICE_KEY_HELP } from "@/lib/diagnostics";
 import { configStatus, publicEnv } from "@/lib/env";
 
 /**
@@ -9,7 +9,7 @@ import { configStatus, publicEnv } from "@/lib/env";
 export async function GET() {
   await connection();
   const config = configStatus();
-  const [serviceKey, publicKey] = await Promise.all([checkServiceRoleKey(), checkPublicKey()]);
+  const [serviceKey, publicKey, anthropicKey] = await Promise.all([checkServiceRoleKey(), checkPublicKey(), checkAnthropicKey()]);
   return Response.json(
     {
       status: "ok",
@@ -23,7 +23,7 @@ export async function GET() {
       serviceRoleKey: SERVICE_KEY_HELP[serviceKey],
       // Shape only (length, prefix, stray characters): never the key itself.
       serviceRoleKeyShape: describeServiceKeyShape(),
-      anthropicKey: config.ai ? "set" : "missing ANTHROPIC_API_KEY",
+      anthropicKey,
       whatsappWebhook: config.whatsappWebhook ? "set" : "missing WHATSAPP_VERIFY_TOKEN / WHATSAPP_APP_SECRET",
       whatsappSend: config.whatsappSend ? "set" : "missing WHATSAPP_ACCESS_TOKEN",
     },

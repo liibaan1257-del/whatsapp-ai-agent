@@ -80,3 +80,28 @@ export function describeServiceKeyShape(): string {
   const start = used.startsWith("sb_secret_") ? "starts with sb_secret_" : used.startsWith("sb_publishable_") ? "starts with sb_publishable_ (wrong key)" : used.startsWith("eyJ") ? "legacy JWT" : "does not start with sb_secret_";
   return `${used.length} characters used, ${start}${problems.length ? `; contains ${problems.join(", ")}` : "; no stray characters"}`;
 }
+
+/**
+ * Does Anthropic accept ANTHROPIC_API_KEY? Listing models is free, so this
+ * costs nothing. Never returns the key.
+ */
+export async function checkAnthropicKey(): Promise<string> {
+  const raw = process.env.ANTHROPIC_API_KEY ?? "";
+  const key = serverEnv.anthropicApiKey();
+  if (!key) return "missing ANTHROPIC_API_KEY";
+  const shape = `${key.length} characters, ${key.startsWith("sk-ant-") ? "starts with sk-ant-" : "does not start with sk-ant- (wrong key?)"}${/[•●*·]/.test(raw) ? ", contains hidden dots (••••)" : ""}`;
+  const base = (process.env.ANTHROPIC_BASE_URL ?? "https://api.anthropic.com").replace(/\/+$/, "");
+  try {
+    const res = await fetch(`${base}/v1/models?limit=1`, {
+      headers: { "x-api-key": key, "anthropic-version": "2023-06-01" },
+      cache: "no-store",
+      signal: AbortSignal.timeout(5000),
+    });
+    if (res.ok) return "OK";
+    if (res.status === 401) return `rejected by Anthropic (invalid or deleted key): ${shape}`;
+    if (res.status === 403) return `not allowed (check the key's workspace / billing): ${shape}`;
+    return `unexpected status ${res.status}: ${shape}`;
+  } catch {
+    return `couldn't reach Anthropic: ${shape}`;
+  }
+}
