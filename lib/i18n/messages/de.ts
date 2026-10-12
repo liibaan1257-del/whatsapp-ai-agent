@@ -28,6 +28,9 @@ export const de: Messages = {
     notFoundBody: "Diese Seite existiert nicht oder Sie haben keinen Zugriff darauf.",
     backHome: "Zurück zum Dashboard",
     whatsappContact: "Schreiben Sie uns auf WhatsApp",
+    errorTitle: "Etwas ist schiefgelaufen",
+    errorBody: "Auf dieser Seite ist ein Fehler aufgetreten. Versuchen Sie es erneut; wenn es weiter passiert, senden Sie uns diesen Code:",
+    retry: "Erneut versuchen",
     privacy: "Datenschutzerklärung",
   },
   home: {

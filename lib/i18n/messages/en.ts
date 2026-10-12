@@ -27,6 +27,9 @@ export const en = {
     notFoundBody: "This page doesn't exist or you don't have access to it.",
     backHome: "Back to the dashboard",
     whatsappContact: "Chat with us on WhatsApp",
+    errorTitle: "Something went wrong",
+    errorBody: "This page hit an error. Try again; if it keeps happening, send us this code:",
+    retry: "Try again",
     privacy: "Privacy policy",
   },
   home: {

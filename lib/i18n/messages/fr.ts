@@ -28,6 +28,9 @@ export const fr: Messages = {
     notFoundBody: "Cette page n'existe pas ou vous n'y avez pas accès.",
     backHome: "Retour au tableau de bord",
     whatsappContact: "Écrivez-nous sur WhatsApp",
+    errorTitle: "Une erreur s'est produite",
+    errorBody: "Cette page a rencontré une erreur. Réessayez ; si cela continue, envoyez-nous ce code :",
+    retry: "Réessayer",
     privacy: "Politique de confidentialité",
   },
   home: {

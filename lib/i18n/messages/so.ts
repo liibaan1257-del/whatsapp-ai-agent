@@ -28,6 +28,9 @@ export const so: Messages = {
     notFoundBody: "Boggani ma jiro ama ogolaansho uma lihid.",
     backHome: "Ku noqo dashboard-ka",
     whatsappContact: "WhatsApp nagala soo xiriir",
+    errorTitle: "Wax ayaa khaldamay",
+    errorBody: "Boggan cillad ayaa ku dhacday. Mar kale isku day; haddii ay sii socoto, noo soo dir koodhkan:",
+    retry: "Mar kale isku day",
     privacy: "Siyaasadda xogta gaarka ah",
   },
   home: {
