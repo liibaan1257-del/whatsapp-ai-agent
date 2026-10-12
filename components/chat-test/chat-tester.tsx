@@ -27,7 +27,11 @@ export function ChatTester({ initial, businessName }: { initial: TestMessage[]; 
   const [resetting, startReset] = useTransition();
   const endRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => endRef.current?.scrollIntoView({ block: "end" }), [messages, busy]);
+  // Braces matter: newer browsers return a Promise from scrollIntoView, and an
+  // effect must return nothing (or a cleanup function), or React crashes.
+  useEffect(() => {
+    endRef.current?.scrollIntoView({ block: "end" });
+  }, [messages, busy]);
 
   async function send(text: string) {
     const message = text.trim();
