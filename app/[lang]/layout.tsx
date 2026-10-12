@@ -4,6 +4,7 @@ import { I18nProvider } from "@/components/i18n/provider";
 import { dirOf, LOCALES } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n/dictionaries";
 import { localeFrom } from "@/lib/i18n/server";
+import { siteUrl } from "@/lib/site";
 import { THEME_SCRIPT } from "@/lib/theme";
 import "../globals.css";
 
@@ -20,6 +21,8 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
   return {
     title: { default: m.meta.appName, template: `%s · ${m.meta.appName}` },
     description: m.meta.description,
+    metadataBase: new URL(siteUrl()),
+    openGraph: { type: "website", siteName: m.meta.appName, title: m.meta.appName, description: m.meta.description, url: "/" },
   };
 }
 

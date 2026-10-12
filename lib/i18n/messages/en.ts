@@ -2,7 +2,7 @@
 export const en = {
   meta: {
     appName: "ReplyBooker",
-    description: "AI customer support and booking agent for WhatsApp.",
+    description: "ReplyBooker is an AI receptionist for WhatsApp: it answers your customers 24/7 in their own language and books appointments automatically. 14-day free trial.",
     dashboard: "Dashboard",
   },
   common: {
