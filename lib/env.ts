@@ -27,9 +27,24 @@ export function isSupabaseConfigured(): boolean {
   }
 }
 
+/**
+ * The Supabase secret key out of whatever was pasted: tolerates a "NAME="
+ * prefix, a stray leading "_", quotes, spaces and line breaks around a real
+ * sb_secret_… or JWT key. Anything else is returned as-is (and reported by
+ * /api/health as malformed).
+ */
+export function extractServiceKey(raw: string | undefined): string {
+  const value = clean(raw);
+  const secret = /sb_secret_[A-Za-z0-9_-]{20,}/.exec(value);
+  if (secret) return secret[0];
+  const jwt = /eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/.exec(value);
+  if (jwt) return jwt[0];
+  return value;
+}
+
 /** Server-only secrets, read lazily so a missing one fails only the feature that needs it. */
 export const serverEnv = {
-  supabaseServiceRoleKey: () => clean(process.env.SUPABASE_SERVICE_ROLE_KEY),
+  supabaseServiceRoleKey: () => extractServiceKey(process.env.SUPABASE_SERVICE_ROLE_KEY),
   anthropicApiKey: () => clean(process.env.ANTHROPIC_API_KEY),
   whatsappVerifyToken: () => clean(process.env.WHATSAPP_VERIFY_TOKEN),
   whatsappAppSecret: () => clean(process.env.WHATSAPP_APP_SECRET),

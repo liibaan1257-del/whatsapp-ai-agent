@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { checkBooking } from "@/lib/ai/booking";
 import { parseKnowledge } from "@/lib/knowledge";
 import { daysLeft, isActive, monthStart, replyLimit } from "@/lib/billing";
+import { extractServiceKey } from "@/lib/env";
 import { formatPrice } from "@/lib/format";
 import { displayHhmm, zonedToUtc, partsInZone } from "@/lib/time";
 
@@ -100,6 +101,17 @@ test("plans: days left, active, monthly limits", () => {
   assert.equal(replyLimit("starter"), 500);
   assert.equal(replyLimit("bogus"), 200);
   assert.equal(monthStart(now).toISOString(), "2026-10-01T00:00:00.000Z");
+});
+
+test("service key: cleaned from common paste mistakes", () => {
+  const key = "sb_secret_ABCDEFGHIJ1234567890-xyz_Q";
+  assert.equal(extractServiceKey(key), key);
+  assert.equal(extractServiceKey(`SUPABASE_SERVICE_ROLE_KEY=${key}`), key);
+  assert.equal(extractServiceKey(`_${key}`), key);
+  assert.equal(extractServiceKey(` "${key}"\n`), key);
+  assert.equal(extractServiceKey("sb_secret_KW5NA••••••"), "sb_secret_KW5NA••••••"); // masked: can't be fixed
+  const jwt = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIn0.abc_DEF-123";
+  assert.equal(extractServiceKey(`key: ${jwt} `), jwt);
 });
 
 console.log(`\n${n} passed`);

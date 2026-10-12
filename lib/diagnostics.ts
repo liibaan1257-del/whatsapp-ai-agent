@@ -62,3 +62,21 @@ export const SERVICE_KEY_HELP: Record<ServiceKeyStatus, string> = {
   rejected: "This Supabase project rejects SUPABASE_SERVICE_ROLE_KEY: it's probably from another project (e.g. ServiceIT). Copy the secret key from the whatsapp-ai-agent project.",
   unreachable: "Couldn't reach Supabase to check the key.",
 };
+
+/**
+ * What is wrong with the stored service key, without revealing it: its
+ * length, its start, and which kinds of characters don't belong.
+ */
+export function describeServiceKeyShape(): string {
+  const raw = process.env.SUPABASE_SERVICE_ROLE_KEY ?? "";
+  if (!raw) return "not set";
+  const used = serverEnv.supabaseServiceRoleKey();
+  const problems: string[] = [];
+  if (/[•●*·]/.test(raw)) problems.push("hidden dots (••••): it was copied while masked");
+  if (/\s/.test(raw.trim())) problems.push("spaces or line breaks inside");
+  if (/=/.test(raw)) problems.push("an '=' sign (the variable name was pasted too)");
+  if (/["'`]/.test(raw)) problems.push("quotes");
+  if (/[^\x20-\x7e]/.test(raw.replace(/[•●·]/g, ""))) problems.push("other non-English characters");
+  const start = used.startsWith("sb_secret_") ? "starts with sb_secret_" : used.startsWith("sb_publishable_") ? "starts with sb_publishable_ (wrong key)" : used.startsWith("eyJ") ? "legacy JWT" : "does not start with sb_secret_";
+  return `${used.length} characters used, ${start}${problems.length ? `; contains ${problems.join(", ")}` : "; no stray characters"}`;
+}

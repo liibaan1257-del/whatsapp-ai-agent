@@ -1,5 +1,5 @@
 import { connection } from "next/server";
-import { checkServiceRoleKey, SERVICE_KEY_HELP } from "@/lib/diagnostics";
+import { checkServiceRoleKey, describeServiceKeyShape, SERVICE_KEY_HELP } from "@/lib/diagnostics";
 import { configStatus, publicEnv } from "@/lib/env";
 
 /**
@@ -21,6 +21,8 @@ export async function GET() {
       supabaseProject: supabaseProjectRef(),
       supabasePublicKey: publicKey,
       serviceRoleKey: SERVICE_KEY_HELP[serviceKey],
+      // Shape only (length, prefix, stray characters): never the key itself.
+      serviceRoleKeyShape: describeServiceKeyShape(),
       anthropicKey: config.ai ? "set" : "missing ANTHROPIC_API_KEY",
       whatsappWebhook: config.whatsappWebhook ? "set" : "missing WHATSAPP_VERIFY_TOKEN / WHATSAPP_APP_SECRET",
       whatsappSend: config.whatsappSend ? "set" : "missing WHATSAPP_ACCESS_TOKEN",
