@@ -38,6 +38,11 @@ export function isActive(accessUntil: string | Date, now: Date = new Date()): bo
   return new Date(accessUntil).getTime() > now.getTime();
 }
 
+/** Signed up in the last `days` days (the Admin page's "New" badge). */
+export function isNewSignup(createdAt: string | Date, days = 7, now: Date = new Date()): boolean {
+  return now.getTime() - new Date(createdAt).getTime() < days * 24 * 60 * 60 * 1000;
+}
+
 /** wa.me link to the operator with a ready-made message, or null if no number is set. */
 export function contactWhatsappLink(text: string): string | null {
   const contact = contactWhatsapp();

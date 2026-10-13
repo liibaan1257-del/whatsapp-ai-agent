@@ -452,6 +452,9 @@ export const fr: Messages = {
     empty: "Aucune entreprise trouvée.",
     notConfigured: "La page Admin nécessite SUPABASE_SERVICE_ROLE_KEY sur le serveur.",
     actionsFor: "Facturation de {name}",
+    joined: "Inscription",
+    noName: "Pas encore de nom d'entreprise",
+    newBadge: "Nouveau",
   },
   terms: {
     title: "Conditions d'utilisation",

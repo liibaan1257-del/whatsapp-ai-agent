@@ -452,6 +452,9 @@ export const ar: Messages = {
     empty: "لم يتم العثور على أنشطة.",
     notConfigured: "تحتاج صفحة الإدارة إلى SUPABASE_SERVICE_ROLE_KEY على الخادم.",
     actionsFor: "الفوترة لـ {name}",
+    joined: "تاريخ التسجيل",
+    noName: "لا يوجد اسم نشاط بعد",
+    newBadge: "جديد",
   },
   terms: {
     title: "شروط الخدمة",

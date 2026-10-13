@@ -452,6 +452,9 @@ export const es: Messages = {
     empty: "No se encontraron negocios.",
     notConfigured: "La página Admin necesita SUPABASE_SERVICE_ROLE_KEY en el servidor.",
     actionsFor: "Facturación de {name}",
+    joined: "Registro",
+    noName: "Aún sin nombre de negocio",
+    newBadge: "Nuevo",
   },
   terms: {
     title: "Términos del servicio",

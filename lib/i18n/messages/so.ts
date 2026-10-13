@@ -452,6 +452,9 @@ export const so: Messages = {
     empty: "Ganacsi lama helin.",
     notConfigured: "Bogga Admin wuxuu u baahan yahay SUPABASE_SERVICE_ROLE_KEY server-ka.",
     actionsFor: "Lacag bixinta {name}",
+    joined: "Is diiwaangeliyay",
+    noName: "Magac ganacsi weli ma leh",
+    newBadge: "Cusub",
   },
   terms: {
     title: "Shuruudaha Adeegga",

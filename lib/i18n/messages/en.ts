@@ -453,6 +453,9 @@ export const en = {
     empty: "No businesses found.",
     notConfigured: "The Admin page needs SUPABASE_SERVICE_ROLE_KEY on the server.",
     actionsFor: "Billing for {name}",
+    joined: "Signed up",
+    noName: "No business name yet",
+    newBadge: "New",
   },
   terms: {
     title: "Terms of Service",

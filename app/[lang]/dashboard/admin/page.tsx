@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { requireOwner } from "@/lib/auth/session";
-import { isActive, isPlan, monthStart, replyLimit } from "@/lib/billing";
+import { isActive, isNewSignup, isPlan, monthStart, replyLimit } from "@/lib/billing";
 import { configStatus } from "@/lib/env";
 import type { Locale } from "@/lib/i18n/config";
 import { getMessages, type Messages } from "@/lib/i18n/dictionaries";
@@ -54,11 +54,11 @@ async function Admin({
     .order("created_at", { ascending: false })
     .limit(500);
   const ownerIds = (businesses ?? []).map((b) => b.owner_id);
-  const { data: profiles } = ownerIds.length ? await db.from("profiles").select("id, email").in("id", ownerIds) : { data: [] };
-  const emailOf = new Map((profiles ?? []).map((p) => [p.id, p.email ?? ""]));
+  const { data: profiles } = ownerIds.length ? await db.from("profiles").select("id, email, full_name").in("id", ownerIds) : { data: [] };
+  const ownerOf = new Map((profiles ?? []).map((p) => [p.id, { email: p.email ?? "", name: p.full_name ?? "" }]));
   const rows = (businesses ?? [])
-    .map((b) => ({ ...b, email: emailOf.get(b.owner_id) ?? "" }))
-    .filter((b) => !q || b.email.toLowerCase().includes(q) || (b.business_name ?? "").toLowerCase().includes(q))
+    .map((b) => ({ ...b, email: ownerOf.get(b.owner_id)?.email ?? "", ownerName: ownerOf.get(b.owner_id)?.name ?? "" }))
+    .filter((b) => !q || [b.email, b.business_name ?? "", b.ownerName].some((v) => v.toLowerCase().includes(q)))
     .slice(0, 100);
 
   // This month's AI replies per business shown.
@@ -94,6 +94,7 @@ async function Admin({
               <TableHeader>
                 <TableRow>
                   <TableHead className="ps-4">{t.business}</TableHead>
+                  <TableHead>{t.joined}</TableHead>
                   <TableHead>{m.billing.plan}</TableHead>
                   <TableHead>{t.until}</TableHead>
                   <TableHead>{t.replies}</TableHead>
@@ -106,10 +107,21 @@ async function Admin({
                   return (
                     <TableRow key={b.id}>
                       <TableCell className="ps-4">
-                        <div className="font-medium">{b.business_name || "—"}</div>
+                        {b.business_name ? (
+                          <div className="font-medium">{b.business_name}</div>
+                        ) : (
+                          <div className="text-sm italic text-muted-foreground">{t.noName}</div>
+                        )}
+                        {b.ownerName && <div className="text-sm">{b.ownerName}</div>}
                         <div className="text-xs text-muted-foreground" dir="ltr">
                           {b.email}
                         </div>
+                      </TableCell>
+                      <TableCell>
+                        <div>{date.format(new Date(b.created_at))}</div>
+                        {isNewSignup(b.created_at) && (
+                          <span className="rounded-md bg-sky-500/15 px-2 py-0.5 text-xs font-medium text-sky-600 dark:text-sky-400">{t.newBadge}</span>
+                        )}
                       </TableCell>
                       <TableCell>{isPlan(b.plan) ? m.billing.plans[b.plan] : b.plan}</TableCell>
                       <TableCell>
@@ -122,7 +134,7 @@ async function Admin({
                         {counts[i]} / {replyLimit(b.plan)}
                       </TableCell>
                       <TableCell className="pe-4">
-                        <BillingActions businessId={b.id} name={b.business_name || b.email} plan={b.plan} />
+                        <BillingActions businessId={b.id} name={b.business_name || b.ownerName || b.email} plan={b.plan} />
                       </TableCell>
                     </TableRow>
                   );

@@ -452,6 +452,9 @@ export const de: Messages = {
     empty: "Keine Unternehmen gefunden.",
     notConfigured: "Die Admin-Seite braucht SUPABASE_SERVICE_ROLE_KEY auf dem Server.",
     actionsFor: "Abrechnung für {name}",
+    joined: "Registriert",
+    noName: "Noch kein Firmenname",
+    newBadge: "Neu",
   },
   terms: {
     title: "Nutzungsbedingungen",
