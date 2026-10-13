@@ -62,6 +62,8 @@ export const serverEnv = {
   twilioAuthToken: () => clean(process.env.TWILIO_AUTH_TOKEN),
   // Vercel Cron sends it as "Authorization: Bearer <CRON_SECRET>".
   cronSecret: () => clean(process.env.CRON_SECRET),
+  // Resend, for emails the app sends itself (e.g. "new signup" to the operator).
+  resendApiKey: () => clean(process.env.RESEND_API_KEY),
 };
 
 /** Which server-side features are configured (names only, never values). */

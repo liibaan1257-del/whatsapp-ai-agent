@@ -96,6 +96,8 @@ See `.env.example`. Mark every secret as **Sensitive**:
 | `WHATSAPP_VERIFY_TOKEN`, `WHATSAPP_APP_SECRET`, `WHATSAPP_ACCESS_TOKEN` | **secret** (Meta) |
 | `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN` | **secret** (Twilio, optional) |
 | `CRON_SECRET` | **secret** (daily reminder job; any long random string) |
+| `RESEND_API_KEY` | **secret**, optional (emails you when someone signs up; Resend key with sending access) |
+| `NOTIFY_EMAIL` | optional (where signup emails go; defaults to `NEXT_PUBLIC_CONTACT_EMAIL`) |
 | `NEXT_PUBLIC_CONTACT_EMAIL`, `NEXT_PUBLIC_CONTACT_WHATSAPP` | public, optional (contact links on home + privacy page) |
 
 Redeploy after changing them.

@@ -2,12 +2,15 @@
 
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { after } from "next/server";
 import { LOGIN_PATH, safeNextPath } from "@/lib/auth/redirect";
 import { isSupabaseConfigured } from "@/lib/env";
 import { fmt } from "@/lib/i18n/config";
 import type { Messages } from "@/lib/i18n/dictionaries";
 import { requestMessages } from "@/lib/i18n/server";
 import { isValidTimeZone } from "@/lib/knowledge";
+import { notifyOperator } from "@/lib/notify";
+import { siteUrl } from "@/lib/site";
 import { createClient } from "@/lib/supabase/server";
 
 export type AuthState = {
@@ -87,6 +90,14 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
   // Supabase answers an already-registered email with a user that has no
   // identities and sends no email (it hides which emails exist): say so.
   if (data.user && data.user.identities?.length === 0) return { error: e.userExists };
+  // Tell the operator about the new signup, after the response is sent.
+  const who = fullName.replace(/\s+/g, " ") || email;
+  after(() =>
+    notifyOperator(
+      `New ReplyBooker signup: ${who}`,
+      `${who} (${email}) just signed up.\nTime zone: ${timezone}\n\nSee all customers: ${siteUrl()}/dashboard/admin`,
+    ),
+  );
   // Email confirmation on: no session yet.
   if (!data.session) return { notice: fmt(m.auth.checkEmail, { email }) };
   redirect("/dashboard");
