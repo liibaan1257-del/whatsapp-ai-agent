@@ -460,6 +460,10 @@ export const so: Messages = {
     delete: "Tirtir",
     deleteConfirm: "Ma tirtiraysaa {name} iyo xogtiisa oo dhan? Dib looma soo celin karo.",
     cannotDeleteAdmin: "Akoonnada Admin-ka halkan lagama tirtiri karo.",
+    sendWelcome: "Dir email soo dhowayn",
+    sending: "Waa la dirayaa…",
+    welcomeSent: "Email-kii soo dhowaynta waa la diray.",
+    emailFailed: "Email-ka lama dirin (hubi RESEND_API_KEY).",
   },
   terms: {
     title: "Shuruudaha Adeegga",

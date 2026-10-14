@@ -460,6 +460,10 @@ export const es: Messages = {
     delete: "Eliminar",
     deleteConfirm: "¿Eliminar {name} y todos sus datos? No se puede deshacer.",
     cannotDeleteAdmin: "Las cuentas de administrador no se pueden eliminar aquí.",
+    sendWelcome: "Enviar email de bienvenida",
+    sending: "Enviando…",
+    welcomeSent: "Email de bienvenida enviado.",
+    emailFailed: "No se pudo enviar el email (revisa RESEND_API_KEY).",
   },
   terms: {
     title: "Términos del servicio",

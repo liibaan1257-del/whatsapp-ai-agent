@@ -460,6 +460,10 @@ export const de: Messages = {
     delete: "Löschen",
     deleteConfirm: "{name} und alle Daten löschen? Das kann nicht rückgängig gemacht werden.",
     cannotDeleteAdmin: "Admin-Konten können hier nicht gelöscht werden.",
+    sendWelcome: "Willkommens-E-Mail senden",
+    sending: "Wird gesendet…",
+    welcomeSent: "Willkommens-E-Mail gesendet.",
+    emailFailed: "E-Mail konnte nicht gesendet werden (RESEND_API_KEY prüfen).",
   },
   terms: {
     title: "Nutzungsbedingungen",

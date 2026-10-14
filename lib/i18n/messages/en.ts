@@ -461,6 +461,10 @@ export const en = {
     delete: "Delete",
     deleteConfirm: "Delete {name} and all its data? This can't be undone.",
     cannotDeleteAdmin: "Admin accounts can't be deleted here.",
+    sendWelcome: "Send welcome email",
+    sending: "Sending…",
+    welcomeSent: "Welcome email sent.",
+    emailFailed: "Couldn't send the email (check RESEND_API_KEY).",
   },
   terms: {
     title: "Terms of Service",

@@ -460,6 +460,10 @@ export const ar: Messages = {
     delete: "حذف",
     deleteConfirm: "حذف {name} وجميع بياناته؟ لا يمكن التراجع عن ذلك.",
     cannotDeleteAdmin: "لا يمكن حذف حسابات المسؤول من هنا.",
+    sendWelcome: "إرسال رسالة ترحيب",
+    sending: "جارٍ الإرسال…",
+    welcomeSent: "تم إرسال رسالة الترحيب.",
+    emailFailed: "تعذّر إرسال البريد (تحقق من RESEND_API_KEY).",
   },
   terms: {
     title: "شروط الخدمة",

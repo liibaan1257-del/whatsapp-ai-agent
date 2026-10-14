@@ -6,13 +6,14 @@ import { isPlan } from "@/lib/billing";
 import { configStatus } from "@/lib/env";
 import { requestMessages } from "@/lib/i18n/server";
 import { logger } from "@/lib/logger";
+import { sendWelcome } from "@/lib/notify";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const OPS = ["month", "year", "pause", "plan"] as const;
 type Op = (typeof OPS)[number];
 
-export type AdminState = { ok?: boolean; error?: string };
+export type AdminState = { ok?: boolean; error?: string; notice?: string };
 
 /**
  * Operator only: extend, pause or change the plan of any business after a
@@ -81,4 +82,24 @@ export async function deleteBusinessAccount(_prev: AdminState, formData: FormDat
   logger.info("admin_account_deleted", { by: owner.id, businessId: id });
   refresh();
   return { ok: true };
+}
+
+/** Operator only: (re)send the welcome email to a business owner, in Somali and English. */
+export async function sendWelcomeEmail(_prev: AdminState, formData: FormData): Promise<AdminState> {
+  const m = await requestMessages();
+  const owner = await getOwner();
+  if (!owner?.isAdmin) return { error: m.admin.failed };
+  if (!configStatus().serviceRole) return { error: m.admin.notConfigured };
+
+  const id = String(formData.get("business_id") ?? "");
+  if (!UUID.test(id)) return { error: m.admin.failed };
+  const db = createAdminClient();
+  const { data: business } = await db.from("business_knowledge").select("owner_id").eq("id", id).maybeSingle();
+  if (!business) return { error: m.admin.failed };
+  const { data: profile } = await db.from("profiles").select("email, full_name").eq("id", business.owner_id).maybeSingle();
+  if (!profile?.email) return { error: m.admin.failed };
+
+  const sent = await sendWelcome(profile.email, profile.full_name ?? "", "both");
+  logger.info("admin_welcome_sent", { by: owner.id, businessId: id, sent });
+  return sent ? { ok: true, notice: m.admin.welcomeSent } : { error: m.admin.emailFailed };
 }

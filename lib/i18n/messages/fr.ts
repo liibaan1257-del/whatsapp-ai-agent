@@ -460,6 +460,10 @@ export const fr: Messages = {
     delete: "Supprimer",
     deleteConfirm: "Supprimer {name} et toutes ses données ? Action irréversible.",
     cannotDeleteAdmin: "Les comptes administrateur ne peuvent pas être supprimés ici.",
+    sendWelcome: "Envoyer l'email de bienvenue",
+    sending: "Envoi…",
+    welcomeSent: "Email de bienvenue envoyé.",
+    emailFailed: "Impossible d'envoyer l'email (vérifiez RESEND_API_KEY).",
   },
   terms: {
     title: "Conditions d'utilisation",
