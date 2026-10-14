@@ -38,6 +38,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         "@type": "Organization",
         name: m.meta.appName,
         url: siteUrl(),
+        logo: `${siteUrl()}/apple-icon.png`,
         email: "liibaan1257@gmail.com",
         sameAs: SOCIAL_LINKS.map((s) => s.url),
       },

@@ -22,7 +22,15 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
     title: { default: m.meta.appName, template: `%s · ${m.meta.appName}` },
     description: m.meta.description,
     metadataBase: new URL(siteUrl()),
-    openGraph: { type: "website", siteName: m.meta.appName, title: m.meta.appName, description: m.meta.description, url: "/" },
+    openGraph: {
+      type: "website",
+      siteName: m.meta.appName,
+      title: m.meta.appName,
+      description: m.meta.description,
+      url: "/",
+      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: m.meta.appName }],
+    },
+    twitter: { card: "summary_large_image", images: ["/og-image.png"] },
   };
 }
 
