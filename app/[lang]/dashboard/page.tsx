@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
-import { CalendarClock, CalendarCheck, CircleCheck, Circle, MessagesSquare, Sparkles } from "lucide-react";
+import { CalendarClock, CalendarCheck, CircleCheck, MessagesSquare, Sparkles } from "lucide-react";
 import { LiveRefresh } from "@/components/dashboard/live-refresh";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Badge } from "@/components/ui/badge";
@@ -10,7 +10,7 @@ import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle }
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { requireOwner } from "@/lib/auth/session";
-import { getKnowledge, getOverview } from "@/lib/dashboard/data";
+import { getKnowledge, getOverview, hasTestedChat } from "@/lib/dashboard/data";
 import { configStatus } from "@/lib/env";
 import { formatDateTime, STATUS_STYLES, timeAgo } from "@/lib/format";
 import { fmt, type Locale } from "@/lib/i18n/config";
@@ -34,22 +34,25 @@ export default async function OverviewPage({ params }: PageProps<"/[lang]/dashbo
 async function Overview({ locale, m }: { locale: Locale; m: Messages }) {
   const o = m.overview;
   const owner = await requireOwner("/dashboard");
-  const [{ stats, conversations, bookings }, knowledge] = await Promise.all([getOverview(), getKnowledge()]);
+  const [{ stats, conversations, bookings }, knowledge, tested] = await Promise.all([getOverview(), getKnowledge(), hasTestedChat()]);
   const tz = knowledge?.timezone ?? "UTC";
   const tf = knowledge?.time_format ?? "24h";
   const config = configStatus();
 
+  // Onboarding steps, in order. The AI key is the operator's setting: only the admin sees it.
   const setup = [
     { done: Boolean(knowledge?.business_name), label: o.setupName, href: "/dashboard/knowledge" },
     { done: Boolean(knowledge?.services.length), label: o.setupServices, href: "/dashboard/knowledge" },
     { done: Boolean(knowledge && Object.values(knowledge.working_hours).some(Boolean)), label: o.setupHours, href: "/dashboard/knowledge" },
-    { done: config.ai, label: o.setupAi, href: null },
+    { done: tested, label: o.setupTest, href: "/dashboard/chat-test" },
     {
       done:
         (Boolean(knowledge?.whatsapp_phone_number_id) && config.whatsappWebhook && config.whatsappSend) ||
         (Boolean(knowledge?.twilio_whatsapp_number) && config.twilio),
       label: o.setupWhatsapp, href: "/dashboard/knowledge" },
+    ...(owner.isAdmin ? [{ done: config.ai, label: o.setupAi, href: null }] : []),
   ];
+  const next = setup.find((s) => !s.done && s.href);
   const setupDone = setup.every((s) => s.done);
 
   const cards = [
@@ -74,20 +77,33 @@ async function Overview({ locale, m }: { locale: Locale; m: Messages }) {
             <CardDescription>{o.finishSetupHint}</CardDescription>
           </CardHeader>
           <CardContent>
-            <ul className="grid gap-2 sm:grid-cols-2">
-              {setup.map((s) => (
+            <ol className="grid gap-2 sm:grid-cols-2">
+              {setup.map((s, i) => (
                 <li key={s.label} className="flex items-center gap-2 text-sm">
-                  {s.done ? <CircleCheck className="size-4 text-brand" aria-label={m.common.done} /> : <Circle className="size-4 text-muted-foreground" aria-label={m.common.toDo} />}
+                  {s.done ? (
+                    <CircleCheck className="size-5 shrink-0 text-brand" aria-label={m.common.done} />
+                  ) : (
+                    <span className="grid size-5 shrink-0 place-items-center rounded-full border text-xs text-muted-foreground" aria-label={m.common.toDo}>
+                      {i + 1}
+                    </span>
+                  )}
                   {s.href && !s.done ? (
-                    <Link href={s.href} className="underline-offset-4 hover:underline">
+                    <Link href={s.href} className={s === next ? "font-medium underline-offset-4 hover:underline" : "underline-offset-4 hover:underline"}>
                       {s.label}
                     </Link>
                   ) : (
-                    <span className={s.done ? "text-muted-foreground" : ""}>{s.label}</span>
+                    <span className={s.done ? "text-muted-foreground line-through" : ""}>{s.label}</span>
                   )}
                 </li>
               ))}
-            </ul>
+            </ol>
+            {next?.href ? (
+              <Button asChild variant="brand" size="sm" className="mt-4">
+                <Link href={next.href}>
+                  {o.setupNext}: {next.label}
+                </Link>
+              </Button>
+            ) : null}
           </CardContent>
         </Card>
       ) : null}

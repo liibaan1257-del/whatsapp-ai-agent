@@ -21,6 +21,7 @@ export function SignupForm() {
   const { m } = useI18n();
   const [state, action, pending] = useActionState<AuthState, FormData>(signup, {});
   const [fullName, setFullName] = useState("");
+  const [businessName, setBusinessName] = useState("");
   const [email, setEmail] = useState("");
 
   if (state.notice) {
@@ -41,6 +42,16 @@ export function SignupForm() {
         value={fullName}
         onChange={(e) => setFullName(e.target.value)}
         error={state.fieldErrors?.fullName}
+      />
+      <Field
+        id="businessName"
+        label={m.knowledge.businessName}
+        placeholder={m.knowledge.businessNamePlaceholder}
+        autoComplete="organization"
+        maxLength={120}
+        value={businessName}
+        onChange={(e) => setBusinessName(e.target.value)}
+        error={state.fieldErrors?.businessName}
       />
       <Field
         id="email"

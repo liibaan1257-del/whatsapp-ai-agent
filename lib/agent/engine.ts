@@ -1,9 +1,11 @@
 import "server-only";
+import { after } from "next/server";
 import { describeAiError, isAiConfigured, runAgent, type ChatTurn, type Intent } from "@/lib/ai/agent";
 import { checkBooking } from "@/lib/ai/booking";
 import { isActive, monthStart, replyLimit } from "@/lib/billing";
 import { parseKnowledge } from "@/lib/knowledge";
 import { logger } from "@/lib/logger";
+import { notifyOwnerOfBooking } from "@/lib/owner-notify";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 /**
@@ -187,6 +189,11 @@ export async function handleCustomerMessage(msg: IncomingMessage): Promise<Engin
           reply = "Sorry, something went wrong saving your booking. A member of our team will contact you.";
         } else {
           bookingId = saved.id;
+          // Tell the owner about real customers' bookings (not their own Chat tester tests).
+          if (msg.channel === "whatsapp") {
+            const booked = { customerName: check.customerName, phone: msg.customerPhone, service: check.service, start: check.start };
+            after(() => notifyOwnerOfBooking(msg.businessId, knowledge, booked));
+          }
         }
       }
     } else {

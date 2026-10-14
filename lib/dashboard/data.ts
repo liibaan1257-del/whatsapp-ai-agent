@@ -13,6 +13,13 @@ export async function getKnowledge(): Promise<Knowledge | null> {
   return data ? parseKnowledge(data) : null;
 }
 
+/** Whether the owner has tried the Chat tester (onboarding step). */
+export async function hasTestedChat(): Promise<boolean> {
+  const supabase = await createClient();
+  const { count } = await supabase.from("conversations").select("id", { count: "exact", head: true }).eq("channel", "test");
+  return (count ?? 0) > 0;
+}
+
 export type ConversationRow = {
   id: string;
   channel: "whatsapp" | "test";

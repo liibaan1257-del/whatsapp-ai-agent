@@ -260,6 +260,8 @@ export const es: Messages = {
     setupHours: "Define el horario",
     setupAi: "Clave de IA configurada (ANTHROPIC_API_KEY)",
     setupWhatsapp: "Conecta WhatsApp",
+    setupTest: "Prueba tu IA en el probador de chat",
+    setupNext: "Siguiente paso",
     activeConversations: "Conversaciones activas",
     activeHint: "WhatsApp, últimos 7 días",
     leads: "Clientes potenciales",

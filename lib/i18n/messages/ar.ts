@@ -260,6 +260,8 @@ export const ar: Messages = {
     setupHours: "حدد ساعات العمل",
     setupAi: "مفتاح الذكاء الاصطناعي مُعدّ (ANTHROPIC_API_KEY)",
     setupWhatsapp: "اربط واتساب",
+    setupTest: "جرّب مساعدك الذكي في أداة اختبار المحادثة",
+    setupNext: "الخطوة التالية",
     activeConversations: "المحادثات النشطة",
     activeHint: "واتساب، آخر 7 أيام",
     leads: "العملاء المحتملون",

@@ -260,6 +260,8 @@ export const so: Messages = {
     setupHours: "Dhig saacadaha shaqada",
     setupAi: "Furaha AI waa la geliyay (ANTHROPIC_API_KEY)",
     setupWhatsapp: "Ku xidh WhatsApp",
+    setupTest: "Ku tijaabi AI-gaaga Chat tester-ka",
+    setupNext: "Tallaabada xigta",
     activeConversations: "Wada-hadallada firfircoon",
     activeHint: "WhatsApp, 7-dii maalmood ee u dambeeyay",
     leads: "Macaamiil suurtagal ah",

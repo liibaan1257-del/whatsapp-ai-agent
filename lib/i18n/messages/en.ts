@@ -259,6 +259,8 @@ export const en = {
     setupHours: "Set opening hours",
     setupAi: "AI key configured (ANTHROPIC_API_KEY)",
     setupWhatsapp: "Connect WhatsApp",
+    setupTest: "Try your AI in the Chat tester",
+    setupNext: "Next step",
     activeConversations: "Active conversations",
     activeHint: "WhatsApp, last 7 days",
     leads: "Leads",

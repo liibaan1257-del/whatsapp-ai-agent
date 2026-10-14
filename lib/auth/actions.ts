@@ -9,14 +9,16 @@ import { fmt } from "@/lib/i18n/config";
 import type { Messages } from "@/lib/i18n/dictionaries";
 import { requestLocale, requestMessages } from "@/lib/i18n/server";
 import { isValidTimeZone } from "@/lib/knowledge";
+import { logger } from "@/lib/logger";
 import { notifyOperator, sendWelcome } from "@/lib/notify";
 import { siteUrl } from "@/lib/site";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 
 export type AuthState = {
   error?: string;
   notice?: string;
-  fieldErrors?: { email?: string; password?: string; fullName?: string };
+  fieldErrors?: { email?: string; password?: string; fullName?: string; businessName?: string };
 };
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -54,6 +56,7 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
   const m = await requestMessages();
   const e = m.auth.errors;
   const fullName = String(formData.get("fullName") ?? "").trim();
+  const businessName = String(formData.get("businessName") ?? "").replace(/\s+/g, " ").trim();
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const password = String(formData.get("password") ?? "");
   // Only a name the runtime knows is passed on; the database checks it again.
@@ -62,9 +65,10 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
 
   const fieldErrors: AuthState["fieldErrors"] = { email: checkEmail(email, m) };
   if (fullName.length > 100) fieldErrors.fullName = e.nameTooLong;
+  if (businessName.length > 100) fieldErrors.businessName = e.nameTooLong;
   if (password.length < MIN_PASSWORD) fieldErrors.password = fmt(e.passwordShort, { min: MIN_PASSWORD });
   else if (password.length > 72) fieldErrors.password = e.passwordLong;
-  if (fieldErrors.email || fieldErrors.password || fieldErrors.fullName) return { fieldErrors };
+  if (fieldErrors.email || fieldErrors.password || fieldErrors.fullName || fieldErrors.businessName) return { fieldErrors };
   if (!isSupabaseConfigured()) return { error: e.signUpNotConfigured };
 
   const h = await headers();
@@ -91,7 +95,9 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
   // identities and sends no email (it hides which emails exist): say so.
   if (data.user && data.user.identities?.length === 0) return { error: e.userExists };
   // Tell the operator and welcome the new owner, after the response is sent.
-  const who = fullName.replace(/\s+/g, " ") || email;
+  // The database trigger created the business row; name it (server-side, by the new user's id).
+  if (businessName && data.user) await nameNewBusiness(data.user.id, businessName);
+  const who = [fullName.replace(/\s+/g, " "), businessName && `(${businessName})`].filter(Boolean).join(" ") || email;
   const locale = await requestLocale();
   after(() =>
     Promise.all([
@@ -160,4 +166,14 @@ export async function logout(): Promise<void> {
     await supabase.auth.signOut();
   }
   redirect(LOGIN_PATH);
+}
+
+/** Sets the business name chosen at sign-up. Best effort: the owner can always set it later. */
+async function nameNewBusiness(ownerId: string, businessName: string) {
+  try {
+    const { error } = await createAdminClient().from("business_knowledge").update({ business_name: businessName }).eq("owner_id", ownerId);
+    if (error) logger.warn("signup_business_name_failed", { code: error.code });
+  } catch (error) {
+    logger.warn("signup_business_name_failed", { error: String(error) });
+  }
 }

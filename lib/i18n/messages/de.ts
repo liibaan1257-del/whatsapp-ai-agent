@@ -260,6 +260,8 @@ export const de: Messages = {
     setupHours: "Öffnungszeiten festlegen",
     setupAi: "KI-Schlüssel eingerichtet (ANTHROPIC_API_KEY)",
     setupWhatsapp: "WhatsApp verbinden",
+    setupTest: "Teste deine KI im Chat-Tester",
+    setupNext: "Nächster Schritt",
     activeConversations: "Aktive Unterhaltungen",
     activeHint: "WhatsApp, letzte 7 Tage",
     leads: "Interessenten",
