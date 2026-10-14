@@ -92,10 +92,18 @@ export function parseInbound(body: unknown): InboundMessage[] {
 const MAX_BODY = 4096;
 
 /** Sends a text message from the business's number. Returns false (and logs) on failure. */
-export async function sendText(phoneNumberId: string, to: string, body: string): Promise<boolean> {
+export type SendError = { status?: number; code?: number; reason?: string };
+
+export async function sendText(
+  phoneNumberId: string,
+  to: string,
+  body: string,
+  onError?: (error: SendError) => void | Promise<void>,
+): Promise<boolean> {
   const token = serverEnv.whatsappAccessToken();
   if (!token) {
     logger.warn("whatsapp_send_skipped", { reason: "WHATSAPP_ACCESS_TOKEN not set" });
+    await onError?.({ reason: "WHATSAPP_ACCESS_TOKEN not set" });
     return false;
   }
   const base = (process.env.WHATSAPP_API_BASE ?? "https://graph.facebook.com").replace(/\/+$/, "");
@@ -116,11 +124,13 @@ export async function sendText(phoneNumberId: string, to: string, body: string):
     if (!res.ok) {
       const detail = await res.json().catch(() => null);
       logger.error("whatsapp_send_failed", { status: res.status, code: detail?.error?.code, type: detail?.error?.type });
+      await onError?.({ status: res.status, code: detail?.error?.code, reason: detail?.error?.type });
       return false;
     }
     return true;
   } catch (error) {
     logger.error("whatsapp_send_failed", { error: error instanceof Error ? error.message : String(error) });
+    await onError?.({ reason: error instanceof Error ? error.name : "network_error" });
     return false;
   }
 }

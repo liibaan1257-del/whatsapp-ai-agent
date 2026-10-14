@@ -3,13 +3,40 @@ import { handleCustomerMessage } from "@/lib/agent/engine";
 import { serverEnv } from "@/lib/env";
 import { logger } from "@/lib/logger";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { parseInbound, safeEqual, sendText, verifySignature, type InboundMessage } from "@/lib/whatsapp/meta";
+import {
+  parseInbound,
+  safeEqual,
+  sendText,
+  verifySignature,
+  type InboundMessage,
+  type SendError,
+} from "@/lib/whatsapp/meta";
 
 /** Time for the AI and the reply after Meta has its 200 (seconds). */
 export const maxDuration = 60;
 
 const MAX_BODY_BYTES = 256 * 1024;
 const UNSUPPORTED_REPLY = "Thanks! For now I can only read text messages. Please type your question.";
+
+/**
+ * Writes one row to webhook_events (no message text, no secrets) so the
+ * operator can see why a message got no answer. Never throws.
+ */
+async function recordEvent(outcome: string, detail?: string) {
+  try {
+    await createAdminClient()
+      .from("webhook_events")
+      .insert({ outcome, detail: detail?.slice(0, 500) ?? null });
+  } catch {
+    // Diagnostics only: a failed write must not affect message handling.
+  }
+}
+
+function describeSendError(error: SendError) {
+  return [error.status && `status ${error.status}`, error.code && `code ${error.code}`, error.reason]
+    .filter(Boolean)
+    .join(", ");
+}
 
 /**
  * GET /api/whatsapp/webhook — Meta's one-time verification handshake.
@@ -46,6 +73,7 @@ export async function POST(request: NextRequest) {
 
   if (!verifySignature(raw, request.headers.get("x-hub-signature-256"), appSecret)) {
     logger.warn("webhook_bad_signature");
+    after(() => recordEvent("bad_signature", "check WHATSAPP_APP_SECRET"));
     return Response.json({ error: "invalid_signature" }, { status: 401 });
   }
 
@@ -57,7 +85,12 @@ export async function POST(request: NextRequest) {
   }
 
   const messages = parseInbound(body);
-  if (messages.length) after(() => processMessages(messages));
+  if (messages.length) {
+    after(async () => {
+      await recordEvent("received", `${messages.length} message(s)`);
+      await processMessages(messages);
+    });
+  }
   return Response.json({ received: true, messages: messages.length });
 }
 
@@ -73,11 +106,14 @@ async function processMessages(messages: InboundMessage[]) {
         .maybeSingle();
       if (!business) {
         logger.warn("webhook_unknown_number", { phoneNumberId: m.phoneNumberId });
+        await recordEvent("unknown_number", `phone_number_id ${m.phoneNumberId}`);
         continue;
       }
 
+      const onSendError = (error: SendError) => recordEvent("send_failed", describeSendError(error));
+
       if (m.text === null) {
-        await sendText(m.phoneNumberId, m.from, UNSUPPORTED_REPLY);
+        await sendText(m.phoneNumberId, m.from, UNSUPPORTED_REPLY, onSendError);
         logger.info("webhook_unsupported_type", { type: m.type });
         continue;
       }
@@ -91,10 +127,15 @@ async function processMessages(messages: InboundMessage[]) {
         externalId: m.messageId,
         provider: "meta",
       });
-      if (result.status === "replied") await sendText(m.phoneNumberId, m.from, result.reply);
-      else logger.info("webhook_no_reply", { status: result.status, conversationId: result.conversationId });
+      if (result.status === "replied") {
+        if (await sendText(m.phoneNumberId, m.from, result.reply, onSendError)) await recordEvent("replied");
+      } else {
+        logger.info("webhook_no_reply", { status: result.status, conversationId: result.conversationId });
+        await recordEvent("no_reply", result.status);
+      }
     } catch (error) {
       logger.error("webhook_processing_failed", { error: error instanceof Error ? error.message : String(error) });
+      await recordEvent("processing_failed", error instanceof Error ? error.message : String(error));
     }
   }
 }
