@@ -18,6 +18,7 @@ import { contactWhatsappLink, PLAN_NAMES, PLANS, PRICES_USD } from "@/lib/billin
 import { fmt } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n/dictionaries";
 import { localeFrom } from "@/lib/i18n/server";
+import { siteUrl, SOCIAL_LINKS } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const FEATURE_ICONS: LucideIcon[] = [Clock, CalendarCheck, Languages, LayoutDashboard, Plug, ShieldCheck];
@@ -29,9 +30,33 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
   const t = m.landing;
   const whatsapp = contactWhatsappLink(t.ctaWhatsapp);
   const money = new Intl.NumberFormat(locale, { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+  // Structured data: tells search engines what ReplyBooker is, its prices and its social profiles.
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        name: m.meta.appName,
+        url: siteUrl(),
+        email: "liibaan1257@gmail.com",
+        sameAs: SOCIAL_LINKS.map((s) => s.url),
+      },
+      {
+        "@type": "SoftwareApplication",
+        name: m.meta.appName,
+        url: siteUrl(),
+        description: m.meta.description,
+        applicationCategory: "BusinessApplication",
+        operatingSystem: "Web",
+        inLanguage: locale,
+        offers: PLAN_NAMES.map((plan) => ({ "@type": "Offer", name: m.billing.plans[plan], price: PRICES_USD[plan], priceCurrency: "USD" })),
+      },
+    ],
+  };
 
   return (
     <div className="flex flex-1 flex-col">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       {/* Header */}
       <header className="sticky top-0 z-30 border-b bg-background/85 backdrop-blur">
         <div className="mx-auto flex h-14 max-w-6xl items-center gap-4 px-4 sm:px-6">
@@ -210,6 +235,11 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             © {m.meta.appName}. {t.rights}
           </p>
           <div className="flex flex-wrap items-center gap-3">
+            {SOCIAL_LINKS.map((s) => (
+              <a key={s.name} href={s.url} target="_blank" rel="noopener noreferrer me" className="hover:text-foreground">
+                {s.name}
+              </a>
+            ))}
             <PrivacyLink />
             <LanguageSwitcher className="w-40" />
             <ThemeToggle className="w-36" />

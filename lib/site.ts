@@ -2,3 +2,9 @@
 export function siteUrl(): string {
   return (process.env.NEXT_PUBLIC_SITE_URL || "https://www.replybooker.com").replace(/\/+$/, "");
 }
+
+/** Public social profiles: footer links, and the sameAs list search engines read. */
+export const SOCIAL_LINKS = [
+  { name: "TikTok", url: "https://vt.tiktok.com/ZSgJXpEMA/" },
+  { name: "Instagram", url: "https://www.instagram.com/p/Debw_G_KgmC/" },
+] as const;
