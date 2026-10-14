@@ -458,6 +458,9 @@ export const en = {
     joined: "Signed up",
     noName: "No business name yet",
     newBadge: "New",
+    delete: "Delete",
+    deleteConfirm: "Delete {name} and all its data? This can't be undone.",
+    cannotDeleteAdmin: "Admin accounts can't be deleted here.",
   },
   terms: {
     title: "Terms of Service",

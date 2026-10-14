@@ -457,6 +457,9 @@ export const de: Messages = {
     joined: "Registriert",
     noName: "Noch kein Firmenname",
     newBadge: "Neu",
+    delete: "Löschen",
+    deleteConfirm: "{name} und alle Daten löschen? Das kann nicht rückgängig gemacht werden.",
+    cannotDeleteAdmin: "Admin-Konten können hier nicht gelöscht werden.",
   },
   terms: {
     title: "Nutzungsbedingungen",

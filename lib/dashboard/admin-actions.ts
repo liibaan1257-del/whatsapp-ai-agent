@@ -52,3 +52,33 @@ export async function updateBilling(_prev: AdminState, formData: FormData): Prom
   refresh();
   return { ok: true };
 }
+
+/**
+ * Operator only: delete a business owner's account and all its data (test or
+ * junk sign-ups). Admin accounts can't be deleted here.
+ */
+export async function deleteBusinessAccount(_prev: AdminState, formData: FormData): Promise<AdminState> {
+  const m = await requestMessages();
+  const owner = await getOwner();
+  if (!owner?.isAdmin) return { error: m.admin.failed };
+  if (!configStatus().serviceRole) return { error: m.admin.notConfigured };
+
+  const id = String(formData.get("business_id") ?? "");
+  if (!UUID.test(id)) return { error: m.admin.failed };
+
+  const db = createAdminClient();
+  const { data: business } = await db.from("business_knowledge").select("owner_id").eq("id", id).maybeSingle();
+  if (!business) return { error: m.admin.failed };
+  const { data: profile } = await db.from("profiles").select("is_platform_admin").eq("id", business.owner_id).maybeSingle();
+  if (business.owner_id === owner.id || profile?.is_platform_admin) return { error: m.admin.cannotDeleteAdmin };
+
+  // Deleting the login removes the profile, business and everything under it (foreign keys cascade).
+  const { error } = await db.auth.admin.deleteUser(business.owner_id);
+  if (error) {
+    logger.error("admin_delete_failed", { businessId: id, status: error.status });
+    return { error: m.admin.failed };
+  }
+  logger.info("admin_account_deleted", { by: owner.id, businessId: id });
+  refresh();
+  return { ok: true };
+}

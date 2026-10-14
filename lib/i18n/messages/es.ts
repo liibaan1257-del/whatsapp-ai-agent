@@ -457,6 +457,9 @@ export const es: Messages = {
     joined: "Registro",
     noName: "Aún sin nombre de negocio",
     newBadge: "Nuevo",
+    delete: "Eliminar",
+    deleteConfirm: "¿Eliminar {name} y todos sus datos? No se puede deshacer.",
+    cannotDeleteAdmin: "Las cuentas de administrador no se pueden eliminar aquí.",
   },
   terms: {
     title: "Términos del servicio",

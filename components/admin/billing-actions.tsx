@@ -4,13 +4,14 @@ import { useActionState } from "react";
 import { useI18n } from "@/components/i18n/provider";
 import { Button } from "@/components/ui/button";
 import { PLAN_NAMES } from "@/lib/billing";
-import { updateBilling, type AdminState } from "@/lib/dashboard/admin-actions";
+import { deleteBusinessAccount, updateBilling, type AdminState } from "@/lib/dashboard/admin-actions";
 import { fmt } from "@/lib/i18n/config";
 
 /** +1 month / +1 year / pause / plan for one business. */
 export function BillingActions({ businessId, name, plan }: { businessId: string; name: string; plan: string }) {
   const { m } = useI18n();
   const [state, action, pending] = useActionState<AdminState, FormData>(updateBilling, {});
+  const [delState, delAction, deleting] = useActionState<AdminState, FormData>(deleteBusinessAccount, {});
   const op = (value: string, label: string, variant: "brand" | "outline" | "ghost") => (
     <form action={action}>
       <input type="hidden" name="business_id" value={businessId} />
@@ -43,7 +44,19 @@ export function BillingActions({ businessId, name, plan }: { businessId: string;
           ))}
         </select>
       </form>
+      <form
+        action={delAction}
+        onSubmit={(e) => {
+          if (!window.confirm(fmt(m.admin.deleteConfirm, { name }))) e.preventDefault();
+        }}
+      >
+        <input type="hidden" name="business_id" value={businessId} />
+        <Button type="submit" size="sm" variant="ghost" className="text-destructive hover:text-destructive" disabled={deleting}>
+          {m.admin.delete}
+        </Button>
+      </form>
       <span aria-live="polite" className="text-xs">
+        {delState.error ? <span className="text-destructive">{delState.error}</span> : null}
         {state.error ? <span className="text-destructive">{state.error}</span> : state.ok && !pending ? <span className="text-brand">{m.admin.saved}</span> : null}
       </span>
     </div>

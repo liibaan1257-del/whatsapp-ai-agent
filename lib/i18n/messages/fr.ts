@@ -457,6 +457,9 @@ export const fr: Messages = {
     joined: "Inscription",
     noName: "Pas encore de nom d'entreprise",
     newBadge: "Nouveau",
+    delete: "Supprimer",
+    deleteConfirm: "Supprimer {name} et toutes ses données ? Action irréversible.",
+    cannotDeleteAdmin: "Les comptes administrateur ne peuvent pas être supprimés ici.",
   },
   terms: {
     title: "Conditions d'utilisation",

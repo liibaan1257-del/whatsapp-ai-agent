@@ -457,6 +457,9 @@ export const so: Messages = {
     joined: "Is diiwaangeliyay",
     noName: "Magac ganacsi weli ma leh",
     newBadge: "Cusub",
+    delete: "Tirtir",
+    deleteConfirm: "Ma tirtiraysaa {name} iyo xogtiisa oo dhan? Dib looma soo celin karo.",
+    cannotDeleteAdmin: "Akoonnada Admin-ka halkan lagama tirtiri karo.",
   },
   terms: {
     title: "Shuruudaha Adeegga",

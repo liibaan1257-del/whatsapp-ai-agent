@@ -457,6 +457,9 @@ export const ar: Messages = {
     joined: "تاريخ التسجيل",
     noName: "لا يوجد اسم نشاط بعد",
     newBadge: "جديد",
+    delete: "حذف",
+    deleteConfirm: "حذف {name} وجميع بياناته؟ لا يمكن التراجع عن ذلك.",
+    cannotDeleteAdmin: "لا يمكن حذف حسابات المسؤول من هنا.",
   },
   terms: {
     title: "شروط الخدمة",
