@@ -7,9 +7,9 @@ import { LOGIN_PATH, safeNextPath } from "@/lib/auth/redirect";
 import { isSupabaseConfigured } from "@/lib/env";
 import { fmt } from "@/lib/i18n/config";
 import type { Messages } from "@/lib/i18n/dictionaries";
-import { requestMessages } from "@/lib/i18n/server";
+import { requestLocale, requestMessages } from "@/lib/i18n/server";
 import { isValidTimeZone } from "@/lib/knowledge";
-import { notifyOperator } from "@/lib/notify";
+import { notifyOperator, sendWelcome } from "@/lib/notify";
 import { siteUrl } from "@/lib/site";
 import { createClient } from "@/lib/supabase/server";
 
@@ -90,13 +90,17 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
   // Supabase answers an already-registered email with a user that has no
   // identities and sends no email (it hides which emails exist): say so.
   if (data.user && data.user.identities?.length === 0) return { error: e.userExists };
-  // Tell the operator about the new signup, after the response is sent.
+  // Tell the operator and welcome the new owner, after the response is sent.
   const who = fullName.replace(/\s+/g, " ") || email;
+  const locale = await requestLocale();
   after(() =>
-    notifyOperator(
-      `New ReplyBooker signup: ${who}`,
-      `${who} (${email}) just signed up.\nTime zone: ${timezone}\n\nSee all customers: ${siteUrl()}/dashboard/admin`,
-    ),
+    Promise.all([
+      notifyOperator(
+        `New ReplyBooker signup: ${who}`,
+        `${who} (${email}) just signed up.\nTime zone: ${timezone}\n\nSee all customers: ${siteUrl()}/dashboard/admin`,
+      ),
+      sendWelcome(email, fullName.replace(/\s+/g, " "), locale),
+    ]),
   );
   // Email confirmation on: no session yet.
   if (!data.session) return { notice: fmt(m.auth.checkEmail, { email }) };
