@@ -466,7 +466,7 @@ export const en = {
     welcomeSent: "Welcome email sent.",
     emailFailed: "Couldn't send the email (check RESEND_API_KEY).",
     waTitle: "WhatsApp connection (Meta)",
-    waHelp: "Paste the WhatsApp Business account ID from Meta (Use cases → WhatsApp → Step 1) and press Connect. This tells Meta to send incoming messages to ReplyBooker.",
+    waHelp: "Press Connect: ReplyBooker finds the WhatsApp Business account from the server's access token and tells Meta to send incoming messages here. You can also paste the account ID from Meta (Use cases → WhatsApp → Step 1).",
     wabaLabel: "WhatsApp Business account ID",
     waConnect: "Connect",
     waConnecting: "Connecting…",

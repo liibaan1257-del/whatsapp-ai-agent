@@ -14,7 +14,7 @@ export function WhatsAppConnect() {
     <form action={action} className="flex flex-wrap items-end gap-2">
       <label className="grid gap-1 text-sm">
         <span className="font-medium">{m.admin.wabaLabel}</span>
-        <Input name="waba_id" inputMode="numeric" autoComplete="off" required className="w-64" />
+        <Input name="waba_id" inputMode="numeric" autoComplete="off" className="w-64" />
       </label>
       <Button type="submit" variant="brand" disabled={pending}>
         {pending ? m.admin.waConnecting : m.admin.waConnect}

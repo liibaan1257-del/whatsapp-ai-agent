@@ -119,31 +119,59 @@ export async function connectWhatsApp(_prev: AdminState, formData: FormData): Pr
   const token = serverEnv.whatsappAccessToken();
   if (!token) return { error: m.admin.waNoToken };
 
-  const waba = String(formData.get("waba_id") ?? "").trim();
-  if (!WABA_ID.test(waba)) return { error: m.admin.waBadId };
+  const typed = String(formData.get("waba_id") ?? "").trim();
+  if (typed && !WABA_ID.test(typed)) return { error: m.admin.waBadId };
 
-  const base = (process.env.WHATSAPP_API_BASE ?? "https://graph.facebook.com").replace(/\/+$/, "");
-  const url = `${base}/${serverEnv.whatsappGraphVersion()}/${waba}/subscribed_apps`;
-  let detail: string;
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${token}` },
-      signal: AbortSignal.timeout(15_000),
-    });
-    const body = await res.json().catch(() => null);
-    if (res.ok && body?.success) {
-      logger.info("admin_whatsapp_subscribed", { by: owner.id, waba });
-      await recordAdminEvent("subscribed_apps", `waba ${waba}`);
-      return { ok: true, notice: m.admin.waConnected };
+  const graph = `${(process.env.WHATSAPP_API_BASE ?? "https://graph.facebook.com").replace(/\/+$/, "")}/${serverEnv.whatsappGraphVersion()}`;
+  const call = async (path: string, method: "GET" | "POST" = "GET") => {
+    try {
+      const res = await fetch(`${graph}${path}`, {
+        method,
+        headers: { Authorization: `Bearer ${token}` },
+        signal: AbortSignal.timeout(15_000),
+      });
+      const body = await res.json().catch(() => null);
+      const error = body?.error ? [body.error.code, body.error.message].filter(Boolean).join(": ") : res.ok ? "" : `status ${res.status}`;
+      return { ok: res.ok && !body?.error, body, error };
+    } catch (error) {
+      return { ok: false, body: null, error: error instanceof Error ? error.name : "network_error" };
     }
-    detail = [body?.error?.code, body?.error?.message].filter(Boolean).join(": ") || `status ${res.status}`;
-  } catch (error) {
-    detail = error instanceof Error ? error.name : "network_error";
+  };
+
+  // No ID typed: read the WhatsApp Business Account IDs this token may manage.
+  let wabas = typed ? [typed] : [];
+  if (!typed) {
+    const info = await call(`/debug_token?input_token=${encodeURIComponent(token)}`);
+    const data = info.body?.data;
+    const scopes: { scope?: string; target_ids?: string[] }[] = data?.granular_scopes ?? [];
+    wabas = [...new Set(scopes.filter((g) => g.scope?.startsWith("whatsapp_business")).flatMap((g) => g.target_ids ?? []))].filter((id) =>
+      WABA_ID.test(id),
+    );
+    const summary = info.ok
+      ? `token app ${data?.app_id ?? "?"}, valid ${data?.is_valid}, expires ${data?.expires_at ? new Date(data.expires_at * 1000).toISOString() : "never"}, scopes ${(data?.scopes ?? []).join(" ")}, wabas ${wabas.join(" ") || "none"}`
+      : `debug_token failed: ${info.error}`;
+    await recordAdminEvent("token_info", summary);
+    if (!wabas.length) return { error: fmt(m.admin.waFailed, { detail: summary.slice(0, 300) }) };
   }
-  logger.error("admin_whatsapp_subscribe_failed", { waba, detail });
-  await recordAdminEvent("subscribe_failed", `waba ${waba}: ${detail}`);
-  return { error: fmt(m.admin.waFailed, { detail: detail.slice(0, 300) }) };
+
+  const done: string[] = [];
+  const failed: string[] = [];
+  for (const waba of wabas) {
+    const r = await call(`/${waba}/subscribed_apps`, "POST");
+    if (r.ok && r.body?.success) done.push(waba);
+    else failed.push(`${waba}: ${r.error}`);
+  }
+  if (done.length) {
+    logger.info("admin_whatsapp_subscribed", { by: owner.id, wabas: done });
+    await recordAdminEvent("subscribed_apps", `waba ${done.join(" ")}`);
+  }
+  if (failed.length) {
+    logger.error("admin_whatsapp_subscribe_failed", { failed });
+    await recordAdminEvent("subscribe_failed", failed.join(" | "));
+  }
+  refresh();
+  if (!done.length) return { error: fmt(m.admin.waFailed, { detail: failed.join(" | ").slice(0, 300) }) };
+  return { ok: true, notice: `${m.admin.waConnected} (${done.join(", ")})` };
 }
 
 async function recordAdminEvent(outcome: string, detail: string) {

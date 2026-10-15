@@ -465,7 +465,7 @@ export const so: Messages = {
     welcomeSent: "Email-kii soo dhowaynta waa la diray.",
     emailFailed: "Email-ka lama dirin (hubi RESEND_API_KEY).",
     waTitle: "Xidhiidhka WhatsApp (Meta)",
-    waHelp: "Ku dheji WhatsApp Business account ID-ga Meta (Use cases → WhatsApp → Step 1) kadibna riix Xidh. Tani waxay Meta u sheegaysaa inay fariimaha u soo dirto ReplyBooker.",
+    waHelp: "Riix Xidh: ReplyBooker wuxuu token-ka server-ka ka helayaa WhatsApp Business account-ka, wuxuuna Meta u sheegayaa inay fariimaha halkan u soo dirto. Waxaad kale oo ku dhejin kartaa account ID-ga Meta (Use cases → WhatsApp → Step 1).",
     wabaLabel: "WhatsApp Business account ID",
     waConnect: "Xidh",
     waConnecting: "Waa la xidhayaa…",

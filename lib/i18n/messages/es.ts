@@ -465,7 +465,7 @@ export const es: Messages = {
     welcomeSent: "Email de bienvenida enviado.",
     emailFailed: "No se pudo enviar el email (revisa RESEND_API_KEY).",
     waTitle: "Conexión de WhatsApp (Meta)",
-    waHelp: "Pega el ID de la cuenta de WhatsApp Business de Meta (Casos de uso → WhatsApp → Paso 1) y pulsa Conectar. Así Meta envía los mensajes entrantes a ReplyBooker.",
+    waHelp: "Pulsa Conectar: ReplyBooker encuentra la cuenta de WhatsApp Business con el token del servidor y pide a Meta que envíe aquí los mensajes entrantes. También puedes pegar el ID de la cuenta de Meta (Casos de uso → WhatsApp → Paso 1).",
     wabaLabel: "ID de la cuenta de WhatsApp Business",
     waConnect: "Conectar",
     waConnecting: "Conectando…",
