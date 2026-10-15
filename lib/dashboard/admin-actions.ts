@@ -3,7 +3,8 @@
 import { refresh } from "next/cache";
 import { getOwner } from "@/lib/auth/session";
 import { isPlan } from "@/lib/billing";
-import { configStatus } from "@/lib/env";
+import { configStatus, serverEnv } from "@/lib/env";
+import { fmt } from "@/lib/i18n/config";
 import { requestMessages } from "@/lib/i18n/server";
 import { logger } from "@/lib/logger";
 import { sendWelcome } from "@/lib/notify";
@@ -102,4 +103,53 @@ export async function sendWelcomeEmail(_prev: AdminState, formData: FormData): P
   const sent = await sendWelcome(profile.email, profile.full_name ?? "", "both");
   logger.info("admin_welcome_sent", { by: owner.id, businessId: id, sent });
   return sent ? { ok: true, notice: m.admin.welcomeSent } : { error: m.admin.emailFailed };
+}
+
+const WABA_ID = /^\d{5,25}$/;
+
+/**
+ * Operator only: subscribe this app to a WhatsApp Business Account so Meta
+ * delivers its incoming messages to the webhook (POST /{waba}/subscribed_apps).
+ * Uses WHATSAPP_ACCESS_TOKEN on the server; the token never reaches the browser.
+ */
+export async function connectWhatsApp(_prev: AdminState, formData: FormData): Promise<AdminState> {
+  const m = await requestMessages();
+  const owner = await getOwner();
+  if (!owner?.isAdmin) return { error: m.admin.failed };
+  const token = serverEnv.whatsappAccessToken();
+  if (!token) return { error: m.admin.waNoToken };
+
+  const waba = String(formData.get("waba_id") ?? "").trim();
+  if (!WABA_ID.test(waba)) return { error: m.admin.waBadId };
+
+  const base = (process.env.WHATSAPP_API_BASE ?? "https://graph.facebook.com").replace(/\/+$/, "");
+  const url = `${base}/${serverEnv.whatsappGraphVersion()}/${waba}/subscribed_apps`;
+  let detail: string;
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+      signal: AbortSignal.timeout(15_000),
+    });
+    const body = await res.json().catch(() => null);
+    if (res.ok && body?.success) {
+      logger.info("admin_whatsapp_subscribed", { by: owner.id, waba });
+      await recordAdminEvent("subscribed_apps", `waba ${waba}`);
+      return { ok: true, notice: m.admin.waConnected };
+    }
+    detail = [body?.error?.code, body?.error?.message].filter(Boolean).join(": ") || `status ${res.status}`;
+  } catch (error) {
+    detail = error instanceof Error ? error.name : "network_error";
+  }
+  logger.error("admin_whatsapp_subscribe_failed", { waba, detail });
+  await recordAdminEvent("subscribe_failed", `waba ${waba}: ${detail}`);
+  return { error: fmt(m.admin.waFailed, { detail: detail.slice(0, 300) }) };
+}
+
+async function recordAdminEvent(outcome: string, detail: string) {
+  try {
+    await createAdminClient().from("webhook_events").insert({ outcome, detail: detail.slice(0, 500) });
+  } catch {
+    // Diagnostics only.
+  }
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { BillingActions } from "@/components/admin/billing-actions";
+import { WhatsAppConnect } from "@/components/admin/whatsapp-connect";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -75,6 +76,12 @@ async function Admin({
     }),
   );
   const date = new Intl.DateTimeFormat(locale, { dateStyle: "medium" });
+  const { data: events } = await db
+    .from("webhook_events")
+    .select("id, created_at, outcome, detail")
+    .order("created_at", { ascending: false })
+    .limit(8);
+  const time = new Intl.DateTimeFormat(locale, { dateStyle: "short", timeStyle: "medium" });
 
   return (
     <>
@@ -142,6 +149,31 @@ async function Admin({
               </TableBody>
             </Table>
           )}
+        </CardContent>
+      </Card>
+      <Card className="mt-6">
+        <CardContent className="grid gap-4">
+          <div>
+            <h2 className="font-semibold">{t.waTitle}</h2>
+            <p className="text-sm text-muted-foreground">{t.waHelp}</p>
+          </div>
+          <WhatsAppConnect />
+          <div>
+            <h3 className="mb-2 text-sm font-medium">{t.waEvents}</h3>
+            {events?.length ? (
+              <ul className="grid gap-1 text-xs" dir="ltr">
+                {events.map((e) => (
+                  <li key={e.id} className="flex flex-wrap gap-x-2">
+                    <span className="tabular-nums text-muted-foreground">{time.format(new Date(e.created_at))}</span>
+                    <span className="font-medium">{e.outcome}</span>
+                    {e.detail && <span className="text-muted-foreground">{e.detail}</span>}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-xs text-muted-foreground">{t.waNoEvents}</p>
+            )}
+          </div>
         </CardContent>
       </Card>
     </>
