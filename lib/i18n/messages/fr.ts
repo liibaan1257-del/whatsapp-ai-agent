@@ -71,7 +71,7 @@ export const fr: Messages = {
       },
       {
         title: "Parle leur langue",
-        body: "Somali, anglais, arabe, français, espagnol et plus : il répond dans la langue du client.",
+        body: "Somali, swahili, anglais, arabe, français, espagnol et plus : il répond dans la langue du client.",
       },
       {
         title: "Tableau de bord simple",
@@ -124,7 +124,7 @@ export const fr: Messages = {
     planFeatures: [
       "Base de connaissances et testeur de chat",
       "Tableau des réservations",
-      "Les 6 langues",
+      "Les 7 langues",
     ],
     choose: "Commencer",
     faqTitle: "Questions fréquentes",

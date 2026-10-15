@@ -70,7 +70,7 @@ export const en = {
       },
       {
         title: "Speaks their language",
-        body: "Somali, English, Arabic, French, Spanish and more: it answers in the language the customer writes.",
+        body: "Somali, Swahili, English, Arabic, French, Spanish and more: it answers in the language the customer writes.",
       },
       {
         title: "Simple dashboard",
@@ -123,7 +123,7 @@ export const en = {
     planFeatures: [
       "Knowledge base and chat tester",
       "Bookings dashboard",
-      "All 6 languages",
+      "All 7 languages",
     ],
     choose: "Get started",
     faqTitle: "Frequently asked questions",

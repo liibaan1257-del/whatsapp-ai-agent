@@ -71,7 +71,7 @@ export const de: Messages = {
       },
       {
         title: "Spricht ihre Sprache",
-        body: "Somali, Englisch, Arabisch, Französisch, Spanisch und mehr: Er antwortet in der Sprache des Kunden.",
+        body: "Somali, Swahili, Englisch, Arabisch, Französisch, Spanisch und mehr: Er antwortet in der Sprache des Kunden.",
       },
       {
         title: "Einfaches Dashboard",
@@ -124,7 +124,7 @@ export const de: Messages = {
     planFeatures: [
       "Wissensdatenbank und Chat-Test",
       "Buchungs-Dashboard",
-      "Alle 6 Sprachen",
+      "Alle 7 Sprachen",
     ],
     choose: "Loslegen",
     faqTitle: "Häufige Fragen",

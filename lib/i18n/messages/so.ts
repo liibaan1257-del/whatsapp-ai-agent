@@ -71,7 +71,7 @@ export const so: Messages = {
       },
       {
         title: "Luqaddooda ayuu ku hadlaa",
-        body: "Soomaali, Ingiriis, Carabi, Faransiis, Isbaanish iyo kuwo kale: wuxuu ku jawaabaa luqadda macmiilku ku qoro.",
+        body: "Soomaali, Sawaaxili, Ingiriis, Carabi, Faransiis, Isbaanish iyo kuwo kale: wuxuu ku jawaabaa luqadda macmiilku ku qoro.",
       },
       {
         title: "Dashboard fudud",
@@ -124,7 +124,7 @@ export const so: Messages = {
     planFeatures: [
       "Xogta ganacsiga iyo Chat tester",
       "Dashboard-ka ballamaha",
-      "Dhammaan 6-da luqadood",
+      "Dhammaan 7-da luqadood",
     ],
     choose: "Bilow",
     faqTitle: "Su'aalaha badanaa la is weydiiyo",
