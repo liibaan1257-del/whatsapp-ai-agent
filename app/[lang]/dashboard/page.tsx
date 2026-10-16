@@ -49,7 +49,7 @@ async function Overview({ locale, m }: { locale: Locale; m: Messages }) {
       done:
         (Boolean(knowledge?.whatsapp_phone_number_id) && config.whatsappWebhook && config.whatsappSend) ||
         (Boolean(knowledge?.twilio_whatsapp_number) && config.twilio),
-      label: o.setupWhatsapp, href: "/dashboard/knowledge" },
+      label: o.setupWhatsapp, href: "/dashboard/knowledge#whatsapp" },
     ...(owner.isAdmin ? [{ done: config.ai, label: o.setupAi, href: null }] : []),
   ];
   const next = setup.find((s) => !s.done && s.href);

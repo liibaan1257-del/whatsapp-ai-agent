@@ -3,9 +3,10 @@ import { headers } from "next/headers";
 import { Suspense } from "react";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { KnowledgeForm } from "@/components/knowledge/knowledge-form";
+import { WhatsAppRequestCard } from "@/components/knowledge/whatsapp-request";
 import { Skeleton } from "@/components/ui/skeleton";
 import { requireOwner } from "@/lib/auth/session";
-import { getKnowledge } from "@/lib/dashboard/data";
+import { getKnowledge, getWhatsAppRequest } from "@/lib/dashboard/data";
 import { configStatus } from "@/lib/env";
 import type { Locale } from "@/lib/i18n/config";
 import { getMessages, type Messages } from "@/lib/i18n/dictionaries";
@@ -29,8 +30,8 @@ export default async function KnowledgePage({ params }: PageProps<"/[lang]/dashb
 }
 
 async function KnowledgeEditor({ locale, m }: { locale: Locale; m: Messages }) {
-  await requireOwner("/dashboard/knowledge");
-  const knowledge = await getKnowledge();
+  const owner = await requireOwner("/dashboard/knowledge");
+  const [knowledge, request] = await Promise.all([getKnowledge(), getWhatsAppRequest()]);
   if (!knowledge) return <p className="text-sm text-muted-foreground">{m.knowledge.missing}</p>;
 
   const h = await headers();
@@ -55,13 +56,23 @@ async function KnowledgeEditor({ locale, m }: { locale: Locale; m: Messages }) {
   const { ai, whatsappWebhook, whatsappSend, serviceRole, twilio } = configStatus();
 
   return (
-    <KnowledgeForm
-      initial={knowledge}
-      timeZones={timeZones}
-      currencies={currencies}
-      webhookUrl={`${proto}://${host}/api/whatsapp/webhook`}
-      twilioWebhookUrl={`${proto}://${host}/api/whatsapp/twilio`}
-      status={{ ai, whatsappWebhook, whatsappSend, serviceRole, twilio }}
-    />
+    <div className="space-y-6">
+      {owner.isAdmin ? null : (
+        <WhatsAppRequestCard
+          connected={Boolean(knowledge.whatsapp_phone_number_id || knowledge.twilio_whatsapp_number)}
+          requestNumber={request?.wa_request_number ?? null}
+          requestedAt={request?.wa_requested_at ?? null}
+        />
+      )}
+      <KnowledgeForm
+        initial={knowledge}
+        timeZones={timeZones}
+        currencies={currencies}
+        webhookUrl={`${proto}://${host}/api/whatsapp/webhook`}
+        twilioWebhookUrl={`${proto}://${host}/api/whatsapp/twilio`}
+        status={{ ai, whatsappWebhook, whatsappSend, serviceRole, twilio }}
+        isAdmin={owner.isAdmin}
+      />
+    </div>
   );
 }

@@ -66,6 +66,7 @@ export function KnowledgeForm({
   webhookUrl,
   twilioWebhookUrl,
   status,
+  isAdmin,
 }: {
   initial: Knowledge;
   timeZones: string[];
@@ -73,6 +74,8 @@ export function KnowledgeForm({
   webhookUrl: string;
   twilioWebhookUrl: string;
   status: Status;
+  /** The operator sees the Meta/Twilio wiring and template settings; owners don't need them. */
+  isAdmin: boolean;
 }) {
   const { m } = useI18n();
   const t = m.knowledge;
@@ -330,49 +333,51 @@ export function KnowledgeForm({
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>{t.whatsapp}</CardTitle>
-          <CardDescription>{t.twilioHint}</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <section className="space-y-4">
-            <h3 className="text-sm font-semibold">{t.metaHeading}</h3>
-            <p className="text-xs text-muted-foreground">{t.whatsappHint}</p>
-            <div className="space-y-2">
-              <Label htmlFor="whatsapp_phone_number_id">{t.phoneId}</Label>
-              <Input id="whatsapp_phone_number_id" dir="ltr" inputMode="numeric" value={phoneId} onChange={(e) => setPhoneId(e.target.value.replace(/\s/g, ""))} placeholder={t.phoneIdPlaceholder} className="max-w-xs" aria-invalid={fe.whatsapp_phone_number_id ? true : undefined} />
-              <ErrorText msg={fe.whatsapp_phone_number_id} />
-            </div>
-            <CopyField id="webhook_url" label={t.callbackUrl} copyLabel={t.copyCallback} value={webhookUrl} />
-            <p className="text-xs text-muted-foreground">{t.verifyHint}</p>
-          </section>
-          <section className="space-y-4 border-t pt-6">
-            <h3 className="text-sm font-semibold">{t.twilioHeading}</h3>
-            <div className="space-y-2">
-              <Label htmlFor="twilio_whatsapp_number">{t.twilioNumber}</Label>
-              <Input id="twilio_whatsapp_number" dir="ltr" type="tel" value={twilioNumber} onChange={(e) => setTwilioNumber(e.target.value.replace(/[\s()-]/g, ""))} placeholder="+14155238886" className="max-w-xs" aria-invalid={fe.twilio_whatsapp_number ? true : undefined} />
-              <ErrorText msg={fe.twilio_whatsapp_number} />
-            </div>
-            <CopyField id="twilio_webhook_url" label={t.twilioCallback} copyLabel={t.copyTwilioCallback} value={twilioWebhookUrl} />
-          </section>
-          <ul className="grid gap-1 border-t pt-4 text-sm sm:grid-cols-2">
-            {[
-              [t.statusAi, status.ai],
-              [t.statusDb, status.serviceRole],
-              [t.statusWebhook, status.whatsappWebhook],
-              [t.statusSend, status.whatsappSend],
-              [t.statusTwilio, status.twilio],
-            ].map(([label, ok]) => (
-              <li key={String(label)} className="flex items-center gap-2">
-                <span className={cn("size-2 shrink-0 rounded-full", ok ? "bg-brand" : "bg-destructive")} aria-hidden="true" />
-                <span className={ok ? "" : "text-muted-foreground"}>{label}</span>
-                <span className="sr-only">{ok ? t.isSet : t.isMissing}</span>
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
+      {isAdmin ? (
+        <Card>
+          <CardHeader>
+            <CardTitle>{t.whatsapp}</CardTitle>
+            <CardDescription>{t.twilioHint}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <section className="space-y-4">
+              <h3 className="text-sm font-semibold">{t.metaHeading}</h3>
+              <p className="text-xs text-muted-foreground">{t.whatsappHint}</p>
+              <div className="space-y-2">
+                <Label htmlFor="whatsapp_phone_number_id">{t.phoneId}</Label>
+                <Input id="whatsapp_phone_number_id" dir="ltr" inputMode="numeric" value={phoneId} onChange={(e) => setPhoneId(e.target.value.replace(/\s/g, ""))} placeholder={t.phoneIdPlaceholder} className="max-w-xs" aria-invalid={fe.whatsapp_phone_number_id ? true : undefined} />
+                <ErrorText msg={fe.whatsapp_phone_number_id} />
+              </div>
+              <CopyField id="webhook_url" label={t.callbackUrl} copyLabel={t.copyCallback} value={webhookUrl} />
+              <p className="text-xs text-muted-foreground">{t.verifyHint}</p>
+            </section>
+            <section className="space-y-4 border-t pt-6">
+              <h3 className="text-sm font-semibold">{t.twilioHeading}</h3>
+              <div className="space-y-2">
+                <Label htmlFor="twilio_whatsapp_number">{t.twilioNumber}</Label>
+                <Input id="twilio_whatsapp_number" dir="ltr" type="tel" value={twilioNumber} onChange={(e) => setTwilioNumber(e.target.value.replace(/[\s()-]/g, ""))} placeholder="+14155238886" className="max-w-xs" aria-invalid={fe.twilio_whatsapp_number ? true : undefined} />
+                <ErrorText msg={fe.twilio_whatsapp_number} />
+              </div>
+              <CopyField id="twilio_webhook_url" label={t.twilioCallback} copyLabel={t.copyTwilioCallback} value={twilioWebhookUrl} />
+            </section>
+            <ul className="grid gap-1 border-t pt-4 text-sm sm:grid-cols-2">
+              {[
+                [t.statusAi, status.ai],
+                [t.statusDb, status.serviceRole],
+                [t.statusWebhook, status.whatsappWebhook],
+                [t.statusSend, status.whatsappSend],
+                [t.statusTwilio, status.twilio],
+              ].map(([label, ok]) => (
+                <li key={String(label)} className="flex items-center gap-2">
+                  <span className={cn("size-2 shrink-0 rounded-full", ok ? "bg-brand" : "bg-destructive")} aria-hidden="true" />
+                  <span className={ok ? "" : "text-muted-foreground"}>{label}</span>
+                  <span className="sr-only">{ok ? t.isSet : t.isMissing}</span>
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      ) : null}
 
       <Card>
         <CardHeader>
@@ -384,7 +389,7 @@ export function KnowledgeForm({
             <input type="checkbox" checked={reminders} onChange={(e) => setReminders(e.target.checked)} className="size-4 accent-[var(--brand)]" />
             <span className="text-sm font-medium">{m.reminders.enabled}</span>
           </label>
-          {reminders ? (
+          {reminders && isAdmin ? (
             <>
               <div className="grid gap-4 sm:grid-cols-[2fr_1fr]">
                 <div className="space-y-2">

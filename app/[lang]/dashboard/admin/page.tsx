@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { BillingActions } from "@/components/admin/billing-actions";
+import { AdminPhoneForm } from "@/components/admin/phone-form";
 import { WhatsAppConnect } from "@/components/admin/whatsapp-connect";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { requireOwner } from "@/lib/auth/session";
 import { isActive, isNewSignup, isPlan, monthStart, replyLimit } from "@/lib/billing";
 import { configStatus } from "@/lib/env";
-import type { Locale } from "@/lib/i18n/config";
+import { fmt, type Locale } from "@/lib/i18n/config";
 import { getMessages, type Messages } from "@/lib/i18n/dictionaries";
 import { localeFrom } from "@/lib/i18n/server";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -51,7 +52,7 @@ async function Admin({
   const db = createAdminClient();
   const { data: businesses } = await db
     .from("business_knowledge")
-    .select("id, owner_id, business_name, plan, access_until, created_at")
+    .select("id, owner_id, business_name, plan, access_until, created_at, whatsapp_phone_number_id, wa_request_number, wa_requested_at")
     .order("created_at", { ascending: false })
     .limit(500);
   const ownerIds = (businesses ?? []).map((b) => b.owner_id);
@@ -123,6 +124,12 @@ async function Admin({
                         <div className="text-xs text-muted-foreground" dir="ltr">
                           {b.email}
                         </div>
+                        {b.wa_request_number && !b.whatsapp_phone_number_id && (
+                          <div className="mt-1 inline-block rounded-md bg-amber-500/15 px-2 py-0.5 text-xs font-medium text-amber-700 dark:text-amber-400" dir="ltr">
+                            {fmt(t.waRequested, { number: b.wa_request_number })}
+                          </div>
+                        )}
+                        <AdminPhoneForm businessId={b.id} phoneId={b.whatsapp_phone_number_id} name={b.business_name || b.email} />
                       </TableCell>
                       <TableCell>
                         <div>{date.format(new Date(b.created_at))}</div>

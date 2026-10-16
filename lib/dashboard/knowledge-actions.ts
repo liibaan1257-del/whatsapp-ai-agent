@@ -6,6 +6,7 @@ import type { Messages } from "@/lib/i18n/dictionaries";
 import { requestMessages } from "@/lib/i18n/server";
 import { isValidTimeZone, knowledgeSchema } from "@/lib/knowledge";
 import { logger } from "@/lib/logger";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 
 export type KnowledgeState = { ok?: boolean; error?: string; fieldErrors?: Record<string, string> };
@@ -66,8 +67,6 @@ export async function saveKnowledge(payload: unknown): Promise<KnowledgeState> {
       timezone: k.timezone,
       currency: k.currency,
       time_format: k.time_format,
-      whatsapp_phone_number_id: k.whatsapp_phone_number_id || null,
-      twilio_whatsapp_number: k.twilio_whatsapp_number || null,
       reminders_enabled: k.reminders_enabled,
       reminder_template: k.reminder_template,
       reminder_template_lang: k.reminder_template_lang,
@@ -76,16 +75,32 @@ export async function saveKnowledge(payload: unknown): Promise<KnowledgeState> {
     .eq("owner_id", owner.id);
 
   if (error) {
-    if (error.code === "23505" && error.message.includes("twilio")) {
-      return { error: e.twilioInUse, fieldErrors: { twilio_whatsapp_number: e.inUse } };
-    }
-    if (error.code === "23505") {
-      return { error: e.phoneInUse, fieldErrors: { whatsapp_phone_number_id: e.inUse } };
-    }
     if (error.message.includes("invalid_timezone")) return { error: e.timezone, fieldErrors: { timezone: e.timezone } };
     logger.error("knowledge_save_failed", { ownerId: owner.id, code: error.code });
     return { error: e.saveFailed };
   }
+
+  // WhatsApp routing decides which business receives a number's messages, so
+  // only the operator sets it (owners can't write these columns at all).
+  if (owner.isAdmin) {
+    const { error: routeError } = await createAdminClient()
+      .from("business_knowledge")
+      .update({
+        whatsapp_phone_number_id: k.whatsapp_phone_number_id || null,
+        twilio_whatsapp_number: k.twilio_whatsapp_number || null,
+      })
+      .eq("id", owner.businessId);
+    if (routeError) return routingError(routeError, e, owner.id);
+  }
   refresh();
   return { ok: true };
+}
+
+function routingError(error: { code?: string; message: string }, e: Messages["knowledge"]["errors"], ownerId: string): KnowledgeState {
+  if (error.code === "23505" && error.message.includes("twilio")) {
+    return { error: e.twilioInUse, fieldErrors: { twilio_whatsapp_number: e.inUse } };
+  }
+  if (error.code === "23505") return { error: e.phoneInUse, fieldErrors: { whatsapp_phone_number_id: e.inUse } };
+  logger.error("knowledge_routing_failed", { ownerId, code: error.code });
+  return { error: e.saveFailed };
 }

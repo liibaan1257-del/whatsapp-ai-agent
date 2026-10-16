@@ -13,6 +13,13 @@ export async function getKnowledge(): Promise<Knowledge | null> {
   return data ? parseKnowledge(data) : null;
 }
 
+/** The owner's pending request to connect a WhatsApp number, if any. */
+export async function getWhatsAppRequest(): Promise<{ wa_request_number: string | null; wa_requested_at: string | null } | null> {
+  const supabase = await createClient();
+  const { data } = await supabase.from("business_knowledge").select("wa_request_number, wa_requested_at").maybeSingle();
+  return data;
+}
+
 /** Whether the owner has tried the Chat tester (onboarding step). */
 export async function hasTestedChat(): Promise<boolean> {
   const supabase = await createClient();
