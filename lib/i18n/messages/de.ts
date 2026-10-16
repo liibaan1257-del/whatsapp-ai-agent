@@ -498,6 +498,80 @@ export const de: Messages = {
     confirmRequired: "Bitte bestätige, dass die Nummer nicht in der WhatsApp-App ist.",
     failed: "Anfrage konnte nicht gesendet werden. Versuch es erneut oder schreib uns auf WhatsApp.",
   },
+  industries: {
+    footerTitle: "ReplyBooker für",
+    otherTitle: "Auch gemacht für",
+    badge: "Für {plural}",
+    title: "KI-Rezeptionist auf WhatsApp für {plural}",
+    description: "ReplyBooker beantwortet deine Kunden auf WhatsApp rund um die Uhr in ihrer Sprache, erklärt deine Preise und bucht Termine automatisch. Gemacht für {plural}. 14 Tage kostenlos testen.",
+    heroSubtitle: "Kunden schreiben dir auf WhatsApp, während du beschäftigt bist, geschlossen hast oder schläfst. ReplyBooker antwortet in Sekunden in ihrer Sprache und bucht den Termin für dich.",
+    benefitsTitle: "Warum {plural} ReplyBooker nutzen",
+    benefits: [
+      "Keine verpassten Nachrichten: Jeder Kunde bekommt in Sekunden eine Antwort, Tag und Nacht.",
+      "Buchungen für {service} und mehr landen direkt in deinem Dashboard.",
+      "Antwortet auf Somali, Swahili, Englisch, Arabisch, Französisch, Spanisch und mehr."
+    ],
+    exampleTitle: "Das sehen deine Kunden",
+    ctaTitle: "14 Tage kostenlos testen",
+    list: {
+      salon: {
+        name: "Friseursalons",
+        plural: "Friseursalons",
+        service: "Haarschnitte",
+        c1: "Hallo! Was kosten Box Braids?",
+        a1: "Hallo 😊 Box Braids kosten 40 $ und dauern etwa 3 Stunden. Möchtest du einen Termin?"
+      },
+      barbershop: {
+        name: "Barbershops",
+        plural: "Barbershops",
+        service: "Fades und Bartpflege",
+        c1: "Kann ich heute nach 17 Uhr kommen?",
+        a1: "Ja! Heute um 17:30 ist frei. Soll ich buchen? Wie heißt du?"
+      },
+      clinic: {
+        name: "Arztpraxen",
+        plural: "Arztpraxen",
+        service: "Sprechstunden",
+        c1: "Gibt es morgen früh einen Arzttermin?",
+        a1: "Ja, morgen um 9:00 und 10:30 für eine allgemeine Sprechstunde (25 $). Welche Uhrzeit passt dir?"
+      },
+      dentist: {
+        name: "Zahnarztpraxen",
+        plural: "Zahnarztpraxen",
+        service: "Kontrollen und Zahnreinigungen",
+        c1: "Was kostet eine Zahnreinigung?",
+        a1: "Eine Zahnreinigung kostet 50 $ und dauert 45 Minuten. Soll ich dich diese Woche eintragen?"
+      },
+      spa: {
+        name: "Spas & Massage",
+        plural: "Spas und Massagestudios",
+        service: "Massagen",
+        c1: "Habt ihr am Samstag eine Partnermassage?",
+        a1: "Ja 🌿 Eine 60-minütige Partnermassage kostet 90 $. Samstag um 14 Uhr ist frei. Reservieren?"
+      },
+      gym: {
+        name: "Fitnessstudios & Trainer",
+        plural: "Fitnessstudios und Personal Trainer",
+        service: "Trainingseinheiten",
+        c1: "Was kostet die Monatsmitgliedschaft?",
+        a1: "Die Monatsmitgliedschaft kostet 30 $, das erste Personal Training ist gratis. Soll ich es buchen?"
+      },
+      tutor: {
+        name: "Nachhilfe & Schulen",
+        plural: "Nachhilfelehrer und Privatschulen",
+        service: "Unterrichtsstunden",
+        c1: "Bietet ihr Englisch für Erwachsene an?",
+        a1: "Ja! Englisch für Erwachsene kostet 10 $ pro Stunde, Montag bis Donnerstag abends. Soll ich eine Probestunde buchen?"
+      },
+      "car-repair": {
+        name: "Autowerkstätten",
+        plural: "Autowerkstätten",
+        service: "Autoservices",
+        c1: "Was kostet ein Ölwechsel?",
+        a1: "Ein Ölwechsel kostet 35 $ und dauert etwa 30 Minuten. Morgen um 10 Uhr ist frei. Buchen?"
+      }
+    }
+  },
   terms: {
     title: "Nutzungsbedingungen",
     link: "Nutzungsbedingungen",

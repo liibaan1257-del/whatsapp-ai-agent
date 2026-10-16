@@ -498,6 +498,80 @@ export const es: Messages = {
     confirmRequired: "Confirma que el número no está en la app de WhatsApp.",
     failed: "No se pudo enviar la solicitud. Inténtalo de nuevo o escríbenos por WhatsApp.",
   },
+  industries: {
+    footerTitle: "ReplyBooker para",
+    otherTitle: "También para",
+    badge: "Para {plural}",
+    title: "Recepcionista con IA en WhatsApp para {plural}",
+    description: "ReplyBooker responde a tus clientes en WhatsApp 24/7 en su idioma, explica tus precios y reserva citas automáticamente. Hecho para {plural}. Prueba gratis de 14 días.",
+    heroSubtitle: "Tus clientes te escriben por WhatsApp cuando estás ocupado, cerrado o durmiendo. ReplyBooker les responde en segundos, en su idioma, y reserva la cita por ti.",
+    benefitsTitle: "Por qué {plural} usan ReplyBooker",
+    benefits: [
+      "Ningún mensaje sin respuesta: cada cliente recibe respuesta en segundos, de día y de noche.",
+      "Las reservas de {service} y más se guardan directamente en tu panel.",
+      "Responde en somalí, suajili, inglés, árabe, francés, español y más."
+    ],
+    exampleTitle: "Lo que verán tus clientes",
+    ctaTitle: "Pruébalo gratis 14 días",
+    list: {
+      salon: {
+        name: "Peluquerías",
+        plural: "peluquerías",
+        service: "cortes de pelo",
+        c1: "¡Hola! ¿Cuánto cuestan las trenzas?",
+        a1: "¡Hola! 😊 Las trenzas cuestan 40 $ y tardan unas 3 horas. ¿Quieres reservar?"
+      },
+      barbershop: {
+        name: "Barberías",
+        plural: "barberías",
+        service: "cortes y arreglo de barba",
+        c1: "¿Puedo cortarme hoy después de las 5?",
+        a1: "¡Sí! Hoy tenemos libre a las 17:30. ¿Te lo reservo? ¿Cómo te llamas?"
+      },
+      clinic: {
+        name: "Clínicas",
+        plural: "clínicas",
+        service: "consultas",
+        c1: "¿Hay médico mañana por la mañana?",
+        a1: "Sí, mañana hay hueco a las 9:00 y a las 10:30 para consulta general (25 $). ¿Qué hora prefieres?"
+      },
+      dentist: {
+        name: "Clínicas dentales",
+        plural: "clínicas dentales",
+        service: "revisiones y limpiezas",
+        c1: "¿Cuánto cuesta una limpieza dental?",
+        a1: "La limpieza cuesta 50 $ y dura 45 minutos. ¿Te reservo esta semana?"
+      },
+      spa: {
+        name: "Spas y masajes",
+        plural: "spas y centros de masaje",
+        service: "masajes",
+        c1: "¿Tenéis masaje para dos el sábado?",
+        a1: "Sí 🌿 Un masaje en pareja de 60 minutos cuesta 90 $. El sábado a las 14:00 está libre. ¿Lo reservo?"
+      },
+      gym: {
+        name: "Gimnasios y entrenadores",
+        plural: "gimnasios y entrenadores personales",
+        service: "sesiones de entrenamiento",
+        c1: "¿Cuánto cuesta la cuota mensual?",
+        a1: "La cuota mensual es de 30 $ y la primera sesión con entrenador es gratis. ¿Te la reservo?"
+      },
+      tutor: {
+        name: "Profesores y academias",
+        plural: "profesores y academias",
+        service: "clases",
+        c1: "¿Dais inglés para adultos?",
+        a1: "¡Sí! Las clases de inglés para adultos cuestan 10 $ la hora, de lunes a jueves por la tarde. ¿Te reservo una clase de prueba?"
+      },
+      "car-repair": {
+        name: "Talleres mecánicos",
+        plural: "talleres mecánicos",
+        service: "revisiones del coche",
+        c1: "¿Cuánto cuesta un cambio de aceite?",
+        a1: "El cambio de aceite cuesta 35 $ y tarda unos 30 minutos. Mañana a las 10:00 hay hueco. ¿Lo reservo?"
+      }
+    }
+  },
   terms: {
     title: "Términos del servicio",
     link: "Términos del servicio",

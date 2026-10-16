@@ -499,6 +499,80 @@ export const en = {
     confirmRequired: "Please confirm the number is not on the WhatsApp app.",
     failed: "Couldn't send the request. Please try again or contact us on WhatsApp.",
   },
+  industries: {
+    footerTitle: "ReplyBooker for",
+    otherTitle: "Also made for",
+    badge: "For {plural}",
+    title: "AI WhatsApp receptionist for {plural}",
+    description: "ReplyBooker answers your customers on WhatsApp 24/7 in their own language, explains your prices and books appointments automatically. Built for {plural}. 14-day free trial.",
+    heroSubtitle: "Customers message you on WhatsApp while you're busy, closed or asleep. ReplyBooker answers them in seconds, in their own language, and books the appointment for you.",
+    benefitsTitle: "Why {plural} use ReplyBooker",
+    benefits: [
+      "No missed messages: every customer gets an answer in seconds, day and night.",
+      "Bookings for {service} and more are saved straight into your dashboard.",
+      "Answers in Somali, Swahili, English, Arabic, French, Spanish and more."
+    ],
+    exampleTitle: "What your customers will see",
+    ctaTitle: "Try it free for 14 days",
+    list: {
+      salon: {
+        name: "Hair salons",
+        plural: "hair salons",
+        service: "haircuts",
+        c1: "Hi! How much are box braids?",
+        a1: "Hi 😊 Box braids are $40 and take about 3 hours. Would you like to book a time?"
+      },
+      barbershop: {
+        name: "Barbershops",
+        plural: "barbershops",
+        service: "fades and beard trims",
+        c1: "Can I get a fade today after 5?",
+        a1: "Yes! We have 5:30 PM free today. Can I book it for you? What's your name?"
+      },
+      clinic: {
+        name: "Clinics",
+        plural: "clinics",
+        service: "consultations",
+        c1: "Do you have a doctor available tomorrow morning?",
+        a1: "Yes, we have 9:00 and 10:30 tomorrow for a general consultation ($25). Which time suits you?"
+      },
+      dentist: {
+        name: "Dental clinics",
+        plural: "dental clinics",
+        service: "check-ups and cleanings",
+        c1: "How much is teeth cleaning?",
+        a1: "A cleaning is $50 and takes 45 minutes. Shall I book you in this week?"
+      },
+      spa: {
+        name: "Spas & massage",
+        plural: "spas and massage centres",
+        service: "massages",
+        c1: "Do you have a massage for two on Saturday?",
+        a1: "Yes 🌿 A 60-minute couples massage is $90. Saturday at 2 PM is free. Shall I reserve it?"
+      },
+      gym: {
+        name: "Gyms & trainers",
+        plural: "gyms and personal trainers",
+        service: "training sessions",
+        c1: "How much is a monthly membership?",
+        a1: "A monthly membership is $30, and the first personal training session is free. Want to book it?"
+      },
+      tutor: {
+        name: "Tutors & schools",
+        plural: "tutors and private schools",
+        service: "lessons",
+        c1: "Do you teach English for adults?",
+        a1: "Yes! Adult English lessons are $10 an hour, Monday to Thursday evenings. Shall I book a trial lesson?"
+      },
+      "car-repair": {
+        name: "Car repair garages",
+        plural: "car repair garages",
+        service: "car services",
+        c1: "How much is an oil change?",
+        a1: "An oil change is $35 and takes about 30 minutes. We have space tomorrow at 10 AM. Book it?"
+      }
+    }
+  },
   terms: {
     title: "Terms of Service",
     link: "Terms of Service",

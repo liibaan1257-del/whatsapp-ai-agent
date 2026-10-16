@@ -498,6 +498,80 @@ export const so: Messages = {
     confirmRequired: "Fadlan xaqiiji in lambarku aanu ku furnayn app-ka WhatsApp.",
     failed: "Codsiga lama dirin. Isku day mar kale ama WhatsApp nagala soo xidhiidh.",
   },
+  industries: {
+    footerTitle: "ReplyBooker waxaa loogu talagalay",
+    otherTitle: "Sidoo kale waxaa loogu talagalay",
+    badge: "{plural}",
+    title: "Qaabilaad AI ah oo WhatsApp ah: {plural}",
+    description: "ReplyBooker wuxuu macaamiishaada uga jawaabaa WhatsApp 24/7 luqaddooda, wuxuu sharxaa qiimahaaga, wuxuuna si toos ah u qabtaa ballamaha. Loo sameeyay {plural}. 14 maalmood bilaash.",
+    heroSubtitle: "Macaamiishu waxay kuu soo qoraan WhatsApp marka aad mashquul tahay, xidhan tahay ama hurdo. ReplyBooker wuxuu uga jawaabaa ilbiriqsiyo gudahood, luqaddooda, wuxuuna kuu qabtaa ballanta.",
+    benefitsTitle: "Sababta {plural} u isticmaalaan ReplyBooker",
+    benefits: [
+      "Fariin ma lumayso: macmiil kasta wuxuu helaa jawaab ilbiriqsiyo gudahood, habeen iyo maalin.",
+      "Ballamaha {service} iyo kuwo kale waxay si toos ah u galaan Dashboard-kaaga.",
+      "Wuxuu ku jawaabaa Soomaali, Sawaaxili, Ingiriisi, Carabi, Faransiis, Isbaanish iyo kuwo kale."
+    ],
+    exampleTitle: "Waxa macaamiishaadu arki doonaan",
+    ctaTitle: "Bilaash ku tijaabi 14 maalmood",
+    list: {
+      salon: {
+        name: "Salonnada timaha",
+        plural: "salonnada timaha",
+        service: "timo-jaridda",
+        c1: "Salaan! Tidcashadu (braids) waa immisa?",
+        a1: "Salaan 😊 Tidcashadu waa $40, waxayna qaadataa 3 saacadood. Ma kuu qabtaa waqti?"
+      },
+      barbershop: {
+        name: "Timo-jarayaasha",
+        plural: "timo-jarayaasha",
+        service: "timo-jaridda iyo gadhka",
+        c1: "Maanta 5-ta kadib ma la ii jari karaa?",
+        a1: "Haa! Maanta 5:30 ayaa bannaan. Ma kuu qabtaa? Magacaa?"
+      },
+      clinic: {
+        name: "Rugaha caafimaadka",
+        plural: "rugaha caafimaadka",
+        service: "baaritaannada",
+        c1: "Berri subax dhakhtar ma joogaa?",
+        a1: "Haa, berri 9:00 iyo 10:30 ayaa bannaan baaritaan guud ($25). Waqtigee kugu habboon?"
+      },
+      dentist: {
+        name: "Rugaha ilkaha",
+        plural: "rugaha ilkaha",
+        service: "baaritaanka iyo nadiifinta ilkaha",
+        c1: "Nadiifinta ilkaha waa immisa?",
+        a1: "Nadiifintu waa $50, waxayna qaadataa 45 daqiiqo. Ma kuu qabtaa toddobaadkan?"
+      },
+      spa: {
+        name: "Spa iyo duugid",
+        plural: "spa-yada iyo xarumaha duugidda",
+        service: "duugidda (massage)",
+        c1: "Sabtida duugid labo qof ah ma haysaan?",
+        a1: "Haa 🌿 Duugid labo qof ah oo 60 daqiiqo ah waa $90. Sabti 2:00 ayaa bannaan. Ma kuu qabtaa?"
+      },
+      gym: {
+        name: "Jimicsiga iyo tababarayaasha",
+        plural: "xarumaha jimicsiga iyo tababarayaasha",
+        service: "fadhiyada tababarka",
+        c1: "Xubinnimada bishii waa immisa?",
+        a1: "Xubinnimada bishii waa $30, fadhiga tababarka koowaadna waa bilaash. Ma kuu qabtaa?"
+      },
+      tutor: {
+        name: "Macallimiinta iyo dugsiyada",
+        plural: "macallimiinta iyo dugsiyada gaarka ah",
+        service: "casharrada",
+        c1: "Ingiriisi ma u dhigtaan dadka waaweyn?",
+        a1: "Haa! Casharrada Ingiriisiga dadka waaweyn waa $10 saacaddii, Isniin ilaa Khamiis fiidkii. Ma kuu qabtaa cashar tijaabo ah?"
+      },
+      "car-repair": {
+        name: "Garaashyada baabuurta",
+        plural: "garaashyada baabuurta",
+        service: "adeegyada baabuurta",
+        c1: "Beddelka saliidda waa immisa?",
+        a1: "Beddelka saliiddu waa $35, wuxuuna qaataa 30 daqiiqo. Berri 10:00 ayaa bannaan. Ma kuu qabtaa?"
+      }
+    }
+  },
   terms: {
     title: "Shuruudaha Adeegga",
     link: "Shuruudaha Adeegga",

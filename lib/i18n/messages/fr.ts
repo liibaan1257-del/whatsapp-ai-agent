@@ -498,6 +498,80 @@ export const fr: Messages = {
     confirmRequired: "Confirmez que le numéro n'est pas dans l'app WhatsApp.",
     failed: "Impossible d'envoyer la demande. Réessayez ou contactez-nous sur WhatsApp.",
   },
+  industries: {
+    footerTitle: "ReplyBooker pour",
+    otherTitle: "Aussi pour",
+    badge: "Pour les {plural}",
+    title: "Réceptionniste IA sur WhatsApp pour les {plural}",
+    description: "ReplyBooker répond à vos clients sur WhatsApp 24h/24 dans leur langue, explique vos tarifs et prend les rendez-vous automatiquement. Conçu pour les {plural}. Essai gratuit de 14 jours.",
+    heroSubtitle: "Vos clients vous écrivent sur WhatsApp quand vous êtes occupé, fermé ou endormi. ReplyBooker leur répond en quelques secondes, dans leur langue, et prend le rendez-vous pour vous.",
+    benefitsTitle: "Pourquoi les {plural} utilisent ReplyBooker",
+    benefits: [
+      "Aucun message manqué : chaque client reçoit une réponse en quelques secondes, jour et nuit.",
+      "Les réservations de {service} et plus sont enregistrées directement dans votre tableau de bord.",
+      "Répond en somali, swahili, anglais, arabe, français, espagnol et plus."
+    ],
+    exampleTitle: "Ce que verront vos clients",
+    ctaTitle: "Essayez gratuitement 14 jours",
+    list: {
+      salon: {
+        name: "Salons de coiffure",
+        plural: "salons de coiffure",
+        service: "coupes",
+        c1: "Bonjour ! Combien coûtent des tresses ?",
+        a1: "Bonjour 😊 Les tresses coûtent 40 $ et prennent environ 3 heures. Voulez-vous réserver ?"
+      },
+      barbershop: {
+        name: "Barbiers",
+        plural: "barbiers",
+        service: "coupes et tailles de barbe",
+        c1: "Je peux passer aujourd'hui après 17 h ?",
+        a1: "Oui ! 17 h 30 est libre aujourd'hui. Je vous réserve ? Quel est votre nom ?"
+      },
+      clinic: {
+        name: "Cliniques",
+        plural: "cliniques",
+        service: "consultations",
+        c1: "Un médecin est-il disponible demain matin ?",
+        a1: "Oui, demain à 9 h et 10 h 30 pour une consultation générale (25 $). Quelle heure vous convient ?"
+      },
+      dentist: {
+        name: "Cabinets dentaires",
+        plural: "cabinets dentaires",
+        service: "contrôles et détartrages",
+        c1: "Combien coûte un détartrage ?",
+        a1: "Un détartrage coûte 50 $ et dure 45 minutes. Je vous réserve cette semaine ?"
+      },
+      spa: {
+        name: "Spas et massages",
+        plural: "spas et centres de massage",
+        service: "massages",
+        c1: "Avez-vous un massage duo samedi ?",
+        a1: "Oui 🌿 Un massage duo de 60 minutes coûte 90 $. Samedi 14 h est libre. Je réserve ?"
+      },
+      gym: {
+        name: "Salles de sport et coachs",
+        plural: "salles de sport et coachs",
+        service: "séances d'entraînement",
+        c1: "Combien coûte l'abonnement mensuel ?",
+        a1: "L'abonnement mensuel est à 30 $ et la première séance de coaching est offerte. Je vous la réserve ?"
+      },
+      tutor: {
+        name: "Professeurs et écoles",
+        plural: "professeurs et écoles privées",
+        service: "cours",
+        c1: "Proposez-vous l'anglais pour adultes ?",
+        a1: "Oui ! Les cours d'anglais pour adultes coûtent 10 $ l'heure, du lundi au jeudi en soirée. Je vous réserve un cours d'essai ?"
+      },
+      "car-repair": {
+        name: "Garages automobiles",
+        plural: "garages automobiles",
+        service: "entretiens auto",
+        c1: "Combien coûte une vidange ?",
+        a1: "Une vidange coûte 35 $ et prend environ 30 minutes. Demain 10 h est libre. Je réserve ?"
+      }
+    }
+  },
   terms: {
     title: "Conditions d'utilisation",
     link: "Conditions d'utilisation",

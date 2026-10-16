@@ -501,6 +501,80 @@ export const sw: Messages = {
     confirmRequired: "Tafadhali thibitisha kuwa namba haitumiki kwenye programu ya WhatsApp.",
     failed: "Imeshindwa kutuma ombi. Jaribu tena au wasiliana nasi kwenye WhatsApp.",
   },
+  industries: {
+    footerTitle: "ReplyBooker kwa",
+    otherTitle: "Pia imetengenezwa kwa",
+    badge: "Kwa {plural}",
+    title: "Mhudumu wa AI wa WhatsApp kwa {plural}",
+    description: "ReplyBooker hujibu wateja wako kwenye WhatsApp saa 24/7 kwa lugha yao, hueleza bei zako na kupanga miadi kiotomatiki. Imetengenezwa kwa {plural}. Jaribio la bure la siku 14.",
+    heroSubtitle: "Wateja hukutumia ujumbe kwenye WhatsApp ukiwa na shughuli, umefunga au umelala. ReplyBooker huwajibu ndani ya sekunde, kwa lugha yao, na kukupangia miadi.",
+    benefitsTitle: "Kwa nini {plural} hutumia ReplyBooker",
+    benefits: [
+      "Hakuna ujumbe unaokosa jibu: kila mteja hujibiwa ndani ya sekunde, mchana na usiku.",
+      "Miadi ya {service} na zaidi huhifadhiwa moja kwa moja kwenye dashibodi yako.",
+      "Hujibu kwa Kisomali, Kiswahili, Kiingereza, Kiarabu, Kifaransa, Kihispania na zaidi."
+    ],
+    exampleTitle: "Kile wateja wako wataona",
+    ctaTitle: "Ijaribu bure kwa siku 14",
+    list: {
+      salon: {
+        name: "Saluni za nywele",
+        plural: "saluni za nywele",
+        service: "kusuka na kukata nywele",
+        c1: "Habari! Kusuka box braids ni bei gani?",
+        a1: "Habari 😊 Box braids ni $40 na huchukua takriban saa 3. Ungependa kupanga muda?"
+      },
+      barbershop: {
+        name: "Vinyozi",
+        plural: "vinyozi",
+        service: "kunyoa na kupunguza ndevu",
+        c1: "Naweza kunyolewa leo baada ya saa 11 jioni?",
+        a1: "Ndiyo! Saa 11:30 jioni leo iko wazi. Nikupangie? Jina lako ni nani?"
+      },
+      clinic: {
+        name: "Kliniki",
+        plural: "kliniki",
+        service: "mashauriano",
+        c1: "Kuna daktari kesho asubuhi?",
+        a1: "Ndiyo, kesho saa 3:00 na 4:30 asubuhi kuna nafasi ya ushauri wa jumla ($25). Muda upi unakufaa?"
+      },
+      dentist: {
+        name: "Kliniki za meno",
+        plural: "kliniki za meno",
+        service: "uchunguzi na usafishaji wa meno",
+        c1: "Kusafisha meno ni bei gani?",
+        a1: "Kusafisha ni $50 na huchukua dakika 45. Nikupangie wiki hii?"
+      },
+      spa: {
+        name: "Spa na masaji",
+        plural: "spa na vituo vya masaji",
+        service: "masaji",
+        c1: "Mna masaji ya watu wawili Jumamosi?",
+        a1: "Ndiyo 🌿 Masaji ya wawili ya dakika 60 ni $90. Jumamosi saa 8 mchana iko wazi. Nikuhifadhie?"
+      },
+      gym: {
+        name: "Gym na wakufunzi",
+        plural: "gym na wakufunzi binafsi",
+        service: "vipindi vya mazoezi",
+        c1: "Uanachama wa mwezi ni bei gani?",
+        a1: "Uanachama wa mwezi ni $30, na kipindi cha kwanza cha mkufunzi ni bure. Nikupangie?"
+      },
+      tutor: {
+        name: "Walimu na shule",
+        plural: "walimu na shule binafsi",
+        service: "masomo",
+        c1: "Mnafundisha Kiingereza kwa watu wazima?",
+        a1: "Ndiyo! Masomo ya Kiingereza kwa watu wazima ni $10 kwa saa, Jumatatu hadi Alhamisi jioni. Nikupangie somo la majaribio?"
+      },
+      "car-repair": {
+        name: "Gereji za magari",
+        plural: "gereji za magari",
+        service: "huduma za magari",
+        c1: "Kubadilisha oili ni bei gani?",
+        a1: "Kubadilisha oili ni $35 na huchukua takriban dakika 30. Kesho saa 4 asubuhi kuna nafasi. Nikupangie?"
+      }
+    }
+  },
   terms: {
     title: "Masharti ya Huduma",
     link: "Masharti ya Huduma",

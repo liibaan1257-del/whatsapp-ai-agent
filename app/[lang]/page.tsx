@@ -10,9 +10,8 @@ import {
   ShieldCheck,
   type LucideIcon,
 } from "lucide-react";
-import { LanguageSwitcher } from "@/components/i18n/language-switcher";
-import { PrivacyLink } from "@/components/privacy-link";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { SiteFooter } from "@/components/marketing/site-footer";
+import { SiteHeader } from "@/components/marketing/site-header";
 import { Button } from "@/components/ui/button";
 import { contactWhatsappLink, PLAN_NAMES, PLANS, PRICES_USD } from "@/lib/billing";
 import { fmt } from "@/lib/i18n/config";
@@ -58,30 +57,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
   return (
     <div className="flex flex-1 flex-col">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
-      {/* Header */}
-      <header className="sticky top-0 z-30 border-b bg-background/85 backdrop-blur">
-        <div className="mx-auto flex h-14 max-w-6xl items-center gap-4 px-4 sm:px-6">
-          <Link href="/" className="flex items-center gap-2 font-semibold">
-            <span className="grid size-8 place-items-center rounded-lg bg-brand/15 text-brand">
-              <MessageCircle className="size-4" aria-hidden="true" />
-            </span>
-            <span className="hidden sm:inline">{m.meta.appName}</span>
-          </Link>
-          <nav className="ms-auto hidden items-center gap-5 text-sm text-muted-foreground md:flex">
-            <a href="#features" className="hover:text-foreground">{t.nav.features}</a>
-            <a href="#pricing" className="hover:text-foreground">{t.nav.pricing}</a>
-            <a href="#faq" className="hover:text-foreground">{t.nav.faq}</a>
-          </nav>
-          <div className="ms-auto flex items-center gap-2 md:ms-0">
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="/login">{m.home.signIn}</Link>
-            </Button>
-            <Button variant="brand" size="sm" asChild>
-              <Link href="/signup">{m.home.getStarted}</Link>
-            </Button>
-          </div>
-        </div>
-      </header>
+      <SiteHeader m={m} sections />
 
       <main className="flex-1">
         {/* Hero */}
@@ -243,24 +219,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-6 text-sm text-muted-foreground sm:px-6">
-          <p>
-            © {m.meta.appName}. {t.rights}
-          </p>
-          <div className="flex flex-wrap items-center gap-3">
-            {SOCIAL_LINKS.map((s) => (
-              <a key={s.name} href={s.url} target="_blank" rel="noopener noreferrer me" className="hover:text-foreground">
-                {s.name}
-              </a>
-            ))}
-            <PrivacyLink />
-            <LanguageSwitcher className="w-40" />
-            <ThemeToggle className="w-36" />
-          </div>
-        </div>
-      </footer>
+      <SiteFooter m={m} />
     </div>
   );
 }
