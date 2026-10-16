@@ -84,6 +84,9 @@ async function Admin({
     .order("created_at", { ascending: false })
     .limit(8);
   const time = new Intl.DateTimeFormat(locale, { dateStyle: "short", timeStyle: "medium" });
+  const { data: subscriberRows } = await db.from("subscribers").select("email, confirmed_at").order("created_at", { ascending: false }).limit(5000);
+  const subs = subscriberRows ?? [];
+  const confirmed = subs.filter((s) => s.confirmed_at);
 
   return (
     <>
@@ -159,6 +162,24 @@ async function Admin({
                 })}
               </TableBody>
             </Table>
+          )}
+        </CardContent>
+      </Card>
+      <Card className="mt-6">
+        <CardContent className="grid gap-3">
+          <h2 className="font-semibold">{t.subscribers}</h2>
+          {subs.length ? (
+            <>
+              <p className="text-sm text-muted-foreground">{fmt(t.subscribersStats, { n: confirmed.length, p: subs.length - confirmed.length })}</p>
+              {confirmed.length ? (
+                <label className="grid gap-1 text-sm">
+                  <span className="font-medium">{t.subscriberEmails}</span>
+                  <textarea readOnly dir="ltr" rows={3} value={confirmed.map((s) => s.email).join(", ")} className="rounded-md border bg-transparent p-2 font-mono text-xs" />
+                </label>
+              ) : null}
+            </>
+          ) : (
+            <p className="text-sm text-muted-foreground">{t.noSubscribers}</p>
           )}
         </CardContent>
       </Card>

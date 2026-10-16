@@ -11,6 +11,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { SiteFooter } from "@/components/marketing/site-footer";
+import { NewsletterForm } from "@/components/marketing/newsletter-form";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { Button } from "@/components/ui/button";
 import { contactWhatsappLink, PLAN_NAMES, PLANS, PRICES_USD } from "@/lib/billing";
@@ -195,6 +196,15 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
                 <p className="mt-3 text-sm text-muted-foreground">{f.a}</p>
               </details>
             ))}
+          </div>
+        </section>
+
+        {/* Newsletter */}
+        <section className="border-t">
+          <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+            <h2 className="text-2xl font-semibold tracking-tight">{m.newsletter.title}</h2>
+            <p className="mt-1 mb-4 text-muted-foreground">{m.newsletter.hint}</p>
+            <NewsletterForm />
           </div>
         </section>
 
