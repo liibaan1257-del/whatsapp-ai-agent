@@ -48,6 +48,9 @@ export const en = {
     heroSubtitle: "An AI agent that replies to your customers in their own language, explains your services and prices, and books appointments while you work or sleep.",
     ctaStart: "Start free for 14 days",
     ctaWhatsapp: "Talk to us on WhatsApp",
+    tryDemo: "Try it now on WhatsApp",
+    tryDemoHint: "Message our demo salon and watch the AI answer and book in seconds.",
+    tryDemoText: "Hi! How much is a haircut?",
     noCard: "No card needed. Ready in 10 minutes.",
     demo: {
       business: "Bella Salon",

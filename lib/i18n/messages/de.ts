@@ -49,6 +49,9 @@ export const de: Messages = {
     heroSubtitle: "Ein KI-Agent, der Ihren Kunden in ihrer Sprache antwortet, Ihre Leistungen und Preise erklärt und Termine bucht, während Sie arbeiten oder schlafen.",
     ctaStart: "14 Tage kostenlos testen",
     ctaWhatsapp: "Schreiben Sie uns auf WhatsApp",
+    tryDemo: "Jetzt auf WhatsApp testen",
+    tryDemoHint: "Schreib unserem Demo-Salon und sieh, wie die KI in Sekunden antwortet und bucht.",
+    tryDemoText: "Hallo! Was kostet ein Haarschnitt?",
     noCard: "Keine Karte nötig. In 10 Minuten startklar.",
     demo: {
       business: "Salon Bella",

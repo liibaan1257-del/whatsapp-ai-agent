@@ -18,7 +18,7 @@ import { contactWhatsappLink, PLAN_NAMES, PLANS, PRICES_USD } from "@/lib/billin
 import { fmt } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n/dictionaries";
 import { localeFrom } from "@/lib/i18n/server";
-import { siteUrl, SOCIAL_LINKS } from "@/lib/site";
+import { demoWhatsappLink, siteUrl, SOCIAL_LINKS } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const FEATURE_ICONS: LucideIcon[] = [Clock, CalendarCheck, Languages, LayoutDashboard, Plug, ShieldCheck];
@@ -107,6 +107,20 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
               ) : null}
             </div>
             <p className="text-sm text-muted-foreground">{t.noCard}</p>
+            <a
+              href={demoWhatsappLink(t.tryDemoText)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex max-w-xl items-center gap-3 rounded-xl border border-brand/40 bg-brand/10 p-4 transition-colors hover:bg-brand/15"
+            >
+              <span className="grid size-10 shrink-0 place-items-center rounded-full bg-brand text-white">
+                <MessageCircle className="size-5" aria-hidden="true" />
+              </span>
+              <span>
+                <span className="block font-semibold text-brand">{t.tryDemo} →</span>
+                <span className="block text-sm text-muted-foreground">{t.tryDemoHint}</span>
+              </span>
+            </a>
           </div>
           <PhoneDemo demo={t.demo} />
         </section>

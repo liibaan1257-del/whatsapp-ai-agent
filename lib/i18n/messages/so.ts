@@ -49,6 +49,9 @@ export const so: Messages = {
     heroSubtitle: "Wakiil AI ah oo macaamiishaada ugu jawaaba luqaddooda, u sharxa adeegyadaada iyo qiimayaashooda, oo ballamaha qabta inta aad shaqaynayso ama hurdo.",
     ctaStart: "Bilow bilaash, 14 maalmood",
     ctaWhatsapp: "WhatsApp nagala soo xiriir",
+    tryDemo: "Hadda ku tijaabi WhatsApp",
+    tryDemoHint: "Fariin u dir salon-kayaga tijaabada ah oo arag sida AI-gu ugu jawaabo oo u qabto ballan ilbiriqsiyo gudahood.",
+    tryDemoText: "Salaan! Timo-jaridku waa immisa?",
     noCard: "Kaar looma baahna. 10 daqiiqo ayuu ku diyaar yahay.",
     demo: {
       business: "Bella Salon",

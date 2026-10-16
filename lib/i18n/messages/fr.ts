@@ -49,6 +49,9 @@ export const fr: Messages = {
     heroSubtitle: "Un agent IA qui répond à vos clients dans leur langue, présente vos services et vos prix, et prend les rendez-vous pendant que vous travaillez ou dormez.",
     ctaStart: "Essai gratuit de 14 jours",
     ctaWhatsapp: "Parlez-nous sur WhatsApp",
+    tryDemo: "Essayez-le sur WhatsApp",
+    tryDemoHint: "Écrivez à notre salon de démonstration et voyez l'IA répondre et réserver en quelques secondes.",
+    tryDemoText: "Bonjour ! Combien coûte une coupe ?",
     noCard: "Sans carte. Prêt en 10 minutes.",
     demo: {
       business: "Salon Bella",

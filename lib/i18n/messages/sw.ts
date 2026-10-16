@@ -50,6 +50,9 @@ export const sw: Messages = {
     heroSubtitle: "Wakala wa AI anayejibu wateja wako kwa lugha yao, anaeleza huduma na bei zako, na kupanga miadi ukiwa kazini au umelala.",
     ctaStart: "Anza bure kwa siku 14",
     ctaWhatsapp: "Ongea nasi kwenye WhatsApp",
+    tryDemo: "Ijaribu sasa kwenye WhatsApp",
+    tryDemoHint: "Tuma ujumbe kwa saluni yetu ya majaribio na uone AI ikijibu na kupanga miadi ndani ya sekunde.",
+    tryDemoText: "Habari! Kunyoa nywele ni bei gani?",
     noCard: "Hakuna kadi inayohitajika. Tayari ndani ya dakika 10.",
     demo: {
       business: "Bella Salon",
