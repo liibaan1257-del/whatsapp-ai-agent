@@ -1,5 +1,5 @@
 import "server-only";
-import { contactWhatsappLink, daysLeft, PRICES_USD } from "@/lib/billing";
+import { contactWhatsappLink, daysLeft, PRICES_USD, YEARLY_PRICES_USD } from "@/lib/billing";
 import { contactEmail } from "@/lib/contact";
 import { logger } from "@/lib/logger";
 import { sendEmail } from "@/lib/notify";
@@ -43,8 +43,8 @@ export async function sendTrialEndingEmails(now: Date = new Date()): Promise<{ t
         `Hi${name ? ` ${name}` : ""},`,
         "",
         `Your free trial${t.business_name ? ` for ${t.business_name}` : ""} ends in ${days} days. To keep your AI assistant answering customers, choose a plan:`,
-        `• Starter — $${PRICES_USD.starter}/month (500 AI replies)`,
-        `• Pro — $${PRICES_USD.pro}/month (2,000 AI replies)`,
+        `• Starter — $${PRICES_USD.starter}/month or $${YEARLY_PRICES_USD.starter}/year (500 AI replies)`,
+        `• Pro — $${PRICES_USD.pro}/month or $${YEARLY_PRICES_USD.pro}/year (2,000 AI replies)`,
         `Pay by Mobile Money, Waafi, card or bank transfer${pay ? `: ${pay}` : " — just reply to this email."}`,
         "",
         "---",
@@ -52,8 +52,8 @@ export async function sendTrialEndingEmails(now: Date = new Date()): Promise<{ t
         `Salaan${name ? ` ${name}` : ""},`,
         "",
         `Tijaabadaada bilaashka ahi waxay dhammaanaysaa ${days} maalmood kadib. Si AI-gaagu u sii wado jawaabaha macaamiisha, dooro qorshe:`,
-        `• Starter — $${PRICES_USD.starter} bishii (500 jawaab)`,
-        `• Pro — $${PRICES_USD.pro} bishii (2,000 jawaab)`,
+        `• Starter — $${PRICES_USD.starter} bishii ama $${YEARLY_PRICES_USD.starter} sannadkii (500 jawaab)`,
+        `• Pro — $${PRICES_USD.pro} bishii ama $${YEARLY_PRICES_USD.pro} sannadkii (2,000 jawaab)`,
         `Ku bixi Mobile Money, Waafi, kaar ama bank${pay ? `: ${pay}` : " — kaliya email-kan ka jawaab."}`,
         "",
         `${site}/dashboard/settings`,

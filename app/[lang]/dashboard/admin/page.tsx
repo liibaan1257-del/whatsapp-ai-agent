@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { BillingActions } from "@/components/admin/billing-actions";
+import { NewsletterBroadcast } from "@/components/admin/newsletter-broadcast";
 import { AdminPhoneForm } from "@/components/admin/phone-form";
 import { WhatsAppConnect } from "@/components/admin/whatsapp-connect";
 import { PageHeader } from "@/components/dashboard/page-header";
@@ -177,6 +178,7 @@ async function Admin({
                   <textarea readOnly dir="ltr" rows={3} value={confirmed.map((s) => s.email).join(", ")} className="rounded-md border bg-transparent p-2 font-mono text-xs" />
                 </label>
               ) : null}
+              <NewsletterBroadcast count={confirmed.length} />
             </>
           ) : (
             <p className="text-sm text-muted-foreground">{t.noSubscribers}</p>

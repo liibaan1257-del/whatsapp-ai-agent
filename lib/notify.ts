@@ -33,6 +33,35 @@ export async function sendEmail(mail: { to: string; subject: string; text: strin
   }
 }
 
+/**
+ * Sends many plain-text emails through Resend's batch endpoint (up to 100 per
+ * request). Returns how many Resend accepted. Never throws.
+ */
+export async function sendEmailBatch(mails: { to: string; subject: string; text: string; headers?: Record<string, string> }[]): Promise<number> {
+  const key = serverEnv.resendApiKey();
+  if (!key) return 0;
+  const base = (process.env.RESEND_API_BASE ?? "https://api.resend.com").replace(/\/+$/, "");
+  let accepted = 0;
+  for (let i = 0; i < mails.length; i += 100) {
+    const chunk = mails.slice(i, i + 100);
+    try {
+      const res = await fetch(`${base}/emails/batch`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+        body: JSON.stringify(
+          chunk.map((m) => ({ from: FROM, to: [m.to], subject: m.subject.slice(0, 200), text: m.text, ...(m.headers ? { headers: m.headers } : {}) })),
+        ),
+        signal: AbortSignal.timeout(20_000),
+      });
+      if (res.ok) accepted += chunk.length;
+      else logger.warn("email_batch_failed", { status: res.status });
+    } catch (error) {
+      logger.warn("email_batch_failed", { error: String(error) });
+    }
+  }
+  return accepted;
+}
+
 function operatorEmail(): string | null {
   return (process.env.NOTIFY_EMAIL ?? "").trim() || contactEmail();
 }

@@ -1,10 +1,11 @@
 "use server";
 
+import { getOwner } from "@/lib/auth/session";
 import { configStatus } from "@/lib/env";
 import { fmt } from "@/lib/i18n/config";
 import { requestLocale, requestMessages } from "@/lib/i18n/server";
 import { logger } from "@/lib/logger";
-import { sendEmail } from "@/lib/notify";
+import { sendEmail, sendEmailBatch } from "@/lib/notify";
 import { siteUrl } from "@/lib/site";
 import { createAdminClient } from "@/lib/supabase/admin";
 
@@ -48,4 +49,40 @@ export async function subscribe(_prev: NewsletterState, formData: FormData): Pro
   if (!sent) return { error: t.failed };
   logger.info("newsletter_confirm_sent");
   return { ok: true };
+}
+
+export type BroadcastState = { ok?: boolean; error?: string; notice?: string };
+
+/**
+ * Operator only: email a newsletter to every confirmed subscriber. Each email
+ * carries its own unsubscribe link (in the text and as List-Unsubscribe).
+ */
+export async function sendNewsletter(_prev: BroadcastState, formData: FormData): Promise<BroadcastState> {
+  const m = await requestMessages();
+  const owner = await getOwner();
+  if (!owner?.isAdmin) return { error: m.admin.failed };
+  const subject = String(formData.get("subject") ?? "").trim();
+  const body = String(formData.get("body") ?? "").trim();
+  if (!subject || subject.length > 150 || !body || body.length > 10_000) return { error: m.admin.broadcastInvalid };
+  if (!configStatus().serviceRole) return { error: m.admin.notConfigured };
+
+  const { data: subs, error } = await createAdminClient().from("subscribers").select("email, token").not("confirmed_at", "is", null).limit(5000);
+  if (error) return { error: m.admin.failed };
+  if (!subs?.length) return { error: m.admin.noSubscribers };
+
+  const site = siteUrl();
+  const sent = await sendEmailBatch(
+    subs.map((s) => {
+      const unsubscribe = `${site}/api/newsletter/unsubscribe?t=${s.token}`;
+      return {
+        to: s.email,
+        subject,
+        text: `${body}\n\n---\nReplyBooker · ${site}\nUnsubscribe / Ka bax: ${unsubscribe}`,
+        headers: { "List-Unsubscribe": `<${unsubscribe}>` },
+      };
+    }),
+  );
+  logger.info("newsletter_sent", { by: owner.id, total: subs.length, sent });
+  if (!sent) return { error: m.admin.emailFailed };
+  return { ok: true, notice: fmt(m.admin.broadcastSent, { n: sent, total: subs.length }) };
 }

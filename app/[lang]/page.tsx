@@ -14,7 +14,7 @@ import { SiteFooter } from "@/components/marketing/site-footer";
 import { NewsletterForm } from "@/components/marketing/newsletter-form";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { Button } from "@/components/ui/button";
-import { contactWhatsappLink, PLAN_NAMES, PLANS, PRICES_USD } from "@/lib/billing";
+import { contactWhatsappLink, PLAN_NAMES, PLANS, PRICES_USD, YEARLY_PRICES_USD } from "@/lib/billing";
 import { fmt } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n/dictionaries";
 import { localeFrom } from "@/lib/i18n/server";
@@ -161,6 +161,9 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
                       <span className="text-4xl font-semibold tabular-nums">{PRICES_USD[plan] ? money.format(PRICES_USD[plan]) : t.free}</span>
                       {PRICES_USD[plan] ? <span className="text-muted-foreground">{t.perMonth}</span> : null}
                     </p>
+                    {YEARLY_PRICES_USD[plan] ? (
+                      <p className="mt-1 text-sm text-brand">{fmt(t.yearly, { price: money.format(YEARLY_PRICES_USD[plan]) })}</p>
+                    ) : null}
                     <ul className="mt-5 flex-1 space-y-2 text-sm">
                       {[fmt(t.repliesPerMonth, { n: PLANS[plan].replies.toLocaleString(locale) }), ...t.planFeatures].map((line) => (
                         <li key={line} className="flex items-start gap-2">
