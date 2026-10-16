@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { DASHBOARD_HOME, LOGIN_PATH, SIGNUP_PATH } from "@/lib/auth/redirect";
 import { isSupabaseConfigured } from "@/lib/env";
 import { isLocale, LOCALE_COOKIE, matchLocale } from "@/lib/i18n/config";
+import { isReferralCode, REFERRAL_COOKIE } from "@/lib/referral";
 import { updateSession } from "@/lib/supabase/proxy";
 
 const YEAR = 60 * 60 * 24 * 365;
@@ -15,6 +16,17 @@ const YEAR = 60 * 60 * 24 * 365;
  *    the server (lib/auth/session.ts), and RLS protects the data itself.
  */
 export async function proxy(request: NextRequest) {
+  return rememberReferral(request, await route(request));
+}
+
+/** ?ref=<code> on any page: keep the invite code for 30 days so it survives until signup. */
+function rememberReferral(request: NextRequest, res: NextResponse) {
+  const ref = request.nextUrl.searchParams.get("ref")?.toLowerCase();
+  if (isReferralCode(ref)) res.cookies.set(REFERRAL_COOKIE, ref, { path: "/", maxAge: 60 * 60 * 24 * 30, sameSite: "lax", httpOnly: true });
+  return res;
+}
+
+async function route(request: NextRequest): Promise<NextResponse> {
   const { pathname, search } = request.nextUrl;
 
   const prefix = pathname.split("/")[1];

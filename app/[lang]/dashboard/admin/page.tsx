@@ -52,12 +52,13 @@ async function Admin({
   const db = createAdminClient();
   const { data: businesses } = await db
     .from("business_knowledge")
-    .select("id, owner_id, business_name, plan, access_until, created_at, whatsapp_phone_number_id, wa_request_number, wa_requested_at")
+    .select("id, owner_id, business_name, plan, access_until, created_at, whatsapp_phone_number_id, wa_request_number, wa_requested_at, referred_by")
     .order("created_at", { ascending: false })
     .limit(500);
   const ownerIds = (businesses ?? []).map((b) => b.owner_id);
   const { data: profiles } = ownerIds.length ? await db.from("profiles").select("id, email, full_name").in("id", ownerIds) : { data: [] };
   const ownerOf = new Map((profiles ?? []).map((p) => [p.id, { email: p.email ?? "", name: p.full_name ?? "" }]));
+  const nameOf = new Map((businesses ?? []).map((b) => [b.id, b.business_name || ownerOf.get(b.owner_id)?.email || ""]));
   const rows = (businesses ?? [])
     .map((b) => ({ ...b, email: ownerOf.get(b.owner_id)?.email ?? "", ownerName: ownerOf.get(b.owner_id)?.name ?? "" }))
     .filter((b) => !q || [b.email, b.business_name ?? "", b.ownerName].some((v) => v.toLowerCase().includes(q)))
@@ -124,6 +125,9 @@ async function Admin({
                         <div className="text-xs text-muted-foreground" dir="ltr">
                           {b.email}
                         </div>
+                        {b.referred_by && (
+                          <div className="text-xs text-muted-foreground">🎁 {fmt(t.invitedBy, { name: nameOf.get(b.referred_by) ?? "?" })}</div>
+                        )}
                         {b.wa_request_number && !b.whatsapp_phone_number_id && (
                           <div className="mt-1 inline-block rounded-md bg-amber-500/15 px-2 py-0.5 text-xs font-medium text-amber-700 dark:text-amber-400" dir="ltr">
                             {fmt(t.waRequested, { number: b.wa_request_number })}

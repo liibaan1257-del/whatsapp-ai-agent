@@ -1,13 +1,15 @@
 "use server";
 
 import { refresh } from "next/cache";
+import { after } from "next/server";
 import { getOwner } from "@/lib/auth/session";
 import { isPlan } from "@/lib/billing";
 import { configStatus, serverEnv } from "@/lib/env";
 import { fmt } from "@/lib/i18n/config";
 import { requestMessages } from "@/lib/i18n/server";
 import { logger } from "@/lib/logger";
-import { sendWelcome } from "@/lib/notify";
+import { sendEmail, sendWelcome } from "@/lib/notify";
+import { siteUrl } from "@/lib/site";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -51,6 +53,7 @@ export async function updateBilling(_prev: AdminState, formData: FormData): Prom
     return { error: m.admin.failed };
   }
   logger.info("admin_billing_updated", { by: owner.id, businessId: id, op, ...update });
+  if (op === "month" || op === "year") await rewardReferrer(db, id);
   refresh();
   return { ok: true };
 }
@@ -179,5 +182,51 @@ async function recordAdminEvent(outcome: string, detail: string) {
     await createAdminClient().from("webhook_events").insert({ outcome, detail: detail.slice(0, 500) });
   } catch {
     // Diagnostics only.
+  }
+}
+
+/**
+ * The first time a referred business pays, the business that invited it gets
+ * one free month. The conditional update makes this happen at most once.
+ */
+async function rewardReferrer(db: ReturnType<typeof createAdminClient>, businessId: string) {
+  const { data: referee } = await db
+    .from("business_knowledge")
+    .update({ referral_rewarded_at: new Date().toISOString() })
+    .eq("id", businessId)
+    .not("referred_by", "is", null)
+    .is("referral_rewarded_at", null)
+    .select("referred_by, business_name")
+    .maybeSingle();
+  if (!referee?.referred_by) return;
+  const { data: referrer } = await db.from("business_knowledge").select("id, owner_id, access_until").eq("id", referee.referred_by).maybeSingle();
+  if (!referrer) return;
+  const base = new Date(Math.max(Date.now(), new Date(referrer.access_until).getTime()));
+  base.setUTCMonth(base.getUTCMonth() + 1);
+  const { error } = await db.from("business_knowledge").update({ access_until: base.toISOString() }).eq("id", referrer.id);
+  if (error) {
+    logger.error("referral_reward_failed", { referrerId: referrer.id, code: error.code });
+    return;
+  }
+  logger.info("referral_rewarded", { referrerId: referrer.id, refereeId: businessId });
+  const { data: profile } = await db.from("profiles").select("email, full_name").eq("id", referrer.owner_id).maybeSingle();
+  if (profile?.email) {
+    const name = referee.business_name || "A business you invited";
+    const until = base.toISOString().slice(0, 10);
+    after(() =>
+      sendEmail({
+        to: profile.email,
+        subject: "You earned a free month 🎁 / Waxaad heshay bil bilaash ah",
+        text: [
+          `${name} just subscribed to ReplyBooker with your invite link. Thank you!`,
+          `Your access now runs until ${until}.`,
+          "",
+          `${name} ayaa ku biiray ReplyBooker iyadoo isticmaalaysa link-gaaga. Mahadsanid!`,
+          `Adeeggaagu hadda wuu socdaa ilaa ${until}.`,
+          "",
+          `${siteUrl()}/dashboard/settings`,
+        ].join("\n"),
+      }),
+    );
   }
 }

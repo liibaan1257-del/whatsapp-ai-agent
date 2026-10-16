@@ -1,6 +1,6 @@
 "use server";
 
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { after } from "next/server";
 import { LOGIN_PATH, safeNextPath } from "@/lib/auth/redirect";
@@ -11,6 +11,7 @@ import { requestLocale, requestMessages } from "@/lib/i18n/server";
 import { isValidTimeZone } from "@/lib/knowledge";
 import { logger } from "@/lib/logger";
 import { notifyOperator, sendWelcome } from "@/lib/notify";
+import { isReferralCode, REFERRAL_COOKIE, REFERRAL_TRIAL_DAYS } from "@/lib/referral";
 import { siteUrl } from "@/lib/site";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
@@ -97,6 +98,7 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
   // Tell the operator and welcome the new owner, after the response is sent.
   // The database trigger created the business row; name it (server-side, by the new user's id).
   if (businessName && data.user) await nameNewBusiness(data.user.id, businessName);
+  if (data.user) await applyReferral(data.user.id);
   const who = [fullName.replace(/\s+/g, " "), businessName && `(${businessName})`].filter(Boolean).join(" ") || email;
   const locale = await requestLocale();
   after(() =>
@@ -169,6 +171,32 @@ export async function logout(): Promise<void> {
 }
 
 /** Sets the business name chosen at sign-up. Best effort: the owner can always set it later. */
+/**
+ * Signed up through an invite link (the proxy kept ?ref=… in a cookie): link the
+ * new business to the inviter and give it the longer trial. The code is looked
+ * up server-side; a business can't refer itself.
+ */
+async function applyReferral(ownerId: string) {
+  const jar = await cookies();
+  const code = jar.get(REFERRAL_COOKIE)?.value;
+  if (!isReferralCode(code)) return;
+  jar.delete(REFERRAL_COOKIE);
+  try {
+    const db = createAdminClient();
+    const { data: referrer } = await db.from("business_knowledge").select("id, owner_id").eq("referral_code", code).maybeSingle();
+    if (!referrer || referrer.owner_id === ownerId) return;
+    const { error } = await db
+      .from("business_knowledge")
+      .update({ referred_by: referrer.id, access_until: new Date(Date.now() + REFERRAL_TRIAL_DAYS * 86_400_000).toISOString() })
+      .eq("owner_id", ownerId)
+      .is("referred_by", null);
+    if (error) logger.warn("signup_referral_failed", { code: error.code });
+    else logger.info("signup_referral_applied", { referrerId: referrer.id });
+  } catch (error) {
+    logger.warn("signup_referral_failed", { error: String(error) });
+  }
+}
+
 async function nameNewBusiness(ownerId: string, businessName: string) {
   try {
     const { error } = await createAdminClient().from("business_knowledge").update({ business_name: businessName }).eq("owner_id", ownerId);

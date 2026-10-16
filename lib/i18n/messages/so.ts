@@ -106,6 +106,7 @@ export const so: Messages = {
     ],
     pricingTitle: "Qiimo fudud",
     pricingSubtitle: "Bilaash ku bilow. Ku bixi Mobile Money, Waafi, kaar ama bank transfer.",
+    referralNote: "Ganacsi kale ma kuu soo gudbiyay? Tijaabadaadu waa 30 maalmood oo bilaash ah.",
     perMonth: "/bishii",
     popular: "Kan ugu caansan",
     free: "Bilaash",
@@ -177,6 +178,7 @@ export const so: Messages = {
     confirmFailed: "Linkiga xaqiijinta ma shaqaynayo ama wuu dhacay. Gal ama mar kale is diiwaangeli.",
     checkEmail: "Fiiri {email}: waxaan kuu dirnay link xaqiijin ah. Kadib gal.",
     accountDeleted: "Akoonkaaga iyo xogtiisa oo dhan waa la tirtiray.",
+    referralBonus: "Waa lagu martiqaaday: tijaabadaada bilaashka ahi waa 30 maalmood.",
     forgot: "Furaha sirta ma illowday?",
     forgotTitle: "Dib u dhig furaha sirta",
     forgotDescription: "Geli email-kaaga, waxaan kuu soo diraynaa link aad ku dejiso furaha sirta cusub.",
@@ -478,6 +480,7 @@ export const so: Messages = {
     waBadId: "Geli account ID-ga (lambarro kaliya).",
     waEvents: "Dhacdooyinkii webhook-ga ee ugu dambeeyay",
     waNoEvents: "Weli wax webhook ah ma iman.",
+    invitedBy: "Waxaa soo martiqaaday {name}",
     waRequested: "WhatsApp la codsaday: {number}",
     phoneIdLabel: "Phone number ID",
     setPhone: "Keydi",
@@ -571,6 +574,16 @@ export const so: Messages = {
         a1: "Beddelka saliiddu waa $35, wuxuuna qaataa 30 daqiiqo. Berri 10:00 ayaa bannaan. Ma kuu qabtaa?"
       }
     }
+  },
+  referral: {
+    title: "Martiqaad ganacsi, hel bil bilaash ah",
+    hint: "La wadaag link-gaaga. Ganacsiga aad martiqaadto wuxuu helayaa 30 maalmood oo bilaash ah (halkii 14), adiguna waxaad helaysaa 1 bil oo bilaash ah marka ay bixiyaan.",
+    linkLabel: "Link-gaaga martiqaadka",
+    copy: "Koobi garee",
+    copied: "Waa la koobiyay!",
+    share: "Ku wadaag WhatsApp",
+    shareText: "Waxaan isticmaalaa ReplyBooker: AI uga jawaaba macaamiishayda WhatsApp, una qabta ballamaha. Bilaash ku tijaabi 30 maalmood: {link}",
+    stats: "{signups} ayaa isdiiwaangeliyay · {rewards} bilood oo bilaash ah ayaad heshay",
   },
   terms: {
     title: "Shuruudaha Adeegga",

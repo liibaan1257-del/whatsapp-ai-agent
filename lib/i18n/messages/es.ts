@@ -106,6 +106,7 @@ export const es: Messages = {
     ],
     pricingTitle: "Precios sencillos",
     pricingSubtitle: "Empieza gratis. Paga con Mobile Money, Waafi, tarjeta o transferencia.",
+    referralNote: "¿Te invitó otro negocio? Tu prueba gratis es de 30 días.",
     perMonth: "/mes",
     popular: "El más elegido",
     free: "Gratis",
@@ -177,6 +178,7 @@ export const es: Messages = {
     confirmFailed: "El enlace de confirmación no es válido o ha caducado. Inicia sesión o regístrate de nuevo.",
     checkEmail: "Revisa {email}: te enviamos un enlace de confirmación. Después, inicia sesión.",
     accountDeleted: "Tu cuenta y todos sus datos se han eliminado.",
+    referralBonus: "Te han invitado: tu prueba gratis es de 30 días.",
     forgot: "¿Olvidaste tu contraseña?",
     forgotTitle: "Restablece tu contraseña",
     forgotDescription: "Escribe tu correo y te enviaremos un enlace para crear una contraseña nueva.",
@@ -478,6 +480,7 @@ export const es: Messages = {
     waBadId: "Introduce el ID de la cuenta (solo dígitos).",
     waEvents: "Últimos eventos del webhook",
     waNoEvents: "Aún no hay eventos del webhook.",
+    invitedBy: "Invitado por {name}",
     waRequested: "WhatsApp solicitado: {number}",
     phoneIdLabel: "ID del número",
     setPhone: "Guardar",
@@ -571,6 +574,16 @@ export const es: Messages = {
         a1: "El cambio de aceite cuesta 35 $ y tarda unos 30 minutos. Mañana a las 10:00 hay hueco. ¿Lo reservo?"
       }
     }
+  },
+  referral: {
+    title: "Invita a un negocio y gana un mes gratis",
+    hint: "Comparte tu enlace. El negocio que invites tendrá una prueba gratis de 30 días en lugar de 14, y tú ganas 1 mes gratis en cuanto se suscriba.",
+    linkLabel: "Tu enlace de invitación",
+    copy: "Copiar enlace",
+    copied: "¡Copiado!",
+    share: "Compartir por WhatsApp",
+    shareText: "Uso ReplyBooker: una IA que responde a mis clientes por WhatsApp y reserva citas. Pruébalo gratis 30 días: {link}",
+    stats: "{signups} registrados · {rewards} meses gratis ganados",
   },
   terms: {
     title: "Términos del servicio",

@@ -105,6 +105,7 @@ export const en = {
     ],
     pricingTitle: "Simple pricing",
     pricingSubtitle: "Start free. Pay by Mobile Money, Waafi, card or bank transfer.",
+    referralNote: "Invited by another business? Your free trial is 30 days.",
     perMonth: "/month",
     popular: "Most popular",
     free: "Free",
@@ -176,6 +177,7 @@ export const en = {
     confirmFailed: "That confirmation link is invalid or expired. Sign in or sign up again.",
     checkEmail: "Check {email} for a confirmation link, then sign in.",
     accountDeleted: "Your account and all its data have been deleted.",
+    referralBonus: "You were invited: your free trial is 30 days.",
     forgot: "Forgot password?",
     forgotTitle: "Reset your password",
     forgotDescription: "Enter your email and we'll send you a link to set a new password.",
@@ -479,6 +481,7 @@ export const en = {
     waBadId: "Enter the account ID (digits only).",
     waEvents: "Latest webhook events",
     waNoEvents: "No webhook events yet.",
+    invitedBy: "Invited by {name}",
     waRequested: "WhatsApp requested: {number}",
     phoneIdLabel: "Phone number ID",
     setPhone: "Save",
@@ -572,6 +575,16 @@ export const en = {
         a1: "An oil change is $35 and takes about 30 minutes. We have space tomorrow at 10 AM. Book it?"
       }
     }
+  },
+  referral: {
+    title: "Invite a business, get a free month",
+    hint: "Share your link. The business you invite gets a 30-day free trial instead of 14 days, and you get 1 free month as soon as they subscribe.",
+    linkLabel: "Your invite link",
+    copy: "Copy link",
+    copied: "Copied!",
+    share: "Share on WhatsApp",
+    shareText: "I use ReplyBooker: an AI that answers my customers on WhatsApp and books appointments. Try it free for 30 days: {link}",
+    stats: "{signups} signed up · {rewards} free months earned",
   },
   terms: {
     title: "Terms of Service",

@@ -106,6 +106,7 @@ export const fr: Messages = {
     ],
     pricingTitle: "Des tarifs simples",
     pricingSubtitle: "Commencez gratuitement. Payez par Mobile Money, Waafi, carte ou virement.",
+    referralNote: "Invité par une autre entreprise ? Votre essai gratuit dure 30 jours.",
     perMonth: "/mois",
     popular: "Le plus choisi",
     free: "Gratuit",
@@ -177,6 +178,7 @@ export const fr: Messages = {
     confirmFailed: "Ce lien de confirmation est invalide ou a expiré. Connectez-vous ou inscrivez-vous à nouveau.",
     checkEmail: "Consultez {email} : un lien de confirmation vous attend. Connectez-vous ensuite.",
     accountDeleted: "Votre compte et toutes ses données ont été supprimés.",
+    referralBonus: "Vous avez été invité : votre essai gratuit dure 30 jours.",
     forgot: "Mot de passe oublié ?",
     forgotTitle: "Réinitialiser le mot de passe",
     forgotDescription: "Saisissez votre e-mail : nous vous enverrons un lien pour choisir un nouveau mot de passe.",
@@ -478,6 +480,7 @@ export const fr: Messages = {
     waBadId: "Saisissez l'ID du compte (chiffres uniquement).",
     waEvents: "Derniers événements du webhook",
     waNoEvents: "Aucun événement webhook pour l'instant.",
+    invitedBy: "Invité par {name}",
     waRequested: "WhatsApp demandé : {number}",
     phoneIdLabel: "ID du numéro",
     setPhone: "Enregistrer",
@@ -571,6 +574,16 @@ export const fr: Messages = {
         a1: "Une vidange coûte 35 $ et prend environ 30 minutes. Demain 10 h est libre. Je réserve ?"
       }
     }
+  },
+  referral: {
+    title: "Invitez une entreprise, gagnez un mois offert",
+    hint: "Partagez votre lien. L'entreprise invitée a un essai gratuit de 30 jours au lieu de 14, et vous gagnez 1 mois offert dès qu'elle s'abonne.",
+    linkLabel: "Votre lien d'invitation",
+    copy: "Copier le lien",
+    copied: "Copié !",
+    share: "Partager sur WhatsApp",
+    shareText: "J'utilise ReplyBooker : une IA qui répond à mes clients sur WhatsApp et prend les rendez-vous. Essayez-le gratuitement 30 jours : {link}",
+    stats: "{signups} inscrits · {rewards} mois offerts gagnés",
   },
   terms: {
     title: "Conditions d'utilisation",

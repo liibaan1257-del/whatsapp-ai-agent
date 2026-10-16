@@ -144,6 +144,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             <div className="text-center">
               <h2 className="text-3xl font-semibold tracking-tight">{t.pricingTitle}</h2>
               <p className="mt-2 text-muted-foreground">{t.pricingSubtitle}</p>
+              <p className="mt-1 text-sm text-brand">🎁 {t.referralNote}</p>
             </div>
             <div className="mt-10 grid gap-4 md:grid-cols-3">
               {PLAN_NAMES.map((plan) => {

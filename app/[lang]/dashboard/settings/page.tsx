@@ -5,6 +5,7 @@ import { Download } from "lucide-react";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { ContactButton } from "@/components/billing/contact-button";
 import { DeleteAccount } from "@/components/settings/delete-account";
+import { ReferralCard } from "@/components/settings/referral-card";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -13,6 +14,8 @@ import { daysLeft, isPlan, monthStart, replyLimit } from "@/lib/billing";
 import { fmt, type Locale } from "@/lib/i18n/config";
 import { getMessages, type Messages } from "@/lib/i18n/dictionaries";
 import { localeFrom } from "@/lib/i18n/server";
+import { siteUrl } from "@/lib/site";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/dashboard/settings">): Promise<Metadata> {
@@ -46,8 +49,10 @@ async function Settings({ m, locale }: { m: Messages; locale: Locale }) {
   const ended = daysLeft(owner.accessUntil) < 0;
   const until = new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(new Date(owner.accessUntil));
   const percent = Math.min(100, Math.round(((used ?? 0) / limit) * 100));
+  const referral = await referralStats(owner.businessId);
   return (
     <div className="space-y-6">
+      {referral ? <ReferralCard link={`${siteUrl()}/signup?ref=${referral.code}`} signups={referral.signups} rewards={referral.rewards} /> : null}
       <Card id="plan">
         <CardHeader>
           <CardTitle>{b.planTitle}</CardTitle>
@@ -119,4 +124,19 @@ async function Settings({ m, locale }: { m: Messages; locale: Locale }) {
       </Card>
     </div>
   );
+}
+
+/** The owner's invite code and what it earned (counts need the service role: the invited rows aren't theirs). */
+async function referralStats(businessId: string) {
+  try {
+    const db = createAdminClient();
+    const [{ data: own }, { count: signups }, { count: rewards }] = await Promise.all([
+      db.from("business_knowledge").select("referral_code").eq("id", businessId).maybeSingle(),
+      db.from("business_knowledge").select("id", { count: "exact", head: true }).eq("referred_by", businessId),
+      db.from("business_knowledge").select("id", { count: "exact", head: true }).eq("referred_by", businessId).not("referral_rewarded_at", "is", null),
+    ]);
+    return own?.referral_code ? { code: own.referral_code, signups: signups ?? 0, rewards: rewards ?? 0 } : null;
+  } catch {
+    return null;
+  }
 }

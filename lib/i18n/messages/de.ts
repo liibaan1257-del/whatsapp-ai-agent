@@ -106,6 +106,7 @@ export const de: Messages = {
     ],
     pricingTitle: "Einfache Preise",
     pricingSubtitle: "Kostenlos starten. Bezahlen per Mobile Money, Waafi, Karte oder Überweisung.",
+    referralNote: "Von einem anderen Unternehmen eingeladen? Deine Testphase dauert 30 Tage.",
     perMonth: "/Monat",
     popular: "Am beliebtesten",
     free: "Kostenlos",
@@ -177,6 +178,7 @@ export const de: Messages = {
     confirmFailed: "Dieser Bestätigungslink ist ungültig oder abgelaufen. Melden Sie sich an oder registrieren Sie sich erneut.",
     checkEmail: "Prüfen Sie {email}: Wir haben Ihnen einen Bestätigungslink geschickt. Melden Sie sich danach an.",
     accountDeleted: "Ihr Konto und alle zugehörigen Daten wurden gelöscht.",
+    referralBonus: "Du wurdest eingeladen: Deine Testphase dauert 30 Tage.",
     forgot: "Passwort vergessen?",
     forgotTitle: "Passwort zurücksetzen",
     forgotDescription: "Geben Sie Ihre E-Mail ein. Wir senden Ihnen einen Link für ein neues Passwort.",
@@ -478,6 +480,7 @@ export const de: Messages = {
     waBadId: "Gib die Konto-ID ein (nur Ziffern).",
     waEvents: "Letzte Webhook-Ereignisse",
     waNoEvents: "Noch keine Webhook-Ereignisse.",
+    invitedBy: "Eingeladen von {name}",
     waRequested: "WhatsApp angefragt: {number}",
     phoneIdLabel: "Telefonnummer-ID",
     setPhone: "Speichern",
@@ -571,6 +574,16 @@ export const de: Messages = {
         a1: "Ein Ölwechsel kostet 35 $ und dauert etwa 30 Minuten. Morgen um 10 Uhr ist frei. Buchen?"
       }
     }
+  },
+  referral: {
+    title: "Lade ein Unternehmen ein, erhalte einen Gratismonat",
+    hint: "Teile deinen Link. Das eingeladene Unternehmen testet 30 statt 14 Tage kostenlos, und du bekommst 1 Gratismonat, sobald es ein Abo abschließt.",
+    linkLabel: "Dein Einladungslink",
+    copy: "Link kopieren",
+    copied: "Kopiert!",
+    share: "Auf WhatsApp teilen",
+    shareText: "Ich nutze ReplyBooker: eine KI, die meinen Kunden auf WhatsApp antwortet und Termine bucht. 30 Tage kostenlos testen: {link}",
+    stats: "{signups} registriert · {rewards} Gratismonate verdient",
   },
   terms: {
     title: "Nutzungsbedingungen",

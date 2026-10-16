@@ -107,6 +107,7 @@ export const sw: Messages = {
     ],
     pricingTitle: "Bei rahisi",
     pricingSubtitle: "Anza bure. Lipa kwa Mobile Money, Waafi, kadi au uhamisho wa benki.",
+    referralNote: "Umealikwa na biashara nyingine? Jaribio lako la bure ni siku 30.",
     perMonth: "/mwezi",
     popular: "Maarufu zaidi",
     free: "Bure",
@@ -178,6 +179,7 @@ export const sw: Messages = {
     confirmFailed: "Kiungo hicho cha uthibitisho si sahihi au kimeisha muda. Ingia au jisajili tena.",
     checkEmail: "Angalia {email} kwa kiungo cha uthibitisho, kisha uingie.",
     accountDeleted: "Akaunti yako na data yake yote zimefutwa.",
+    referralBonus: "Umealikwa: jaribio lako la bure ni siku 30.",
     forgot: "Umesahau nenosiri?",
     forgotTitle: "Weka upya nenosiri lako",
     forgotDescription: "Weka barua pepe yako na tutakutumia kiungo cha kuweka nenosiri jipya.",
@@ -481,6 +483,7 @@ export const sw: Messages = {
     waBadId: "Weka ID ya akaunti (tarakimu pekee).",
     waEvents: "Matukio ya karibuni ya webhook",
     waNoEvents: "Bado hakuna matukio ya webhook.",
+    invitedBy: "Amealikwa na {name}",
     waRequested: "WhatsApp imeombwa: {number}",
     phoneIdLabel: "Phone number ID",
     setPhone: "Hifadhi",
@@ -574,6 +577,16 @@ export const sw: Messages = {
         a1: "Kubadilisha oili ni $35 na huchukua takriban dakika 30. Kesho saa 4 asubuhi kuna nafasi. Nikupangie?"
       }
     }
+  },
+  referral: {
+    title: "Alika biashara, pata mwezi wa bure",
+    hint: "Shiriki kiungo chako. Biashara unayoialika inapata jaribio la bure la siku 30 badala ya 14, nawe unapata mwezi 1 wa bure mara wanapolipia.",
+    linkLabel: "Kiungo chako cha mwaliko",
+    copy: "Nakili kiungo",
+    copied: "Imenakiliwa!",
+    share: "Shiriki kwenye WhatsApp",
+    shareText: "Ninatumia ReplyBooker: AI inayojibu wateja wangu kwenye WhatsApp na kupanga miadi. Ijaribu bure kwa siku 30: {link}",
+    stats: "{signups} wamejisajili · miezi {rewards} ya bure umepata",
   },
   terms: {
     title: "Masharti ya Huduma",
