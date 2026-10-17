@@ -3,7 +3,7 @@
  * the browser's Accept-Language); proxy.ts serves /<lang>/… internally so
  * URLs stay the same in every language.
  */
-export const LOCALES = ["en", "es", "fr", "de", "ar", "so", "sw"] as const;
+export const LOCALES = ["en", "es", "fr", "de", "ar", "so", "sw", "ru", "zh"] as const;
 export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = "en";
 export const LOCALE_COOKIE = "lang";
@@ -16,6 +16,8 @@ export const LOCALE_NAMES: Record<Locale, string> = {
   ar: "العربية",
   so: "Soomaali",
   sw: "Kiswahili",
+  ru: "Русский",
+  zh: "中文",
 };
 
 export function isLocale(value: unknown): value is Locale {

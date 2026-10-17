@@ -74,7 +74,7 @@ export const so: Messages = {
       },
       {
         title: "Luqaddooda ayuu ku hadlaa",
-        body: "Soomaali, Sawaaxili, Ingiriis, Carabi, Faransiis, Isbaanish iyo kuwo kale: wuxuu ku jawaabaa luqadda macmiilku ku qoro.",
+        body: "Soomaali, Sawaaxili, Ingiriis, Carabi, Faransiis, Isbaanish, Ruush, Shiinees iyo kuwo kale: wuxuu ku jawaabaa luqadda macmiilku ku qoro.",
       },
       {
         title: "Dashboard fudud",
@@ -129,7 +129,7 @@ export const so: Messages = {
     planFeatures: [
       "Xogta ganacsiga iyo Chat tester",
       "Dashboard-ka ballamaha",
-      "Dhammaan 7-da luqadood",
+      "Dhammaan 9-ka luqadood",
     ],
     choose: "Bilow",
     faqTitle: "Su'aalaha badanaa la is weydiiyo",
@@ -524,7 +524,7 @@ export const so: Messages = {
     benefits: [
       "Fariin ma lumayso: macmiil kasta wuxuu helaa jawaab ilbiriqsiyo gudahood, habeen iyo maalin.",
       "Ballamaha {service} iyo kuwo kale waxay si toos ah u galaan Dashboard-kaaga.",
-      "Wuxuu ku jawaabaa Soomaali, Sawaaxili, Ingiriisi, Carabi, Faransiis, Isbaanish iyo kuwo kale."
+      "Wuxuu ku jawaabaa Soomaali, Sawaaxili, Ingiriisi, Carabi, Faransiis, Isbaanish, Ruush, Shiinees iyo kuwo kale."
     ],
     exampleTitle: "Waxa macaamiishaadu arki doonaan",
     ctaTitle: "Bilaash ku tijaabi 14 maalmood",

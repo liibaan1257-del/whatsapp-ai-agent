@@ -74,7 +74,7 @@ export const fr: Messages = {
       },
       {
         title: "Parle leur langue",
-        body: "Somali, swahili, anglais, arabe, français, espagnol et plus : il répond dans la langue du client.",
+        body: "Somali, swahili, anglais, arabe, français, espagnol, russe, chinois et plus : il répond dans la langue du client.",
       },
       {
         title: "Tableau de bord simple",
@@ -129,7 +129,7 @@ export const fr: Messages = {
     planFeatures: [
       "Base de connaissances et testeur de chat",
       "Tableau des réservations",
-      "Les 7 langues",
+      "Les 9 langues",
     ],
     choose: "Commencer",
     faqTitle: "Questions fréquentes",
@@ -524,7 +524,7 @@ export const fr: Messages = {
     benefits: [
       "Aucun message manqué : chaque client reçoit une réponse en quelques secondes, jour et nuit.",
       "Les réservations de {service} et plus sont enregistrées directement dans votre tableau de bord.",
-      "Répond en somali, swahili, anglais, arabe, français, espagnol et plus."
+      "Répond en somali, swahili, anglais, arabe, français, espagnol, russe, chinois et plus."
     ],
     exampleTitle: "Ce que verront vos clients",
     ctaTitle: "Essayez gratuitement 14 jours",

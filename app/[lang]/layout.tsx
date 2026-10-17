@@ -8,7 +8,7 @@ import { siteUrl } from "@/lib/site";
 import { THEME_SCRIPT } from "@/lib/theme";
 import "../globals.css";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin", "latin-ext"] });
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin", "latin-ext", "cyrillic"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 // One static version per language; proxy.ts picks it from the `lang` cookie / browser.

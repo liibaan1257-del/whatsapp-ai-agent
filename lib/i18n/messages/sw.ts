@@ -75,7 +75,7 @@ export const sw: Messages = {
       },
       {
         title: "Huongea lugha yao",
-        body: "Kisomali, Kiswahili, Kiingereza, Kiarabu, Kifaransa, Kihispania na zaidi: hujibu kwa lugha ambayo mteja anaandika.",
+        body: "Kisomali, Kiswahili, Kiingereza, Kiarabu, Kifaransa, Kihispania, Kirusi, Kichina na zaidi: hujibu kwa lugha ambayo mteja anaandika.",
       },
       {
         title: "Dashibodi rahisi",
@@ -130,7 +130,7 @@ export const sw: Messages = {
     planFeatures: [
       "Hifadhi ya maarifa na kijaribu cha gumzo",
       "Dashibodi ya miadi",
-      "Lugha zote 7",
+      "Lugha zote 9",
     ],
     choose: "Anza sasa",
     faqTitle: "Maswali yanayoulizwa mara kwa mara",
@@ -527,7 +527,7 @@ export const sw: Messages = {
     benefits: [
       "Hakuna ujumbe unaokosa jibu: kila mteja hujibiwa ndani ya sekunde, mchana na usiku.",
       "Miadi ya {service} na zaidi huhifadhiwa moja kwa moja kwenye dashibodi yako.",
-      "Hujibu kwa Kisomali, Kiswahili, Kiingereza, Kiarabu, Kifaransa, Kihispania na zaidi."
+      "Hujibu kwa Kisomali, Kiswahili, Kiingereza, Kiarabu, Kifaransa, Kihispania, Kirusi, Kichina na zaidi."
     ],
     exampleTitle: "Kile wateja wako wataona",
     ctaTitle: "Ijaribu bure kwa siku 14",

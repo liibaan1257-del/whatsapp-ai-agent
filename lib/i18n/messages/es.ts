@@ -74,7 +74,7 @@ export const es: Messages = {
       },
       {
         title: "Habla su idioma",
-        body: "Somalí, suajili, inglés, árabe, francés, español y más: responde en el idioma en que escribe el cliente.",
+        body: "Somalí, suajili, inglés, árabe, francés, español, ruso, chino y más: responde en el idioma en que escribe el cliente.",
       },
       {
         title: "Panel sencillo",
@@ -129,7 +129,7 @@ export const es: Messages = {
     planFeatures: [
       "Base de conocimiento y chat de prueba",
       "Panel de reservas",
-      "Los 7 idiomas",
+      "Los 9 idiomas",
     ],
     choose: "Empezar",
     faqTitle: "Preguntas frecuentes",
@@ -524,7 +524,7 @@ export const es: Messages = {
     benefits: [
       "Ningún mensaje sin respuesta: cada cliente recibe respuesta en segundos, de día y de noche.",
       "Las reservas de {service} y más se guardan directamente en tu panel.",
-      "Responde en somalí, suajili, inglés, árabe, francés, español y más."
+      "Responde en somalí, suajili, inglés, árabe, francés, español, ruso, chino y más."
     ],
     exampleTitle: "Lo que verán tus clientes",
     ctaTitle: "Pruébalo gratis 14 días",

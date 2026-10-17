@@ -73,7 +73,7 @@ export const en = {
       },
       {
         title: "Speaks their language",
-        body: "Somali, Swahili, English, Arabic, French, Spanish and more: it answers in the language the customer writes.",
+        body: "Somali, Swahili, English, Arabic, French, Spanish, Russian, Chinese and more: it answers in the language the customer writes.",
       },
       {
         title: "Simple dashboard",
@@ -128,7 +128,7 @@ export const en = {
     planFeatures: [
       "Knowledge base and chat tester",
       "Bookings dashboard",
-      "All 7 languages",
+      "All 9 languages",
     ],
     choose: "Get started",
     faqTitle: "Frequently asked questions",
@@ -525,7 +525,7 @@ export const en = {
     benefits: [
       "No missed messages: every customer gets an answer in seconds, day and night.",
       "Bookings for {service} and more are saved straight into your dashboard.",
-      "Answers in Somali, Swahili, English, Arabic, French, Spanish and more."
+      "Answers in Somali, Swahili, English, Arabic, French, Spanish, Russian, Chinese and more."
     ],
     exampleTitle: "What your customers will see",
     ctaTitle: "Try it free for 14 days",

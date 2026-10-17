@@ -74,7 +74,7 @@ export const de: Messages = {
       },
       {
         title: "Spricht ihre Sprache",
-        body: "Somali, Swahili, Englisch, Arabisch, Französisch, Spanisch und mehr: Er antwortet in der Sprache des Kunden.",
+        body: "Somali, Swahili, Englisch, Arabisch, Französisch, Spanisch, Russisch, Chinesisch und mehr: Er antwortet in der Sprache des Kunden.",
       },
       {
         title: "Einfaches Dashboard",
@@ -129,7 +129,7 @@ export const de: Messages = {
     planFeatures: [
       "Wissensdatenbank und Chat-Test",
       "Buchungs-Dashboard",
-      "Alle 7 Sprachen",
+      "Alle 9 Sprachen",
     ],
     choose: "Loslegen",
     faqTitle: "Häufige Fragen",
@@ -524,7 +524,7 @@ export const de: Messages = {
     benefits: [
       "Keine verpassten Nachrichten: Jeder Kunde bekommt in Sekunden eine Antwort, Tag und Nacht.",
       "Buchungen für {service} und mehr landen direkt in deinem Dashboard.",
-      "Antwortet auf Somali, Swahili, Englisch, Arabisch, Französisch, Spanisch und mehr."
+      "Antwortet auf Somali, Swahili, Englisch, Arabisch, Französisch, Spanisch, Russisch, Chinesisch und mehr."
     ],
     exampleTitle: "Das sehen deine Kunden",
     ctaTitle: "14 Tage kostenlos testen",
