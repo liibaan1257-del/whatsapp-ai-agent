@@ -250,7 +250,7 @@ function PhoneDemo({ demo }: { demo: { business: string; online: string; c1: str
           </span>
           <div className="leading-tight">
             <p className="text-sm font-semibold">{demo.business}</p>
-            <p className="text-xs opacity-80">{demo.online}</p>
+            <p className="text-xs">{demo.online}</p>
           </div>
         </div>
         <div className="space-y-3 bg-muted/40 p-4">

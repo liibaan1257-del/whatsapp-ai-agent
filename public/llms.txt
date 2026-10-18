@@ -1,0 +1,35 @@
+# ReplyBooker
+
+> ReplyBooker is an AI receptionist for WhatsApp. It answers a small business's customers 24/7 in their own language, explains services, prices and opening hours from the business's own knowledge base, and books appointments automatically into a simple dashboard.
+
+ReplyBooker is built for service businesses such as salons, barbershops, clinics, dentists, spas, gyms, tutors and garages. It connects to the business's official WhatsApp number through the Meta WhatsApp Cloud API (or Twilio). Replies are available in Somali, Swahili, English, Arabic, French, Spanish, German, Russian, Chinese and more. The website and dashboard are available in 9 languages.
+
+Pricing: free 14-day trial (no card needed), Starter $19/month or $190/year (500 AI replies per month), Pro $49/month or $490/year (2,000 AI replies per month). Payment by Mobile Money, Waafi, card or bank transfer.
+
+Live demo: send "Hi" on WhatsApp to +252 62 569 0242 (https://wa.me/252625690242).
+
+## Product
+
+- [Home](https://www.replybooker.com/): features, how it works, pricing and FAQ
+- [Sign up](https://www.replybooker.com/signup): start the free 14-day trial
+- [Live WhatsApp demo](https://wa.me/252625690242): talk to the AI receptionist of a demo salon
+
+## Industries
+
+- [Hair salons](https://www.replybooker.com/for/salon)
+- [Barbershops](https://www.replybooker.com/for/barbershop)
+- [Clinics](https://www.replybooker.com/for/clinic)
+- [Dental clinics](https://www.replybooker.com/for/dentist)
+- [Spas](https://www.replybooker.com/for/spa)
+- [Gyms](https://www.replybooker.com/for/gym)
+- [Tutors](https://www.replybooker.com/for/tutor)
+- [Car repair](https://www.replybooker.com/for/car-repair)
+
+## Legal
+
+- [Privacy policy](https://www.replybooker.com/privacy)
+- [Terms of service](https://www.replybooker.com/terms)
+
+## Optional
+
+- [Sitemap](https://www.replybooker.com/sitemap.xml)

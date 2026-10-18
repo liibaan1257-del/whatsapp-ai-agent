@@ -10,7 +10,7 @@ export function SiteHeader({ m, sections = false }: { m: Messages; sections?: bo
   return (
     <header className="sticky top-0 z-30 border-b bg-background/85 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-6xl items-center gap-4 px-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-2 font-semibold">
+        <Link href="/" aria-label={m.meta.appName} className="flex items-center gap-2 font-semibold">
           <span className="grid size-8 place-items-center rounded-lg bg-brand/15 text-brand">
             <MessageCircle className="size-4" aria-hidden="true" />
           </span>
