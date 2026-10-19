@@ -19,6 +19,8 @@ import { createClient } from "@/lib/supabase/server";
 export type AuthState = {
   error?: string;
   notice?: string;
+  /** The password was right but the email is not confirmed yet: offer to resend the link. */
+  unconfirmed?: boolean;
   fieldErrors?: { email?: string; password?: string; fullName?: string; businessName?: string };
 };
 
@@ -45,7 +47,7 @@ export async function login(_prev: AuthState, formData: FormData): Promise<AuthS
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) {
-    if (error.code === "email_not_confirmed") return { error: e.emailNotConfirmed };
+    if (error.code === "email_not_confirmed") return { error: e.emailNotConfirmed, unconfirmed: true };
     if (error.code === "over_request_rate_limit") return { error: e.tooManyAttempts };
     if (error.code === "invalid_credentials") return { error: e.invalidCredentials };
     return { error: fmt(e.signInFailed, { code: error.code ?? `status ${error.status ?? "unknown"}` }) };
@@ -137,6 +139,33 @@ export async function requestPasswordReset(_prev: AuthState, formData: FormData)
     return { error: e.tooManyAttempts };
   }
   return { notice: fmt(m.auth.resetSent, { email }) };
+}
+
+/**
+ * Sends the sign-up confirmation link again. The answer is the same whether
+ * or not the email has an account, so it can't be used to find accounts.
+ */
+export async function resendConfirmation(_prev: AuthState, formData: FormData): Promise<AuthState> {
+  const m = await requestMessages();
+  const e = m.auth.errors;
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const emailError = checkEmail(email, m);
+  if (emailError) return { error: emailError };
+  if (!isSupabaseConfigured()) return { error: e.signInNotConfigured };
+
+  const h = await headers();
+  const origin = h.get("origin") ?? `${h.get("x-forwarded-proto") ?? "https"}://${h.get("host")}`;
+  const supabase = await createClient();
+  const { error } = await supabase.auth.resend({
+    type: "signup",
+    email,
+    options: { emailRedirectTo: `${origin}/auth/confirm?next=/dashboard` },
+  });
+  if (error && (error.code === "over_email_send_rate_limit" || error.code === "over_request_rate_limit")) {
+    return { error: e.tooManyAttempts };
+  }
+  if (error) logger.warn("resend_confirmation_failed", { code: error.code ?? String(error.status) });
+  return { notice: fmt(m.auth.confirmationResent, { email }) };
 }
 
 /** Sets a new password for the user signed in through a reset link. */
