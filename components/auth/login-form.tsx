@@ -13,6 +13,7 @@ export function LoginForm({ next, initialError, notice }: { next: string; initia
   const [resent, resend, resending] = useActionState<AuthState, FormData>(resendConfirmation, {});
   // Controlled so the email survives a failed attempt (forms reset after submit).
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <div className="space-y-4">
@@ -33,7 +34,16 @@ export function LoginForm({ next, initialError, notice }: { next: string; initia
           onChange={(e) => setEmail(e.target.value)}
           error={state.fieldErrors?.email}
         />
-        <Field id="password" label={m.auth.password} type="password" autoComplete="current-password" required error={state.fieldErrors?.password} />
+        <Field
+          id="password"
+          label={m.auth.password}
+          type="password"
+          autoComplete="current-password"
+          required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          error={state.fieldErrors?.password}
+        />
         <div className="-mt-2 text-end">
           <Link href="/forgot-password" className="text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline">
             {m.auth.forgot}
@@ -51,6 +61,7 @@ export function LoginForm({ next, initialError, notice }: { next: string; initia
       {state.unconfirmed ? (
         <form action={resend} className="space-y-2">
           <input type="hidden" name="email" value={email} />
+          <input type="hidden" name="password" value={password} />
           <Button type="submit" variant="outline" className="w-full" disabled={resending || !email}>
             {resending ? m.auth.resendingConfirmation : m.auth.resendConfirmation}
           </Button>

@@ -3,6 +3,7 @@
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { after } from "next/server";
+import { sendConfirmationEmail } from "@/lib/auth/confirm-email";
 import { LOGIN_PATH, safeNextPath } from "@/lib/auth/redirect";
 import { isSupabaseConfigured } from "@/lib/env";
 import { fmt } from "@/lib/i18n/config";
@@ -77,32 +78,27 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
   const h = await headers();
   const origin = h.get("origin") ?? `${h.get("x-forwarded-proto") ?? "https"}://${h.get("host")}`;
 
-  const supabase = await createClient();
-  const { data, error } = await supabase.auth.signUp({
+  // Created with the service role so Supabase's own mailer (limited, often
+  // spam-filtered) isn't used: the confirmation link goes out through Resend.
+  const admin = createAdminClient();
+  const { data, error } = await admin.auth.admin.createUser({
     email,
     password,
-    options: {
-      data: { full_name: fullName, timezone },
-      emailRedirectTo: `${origin}/auth/confirm?next=/dashboard`,
-    },
+    email_confirm: false,
+    user_metadata: { full_name: fullName, timezone },
   });
   if (error) {
-    if (error.code === "user_already_exists") return { error: e.userExists };
+    if (error.code === "email_exists" || error.code === "user_already_exists") return { error: e.userExists };
     if (error.code === "weak_password") return { fieldErrors: { password: e.weakPassword } };
-    if (error.code === "over_email_send_rate_limit" || error.code === "over_request_rate_limit") {
-      return { error: e.tooManySignups };
-    }
     return { error: fmt(e.signUpFailed, { code: error.code ?? `status ${error.status ?? "unknown"}` }) };
   }
-  // Supabase answers an already-registered email with a user that has no
-  // identities and sends no email (it hides which emails exist): say so.
-  if (data.user && data.user.identities?.length === 0) return { error: e.userExists };
   // Tell the operator and welcome the new owner, after the response is sent.
   // The database trigger created the business row; name it (server-side, by the new user's id).
   if (businessName && data.user) await nameNewBusiness(data.user.id, businessName);
   if (data.user) await applyReferral(data.user.id);
   const who = [fullName.replace(/\s+/g, " "), businessName && `(${businessName})`].filter(Boolean).join(" ") || email;
   const locale = await requestLocale();
+  await sendConfirmationEmail(email, origin, locale === "so" ? "so" : "en");
   after(() =>
     Promise.all([
       notifyOperator(
@@ -112,9 +108,8 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
       sendWelcome(email, fullName.replace(/\s+/g, " "), locale),
     ]),
   );
-  // Email confirmation on: no session yet.
-  if (!data.session) return { notice: fmt(m.auth.checkEmail, { email }) };
-  redirect("/dashboard");
+  // The owner signs in by opening the confirmation link.
+  return { notice: fmt(m.auth.checkEmail, { email }) };
 }
 
 /**
@@ -149,22 +144,23 @@ export async function resendConfirmation(_prev: AuthState, formData: FormData): 
   const m = await requestMessages();
   const e = m.auth.errors;
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const password = String(formData.get("password") ?? "");
   const emailError = checkEmail(email, m);
   if (emailError) return { error: emailError };
   if (!isSupabaseConfigured()) return { error: e.signInNotConfigured };
 
+  // Only for the account's owner: the password must be right (Supabase then
+  // answers "email not confirmed"), so strangers can't flood an inbox.
+  const supabase = await createClient();
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error?.code === "over_request_rate_limit") return { error: e.tooManyAttempts };
+  if (error?.code !== "email_not_confirmed") return { error: e.invalidCredentials };
+
   const h = await headers();
   const origin = h.get("origin") ?? `${h.get("x-forwarded-proto") ?? "https"}://${h.get("host")}`;
-  const supabase = await createClient();
-  const { error } = await supabase.auth.resend({
-    type: "signup",
-    email,
-    options: { emailRedirectTo: `${origin}/auth/confirm?next=/dashboard` },
-  });
-  if (error && (error.code === "over_email_send_rate_limit" || error.code === "over_request_rate_limit")) {
-    return { error: e.tooManyAttempts };
-  }
-  if (error) logger.warn("resend_confirmation_failed", { code: error.code ?? String(error.status) });
+  const locale = await requestLocale();
+  const sent = await sendConfirmationEmail(email, origin, locale === "so" ? "so" : "en");
+  if (!sent) logger.warn("resend_confirmation_not_sent", {});
   return { notice: fmt(m.auth.confirmationResent, { email }) };
 }
 

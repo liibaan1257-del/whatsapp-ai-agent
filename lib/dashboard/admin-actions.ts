@@ -2,6 +2,7 @@
 
 import { refresh } from "next/cache";
 import { after } from "next/server";
+import { sendConfirmationEmail } from "@/lib/auth/confirm-email";
 import { getOwner } from "@/lib/auth/session";
 import { isPlan } from "@/lib/billing";
 import { configStatus, serverEnv } from "@/lib/env";
@@ -88,7 +89,10 @@ export async function deleteBusinessAccount(_prev: AdminState, formData: FormDat
   return { ok: true };
 }
 
-/** Operator only: (re)send the welcome email to a business owner, in Somali and English. */
+/**
+ * Operator only: (re)send the welcome email to a business owner, in Somali and
+ * English, plus a confirmation link if they never confirmed their email.
+ */
 export async function sendWelcomeEmail(_prev: AdminState, formData: FormData): Promise<AdminState> {
   const m = await requestMessages();
   const owner = await getOwner();
@@ -104,7 +108,9 @@ export async function sendWelcomeEmail(_prev: AdminState, formData: FormData): P
   if (!profile?.email) return { error: m.admin.failed };
 
   const sent = await sendWelcome(profile.email, profile.full_name ?? "", "both");
-  logger.info("admin_welcome_sent", { by: owner.id, businessId: id, sent });
+  // An owner who never confirmed their email also gets a fresh confirmation link.
+  const confirm = await sendConfirmationEmail(profile.email, siteUrl(), "both");
+  logger.info("admin_welcome_sent", { by: owner.id, businessId: id, sent, confirm });
   return sent ? { ok: true, notice: m.admin.welcomeSent } : { error: m.admin.emailFailed };
 }
 
