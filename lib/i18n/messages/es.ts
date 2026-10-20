@@ -109,6 +109,9 @@ export const es: Messages = {
     referralNote: "¿Te invitó otro negocio? Tu prueba gratis es de 30 días.",
     yearly: "o {price}/año (2 meses gratis)",
     perMonth: "/mes",
+    perYear: "/año",
+    twoMonthsFree: "2 meses gratis",
+    payYearly: "Pago anual",
     popular: "El más elegido",
     free: "Gratis",
     plans: {

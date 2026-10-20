@@ -162,7 +162,16 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
                       {PRICES_USD[plan] ? <span className="text-muted-foreground">{t.perMonth}</span> : null}
                     </p>
                     {YEARLY_PRICES_USD[plan] ? (
-                      <p className="mt-1 text-sm text-brand">{fmt(t.yearly, { price: money.format(YEARLY_PRICES_USD[plan]) })}</p>
+                      <div className="mt-3 rounded-lg border border-brand/30 bg-brand/5 px-3 py-2">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-xs font-medium text-muted-foreground">{t.payYearly}</span>
+                          <span className="rounded-full bg-brand px-2 py-0.5 text-xs font-medium text-brand-foreground">{t.twoMonthsFree}</span>
+                        </div>
+                        <p className="mt-1">
+                          <span className="text-2xl font-semibold tabular-nums">{money.format(YEARLY_PRICES_USD[plan])}</span>
+                          <span className="text-muted-foreground">{t.perYear}</span>
+                        </p>
+                      </div>
                     ) : null}
                     <ul className="mt-5 flex-1 space-y-2 text-sm">
                       {[fmt(t.repliesPerMonth, { n: PLANS[plan].replies.toLocaleString(locale) }), ...t.planFeatures].map((line) => (

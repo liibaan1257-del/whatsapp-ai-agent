@@ -109,6 +109,9 @@ export const de: Messages = {
     referralNote: "Von einem anderen Unternehmen eingeladen? Deine Testphase dauert 30 Tage.",
     yearly: "oder {price}/Jahr (2 Monate gratis)",
     perMonth: "/Monat",
+    perYear: "/Jahr",
+    twoMonthsFree: "2 Monate gratis",
+    payYearly: "Jährlich zahlen",
     popular: "Am beliebtesten",
     free: "Kostenlos",
     plans: {

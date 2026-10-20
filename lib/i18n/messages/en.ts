@@ -108,6 +108,9 @@ export const en = {
     referralNote: "Invited by another business? Your free trial is 30 days.",
     yearly: "or {price}/year (2 months free)",
     perMonth: "/month",
+    perYear: "/year",
+    twoMonthsFree: "2 months free",
+    payYearly: "Pay yearly",
     popular: "Most popular",
     free: "Free",
     plans: {

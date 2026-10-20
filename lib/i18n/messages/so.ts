@@ -109,6 +109,9 @@ export const so: Messages = {
     referralNote: "Ganacsi kale ma kuu soo gudbiyay? Tijaabadaadu waa 30 maalmood oo bilaash ah.",
     yearly: "ama {price} sannadkii (2 bilood bilaash)",
     perMonth: "/bishii",
+    perYear: "/sanadkii",
+    twoMonthsFree: "2 bilood bilaash",
+    payYearly: "Bixi sanadkii",
     popular: "Kan ugu caansan",
     free: "Bilaash",
     plans: {

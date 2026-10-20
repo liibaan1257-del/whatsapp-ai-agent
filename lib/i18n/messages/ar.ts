@@ -109,6 +109,9 @@ export const ar: Messages = {
     referralNote: "دعاك نشاط تجاري آخر؟ تجربتك المجانية 30 يوماً.",
     yearly: "أو {price} سنويًا (شهران مجانًا)",
     perMonth: "/شهريًا",
+    perYear: "/سنويًا",
+    twoMonthsFree: "شهران مجانًا",
+    payYearly: "الدفع السنوي",
     popular: "الأكثر شيوعًا",
     free: "مجاني",
     plans: {

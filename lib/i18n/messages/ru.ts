@@ -110,6 +110,9 @@ export const ru: Messages = {
     referralNote: "Вас пригласил другой бизнес? Ваш бесплатный пробный период — 30 дней.",
     yearly: "или {price}/год (2 месяца бесплатно)",
     perMonth: "/мес.",
+    perYear: "/год",
+    twoMonthsFree: "2 месяца бесплатно",
+    payYearly: "Оплата за год",
     popular: "Самый популярный",
     free: "Бесплатно",
     plans: {

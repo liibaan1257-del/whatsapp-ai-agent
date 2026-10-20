@@ -109,6 +109,9 @@ export const fr: Messages = {
     referralNote: "Invité par une autre entreprise ? Votre essai gratuit dure 30 jours.",
     yearly: "ou {price}/an (2 mois offerts)",
     perMonth: "/mois",
+    perYear: "/an",
+    twoMonthsFree: "2 mois offerts",
+    payYearly: "Paiement annuel",
     popular: "Le plus choisi",
     free: "Gratuit",
     plans: {

@@ -110,6 +110,9 @@ export const zh: Messages = {
     referralNote: "由其他商家邀请？您的免费试用期为 30 天。",
     yearly: "或 {price}/年（赠送 2 个月）",
     perMonth: "/月",
+    perYear: "/年",
+    twoMonthsFree: "免费 2 个月",
+    payYearly: "按年付费",
     popular: "最受欢迎",
     free: "免费",
     plans: {

@@ -110,6 +110,9 @@ export const sw: Messages = {
     referralNote: "Umealikwa na biashara nyingine? Jaribio lako la bure ni siku 30.",
     yearly: "au {price}/mwaka (miezi 2 bure)",
     perMonth: "/mwezi",
+    perYear: "/mwaka",
+    twoMonthsFree: "Miezi 2 bure",
+    payYearly: "Lipa kwa mwaka",
     popular: "Maarufu zaidi",
     free: "Bure",
     plans: {
