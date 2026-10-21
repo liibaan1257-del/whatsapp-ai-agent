@@ -15,6 +15,7 @@ import { NewsletterForm } from "@/components/marketing/newsletter-form";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { Button } from "@/components/ui/button";
 import { contactWhatsappLink, PLAN_NAMES, PLANS, PRICES_USD, YEARLY_PRICES_USD } from "@/lib/billing";
+import { PAYMENT_ACCOUNTS } from "@/lib/contact";
 import { fmt } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n/dictionaries";
 import { localeFrom } from "@/lib/i18n/server";
@@ -187,6 +188,20 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
                   </div>
                 );
               })}
+            </div>
+            <div className="mt-6 rounded-xl border bg-card p-5 text-sm">
+              <p className="text-muted-foreground">{m.billing.payTo}</p>
+              <ul className="mt-3 grid gap-3 sm:grid-cols-3">
+                {PAYMENT_ACCOUNTS.map((a) => (
+                  <li key={a.number} className="rounded-lg border px-3 py-2">
+                    <p className="font-medium">{a.method}</p>
+                    <p className="font-mono text-base tabular-nums" dir="ltr">
+                      {a.number}
+                    </p>
+                    <p className="text-xs text-muted-foreground">{a.name}</p>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
