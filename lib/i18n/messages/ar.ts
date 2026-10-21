@@ -440,6 +440,7 @@ export const ar: Messages = {
     usageValue: "{used} من {limit}",
     prices: "Starter: ‏19$ شهريًا أو 190$ سنويًا (500 رد) · Pro: ‏49$ شهريًا أو 490$ سنويًا (2000 رد)",
     howToPay: "ادفع عبر Mobile Money أو Waafi أو تحويل بنكي: تواصل معنا وسنفعّل خطتك فورًا.",
+    payTo: "أرسل الدفعة إلى أحد هذه الحسابات، ثم أرسل لنا الإيصال على واتساب:",
     plans: {
       trial: "تجربة مجانية",
       starter: "Starter",

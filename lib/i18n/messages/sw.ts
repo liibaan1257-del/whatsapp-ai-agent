@@ -443,6 +443,7 @@ export const sw: Messages = {
     usageValue: "{used} kati ya {limit}",
     prices: "Starter: $19/mwezi au $190/mwaka (majibu 500 ya AI) · Pro: $49/mwezi au $490/mwaka (majibu 2,000 ya AI)",
     howToPay: "Lipa kwa Mobile Money, Waafi au uhamisho wa benki: wasiliana nasi na tunawasha mpango wako mara moja.",
+    payTo: "Tuma malipo kwa mojawapo ya akaunti hizi, kisha ututumie risiti kwenye WhatsApp:",
     plans: {
       trial: "Jaribio la bure",
       starter: "Starter",

@@ -443,6 +443,7 @@ export const zh: Messages = {
     usageValue: "{used} / {limit}",
     prices: "入门版：19 美元/月或 190 美元/年（500 条 AI 回复）· 专业版：49 美元/月或 490 美元/年（2,000 条 AI 回复）",
     howToPay: "可通过 Mobile Money、Waafi 或银行转账付款：联系我们，我们会立即为您开通套餐。",
+    payTo: "请将款项转入以下任一账户，然后通过 WhatsApp 将收据发给我们：",
     plans: {
       trial: "免费试用",
       starter: "入门版",

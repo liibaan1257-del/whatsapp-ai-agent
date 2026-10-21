@@ -440,6 +440,7 @@ export const de: Messages = {
     usageValue: "{used} von {limit}",
     prices: "Starter: 19 $/Monat oder 190 $/Jahr (500 KI-Antworten) · Pro: 49 $/Monat oder 490 $/Jahr (2.000 KI-Antworten)",
     howToPay: "Bezahlen Sie per Mobile Money, Waafi oder Banküberweisung: Kontaktieren Sie uns, wir aktivieren Ihren Tarif sofort.",
+    payTo: "Senden Sie die Zahlung an eines dieser Konten und schicken Sie uns dann den Beleg per WhatsApp:",
     plans: {
       trial: "Kostenloser Test",
       starter: "Starter",

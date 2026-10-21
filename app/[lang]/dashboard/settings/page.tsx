@@ -11,6 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Skeleton } from "@/components/ui/skeleton";
 import { requireOwner } from "@/lib/auth/session";
 import { daysLeft, isPlan, monthStart, replyLimit } from "@/lib/billing";
+import { PAYMENT_ACCOUNTS } from "@/lib/contact";
 import { fmt, type Locale } from "@/lib/i18n/config";
 import { getMessages, type Messages } from "@/lib/i18n/dictionaries";
 import { localeFrom } from "@/lib/i18n/server";
@@ -73,6 +74,20 @@ async function Settings({ m, locale }: { m: Messages; locale: Locale }) {
             </dd>
           </dl>
           <p className="text-xs text-muted-foreground">{b.prices}</p>
+          <div className="space-y-2 rounded-lg border p-3 text-sm">
+            <p className="text-muted-foreground">{b.payTo}</p>
+            <ul className="space-y-1.5">
+              {PAYMENT_ACCOUNTS.map((a) => (
+                <li key={a.number}>
+                  <span className="font-medium">{a.method}</span>{" "}
+                  <span className="font-mono tabular-nums" dir="ltr">
+                    {a.number}
+                  </span>{" "}
+                  <span className="text-muted-foreground">({a.name})</span>
+                </li>
+              ))}
+            </ul>
+          </div>
           <ContactButton m={m} email={owner.email} />
         </CardContent>
       </Card>

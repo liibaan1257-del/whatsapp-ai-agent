@@ -17,3 +17,9 @@ export function contactWhatsapp(): { display: string; link: string } | null {
   if (!/^[1-9][0-9]{6,14}$/.test(digits)) return null;
   return { display: `+${digits}`, link: `https://wa.me/${digits}` };
 }
+
+/** Where customers send their payment (shown on the owner's Settings page). */
+export const PAYMENT_ACCOUNTS = [
+  { method: "EVC Plus", number: "0618710974", name: "Liban Salah Abdullahi" },
+  { method: "Premier Bank", number: "0615690242", name: "Cabdullahi Sheikh Ahmed Mahomuud" },
+] as const;

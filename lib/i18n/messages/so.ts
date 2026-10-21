@@ -440,6 +440,7 @@ export const so: Messages = {
     usageValue: "{used} ka mid ah {limit}",
     prices: "Starter: $19 bishii ama $190 sannadkii (500 jawaabood AI) · Pro: $49 bishii ama $490 sannadkii (2,000 jawaabood AI)",
     howToPay: "Ku bixi Mobile Money, Waafi ama bank transfer: nala soo xiriir, isla markiiba qorshahaaga ayaan shidaynaa.",
+    payTo: "Lacagta u dir mid ka mid ah account-yadan, kadib rasiidka WhatsApp noogu soo dir:",
     plans: {
       trial: "Tijaabo bilaash ah",
       starter: "Starter",

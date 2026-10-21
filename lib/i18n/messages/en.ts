@@ -441,6 +441,7 @@ export const en = {
     usageValue: "{used} of {limit}",
     prices: "Starter: $19/month or $190/year (500 AI replies) · Pro: $49/month or $490/year (2,000 AI replies)",
     howToPay: "Pay by Mobile Money, Waafi or bank transfer: contact us and we activate your plan right away.",
+    payTo: "Send the payment to one of these accounts, then send us the receipt on WhatsApp:",
     plans: {
       trial: "Free trial",
       starter: "Starter",

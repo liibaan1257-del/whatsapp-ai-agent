@@ -440,6 +440,7 @@ export const fr: Messages = {
     usageValue: "{used} sur {limit}",
     prices: "Starter : 19 $/mois ou 190 $/an (500 réponses IA) · Pro : 49 $/mois ou 490 $/an (2 000 réponses IA)",
     howToPay: "Payez par Mobile Money, Waafi ou virement bancaire : contactez-nous et nous activons votre abonnement tout de suite.",
+    payTo: "Envoyez le paiement sur l’un de ces comptes, puis envoyez-nous le reçu sur WhatsApp :",
     plans: {
       trial: "Essai gratuit",
       starter: "Starter",
