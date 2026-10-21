@@ -21,5 +21,6 @@ export function contactWhatsapp(): { display: string; link: string } | null {
 /** Where customers send their payment (shown on the owner's Settings page). */
 export const PAYMENT_ACCOUNTS = [
   { method: "EVC Plus", number: "0618710974", name: "Liban Salah Abdullahi" },
+  { method: "Salaam Somali Bank", number: "38458446", name: "Liban Salah Abdullahi" },
   { method: "Premier Bank", number: "0615690242", name: "Cabdullahi Sheikh Ahmed Mahomuud" },
 ] as const;
