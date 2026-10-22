@@ -10,7 +10,7 @@ import { localeFrom } from "@/lib/i18n/server";
 const UPDATED = "2026-10-11";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/privacy">): Promise<Metadata> {
-  return { title: getMessages(localeFrom((await params).lang)).privacy.title };
+  return { title: getMessages(localeFrom((await params).lang)).privacy.title, alternates: { canonical: "/privacy" } };
 }
 
 export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy">) {

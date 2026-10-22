@@ -9,7 +9,7 @@ import { localeFrom } from "@/lib/i18n/server";
 import { isReferralCode, REFERRAL_COOKIE } from "@/lib/referral";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/signup">): Promise<Metadata> {
-  return { title: getMessages(localeFrom((await params).lang)).auth.signupTitle };
+  return { title: getMessages(localeFrom((await params).lang)).auth.signupTitle, alternates: { canonical: "/signup" } };
 }
 
 export default async function SignupPage({ params, searchParams }: PageProps<"/[lang]/signup">) {

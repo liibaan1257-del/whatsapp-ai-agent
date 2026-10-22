@@ -10,7 +10,7 @@ import { localeFrom } from "@/lib/i18n/server";
 const UPDATED = "2026-10-12";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/terms">): Promise<Metadata> {
-  return { title: getMessages(localeFrom((await params).lang)).terms.title };
+  return { title: getMessages(localeFrom((await params).lang)).terms.title, alternates: { canonical: "/terms" } };
 }
 
 export default async function TermsPage({ params }: PageProps<"/[lang]/terms">) {

@@ -8,7 +8,7 @@ import { getMessages, type Messages } from "@/lib/i18n/dictionaries";
 import { localeFrom } from "@/lib/i18n/server";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/login">): Promise<Metadata> {
-  return { title: getMessages(localeFrom((await params).lang)).auth.signInTitle };
+  return { title: getMessages(localeFrom((await params).lang)).auth.signInTitle, alternates: { canonical: "/login" } };
 }
 
 export default async function LoginPage({ params, searchParams }: PageProps<"/[lang]/login">) {

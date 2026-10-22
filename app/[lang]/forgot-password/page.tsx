@@ -7,7 +7,7 @@ import { getMessages, type Messages } from "@/lib/i18n/dictionaries";
 import { localeFrom } from "@/lib/i18n/server";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/forgot-password">): Promise<Metadata> {
-  return { title: getMessages(localeFrom((await params).lang)).auth.forgotTitle };
+  return { title: getMessages(localeFrom((await params).lang)).auth.forgotTitle, alternates: { canonical: "/forgot-password" } };
 }
 
 export default async function ForgotPasswordPage({ params, searchParams }: PageProps<"/[lang]/forgot-password">) {

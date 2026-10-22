@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   CalendarCheck,
@@ -25,6 +26,8 @@ import { cn } from "@/lib/utils";
 const FEATURE_ICONS: LucideIcon[] = [Clock, CalendarCheck, Languages, LayoutDashboard, Plug, ShieldCheck];
 
 /** Public home page: what the product does, pricing, FAQ (static, one per language). */
+export const metadata: Metadata = { alternates: { canonical: "/" } };
+
 export default async function Home({ params }: PageProps<"/[lang]">) {
   const locale = localeFrom((await params).lang);
   const m = getMessages(locale);
