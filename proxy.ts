@@ -85,5 +85,5 @@ function withCookies(redirect: NextResponse, from: NextResponse) {
 
 export const config = {
   // Pages only: skip API routes (the webhook has its own auth), static files and images.
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt|xml|mp4)$).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt|xml|mp4|json|webmanifest)$).*)"],
 };
