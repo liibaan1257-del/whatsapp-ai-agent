@@ -53,6 +53,7 @@ export const so: Messages = {
     tryDemoHint: "Fariin u dir salon-kayaga tijaabada ah oo arag sida AI-gu ugu jawaabo oo u qabto ballan ilbiriqsiyo gudahood.",
     tryDemoText: "Salaan! Timo-jaridku waa immisa?",
     noCard: "Kaar looma baahna. 10 daqiiqo ayuu ku diyaar yahay.",
+    videoTitle: "Ku arag 40 ilbiriqsi",
     demo: {
       business: "Bella Salon",
       online: "online",
@@ -186,6 +187,10 @@ export const so: Messages = {
     resendConfirmation: "Dib u dir email-ka xaqiijinta",
     resendingConfirmation: "Waa la dirayaa…",
     confirmationResent: "Link xaqiijin cusub ayaan u dirnay {email}. Fiiri Inbox-ka iyo Spam-ka.",
+    checkEmailTitle: "Fiiri email-kaaga",
+    checkEmailSpam: "Ma arkin? Fiiri Spam ama Promotions. Email-ku wuxuu ka imanayaa ReplyBooker.",
+    openGmail: "Fur Gmail",
+    signupPerks: ["14 maalmood bilaash", "Kaar looma baahna", "10 daqiiqo ayuu ku diyaar yahay"],
     forgot: "Furaha sirta ma illowday?",
     forgotTitle: "Dib u dhig furaha sirta",
     forgotDescription: "Geli email-kaaga, waxaan kuu soo diraynaa link aad ku dejiso furaha sirta cusub.",

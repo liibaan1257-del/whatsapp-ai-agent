@@ -53,6 +53,7 @@ export const es: Messages = {
     tryDemoHint: "Escribe a nuestro salón de demostración y mira cómo la IA responde y reserva en segundos.",
     tryDemoText: "¡Hola! ¿Cuánto cuesta un corte de pelo?",
     noCard: "Sin tarjeta. Listo en 10 minutos.",
+    videoTitle: "Míralo en 40 segundos",
     demo: {
       business: "Salón Bella",
       online: "en línea",
@@ -186,6 +187,10 @@ export const es: Messages = {
     resendConfirmation: "Reenviar correo de confirmación",
     resendingConfirmation: "Enviando…",
     confirmationResent: "Enviamos un nuevo enlace de confirmación a {email}. Revisa tu bandeja de entrada y la carpeta de spam.",
+    checkEmailTitle: "Revisa tu correo",
+    checkEmailSpam: "¿No lo encuentras? Mira en Spam o Promociones. El correo es de ReplyBooker.",
+    openGmail: "Abrir Gmail",
+    signupPerks: ["14 días gratis", "Sin tarjeta", "Listo en 10 minutos"],
     forgot: "¿Olvidaste tu contraseña?",
     forgotTitle: "Restablece tu contraseña",
     forgotDescription: "Escribe tu correo y te enviaremos un enlace para crear una contraseña nueva.",

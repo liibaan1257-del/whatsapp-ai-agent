@@ -54,6 +54,7 @@ export const sw: Messages = {
     tryDemoHint: "Tuma ujumbe kwa saluni yetu ya majaribio na uone AI ikijibu na kupanga miadi ndani ya sekunde.",
     tryDemoText: "Habari! Kunyoa nywele ni bei gani?",
     noCard: "Hakuna kadi inayohitajika. Tayari ndani ya dakika 10.",
+    videoTitle: "Ione kwa sekunde 40",
     demo: {
       business: "Bella Salon",
       online: "mtandaoni",
@@ -187,6 +188,10 @@ export const sw: Messages = {
     resendConfirmation: "Tuma tena barua pepe ya uthibitisho",
     resendingConfirmation: "Inatuma…",
     confirmationResent: "Tumetuma kiungo kipya cha uthibitisho kwa {email}. Angalia kikasha na folda ya barua taka.",
+    checkEmailTitle: "Angalia barua pepe yako",
+    checkEmailSpam: "Hukuiona? Angalia Spam au Promotions. Barua pepe inatoka kwa ReplyBooker.",
+    openGmail: "Fungua Gmail",
+    signupPerks: ["Siku 14 bure", "Hakuna kadi inayohitajika", "Tayari ndani ya dakika 10"],
     forgot: "Umesahau nenosiri?",
     forgotTitle: "Weka upya nenosiri lako",
     forgotDescription: "Weka barua pepe yako na tutakutumia kiungo cha kuweka nenosiri jipya.",

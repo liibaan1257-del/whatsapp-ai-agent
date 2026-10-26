@@ -106,6 +106,24 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
           <PhoneDemo demo={t.demo} />
         </section>
 
+        {/* 40-second promo video (English, works for every market) */}
+        <section className="border-t">
+          <div className="mx-auto max-w-6xl px-4 py-12 text-center sm:px-6">
+            <h2 className="text-2xl font-semibold tracking-tight">{t.videoTitle}</h2>
+            <video
+              className="mx-auto mt-6 aspect-[9/16] w-full max-w-xs rounded-2xl border bg-black shadow-lg"
+              src="/media/replybooker-english-all.mp4"
+              poster="/media/replybooker-english-all.jpg"
+              controls
+              playsInline
+              preload="none"
+            />
+            <Button variant="brand" size="lg" className="mt-6" asChild>
+              <Link href="/signup">{t.ctaStart}</Link>
+            </Button>
+          </div>
+        </section>
+
         {/* Features */}
         <section id="features" className="scroll-mt-16 border-t bg-muted/30">
           <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">

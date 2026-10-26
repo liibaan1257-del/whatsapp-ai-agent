@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import Link from "next/link";
+import { Check } from "lucide-react";
 import { Suspense } from "react";
 import { AuthCard } from "@/components/auth/auth-card";
 import { SignupForm } from "@/components/auth/signup-form";
@@ -30,6 +31,14 @@ export default async function SignupPage({ params, searchParams }: PageProps<"/[
       <Suspense fallback={null}>
         <InviteBonus searchParams={searchParams} text={m.auth.referralBonus} />
       </Suspense>
+      <ul className="mb-5 grid gap-1.5 text-sm">
+        {m.auth.signupPerks.map((perk) => (
+          <li key={perk} className="flex items-center gap-2">
+            <Check className="size-4 shrink-0 text-brand" aria-hidden="true" />
+            {perk}
+          </li>
+        ))}
+      </ul>
       <SignupForm />
     </AuthCard>
   );

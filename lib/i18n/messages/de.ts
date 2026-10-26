@@ -53,6 +53,7 @@ export const de: Messages = {
     tryDemoHint: "Schreib unserem Demo-Salon und sieh, wie die KI in Sekunden antwortet und bucht.",
     tryDemoText: "Hallo! Was kostet ein Haarschnitt?",
     noCard: "Keine Karte nötig. In 10 Minuten startklar.",
+    videoTitle: "In 40 Sekunden erklärt",
     demo: {
       business: "Salon Bella",
       online: "online",
@@ -186,6 +187,10 @@ export const de: Messages = {
     resendConfirmation: "Bestätigungs-E-Mail erneut senden",
     resendingConfirmation: "Wird gesendet…",
     confirmationResent: "Wir haben einen neuen Bestätigungslink an {email} gesendet. Prüfen Sie Posteingang und Spam-Ordner.",
+    checkEmailTitle: "Prüfen Sie Ihre E-Mails",
+    checkEmailSpam: "Nicht gefunden? Schauen Sie im Spam- oder Werbungs-Ordner nach. Die E-Mail kommt von ReplyBooker.",
+    openGmail: "Gmail öffnen",
+    signupPerks: ["14 Tage kostenlos", "Keine Karte nötig", "In 10 Minuten startklar"],
     forgot: "Passwort vergessen?",
     forgotTitle: "Passwort zurücksetzen",
     forgotDescription: "Geben Sie Ihre E-Mail ein. Wir senden Ihnen einen Link für ein neues Passwort.",

@@ -52,6 +52,7 @@ export const en = {
     tryDemoHint: "Message our demo salon and watch the AI answer and book in seconds.",
     tryDemoText: "Hi! How much is a haircut?",
     noCard: "No card needed. Ready in 10 minutes.",
+    videoTitle: "See it in 40 seconds",
     demo: {
       business: "Bella Salon",
       online: "online",
@@ -185,6 +186,10 @@ export const en = {
     resendConfirmation: "Resend confirmation email",
     resendingConfirmation: "Sending…",
     confirmationResent: "We sent a new confirmation link to {email}. Check your inbox and spam folder.",
+    checkEmailTitle: "Check your email",
+    checkEmailSpam: "Can't find it? Look in Spam or Promotions. The email is from ReplyBooker.",
+    openGmail: "Open Gmail",
+    signupPerks: ["14 days free", "No card needed", "Ready in 10 minutes"],
     forgot: "Forgot password?",
     forgotTitle: "Reset your password",
     forgotDescription: "Enter your email and we'll send you a link to set a new password.",

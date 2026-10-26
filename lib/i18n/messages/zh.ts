@@ -54,6 +54,7 @@ export const zh: Messages = {
     tryDemoHint: "给我们的演示美发店发消息，几秒钟内即可看到 AI 回复并完成预约。",
     tryDemoText: "你好！剪发多少钱？",
     noCard: "无需信用卡，10 分钟即可上线。",
+    videoTitle: "40 秒了解",
     demo: {
       business: "Bella 美发沙龙",
       online: "在线",
@@ -187,6 +188,10 @@ export const zh: Messages = {
     resendConfirmation: "重新发送确认邮件",
     resendingConfirmation: "正在发送…",
     confirmationResent: "我们已向 {email} 发送了新的确认链接。请检查收件箱和垃圾邮件文件夹。",
+    checkEmailTitle: "请查收邮件",
+    checkEmailSpam: "找不到？请查看垃圾邮件或推广邮件文件夹。邮件来自 ReplyBooker。",
+    openGmail: "打开 Gmail",
+    signupPerks: ["免费试用 14 天", "无需信用卡", "10 分钟即可上线"],
     forgot: "忘记密码？",
     forgotTitle: "重置密码",
     forgotDescription: "输入您的电子邮箱，我们将向您发送设置新密码的链接。",

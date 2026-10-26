@@ -53,6 +53,7 @@ export const ar: Messages = {
     tryDemoHint: "راسل صالوننا التجريبي وشاهد الذكاء الاصطناعي يرد ويحجز خلال ثوانٍ.",
     tryDemoText: "مرحباً! كم سعر قص الشعر؟",
     noCard: "لا حاجة لبطاقة. جاهز خلال 10 دقائق.",
+    videoTitle: "شاهده في 40 ثانية",
     demo: {
       business: "صالون بيلا",
       online: "متصل",
@@ -186,6 +187,10 @@ export const ar: Messages = {
     resendConfirmation: "إعادة إرسال رسالة التأكيد",
     resendingConfirmation: "جارٍ الإرسال…",
     confirmationResent: "أرسلنا رابط تأكيد جديدًا إلى {email}. تحقق من البريد الوارد ومجلد الرسائل غير المرغوب فيها.",
+    checkEmailTitle: "تحقق من بريدك الإلكتروني",
+    checkEmailSpam: "لم تجده؟ ابحث في الرسائل غير المرغوب فيها أو العروض الترويجية. الرسالة من ReplyBooker.",
+    openGmail: "افتح Gmail",
+    signupPerks: ["14 يومًا مجانًا", "لا حاجة لبطاقة", "جاهز خلال 10 دقائق"],
     forgot: "نسيت كلمة المرور؟",
     forgotTitle: "إعادة تعيين كلمة المرور",
     forgotDescription: "أدخل بريدك الإلكتروني وسنرسل لك رابطًا لتعيين كلمة مرور جديدة.",
