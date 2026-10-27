@@ -188,8 +188,9 @@ export const zh: Messages = {
     resendConfirmation: "重新发送确认邮件",
     resendingConfirmation: "正在发送…",
     confirmationResent: "我们已向 {email} 发送了新的确认链接。请检查收件箱和垃圾邮件文件夹。",
-    checkEmailTitle: "请查收邮件",
     checkEmailSpam: "找不到？请查看垃圾邮件或推广邮件文件夹。邮件来自 ReplyBooker。",
+    verifyBanner: "请确认您的邮箱：我们已向 {email} 发送链接。连接 WhatsApp 前需要先确认。",
+    verifyWait: "请等待一分钟后再发送邮件。",
     openGmail: "打开 Gmail",
     signupPerks: ["免费试用 14 天", "无需信用卡", "10 分钟即可上线"],
     forgot: "忘记密码？",
@@ -513,6 +514,7 @@ export const zh: Messages = {
     setPhone: "保存",
   },
   waRequest: {
+    verifyEmailFirst: "请先确认您的邮箱（见页面顶部的绿色框），再连接 WhatsApp。",
     title: "连接您的 WhatsApp",
     hint: "告诉我们客户应向哪个号码发送消息。我们会为您完成连接，通常在 24 小时内，此后 AI 将通过该号码回复。",
     numberLabel: "您商家的 WhatsApp 号码",

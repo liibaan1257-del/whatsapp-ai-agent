@@ -1,6 +1,7 @@
 import type { EmailOtpType } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
 import { LOGIN_PATH, safeNextPath } from "@/lib/auth/redirect";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 
 /**
@@ -20,6 +21,20 @@ export async function GET(request: NextRequest) {
     : tokenHash && type
       ? await supabase.auth.verifyOtp({ token_hash: tokenHash, type })
       : { error: new Error("missing_token") };
+
+  // Our confirmation emails are one-time magic links sent to the owner's
+  // address: opening one proves they own it.
+  if (!error && type === "magiclink") {
+    const { data } = await supabase.auth.getClaims();
+    const userId = data?.claims?.sub;
+    if (userId) {
+      await createAdminClient()
+        .from("profiles")
+        .update({ email_verified_at: new Date().toISOString() })
+        .eq("id", userId)
+        .is("email_verified_at", null);
+    }
+  }
 
   // A failed password-reset link goes back to "forgot password" to ask for a new one.
   const failedReset = error && next.startsWith("/reset-password");

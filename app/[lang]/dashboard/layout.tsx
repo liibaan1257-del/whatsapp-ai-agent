@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense, type ReactNode } from "react";
+import { VerifyBanner } from "@/components/auth/verify-banner";
 import { PlanBanner } from "@/components/billing/plan-banner";
 import { DashboardShell } from "@/components/dashboard/shell";
 import { requireOwner } from "@/lib/auth/session";
@@ -40,6 +41,7 @@ async function Gate({ children, m }: { children: ReactNode; m: Messages }) {
   const owner = await requireOwner();
   return (
     <DashboardShell owner={{ email: owner.email, businessName: owner.businessName, isAdmin: owner.isAdmin }}>
+      {owner.emailVerified ? null : <VerifyBanner email={owner.email} />}
       <PlanBanner m={m} plan={owner.plan} accessUntil={owner.accessUntil} email={owner.email} />
       {children}
     </DashboardShell>

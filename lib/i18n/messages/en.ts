@@ -186,8 +186,9 @@ export const en = {
     resendConfirmation: "Resend confirmation email",
     resendingConfirmation: "Sending…",
     confirmationResent: "We sent a new confirmation link to {email}. Check your inbox and spam folder.",
-    checkEmailTitle: "Check your email",
     checkEmailSpam: "Can't find it? Look in Spam or Promotions. The email is from ReplyBooker.",
+    verifyBanner: "Confirm your email: we sent a link to {email}. You need it before connecting WhatsApp.",
+    verifyWait: "Please wait a minute before sending another email.",
     openGmail: "Open Gmail",
     signupPerks: ["14 days free", "No card needed", "Ready in 10 minutes"],
     forgot: "Forgot password?",
@@ -511,6 +512,7 @@ export const en = {
     setPhone: "Save",
   },
   waRequest: {
+    verifyEmailFirst: "Confirm your email first (see the green box at the top of the page), then connect WhatsApp.",
     title: "Connect your WhatsApp",
     hint: "Tell us which number your customers should message. We connect it for you, usually within 24 hours, and from then on the AI answers on it.",
     numberLabel: "WhatsApp number for your business",

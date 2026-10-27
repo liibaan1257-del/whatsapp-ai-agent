@@ -26,6 +26,7 @@ export async function requestWhatsAppConnection(_prev: WhatsAppRequestState, for
   const t = m.waRequest;
   const owner = await getOwner();
   if (!owner) return { error: m.common.signInAgain };
+  if (!owner.emailVerified) return { error: t.verifyEmailFirst };
   if (!configStatus().serviceRole) return { error: t.failed };
 
   const number = String(formData.get("number") ?? "").replace(/[\s()-]/g, "");

@@ -188,8 +188,9 @@ export const sw: Messages = {
     resendConfirmation: "Tuma tena barua pepe ya uthibitisho",
     resendingConfirmation: "Inatuma…",
     confirmationResent: "Tumetuma kiungo kipya cha uthibitisho kwa {email}. Angalia kikasha na folda ya barua taka.",
-    checkEmailTitle: "Angalia barua pepe yako",
     checkEmailSpam: "Hukuiona? Angalia Spam au Promotions. Barua pepe inatoka kwa ReplyBooker.",
+    verifyBanner: "Thibitisha barua pepe yako: tumetuma kiungo kwa {email}. Unakihitaji kabla ya kuunganisha WhatsApp.",
+    verifyWait: "Tafadhali subiri dakika moja kabla ya kutuma barua pepe nyingine.",
     openGmail: "Fungua Gmail",
     signupPerks: ["Siku 14 bure", "Hakuna kadi inayohitajika", "Tayari ndani ya dakika 10"],
     forgot: "Umesahau nenosiri?",
@@ -513,6 +514,7 @@ export const sw: Messages = {
     setPhone: "Hifadhi",
   },
   waRequest: {
+    verifyEmailFirst: "Thibitisha barua pepe yako kwanza (angalia kisanduku cha kijani juu ya ukurasa), kisha unganisha WhatsApp.",
     title: "Unganisha WhatsApp yako",
     hint: "Tuambie namba ambayo wateja wako wataandikia. Tunaiunganisha kwa ajili yako, kwa kawaida ndani ya saa 24, na kuanzia hapo AI hujibu kupitia namba hiyo.",
     numberLabel: "Namba ya WhatsApp ya biashara yako",

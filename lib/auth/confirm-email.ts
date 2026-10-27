@@ -9,22 +9,21 @@ import { createAdminClient } from "@/lib/supabase/admin";
  * lands in the inbox instead of relying on Supabase's built-in mailer.
  *
  * The link is a one-time Supabase magic link: opening it confirms the email
- * and signs the owner in. Nothing is sent for an unknown or already-confirmed
- * address. Returns whether an email went out. Never throws.
+ * (marks profiles.email_verified_at) and signs the owner in. Nothing is sent
+ * for an unknown or already-verified address. Returns whether an email went out. Never throws.
  */
 export async function sendConfirmationEmail(email: string, origin: string, locale: Locale | "both"): Promise<boolean> {
   try {
     const admin = createAdminClient();
     // Only existing accounts: a magic link for an unknown address would create one.
-    const { data: profile } = await admin.from("profiles").select("full_name").eq("email", email).maybeSingle();
-    if (!profile) return false;
+    const { data: profile } = await admin.from("profiles").select("full_name, email_verified_at").eq("email", email).maybeSingle();
+    if (!profile || profile.email_verified_at) return false;
 
     const { data, error } = await admin.auth.admin.generateLink({ type: "magiclink", email });
     if (error || !data.properties?.hashed_token) {
       logger.warn("confirm_link_failed", { code: error?.code ?? "no_token" });
       return false;
     }
-    if (data.user?.email_confirmed_at) return false;
 
     const link = `${origin}/auth/confirm?token_hash=${encodeURIComponent(data.properties.hashed_token)}&type=magiclink&next=/dashboard`;
     const first = (profile.full_name ?? "").trim().split(/\s+/)[0] ?? "";

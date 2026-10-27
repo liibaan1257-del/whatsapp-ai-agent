@@ -81,10 +81,12 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
   // Created with the service role so Supabase's own mailer (limited, often
   // spam-filtered) isn't used: the confirmation link goes out through Resend.
   const admin = createAdminClient();
+  // Created confirmed so the owner can sign in at once; whether they own the
+  // address is tracked in profiles.email_verified_at (set by the emailed link).
   const { data, error } = await admin.auth.admin.createUser({
     email,
     password,
-    email_confirm: false,
+    email_confirm: true,
     user_metadata: { full_name: fullName, timezone },
   });
   if (error) {
@@ -108,8 +110,14 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
       sendWelcome(email, fullName.replace(/\s+/g, " "), locale),
     ]),
   );
-  // The owner signs in by opening the confirmation link.
-  return { notice: fmt(m.auth.checkEmail, { email }) };
+  // Straight into the dashboard; the emailed link only verifies the address.
+  const supabase = await createClient();
+  const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+  if (signInError) {
+    logger.warn("signup_sign_in_failed", { code: signInError.code ?? "unknown" });
+    return { notice: fmt(m.auth.checkEmail, { email }) };
+  }
+  redirect("/dashboard");
 }
 
 /**
@@ -161,6 +169,39 @@ export async function resendConfirmation(_prev: AuthState, formData: FormData): 
   const locale = await requestLocale();
   const sent = await sendConfirmationEmail(email, origin, locale === "so" ? "so" : "en");
   if (!sent) logger.warn("resend_confirmation_not_sent", {});
+  return { notice: fmt(m.auth.confirmationResent, { email }) };
+}
+
+/**
+ * Signed-in owner: email the verification link again. Uses the session's own
+ * address (never one from the form) and at most once a minute.
+ */
+export async function resendVerification(_prev: AuthState): Promise<AuthState> {
+  const m = await requestMessages();
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getClaims();
+  const userId = data?.claims?.sub;
+  const email = typeof data?.claims?.email === "string" ? data.claims.email : null;
+  if (!userId || !email) return { error: m.common.signInAgain };
+
+  const admin = createAdminClient();
+  const since = new Date(Date.now() - 60_000).toISOString();
+  // Claim the send slot atomically: only one request per minute gets a row back.
+  const { data: claimed } = await admin
+    .from("profiles")
+    .update({ verify_email_sent_at: new Date().toISOString() })
+    .eq("id", userId)
+    .is("email_verified_at", null)
+    .or(`verify_email_sent_at.is.null,verify_email_sent_at.lt.${since}`)
+    .select("id")
+    .maybeSingle();
+  if (!claimed) return { error: m.auth.verifyWait };
+
+  const h = await headers();
+  const origin = h.get("origin") ?? `${h.get("x-forwarded-proto") ?? "https"}://${h.get("host")}`;
+  const locale = await requestLocale();
+  const sent = await sendConfirmationEmail(email, origin, locale === "so" ? "so" : "en");
+  if (!sent) logger.warn("resend_verification_not_sent", {});
   return { notice: fmt(m.auth.confirmationResent, { email }) };
 }
 

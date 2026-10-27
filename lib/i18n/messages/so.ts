@@ -187,8 +187,9 @@ export const so: Messages = {
     resendConfirmation: "Dib u dir email-ka xaqiijinta",
     resendingConfirmation: "Waa la dirayaa…",
     confirmationResent: "Link xaqiijin cusub ayaan u dirnay {email}. Fiiri Inbox-ka iyo Spam-ka.",
-    checkEmailTitle: "Fiiri email-kaaga",
     checkEmailSpam: "Ma arkin? Fiiri Spam ama Promotions. Email-ku wuxuu ka imanayaa ReplyBooker.",
+    verifyBanner: "Xaqiiji email-kaaga: link ayaan u dirnay {email}. Waxaad u baahan tahay ka hor intaadan WhatsApp xirin.",
+    verifyWait: "Fadlan daqiiqad sug ka hor intaadan email kale dirin.",
     openGmail: "Fur Gmail",
     signupPerks: ["14 maalmood bilaash", "Kaar looma baahna", "10 daqiiqo ayuu ku diyaar yahay"],
     forgot: "Furaha sirta ma illowday?",
@@ -510,6 +511,7 @@ export const so: Messages = {
     setPhone: "Keydi",
   },
   waRequest: {
+    verifyEmailFirst: "Marka hore xaqiiji email-kaaga (fiiri sanduuqa cagaaran ee bogga korkiisa), kadibna WhatsApp xir.",
     title: "Ku xidh WhatsApp-kaaga",
     hint: "Noo sheeg lambarka ay macaamiishaadu u qorayaan. Annaga ayaa kuu xidhaya, badanaa 24 saacadood gudahood, kadibna AI-ga ayaa ka jawaabaya.",
     numberLabel: "Lambarka WhatsApp ee ganacsigaaga",

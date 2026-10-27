@@ -187,8 +187,9 @@ export const de: Messages = {
     resendConfirmation: "Bestätigungs-E-Mail erneut senden",
     resendingConfirmation: "Wird gesendet…",
     confirmationResent: "Wir haben einen neuen Bestätigungslink an {email} gesendet. Prüfen Sie Posteingang und Spam-Ordner.",
-    checkEmailTitle: "Prüfen Sie Ihre E-Mails",
     checkEmailSpam: "Nicht gefunden? Schauen Sie im Spam- oder Werbungs-Ordner nach. Die E-Mail kommt von ReplyBooker.",
+    verifyBanner: "Bestätigen Sie Ihre E-Mail: Wir haben einen Link an {email} gesendet. Sie brauchen ihn, bevor Sie WhatsApp verbinden.",
+    verifyWait: "Bitte warten Sie eine Minute, bevor Sie eine weitere E-Mail senden.",
     openGmail: "Gmail öffnen",
     signupPerks: ["14 Tage kostenlos", "Keine Karte nötig", "In 10 Minuten startklar"],
     forgot: "Passwort vergessen?",
@@ -510,6 +511,7 @@ export const de: Messages = {
     setPhone: "Speichern",
   },
   waRequest: {
+    verifyEmailFirst: "Bestätigen Sie zuerst Ihre E-Mail (siehe grüner Kasten oben auf der Seite), dann verbinden Sie WhatsApp.",
     title: "WhatsApp verbinden",
     hint: "Sag uns, an welche Nummer deine Kunden schreiben sollen. Wir verbinden sie für dich, meist innerhalb von 24 Stunden, danach antwortet die KI darauf.",
     numberLabel: "WhatsApp-Nummer deines Unternehmens",
