@@ -106,7 +106,7 @@ export const so: Messages = {
       },
     ],
     pricingTitle: "Qiimo fudud",
-    pricingSubtitle: "Bilaash ku bilow. Ku bixi Mobile Money, Waafi, kaar ama bank transfer.",
+    pricingSubtitle: "Bilaash ku bilow. Ku bixi Mobile Money, Waafi ama bank transfer.",
     referralNote: "Ganacsi kale ma kuu soo gudbiyay? Tijaabadaadu waa 30 maalmood oo bilaash ah.",
     yearly: "ama {price} sannadkii (2 bilood bilaash)",
     perMonth: "/bishii",
@@ -152,7 +152,7 @@ export const so: Messages = {
       },
       {
         q: "Sideen u bixiyaa?",
-        a: "Tijaabada bilaashka ah kadib, bil kasta ku bixi Mobile Money, Waafi, kaar ama bank transfer. WhatsApp nagala soo xiriir, isla markiiba qorshahaaga ayaan shidaynaa.",
+        a: "Tijaabada bilaashka ah kadib, bil kasta ku bixi Mobile Money, Waafi ama bank transfer. WhatsApp nagala soo xiriir, isla markiiba qorshahaaga ayaan shidaynaa.",
       },
       {
         q: "Xogtaydu ma ammaan baa?",
@@ -653,7 +653,7 @@ export const so: Messages = {
       },
       {
         title: "4. Lacag bixinta iyo celinta",
-        body: "Qorshayaasha waxaa la bixiyaa horay, bil kasta ama sanad kasta, hababka aan bixinno (tusaale Mobile Money, Waafi, kaar ama bank transfer). Lacagta muddo bilaabatay lama celiyo, marka laga reebo meesha sharcigu ku waajibiyo. Qiimayaashu way isbeddeli karaan; waan kuu sheegaynaa ka hor inta aan kugu dhaqan gelin.",
+        body: "Qorshayaasha waxaa la bixiyaa horay, bil kasta ama sanad kasta, hababka aan bixinno (tusaale Mobile Money, Waafi ama bank transfer). Lacagta muddo bilaabatay lama celiyo, marka laga reebo meesha sharcigu ku waajibiyo. Qiimayaashu way isbeddeli karaan; waan kuu sheegaynaa ka hor inta aan kugu dhaqan gelin.",
       },
       {
         title: "5. Isticmaalka la oggol yahay",

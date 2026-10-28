@@ -105,7 +105,7 @@ export const en = {
       },
     ],
     pricingTitle: "Simple pricing",
-    pricingSubtitle: "Start free. Pay by Mobile Money, Waafi, card or bank transfer.",
+    pricingSubtitle: "Start free. Pay by Mobile Money, Waafi or bank transfer.",
     referralNote: "Invited by another business? Your free trial is 30 days.",
     yearly: "or {price}/year (2 months free)",
     perMonth: "/month",
@@ -151,7 +151,7 @@ export const en = {
       },
       {
         q: "How do I pay?",
-        a: "After the free trial, pay monthly by Mobile Money, Waafi, card or bank transfer. Contact us on WhatsApp and we activate your plan right away.",
+        a: "After the free trial, pay monthly by Mobile Money, Waafi or bank transfer. Contact us on WhatsApp and we activate your plan right away.",
       },
       {
         q: "Is my data safe?",
@@ -654,7 +654,7 @@ export const en = {
       },
       {
         title: "4. Payment and refunds",
-        body: "Plans are paid in advance, monthly or yearly, by the methods we offer (for example Mobile Money, Waafi, card or bank transfer). Payments are not refunded for a period already started, except where the law requires it. Prices may change; we tell you before a change applies to you.",
+        body: "Plans are paid in advance, monthly or yearly, by the methods we offer (for example Mobile Money, Waafi or bank transfer). Payments are not refunded for a period already started, except where the law requires it. Prices may change; we tell you before a change applies to you.",
       },
       {
         title: "5. Acceptable use",

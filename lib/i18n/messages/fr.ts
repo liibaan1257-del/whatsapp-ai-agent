@@ -106,7 +106,7 @@ export const fr: Messages = {
       },
     ],
     pricingTitle: "Des tarifs simples",
-    pricingSubtitle: "Commencez gratuitement. Payez par Mobile Money, Waafi, carte ou virement.",
+    pricingSubtitle: "Commencez gratuitement. Payez par Mobile Money, Waafi ou virement.",
     referralNote: "Invité par une autre entreprise ? Votre essai gratuit dure 30 jours.",
     yearly: "ou {price}/an (2 mois offerts)",
     perMonth: "/mois",
@@ -152,7 +152,7 @@ export const fr: Messages = {
       },
       {
         q: "Comment payer ?",
-        a: "Après l'essai, payez chaque mois par Mobile Money, Waafi, carte ou virement. Écrivez-nous sur WhatsApp et nous activons votre formule tout de suite.",
+        a: "Après l'essai, payez chaque mois par Mobile Money, Waafi ou virement. Écrivez-nous sur WhatsApp et nous activons votre formule tout de suite.",
       },
       {
         q: "Mes données sont-elles en sécurité ?",
@@ -653,7 +653,7 @@ export const fr: Messages = {
       },
       {
         title: "4. Paiement et remboursements",
-        body: "Les formules se paient d'avance, au mois ou à l'année, par les moyens proposés (par exemple Mobile Money, Waafi, carte ou virement). Une période commencée n'est pas remboursée, sauf obligation légale. Les prix peuvent changer ; nous vous prévenons avant qu'un changement s'applique à vous.",
+        body: "Les formules se paient d'avance, au mois ou à l'année, par les moyens proposés (par exemple Mobile Money, Waafi ou virement). Une période commencée n'est pas remboursée, sauf obligation légale. Les prix peuvent changer ; nous vous prévenons avant qu'un changement s'applique à vous.",
       },
       {
         title: "5. Utilisation acceptable",

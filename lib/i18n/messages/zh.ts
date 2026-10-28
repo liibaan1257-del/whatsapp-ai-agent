@@ -107,7 +107,7 @@ export const zh: Messages = {
       },
     ],
     pricingTitle: "简单透明的价格",
-    pricingSubtitle: "免费开始。支持 Mobile Money、Waafi、银行卡或银行转账付款。",
+    pricingSubtitle: "免费开始。支持 Mobile Money、Waafi 或银行转账付款。",
     referralNote: "由其他商家邀请？您的免费试用期为 30 天。",
     yearly: "或 {price}/年（赠送 2 个月）",
     perMonth: "/月",
@@ -153,7 +153,7 @@ export const zh: Messages = {
       },
       {
         q: "如何付款？",
-        a: "免费试用结束后，可通过 Mobile Money、Waafi、银行卡或银行转账按月付款。通过 WhatsApp 联系我们，我们会立即为您开通套餐。",
+        a: "免费试用结束后，可通过 Mobile Money、Waafi 或银行转账按月付款。通过 WhatsApp 联系我们，我们会立即为您开通套餐。",
       },
       {
         q: "我的数据安全吗？",
@@ -656,7 +656,7 @@ export const zh: Messages = {
       },
       {
         title: "4. 付款和退款",
-        body: "套餐需按月或按年预先支付，可通过我们提供的方式付款（例如 Mobile Money、Waafi、银行卡或银行转账）。除法律另有规定外，已开始的计费周期不予退款。价格可能调整；在调整对您生效前，我们会提前告知。",
+        body: "套餐需按月或按年预先支付，可通过我们提供的方式付款（例如 Mobile Money、Waafi 或银行转账）。除法律另有规定外，已开始的计费周期不予退款。价格可能调整；在调整对您生效前，我们会提前告知。",
       },
       {
         title: "5. 可接受的使用",

@@ -107,7 +107,7 @@ export const sw: Messages = {
       },
     ],
     pricingTitle: "Bei rahisi",
-    pricingSubtitle: "Anza bure. Lipa kwa Mobile Money, Waafi, kadi au uhamisho wa benki.",
+    pricingSubtitle: "Anza bure. Lipa kwa Mobile Money, Waafi au uhamisho wa benki.",
     referralNote: "Umealikwa na biashara nyingine? Jaribio lako la bure ni siku 30.",
     yearly: "au {price}/mwaka (miezi 2 bure)",
     perMonth: "/mwezi",
@@ -153,7 +153,7 @@ export const sw: Messages = {
       },
       {
         q: "Ninalipaje?",
-        a: "Baada ya jaribio la bure, lipa kila mwezi kwa Mobile Money, Waafi, kadi au uhamisho wa benki. Wasiliana nasi kwenye WhatsApp na tunawasha mpango wako mara moja.",
+        a: "Baada ya jaribio la bure, lipa kila mwezi kwa Mobile Money, Waafi au uhamisho wa benki. Wasiliana nasi kwenye WhatsApp na tunawasha mpango wako mara moja.",
       },
       {
         q: "Je, data yangu iko salama?",
@@ -656,7 +656,7 @@ export const sw: Messages = {
       },
       {
         title: "4. Malipo na marejesho",
-        body: "Mipango hulipwa mapema, kila mwezi au kila mwaka, kwa njia tunazotoa (kwa mfano Mobile Money, Waafi, kadi au uhamisho wa benki). Malipo ya kipindi kilichokwisha anza hayarejeshwi, isipokuwa sheria inavyotaka. Bei zinaweza kubadilika; tunakuarifu kabla mabadiliko hayajakuhusu.",
+        body: "Mipango hulipwa mapema, kila mwezi au kila mwaka, kwa njia tunazotoa (kwa mfano Mobile Money, Waafi au uhamisho wa benki). Malipo ya kipindi kilichokwisha anza hayarejeshwi, isipokuwa sheria inavyotaka. Bei zinaweza kubadilika; tunakuarifu kabla mabadiliko hayajakuhusu.",
       },
       {
         title: "5. Matumizi yanayokubalika",

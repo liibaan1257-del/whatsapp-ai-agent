@@ -106,7 +106,7 @@ export const de: Messages = {
       },
     ],
     pricingTitle: "Einfache Preise",
-    pricingSubtitle: "Kostenlos starten. Bezahlen per Mobile Money, Waafi, Karte oder Überweisung.",
+    pricingSubtitle: "Kostenlos starten. Bezahlen per Mobile Money, Waafi oder Überweisung.",
     referralNote: "Von einem anderen Unternehmen eingeladen? Deine Testphase dauert 30 Tage.",
     yearly: "oder {price}/Jahr (2 Monate gratis)",
     perMonth: "/Monat",
@@ -152,7 +152,7 @@ export const de: Messages = {
       },
       {
         q: "Wie bezahle ich?",
-        a: "Nach dem Test monatlich per Mobile Money, Waafi, Karte oder Überweisung. Schreiben Sie uns auf WhatsApp, wir aktivieren Ihren Tarif sofort.",
+        a: "Nach dem Test monatlich per Mobile Money, Waafi oder Überweisung. Schreiben Sie uns auf WhatsApp, wir aktivieren Ihren Tarif sofort.",
       },
       {
         q: "Sind meine Daten sicher?",
@@ -653,7 +653,7 @@ export const de: Messages = {
       },
       {
         title: "4. Zahlung und Erstattung",
-        body: "Tarife werden im Voraus monatlich oder jährlich über die angebotenen Wege bezahlt (z. B. Mobile Money, Waafi, Karte oder Überweisung). Bereits begonnene Zeiträume werden nicht erstattet, außer wenn das Gesetz es verlangt. Preise können sich ändern; wir informieren Sie, bevor eine Änderung für Sie gilt.",
+        body: "Tarife werden im Voraus monatlich oder jährlich über die angebotenen Wege bezahlt (z. B. Mobile Money, Waafi oder Überweisung). Bereits begonnene Zeiträume werden nicht erstattet, außer wenn das Gesetz es verlangt. Preise können sich ändern; wir informieren Sie, bevor eine Änderung für Sie gilt.",
       },
       {
         title: "5. Zulässige Nutzung",

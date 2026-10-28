@@ -106,7 +106,7 @@ export const es: Messages = {
       },
     ],
     pricingTitle: "Precios sencillos",
-    pricingSubtitle: "Empieza gratis. Paga con Mobile Money, Waafi, tarjeta o transferencia.",
+    pricingSubtitle: "Empieza gratis. Paga con Mobile Money, Waafi o transferencia.",
     referralNote: "¿Te invitó otro negocio? Tu prueba gratis es de 30 días.",
     yearly: "o {price}/año (2 meses gratis)",
     perMonth: "/mes",
@@ -152,7 +152,7 @@ export const es: Messages = {
       },
       {
         q: "¿Cómo pago?",
-        a: "Tras la prueba gratis, paga cada mes con Mobile Money, Waafi, tarjeta o transferencia. Escríbenos por WhatsApp y activamos tu plan al momento.",
+        a: "Tras la prueba gratis, paga cada mes con Mobile Money, Waafi o transferencia. Escríbenos por WhatsApp y activamos tu plan al momento.",
       },
       {
         q: "¿Mis datos están seguros?",
@@ -653,7 +653,7 @@ export const es: Messages = {
       },
       {
         title: "4. Pago y reembolsos",
-        body: "Los planes se pagan por adelantado, mensual o anualmente, con los métodos que ofrecemos (por ejemplo Mobile Money, Waafi, tarjeta o transferencia). No se reembolsan periodos ya iniciados, salvo cuando la ley lo exija. Los precios pueden cambiar; te avisaremos antes de aplicarte un cambio.",
+        body: "Los planes se pagan por adelantado, mensual o anualmente, con los métodos que ofrecemos (por ejemplo Mobile Money, Waafi o transferencia). No se reembolsan periodos ya iniciados, salvo cuando la ley lo exija. Los precios pueden cambiar; te avisaremos antes de aplicarte un cambio.",
       },
       {
         title: "5. Uso aceptable",
