@@ -18,7 +18,8 @@ export function WhatsAppConnect() {
       </label>
       <label className="grid gap-1 text-sm">
         <span className="font-medium">{m.admin.waPinLabel}</span>
-        <Input name="pin" type="password" inputMode="numeric" maxLength={6} autoComplete="off" className="w-32" />
+        {/* Text input with masked glyphs, not type="password": browsers would autofill the saved login email into the ID field above. */}
+        <Input name="pin" inputMode="numeric" maxLength={6} autoComplete="off" data-1p-ignore data-lpignore="true" className="w-32 [-webkit-text-security:disc]" />
       </label>
       <Button type="submit" variant="brand" disabled={pending}>
         {pending ? m.admin.waConnecting : m.admin.waConnect}
