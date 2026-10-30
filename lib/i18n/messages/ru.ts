@@ -489,6 +489,8 @@ export const ru: Messages = {
     waTitle: "Подключение WhatsApp (Meta)",
     waHelp: "Нажмите «Подключить»: ReplyBooker найдёт аккаунт WhatsApp Business по токену доступа сервера и попросит Meta отправлять входящие сообщения сюда. Также можно вставить ID аккаунта из Meta (Use cases → WhatsApp → Step 1).",
     wabaLabel: "ID аккаунта WhatsApp Business",
+    waPinLabel: "6-значный PIN (повторная регистрация)",
+    waBadPin: "Введите 6-значный PIN.",
     waConnect: "Подключить",
     waConnecting: "Подключение…",
     waConnected: "Подключено. Отправьте сообщение в WhatsApp, чтобы проверить.",

@@ -489,6 +489,8 @@ export const sw: Messages = {
     waTitle: "Muunganisho wa WhatsApp (Meta)",
     waHelp: "Bonyeza Unganisha: ReplyBooker hupata akaunti ya WhatsApp Business kutoka kwa tokeni ya seva na kuiambia Meta itume ujumbe unaoingia hapa. Unaweza pia kubandika ID ya akaunti kutoka Meta (Use cases → WhatsApp → Step 1).",
     wabaLabel: "ID ya akaunti ya WhatsApp Business",
+    waPinLabel: "PIN ya tarakimu 6 (kusajili upya)",
+    waBadPin: "Weka PIN ya tarakimu 6.",
     waConnect: "Unganisha",
     waConnecting: "Inaunganisha…",
     waConnected: "Imeunganishwa. Tuma ujumbe wa WhatsApp kujaribu.",

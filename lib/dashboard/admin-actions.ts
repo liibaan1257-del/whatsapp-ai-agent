@@ -115,6 +115,7 @@ export async function sendWelcomeEmail(_prev: AdminState, formData: FormData): P
 }
 
 const WABA_ID = /^\d{5,25}$/;
+const PIN = /^\d{6}$/;
 
 /**
  * Operator only: subscribe this app to a WhatsApp Business Account so Meta
@@ -130,13 +131,18 @@ export async function connectWhatsApp(_prev: AdminState, formData: FormData): Pr
 
   const typed = String(formData.get("waba_id") ?? "").trim();
   if (typed && !WABA_ID.test(typed)) return { error: m.admin.waBadId };
+  // Optional two-step PIN: re-registers the numbers with the Cloud API (a number
+  // shown as "Offline" in WhatsApp Manager gets no webhooks until registered).
+  const pin = String(formData.get("pin") ?? "").trim();
+  if (pin && !PIN.test(pin)) return { error: m.admin.waBadPin };
 
   const graph = `${(process.env.WHATSAPP_API_BASE ?? "https://graph.facebook.com").replace(/\/+$/, "")}/${serverEnv.whatsappGraphVersion()}`;
-  const call = async (path: string, method: "GET" | "POST" = "GET") => {
+  const call = async (path: string, method: "GET" | "POST" = "GET", json?: object) => {
     try {
       const res = await fetch(`${graph}${path}`, {
         method,
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token}`, ...(json ? { "Content-Type": "application/json" } : {}) },
+        body: json ? JSON.stringify(json) : undefined,
         signal: AbortSignal.timeout(15_000),
       });
       const body = await res.json().catch(() => null);
@@ -178,9 +184,29 @@ export async function connectWhatsApp(_prev: AdminState, formData: FormData): Pr
     logger.error("admin_whatsapp_subscribe_failed", { failed });
     await recordAdminEvent("subscribe_failed", failed.join(" | "));
   }
+  // Number status, and registration when a PIN was given. The PIN is never logged.
+  const numbers: string[] = [];
+  for (const waba of wabas) {
+    const list = await call(`/${waba}/phone_numbers?fields=id,display_phone_number,status`);
+    if (!list.ok) {
+      numbers.push(`${waba}: ${list.error}`);
+      continue;
+    }
+    for (const n of (list.body?.data ?? []) as { id: string; display_phone_number?: string; status?: string }[]) {
+      let line = `${n.display_phone_number ?? n.id} ${n.status ?? "?"}`;
+      if (pin && WABA_ID.test(n.id)) {
+        const r = await call(`/${n.id}/register`, "POST", { messaging_product: "whatsapp", pin });
+        line += r.ok && r.body?.success ? " → registered" : ` → register failed: ${r.error}`;
+      }
+      numbers.push(line);
+    }
+  }
+  if (numbers.length) await recordAdminEvent(pin ? "register" : "numbers", numbers.join(" | "));
+
   refresh();
-  if (!done.length) return { error: fmt(m.admin.waFailed, { detail: failed.join(" | ").slice(0, 300) }) };
-  return { ok: true, notice: `${m.admin.waConnected} (${done.join(", ")})` };
+  const status = numbers.length ? ` · ${numbers.join(" | ").slice(0, 300)}` : "";
+  if (!done.length) return { error: fmt(m.admin.waFailed, { detail: failed.join(" | ").slice(0, 300) }) + status };
+  return { ok: true, notice: `${m.admin.waConnected} (${done.join(", ")})${status}` };
 }
 
 async function recordAdminEvent(outcome: string, detail: string) {

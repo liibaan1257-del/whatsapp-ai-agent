@@ -486,6 +486,8 @@ export const so: Messages = {
     waTitle: "Xidhiidhka WhatsApp (Meta)",
     waHelp: "Riix Xidh: ReplyBooker wuxuu token-ka server-ka ka helayaa WhatsApp Business account-ka, wuxuuna Meta u sheegayaa inay fariimaha halkan u soo dirto. Waxaad kale oo ku dhejin kartaa account ID-ga Meta (Use cases → WhatsApp → Step 1).",
     wabaLabel: "WhatsApp Business account ID",
+    waPinLabel: "PIN-ka 6-da lambar (dib-u-diiwaangelin)",
+    waBadPin: "Geli PIN-ka 6-da lambar ah.",
     waConnect: "Xidh",
     waConnecting: "Waa la xidhayaa…",
     waConnected: "Waa la xidhay. Fariin WhatsApp ah u dir si aad u tijaabiso.",

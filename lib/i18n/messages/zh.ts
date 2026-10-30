@@ -489,6 +489,8 @@ export const zh: Messages = {
     waTitle: "WhatsApp 连接（Meta）",
     waHelp: "点击“连接”：ReplyBooker 会通过服务器的访问令牌找到 WhatsApp Business 账户，并通知 Meta 将收到的消息发送到这里。您也可以粘贴 Meta 中的账户 ID（Use cases → WhatsApp → Step 1）。",
     wabaLabel: "WhatsApp Business 账户 ID",
+    waPinLabel: "6 位 PIN（重新注册）",
+    waBadPin: "请输入 6 位 PIN。",
     waConnect: "连接",
     waConnecting: "正在连接…",
     waConnected: "已连接。发送一条 WhatsApp 消息进行测试。",

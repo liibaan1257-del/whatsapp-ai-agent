@@ -486,6 +486,8 @@ export const fr: Messages = {
     waTitle: "Connexion WhatsApp (Meta)",
     waHelp: "Cliquez sur Connecter : ReplyBooker trouve le compte WhatsApp Business grâce au jeton du serveur et demande à Meta d'envoyer ici les messages entrants. Vous pouvez aussi coller l'ID du compte depuis Meta (Cas d'usage → WhatsApp → Étape 1).",
     wabaLabel: "ID du compte WhatsApp Business",
+    waPinLabel: "Code PIN à 6 chiffres (réenregistrement)",
+    waBadPin: "Saisissez le code PIN à 6 chiffres.",
     waConnect: "Connecter",
     waConnecting: "Connexion…",
     waConnected: "Connecté. Envoyez un message WhatsApp pour tester.",
