@@ -31,6 +31,8 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
       images: [{ url: "/og-image.png", width: 1200, height: 630, alt: m.meta.appName }],
     },
     twitter: { card: "summary_large_image", images: ["/og-image.png"] },
+    // Meta Business domain verification for replybooker.com (public by design).
+    other: { "facebook-domain-verification": "pc3dkwilcn9momtcrhk0nugk9a8vmj" },
   };
 }
 
