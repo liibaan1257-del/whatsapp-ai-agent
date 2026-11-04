@@ -412,6 +412,16 @@ export const zh: Messages = {
       unreachable: "无法连接 Supabase 以验证密钥。",
     },
   },
+  logo: {
+    title: "商家标志",
+    hint: "显示在控制台中商家名称旁边。PNG、JPG 或 WebP；会缩小到 256 像素。",
+    choose: "上传标志",
+    saving: "正在保存…",
+    remove: "移除",
+    saved: "标志已保存。",
+    invalid: "无法使用该图片。请尝试 PNG 或 JPG。",
+    failed: "无法保存标志。请重试。",
+  },
   settings: {
     title: "设置",
     description: "您的账户和数据。",

@@ -410,6 +410,16 @@ export const en = {
       unreachable: "Couldn't reach Supabase to check the key.",
     },
   },
+  logo: {
+    title: "Business logo",
+    hint: "Shown next to your business name in the dashboard. PNG, JPG or WebP; it is resized to 256 px.",
+    choose: "Upload logo",
+    saving: "Saving…",
+    remove: "Remove",
+    saved: "Logo saved.",
+    invalid: "That image could not be used. Try a PNG or JPG.",
+    failed: "Could not save the logo. Please try again.",
+  },
   settings: {
     title: "Settings",
     description: "Your account and your data.",

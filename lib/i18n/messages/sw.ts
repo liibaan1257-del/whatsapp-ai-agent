@@ -412,6 +412,16 @@ export const sw: Messages = {
       unreachable: "Imeshindwa kufikia Supabase kukagua ufunguo.",
     },
   },
+  logo: {
+    title: "Nembo ya biashara",
+    hint: "Inaonekana karibu na jina la biashara yako kwenye dashibodi. PNG, JPG au WebP; hupunguzwa hadi 256 px.",
+    choose: "Pakia nembo",
+    saving: "Inahifadhi…",
+    remove: "Ondoa",
+    saved: "Nembo imehifadhiwa.",
+    invalid: "Picha hiyo haikuweza kutumika. Jaribu PNG au JPG.",
+    failed: "Imeshindwa kuhifadhi nembo. Jaribu tena.",
+  },
   settings: {
     title: "Mipangilio",
     description: "Akaunti yako na data yako.",

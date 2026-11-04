@@ -410,6 +410,16 @@ export const es: Messages = {
       unreachable: "No se pudo contactar con Supabase para comprobar la clave.",
     },
   },
+  logo: {
+    title: "Logo del negocio",
+    hint: "Se muestra junto al nombre de tu negocio en el panel. PNG, JPG o WebP; se reduce a 256 px.",
+    choose: "Subir logo",
+    saving: "Guardando…",
+    remove: "Quitar",
+    saved: "Logo guardado.",
+    invalid: "No se pudo usar esa imagen. Prueba con PNG o JPG.",
+    failed: "No se pudo guardar el logo. Inténtalo de nuevo.",
+  },
   settings: {
     title: "Ajustes",
     description: "Tu cuenta y tus datos.",

@@ -39,13 +39,18 @@ function NavLinks({ onNavigate, isAdmin }: { onNavigate?: () => void; isAdmin: b
   );
 }
 
-function Brand({ businessName }: { businessName: string }) {
+function Brand({ businessName, logo }: { businessName: string; logo: string | null }) {
   const { m } = useI18n();
   return (
     <Link href="/dashboard" className="flex items-center gap-2.5">
-      <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-brand/15 text-brand">
-        <MessageCircle className="size-4" aria-hidden="true" />
-      </span>
+      {logo ? (
+        // eslint-disable-next-line @next/next/no-img-element -- small data URL from the database
+        <img src={logo} alt="" className="size-8 shrink-0 rounded-lg bg-white object-contain" />
+      ) : (
+        <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-brand/15 text-brand">
+          <MessageCircle className="size-4" aria-hidden="true" />
+        </span>
+      )}
       <span className="min-w-0 leading-tight">
         <span className="block truncate text-sm font-semibold">{businessName || m.common.yourBusiness}</span>
         <span className="block text-xs text-muted-foreground">ReplyBooker</span>
@@ -74,7 +79,7 @@ function SignOut({ email }: { email: string | null }) {
 }
 
 /** Sidebar layout for /dashboard; a drawer on small screens. */
-export function DashboardShell({ owner, children }: { owner: { email: string | null; businessName: string; isAdmin: boolean }; children: ReactNode }) {
+export function DashboardShell({ owner, children }: { owner: { email: string | null; businessName: string; logo: string | null; isAdmin: boolean }; children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const { m } = useI18n();
 
@@ -89,7 +94,7 @@ export function DashboardShell({ owner, children }: { owner: { email: string | n
     <div className="flex min-h-screen bg-muted/30">
       <aside className="fixed inset-y-0 start-0 hidden w-60 flex-col border-e bg-background lg:flex">
         <div className="p-4">
-          <Brand businessName={owner.businessName} />
+          <Brand businessName={owner.businessName} logo={owner.logo} />
         </div>
         <div className="flex-1 px-3">
           <NavLinks isAdmin={owner.isAdmin} />
@@ -102,7 +107,7 @@ export function DashboardShell({ owner, children }: { owner: { email: string | n
           <button type="button" aria-label={m.nav.closeMenu} className="absolute inset-0 bg-black/40" onClick={() => setOpen(false)} />
           <aside className="relative flex h-full w-72 max-w-[85vw] flex-col border-e bg-background">
             <div className="flex items-center justify-between p-4">
-              <Brand businessName={owner.businessName} />
+              <Brand businessName={owner.businessName} logo={owner.logo} />
               <Button variant="ghost" size="icon" aria-label={m.nav.closeMenu} onClick={() => setOpen(false)}>
                 <X />
               </Button>
@@ -120,7 +125,7 @@ export function DashboardShell({ owner, children }: { owner: { email: string | n
           <Button variant="ghost" size="icon" aria-label={m.nav.openMenu} onClick={() => setOpen(true)}>
             <Menu />
           </Button>
-          <Brand businessName={owner.businessName} />
+          <Brand businessName={owner.businessName} logo={owner.logo} />
         </header>
         <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6 lg:py-8">
           {children}

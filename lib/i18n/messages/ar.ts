@@ -410,6 +410,16 @@ export const ar: Messages = {
       unreachable: "تعذّر الوصول إلى Supabase للتحقق من المفتاح.",
     },
   },
+  logo: {
+    title: "شعار النشاط التجاري",
+    hint: "يظهر بجانب اسم نشاطك في لوحة التحكم. PNG أو JPG أو WebP؛ يُصغَّر إلى 256 بكسل.",
+    choose: "رفع الشعار",
+    saving: "جارٍ الحفظ…",
+    remove: "إزالة",
+    saved: "تم حفظ الشعار.",
+    invalid: "تعذّر استخدام هذه الصورة. جرّب PNG أو JPG.",
+    failed: "تعذّر حفظ الشعار. حاول مرة أخرى.",
+  },
   settings: {
     title: "الإعدادات",
     description: "حسابك وبياناتك.",

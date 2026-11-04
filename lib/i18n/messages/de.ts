@@ -410,6 +410,16 @@ export const de: Messages = {
       unreachable: "Supabase war nicht erreichbar, um den Schlüssel zu prüfen.",
     },
   },
+  logo: {
+    title: "Firmenlogo",
+    hint: "Wird neben deinem Firmennamen im Dashboard angezeigt. PNG, JPG oder WebP; wird auf 256 px verkleinert.",
+    choose: "Logo hochladen",
+    saving: "Wird gespeichert…",
+    remove: "Entfernen",
+    saved: "Logo gespeichert.",
+    invalid: "Dieses Bild konnte nicht verwendet werden. Versuche PNG oder JPG.",
+    failed: "Logo konnte nicht gespeichert werden. Bitte erneut versuchen.",
+  },
   settings: {
     title: "Einstellungen",
     description: "Ihr Konto und Ihre Daten.",

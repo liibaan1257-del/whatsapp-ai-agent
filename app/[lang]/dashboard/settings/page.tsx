@@ -5,6 +5,7 @@ import { Download } from "lucide-react";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { ContactButton } from "@/components/billing/contact-button";
 import { DeleteAccount } from "@/components/settings/delete-account";
+import { LogoCard } from "@/components/settings/logo-card";
 import { ReferralCard } from "@/components/settings/referral-card";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -53,6 +54,7 @@ async function Settings({ m, locale }: { m: Messages; locale: Locale }) {
   const referral = await referralStats(owner.businessId);
   return (
     <div className="space-y-6">
+      <LogoCard logo={owner.logo} />
       {referral ? <ReferralCard link={`${siteUrl()}/signup?ref=${referral.code}`} signups={referral.signups} rewards={referral.rewards} /> : null}
       <Card id="plan">
         <CardHeader>

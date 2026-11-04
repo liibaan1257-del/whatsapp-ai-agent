@@ -10,6 +10,8 @@ export type Owner = {
   fullName: string | null;
   businessId: string;
   businessName: string;
+  /** Small image data URL shown in the sidebar, or null. */
+  logo: string | null;
   plan: string;
   accessUntil: string;
   /** Opened the link we emailed (profiles.email_verified_at). */
@@ -31,7 +33,7 @@ export const getOwner = cache(async (): Promise<Owner | null> => {
 
   const [{ data: profile }, { data: business }] = await Promise.all([
     supabase.from("profiles").select("email, full_name, is_platform_admin, email_verified_at").eq("id", userId).maybeSingle(),
-    supabase.from("business_knowledge").select("id, business_name, plan, access_until").eq("owner_id", userId).maybeSingle(),
+    supabase.from("business_knowledge").select("id, business_name, plan, access_until, logo").eq("owner_id", userId).maybeSingle(),
   ]);
   if (!business) return null; // Sign-up trigger not run (migration missing).
 
@@ -41,6 +43,7 @@ export const getOwner = cache(async (): Promise<Owner | null> => {
     fullName: profile?.full_name ?? null,
     businessId: business.id,
     businessName: business.business_name,
+    logo: business.logo ?? null,
     plan: business.plan ?? "trial",
     accessUntil: business.access_until ?? new Date(0).toISOString(),
     emailVerified: Boolean(profile?.email_verified_at),

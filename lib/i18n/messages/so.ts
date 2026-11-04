@@ -410,6 +410,16 @@ export const so: Messages = {
       unreachable: "Lama gaari karin Supabase si furaha loo hubiyo.",
     },
   },
+  logo: {
+    title: "Logo-ga ganacsiga",
+    hint: "Wuxuu ka muuqanayaa magaca ganacsigaaga agtiisa dashboard-ka. PNG, JPG ama WebP; waxaa loo yareeyaa 256 px.",
+    choose: "Soo geli logo",
+    saving: "Waa la kaydinayaa…",
+    remove: "Ka saar",
+    saved: "Logo-ga waa la kaydiyay.",
+    invalid: "Sawirkaas lama isticmaali karo. Isku day PNG ama JPG.",
+    failed: "Logo-ga lama kaydin karo. Mar kale isku day.",
+  },
   settings: {
     title: "Habaynta",
     description: "Akoonkaaga iyo xogtaada.",

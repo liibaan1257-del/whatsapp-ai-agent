@@ -40,7 +40,7 @@ async function Gate({ children, m }: { children: ReactNode; m: Messages }) {
   }
   const owner = await requireOwner();
   return (
-    <DashboardShell owner={{ email: owner.email, businessName: owner.businessName, isAdmin: owner.isAdmin }}>
+    <DashboardShell owner={{ email: owner.email, businessName: owner.businessName, logo: owner.logo, isAdmin: owner.isAdmin }}>
       {owner.emailVerified ? null : <VerifyBanner email={owner.email} />}
       <PlanBanner m={m} plan={owner.plan} accessUntil={owner.accessUntil} email={owner.email} />
       {children}

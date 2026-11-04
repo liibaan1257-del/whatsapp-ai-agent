@@ -410,6 +410,16 @@ export const fr: Messages = {
       unreachable: "Impossible de joindre Supabase pour vérifier la clé.",
     },
   },
+  logo: {
+    title: "Logo de l'entreprise",
+    hint: "Affiché à côté du nom de votre entreprise dans le tableau de bord. PNG, JPG ou WebP ; redimensionné à 256 px.",
+    choose: "Téléverser un logo",
+    saving: "Enregistrement…",
+    remove: "Supprimer",
+    saved: "Logo enregistré.",
+    invalid: "Cette image n'a pas pu être utilisée. Essayez un PNG ou un JPG.",
+    failed: "Impossible d'enregistrer le logo. Réessayez.",
+  },
   settings: {
     title: "Paramètres",
     description: "Votre compte et vos données.",
