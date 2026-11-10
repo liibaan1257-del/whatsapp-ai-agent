@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 
 // Public Google tag ID (shown in page source by design; not a secret).
 const TAG_ID = "G-XCZXRD8TJ5";
+// Second GA4 stream for the same site (both receive the same page views).
+const EXTRA_IDS = ["G-BSFRV0HFVB"];
 
 // Private areas: never load analytics there (business data, admin).
 const PRIVATE = /^\/(?:[a-z]{2}\/)?(?:dashboard|admin|reset-password)(?:\/|$)/;
@@ -34,6 +36,7 @@ export function GoogleTag() {
     };
     window.gtag("js", new Date());
     window.gtag("config", TAG_ID);
+    for (const id of EXTRA_IDS) window.gtag("config", id);
     const s = document.createElement("script");
     s.id = "google-tag";
     s.async = true;
