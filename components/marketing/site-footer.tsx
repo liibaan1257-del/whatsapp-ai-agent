@@ -20,6 +20,11 @@ export function SiteFooter({ m }: { m: Messages }) {
               </Link>
             </li>
           ))}
+          <li lang="so">
+            <Link href="/whatsapp-chatbot-soomaali" className="hover:text-foreground">
+              WhatsApp chatbot Af-Soomaali
+            </Link>
+          </li>
         </ul>
       </div>
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-6 text-sm text-muted-foreground sm:px-6">
