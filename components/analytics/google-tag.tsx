@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 // Public Google tag ID (shown in page source by design; not a secret).
-const TAG_ID = "GTM-TJLVJ4KJ";
+const TAG_ID = "G-XCZXRD8TJ5";
 
 // Private areas: never load analytics there (business data, admin).
 const PRIVATE = /^\/(?:[a-z]{2}\/)?(?:dashboard|admin|reset-password)(?:\/|$)/;
@@ -33,10 +33,11 @@ export function GoogleTag() {
       window.dataLayer!.push(arguments);
     };
     window.gtag("js", new Date());
+    window.gtag("config", TAG_ID);
     const s = document.createElement("script");
     s.id = "google-tag";
     s.async = true;
-    s.src = `https://www.googletagmanager.com/gtm.js?id=${TAG_ID}`;
+    s.src = `https://www.googletagmanager.com/gtag/js?id=${TAG_ID}`;
     document.head.appendChild(s);
   }, [isPrivate]);
 
