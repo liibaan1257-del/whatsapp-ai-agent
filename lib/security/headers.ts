@@ -22,13 +22,15 @@ function supabaseOrigin(): string | null {
 function contentSecurityPolicy(): string {
   const supabase = supabaseOrigin();
   const supabaseWs = supabase?.replace(/^http/, "ws");
+  // Google tag (analytics on public pages; see components/analytics/google-tag.tsx).
+  const google = ["https://www.googletagmanager.com", "https://*.google-analytics.com", "https://*.analytics.google.com"];
   const directives: Record<string, string[]> = {
     "default-src": ["'self'"],
-    "script-src": ["'self'", "'unsafe-inline'", ...(isDev ? ["'unsafe-eval'"] : [])],
+    "script-src": ["'self'", "'unsafe-inline'", "https://www.googletagmanager.com", ...(isDev ? ["'unsafe-eval'"] : [])],
     "style-src": ["'self'", "'unsafe-inline'"],
-    "img-src": ["'self'", "data:", "blob:"],
+    "img-src": ["'self'", "data:", "blob:", ...google],
     "font-src": ["'self'"],
-    "connect-src": ["'self'", ...(supabase ? [supabase] : []), ...(supabaseWs ? [supabaseWs] : [])],
+    "connect-src": ["'self'", ...google, ...(supabase ? [supabase] : []), ...(supabaseWs ? [supabaseWs] : [])],
     "object-src": ["'none'"],
     "base-uri": ["'self'"],
     "form-action": ["'self'"],

@@ -730,7 +730,7 @@ export const de: Messages = {
       },
       {
         title: "Cookies",
-        body: "Nur notwendige Cookies: die Anmeldesitzung und Ihre Sprachwahl. Hell-/Dunkelmodus wird in Ihrem Browser gespeichert. Keine Tracking- oder Werbe-Cookies.",
+        body: "Notwendige Cookies: die Anmeldesitzung und Ihre Sprachwahl. Hell-/Dunkelmodus wird in Ihrem Browser gespeichert. Nur auf öffentlichen Seiten (nicht im Dashboard) nutzen wir Google Analytics, um Besuche zu zählen und zu sehen, welche Seiten hilfreich sind; es setzt Analyse-Cookies und erhält weder Ihre Geschäftsdaten noch WhatsApp-Unterhaltungen. Keine Werbe-Cookies. Sie können Analysen über die Datenschutzeinstellungen Ihres Browsers oder einen Blocker unterbinden.",
       },
       {
         title: "Sicherheit",

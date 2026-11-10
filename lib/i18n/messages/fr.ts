@@ -730,7 +730,7 @@ export const fr: Messages = {
       },
       {
         title: "Cookies",
-        body: "Uniquement des cookies nécessaires : la session de connexion et votre choix de langue. Le mode clair/sombre est enregistré dans votre navigateur. Aucun cookie de suivi ou de publicité.",
+        body: "Cookies nécessaires : la session de connexion et votre choix de langue. Le mode clair/sombre est enregistré dans votre navigateur. Sur les pages publiques uniquement (pas le tableau de bord), nous utilisons Google Analytics pour compter les visites et voir quelles pages sont utiles ; il dépose des cookies de mesure et ne reçoit ni les données de votre entreprise ni les conversations WhatsApp. Aucun cookie publicitaire. Vous pouvez bloquer la mesure d'audience via les réglages de confidentialité de votre navigateur ou un bloqueur.",
       },
       {
         title: "Sécurité",

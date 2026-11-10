@@ -7,7 +7,7 @@ import { getMessages } from "@/lib/i18n/dictionaries";
 import { localeFrom } from "@/lib/i18n/server";
 
 // Change when the policy text changes.
-const UPDATED = "2026-10-11";
+const UPDATED = "2026-11-10";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/privacy">): Promise<Metadata> {
   return { title: getMessages(localeFrom((await params).lang)).privacy.title, alternates: { canonical: "/privacy" } };

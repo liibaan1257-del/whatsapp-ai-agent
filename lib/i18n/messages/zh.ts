@@ -734,7 +734,7 @@ export const zh: Messages = {
       },
       {
         title: "Cookie",
-        body: "仅使用必要的 Cookie：登录会话和您的语言选择。浅色/深色模式保存在您的浏览器中。不使用任何跟踪或广告 Cookie。",
+        body: "必要的 Cookie：登录会话和您的语言选择。浅色/深色模式保存在您的浏览器中。仅在公开页面（不包括控制台）上，我们使用 Google Analytics 统计访问量并了解哪些页面有用；它会设置分析 Cookie，不会接收您的商家数据或 WhatsApp 对话。没有广告 Cookie。您可以通过浏览器的隐私设置或拦截工具阻止分析。",
       },
       {
         title: "安全",

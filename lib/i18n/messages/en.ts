@@ -732,7 +732,7 @@ export const en = {
       },
       {
         title: "Cookies",
-        body: "Only necessary cookies: the sign-in session and your language choice. Light/dark mode is saved in your browser. No tracking or advertising cookies.",
+        body: "Necessary cookies: the sign-in session and your language choice. Light/dark mode is saved in your browser. On public pages only (not the dashboard), we use Google Analytics to count visits and see which pages are useful; it sets analytics cookies and does not receive your business data or WhatsApp conversations. No advertising cookies. You can block analytics with your browser's privacy settings or a blocker.",
       },
       {
         title: "Security",

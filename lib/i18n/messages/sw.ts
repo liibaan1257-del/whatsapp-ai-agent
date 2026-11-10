@@ -734,7 +734,7 @@ export const sw: Messages = {
       },
       {
         title: "Vidakuzi",
-        body: "Vidakuzi muhimu pekee: kipindi cha kuingia na chaguo lako la lugha. Hali ya mwanga/giza huhifadhiwa kwenye kivinjari chako. Hakuna vidakuzi vya ufuatiliaji wala matangazo.",
+        body: "Vidakuzi muhimu: kipindi cha kuingia na lugha uliyochagua. Hali ya mwanga/giza huhifadhiwa kwenye kivinjari chako. Kwenye kurasa za umma pekee (si dashibodi), tunatumia Google Analytics kuhesabu ziara na kuona kurasa zenye manufaa; huweka vidakuzi vya uchanganuzi na haipokei data ya biashara yako wala mazungumzo ya WhatsApp. Hakuna vidakuzi vya matangazo. Unaweza kuzuia uchanganuzi kwa mipangilio ya faragha ya kivinjari chako au kizuizi.",
       },
       {
         title: "Usalama",

@@ -730,7 +730,7 @@ export const so: Messages = {
       },
       {
         title: "Cookies",
-        body: "Cookies lagama maarmaan ah oo keliya: fadhiga galitaanka iyo luqadda aad dooratay. Iftiinka/mugdiga waxaa lagu kaydiyaa browser-kaaga. Ma jiraan cookies raadraac ama xayaysiis.",
+        body: "Cookies lagama maarmaan ah: fadhiga galitaanka iyo luqadda aad dooratay. Iftiinka/mugdiga waxaa lagu kaydiyaa browser-kaaga. Bogagga dadweynaha oo keliya (ma aha dashboard-ka), waxaan isticmaalnaa Google Analytics si aan u tirinno booqashooyinka oo aan u ogaanno bogagga faa'iidada leh; wuxuu dejiyaa cookies falanqayn ah, mana helo xogta ganacsigaaga ama wada-hadallada WhatsApp. Ma jiraan cookies xayaysiis. Falanqaynta waxaad ku xannibi kartaa habaynta asturnaanta ee browser-kaaga ama blocker.",
       },
       {
         title: "Amniga",

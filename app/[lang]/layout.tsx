@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
+import { GoogleTag } from "@/components/analytics/google-tag";
 import { I18nProvider } from "@/components/i18n/provider";
 import { dirOf, LOCALES } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n/dictionaries";
@@ -48,6 +50,9 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
         <I18nProvider locale={locale} messages={getMessages(locale)}>
           {children}
         </I18nProvider>
+        <Suspense fallback={null}>
+          <GoogleTag />
+        </Suspense>
       </body>
     </html>
   );
