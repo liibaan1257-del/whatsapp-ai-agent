@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { BillingActions } from "@/components/admin/billing-actions";
@@ -91,7 +92,15 @@ async function Admin({
 
   return (
     <>
-      <PageHeader title={t.title} description={t.description} />
+      <PageHeader
+        title={t.title}
+        description={t.description}
+        actions={
+          <Button variant="outline" asChild>
+            <Link href="/dashboard/admin/analytics">{m.adminAnalytics.open}</Link>
+          </Button>
+        }
+      />
       <form className="mb-4 flex max-w-md gap-2" role="search">
         <Input name="q" type="search" defaultValue={q} placeholder={t.search} aria-label={t.search} />
         <Button type="submit" variant="outline">

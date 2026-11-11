@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { PRIVATE_PATH } from "@/lib/analytics";
 
 // Public Google tag ID (shown in page source by design; not a secret).
 const TAG_ID = "G-XCZXRD8TJ5";
@@ -9,7 +10,7 @@ const TAG_ID = "G-XCZXRD8TJ5";
 const EXTRA_IDS = ["G-BSFRV0HFVB"];
 
 // Private areas: never load analytics there (business data, admin).
-const PRIVATE = /^\/(?:[a-z]{2}\/)?(?:dashboard|admin|reset-password)(?:\/|$)/;
+const PRIVATE = PRIVATE_PATH;
 
 const ALL_IDS = [TAG_ID, ...EXTRA_IDS];
 
