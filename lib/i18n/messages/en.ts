@@ -778,6 +778,18 @@ export const en = {
     errTemplate: "Lowercase letters, numbers and _ only.",
     errLang: "A language code like en or en_US.",
   },
+  quickSetup: {
+    title: "Quick setup with AI",
+    hint: "Describe your business in a few sentences: what you sell, prices, opening hours, location. The AI fills in your services, hours and FAQs. You can edit everything below.",
+    placeholder: "Example: We sell rice, sugar and cooking oil. Rice 25kg is $22, sugar 50kg is $40. Open every day 7:00–22:00. We are in Hodan, Mogadishu, and deliver in the city.",
+    button: "Fill in with AI",
+    working: "Filling in…",
+    done: "Done ✓ {services} services and {faqs} FAQs added. Check them below, then try the Chat tester.",
+    errShort: "Write a bit more (at least 20 characters).",
+    errLong: "Too long: keep it under 3,000 characters.",
+    errAi: "The AI couldn't do it right now. Try again in a minute.",
+    errFailed: "Couldn't save. Try again.",
+  },
   knowledge: {
     title: "Knowledge base",
     description: "Everything your AI agent knows about your business. It reads this before every reply.",

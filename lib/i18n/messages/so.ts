@@ -776,6 +776,18 @@ export const so: Messages = {
     errTemplate: "Xarfo yaryar, lambarro iyo _ oo keliya.",
     errLang: "Koodh luqadeed sida en ama so.",
   },
+  quickSetup: {
+    title: "Dejin degdeg ah oo AI ah",
+    hint: "Dhowr jumladood ku sharax ganacsigaaga: waxa aad iibiso, qiimaha, saacadaha iyo goobta. AI-ga ayaa buuxinaya adeegyada, saacadaha iyo su'aalaha. Hoos wax walba waad ka beddeli kartaa.",
+    placeholder: "Tusaale: Waxaan iibinnaa bariis, sonkor iyo saliid. Bariiska 25kg waa $22, sonkorta 50kg waa $40. Maalin kasta waan furan nahay 7:00–22:00. Waxaan joognaa Hodan, Muqdisho, magaaladana waan keennaa.",
+    button: "AI ha buuxiyo",
+    working: "Waa la buuxinayaa…",
+    done: "Waa la dhammeeyay ✓ {services} adeeg iyo {faqs} su'aalood ayaa lagu daray. Hoos ka hubi, kadibna isku day Tijaabi chat-ka.",
+    errShort: "Wax yar ku dar (ugu yaraan 20 xaraf).",
+    errLong: "Aad buu u dheer yahay: ka yaree 3,000 xaraf.",
+    errAi: "AI-ga hadda ma samayn karo. Daqiiqad kadib isku day.",
+    errFailed: "Lama kaydin. Mar kale isku day.",
+  },
   knowledge: {
     title: "Xogta ganacsiga",
     description: "Wax kasta oo wakiilkaaga AI ka yaqaan ganacsigaaga. Wuu akhriyaa jawaab kasta ka hor.",

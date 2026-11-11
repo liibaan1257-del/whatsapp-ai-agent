@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { Suspense } from "react";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { KnowledgeForm } from "@/components/knowledge/knowledge-form";
+import { QuickSetupCard } from "@/components/knowledge/quick-setup-card";
 import { WhatsAppRequestCard } from "@/components/knowledge/whatsapp-request";
 import { Skeleton } from "@/components/ui/skeleton";
 import { requireOwner } from "@/lib/auth/session";
@@ -64,7 +65,10 @@ async function KnowledgeEditor({ locale, m }: { locale: Locale; m: Messages }) {
           requestedAt={request?.wa_requested_at ?? null}
         />
       )}
+      <QuickSetupCard highlight={knowledge.services.length === 0} />
       <KnowledgeForm
+        // Remount with the new data after Quick setup (the form keeps its own state).
+        key={`${knowledge.services.length}-${knowledge.faqs.length}-${knowledge.description.length}-${knowledge.booking_policy.length}`}
         initial={knowledge}
         timeZones={timeZones}
         currencies={currencies}

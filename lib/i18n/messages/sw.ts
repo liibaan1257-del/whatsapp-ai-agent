@@ -780,6 +780,18 @@ export const sw: Messages = {
     errTemplate: "Herufi ndogo, tarakimu na _ pekee.",
     errLang: "Msimbo wa lugha kama sw au en_US.",
   },
+  quickSetup: {
+    title: "Usanidi wa haraka kwa AI",
+    hint: "Eleza biashara yako kwa sentensi chache: unachouza, bei, saa za kufungua na mahali. AI itajaza huduma, saa na maswali yanayoulizwa mara kwa mara. Unaweza kuhariri kila kitu hapa chini.",
+    placeholder: "Mfano: Tunauza mchele, sukari na mafuta. Mchele kilo 25 ni $22, sukari kilo 50 ni $40. Tunafungua kila siku 7:00–22:00. Tuko Hodan, Mogadishu, na tunasambaza mjini.",
+    button: "Jaza kwa AI",
+    working: "Inajaza…",
+    done: "Imekamilika ✓ Huduma {services} na maswali {faqs} yameongezwa. Yakague hapa chini, kisha jaribu Kijaribu cha gumzo.",
+    errShort: "Andika zaidi kidogo (angalau herufi 20).",
+    errLong: "Ni ndefu mno: chini ya herufi 3,000.",
+    errAi: "AI haikuweza sasa hivi. Jaribu tena baada ya dakika moja.",
+    errFailed: "Imeshindwa kuhifadhi. Jaribu tena.",
+  },
   knowledge: {
     title: "Hifadhi ya maarifa",
     description: "Kila kitu wakala wako wa AI anajua kuhusu biashara yako. Huisoma kabla ya kila jibu.",

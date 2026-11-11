@@ -776,6 +776,18 @@ export const de: Messages = {
     errTemplate: "Nur Kleinbuchstaben, Ziffern und _.",
     errLang: "Ein Sprachcode wie de oder de_DE.",
   },
+  quickSetup: {
+    title: "Schnelleinrichtung mit KI",
+    hint: "Beschreiben Sie Ihr Geschäft in ein paar Sätzen: was Sie verkaufen, Preise, Öffnungszeiten, Standort. Die KI füllt Leistungen, Zeiten und FAQs aus. Alles unten bleibt bearbeitbar.",
+    placeholder: "Beispiel: Wir verkaufen Reis, Zucker und Speiseöl. Reis 25 kg kostet 22 $, Zucker 50 kg 40 $. Täglich 7:00–22:00 geöffnet. Wir sind in Hodan, Mogadischu, und liefern in der Stadt.",
+    button: "Mit KI ausfüllen",
+    working: "Wird ausgefüllt…",
+    done: "Fertig ✓ {services} Leistungen und {faqs} FAQs hinzugefügt. Unten prüfen, dann den Chat-Test ausprobieren.",
+    errShort: "Bitte etwas mehr schreiben (mindestens 20 Zeichen).",
+    errLong: "Zu lang: unter 3.000 Zeichen bleiben.",
+    errAi: "Die KI konnte das gerade nicht. In einer Minute erneut versuchen.",
+    errFailed: "Speichern fehlgeschlagen. Bitte erneut versuchen.",
+  },
   knowledge: {
     title: "Wissensdatenbank",
     description: "Alles, was Ihr KI-Agent über Ihr Unternehmen weiß. Er liest es vor jeder Antwort.",

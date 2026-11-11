@@ -776,6 +776,18 @@ export const es: Messages = {
     errTemplate: "Solo minúsculas, números y _.",
     errLang: "Un código de idioma como es o es_ES.",
   },
+  quickSetup: {
+    title: "Configuración rápida con IA",
+    hint: "Describe tu negocio en pocas frases: qué vendes, precios, horario y ubicación. La IA rellena tus servicios, horario y preguntas frecuentes. Puedes editarlo todo abajo.",
+    placeholder: "Ejemplo: Vendemos arroz, azúcar y aceite. El arroz de 25 kg cuesta 22 $, el azúcar de 50 kg 40 $. Abrimos todos los días 7:00–22:00. Estamos en Hodan, Mogadiscio, y repartimos en la ciudad.",
+    button: "Rellenar con IA",
+    working: "Rellenando…",
+    done: "Listo ✓ Se añadieron {services} servicios y {faqs} preguntas frecuentes. Revísalos abajo y prueba el chat de prueba.",
+    errShort: "Escribe un poco más (al menos 20 caracteres).",
+    errLong: "Demasiado largo: menos de 3.000 caracteres.",
+    errAi: "La IA no pudo hacerlo ahora. Inténtalo en un minuto.",
+    errFailed: "No se pudo guardar. Inténtalo de nuevo.",
+  },
   knowledge: {
     title: "Base de conocimiento",
     description: "Todo lo que tu agente de IA sabe de tu negocio. Lo lee antes de cada respuesta.",

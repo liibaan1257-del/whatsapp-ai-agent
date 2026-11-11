@@ -780,6 +780,18 @@ export const zh: Messages = {
     errTemplate: "仅限小写字母、数字和 _。",
     errLang: "语言代码，例如 en 或 en_US。",
   },
+  quickSetup: {
+    title: "AI 快速设置",
+    hint: "用几句话描述您的生意：卖什么、价格、营业时间和地点。AI 会自动填写服务、营业时间和常见问题，您可以在下方修改任何内容。",
+    placeholder: "例如：我们卖大米、白糖和食用油。25 公斤大米 22 美元，50 公斤白糖 40 美元。每天 7:00–22:00 营业。我们在摩加迪沙 Hodan 区，市内送货。",
+    button: "用 AI 填写",
+    working: "正在填写…",
+    done: "完成 ✓ 已添加 {services} 项服务和 {faqs} 个常见问题。请在下方检查，然后试试聊天测试。",
+    errShort: "请再多写一点（至少 20 个字符）。",
+    errLong: "太长了：请少于 3000 个字符。",
+    errAi: "AI 暂时无法完成，请一分钟后再试。",
+    errFailed: "保存失败，请重试。",
+  },
   knowledge: {
     title: "知识库",
     description: "AI 助理所了解的关于您商家的一切。每次回复前它都会阅读这些内容。",
