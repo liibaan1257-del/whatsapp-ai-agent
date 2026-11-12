@@ -52,7 +52,18 @@ const BUSINESSES = [
 
 const REGIONS = ["Soomaaliya", "Somaliland", "Kenya", "Uganda", "Itoobiya", "Jabuuti", "Qurbajoogta (Yurub, Maraykan, Khaliijka)"];
 
+const STEPS: { title: string; text: string }[] = [
+  { title: "Isdiiwaangeli bilaash", text: "Gal replybooker.com, samee akoon. 14 maalmood waa bilaash, kaar looma baahna." },
+  { title: "Ku qor ganacsigaaga", text: "\"Xogta ganacsiga\" → \"Dejin degdeg ah\": dhowr jumladood ku qor waxa aad iibiso, qiimaha, saacadaha iyo goobta, kadibna riix \"AI ha buuxiyo\". AI-ga ayaa buuxinaya adeegyada iyo su'aalaha." },
+  { title: "Tijaabi chat-ka", text: "\"Tijaabi chat-ka\" ku weydii su'aal sida macmiil oo kale, tusaale \"Bariisku immisa waaye?\", oo arag jawaabta Af-Soomaaliga ah." },
+  { title: "WhatsApp-ka ku xidh", text: "Lambar WhatsApp Business ah oo cusub ayaan kuu xidhaynaa. Kadib chatbot-kaagu wuxuu macaamiishaada uga jawaabayaa 24 saac." },
+];
+
 const FAQ: { q: string; a: string }[] = [
+  {
+    q: "Sidee loo sameeyaa WhatsApp chatbot Af-Soomaali ah?",
+    a: "ReplyBooker code uma baahna: 1) isdiiwaangeli bilaash, 2) \"Dejin degdeg ah\" ku qor waxa aad iibiso iyo qiimaha, AI-ga ayaa buuxinaya, 3) \"Tijaabi chat-ka\" ku tijaabi, 4) lambarkaaga WhatsApp ayaan kuu xidhaynaa. Inta badan hal daqiiqo ayuu bot-ku ku diyaar noqdaa.",
+  },
   {
     q: "Chatbot-ku ma si fiican ayuu Af-Soomaali u yaqaan?",
     a: "Haa. ReplyBooker wuxuu u jawaabaa macmiilka luqadda uu ku qoro, Af-Soomaalina waa luqad si buuxda loo taageero. Dashboard-ka iyo farriimaha ganacsigaaguba waa Af-Soomaali.",
@@ -108,6 +119,13 @@ export default function SomaliChatbotPage() {
       provider: { "@type": "Organization", name: "ReplyBooker", url: siteUrl() },
       areaServed: REGIONS,
       availableLanguage: ["so", "en", "ar", "sw"],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      name: "Sidee loo sameeyaa WhatsApp chatbot Af-Soomaali ah?",
+      inLanguage: "so",
+      step: STEPS.map((st, i) => ({ "@type": "HowToStep", position: i + 1, name: st.title, text: st.text })),
     },
     {
       "@context": "https://schema.org",
@@ -180,6 +198,22 @@ export default function SomaliChatbotPage() {
               ))}
             </ul>
           </div>
+        </section>
+
+        <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
+          <h2 className="text-center text-3xl font-semibold tracking-tight">Sidee loo sameeyaa WhatsApp chatbot Af-Soomaali ah?</h2>
+          <p className="mt-2 text-center text-muted-foreground">4 tallaabo, code la&apos;aan. Inta badan hal daqiiqo.</p>
+          <ol className="mt-8 grid gap-4 sm:grid-cols-2">
+            {STEPS.map((st, i) => (
+              <li key={st.title} className="flex gap-4 rounded-xl border bg-card p-5">
+                <span className="grid size-9 shrink-0 place-items-center rounded-full bg-brand font-semibold text-brand-foreground">{i + 1}</span>
+                <div>
+                  <h3 className="font-semibold">{st.title}</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">{st.text}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
         </section>
 
         <section className="mx-auto grid max-w-5xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-2">
