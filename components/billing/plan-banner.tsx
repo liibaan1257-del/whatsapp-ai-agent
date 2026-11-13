@@ -1,4 +1,7 @@
+import Link from "next/link";
+import { Sparkles } from "lucide-react";
 import { ContactButton } from "@/components/billing/contact-button";
+import { Button } from "@/components/ui/button";
 import { daysLeft } from "@/lib/billing";
 import { fmt } from "@/lib/i18n/config";
 import type { Messages } from "@/lib/i18n/dictionaries";
@@ -14,6 +17,8 @@ export function PlanBanner({ m, plan, accessUntil, email }: { m: Messages; plan:
   else if (days <= 3) text = fmt(b.expiresSoon, { days });
   if (!text) return null;
   const ended = days < 0;
+  // Early in the trial: point to setup first, and offer help rather than payment.
+  const earlyTrial = plan === "trial" && days > 3;
   return (
     <div
       role={ended ? "alert" : "status"}
@@ -23,7 +28,19 @@ export function PlanBanner({ m, plan, accessUntil, email }: { m: Messages; plan:
       )}
     >
       <p className={ended ? "font-medium text-destructive" : ""}>{text}</p>
-      <ContactButton m={m} email={email} />
+      {earlyTrial ? (
+        <div className="flex flex-wrap gap-2">
+          <Button variant="brand" size="sm" asChild>
+            <Link href="/dashboard/knowledge">
+              <Sparkles aria-hidden="true" />
+              {b.setupCta}
+            </Link>
+          </Button>
+          <ContactButton m={m} email={email} kind="help" />
+        </div>
+      ) : (
+        <ContactButton m={m} email={email} />
+      )}
     </div>
   );
 }
