@@ -194,7 +194,7 @@ export async function connectWhatsApp(_prev: AdminState, formData: FormData): Pr
       continue;
     }
     for (const n of (list.body?.data ?? []) as { id: string; display_phone_number?: string; status?: string }[]) {
-      let line = `${n.display_phone_number ?? n.id} ${n.status ?? "?"}`;
+      let line = `${n.display_phone_number ?? "?"} [ID ${n.id}] ${n.status ?? "?"}`;
       if (pin && WABA_ID.test(n.id)) {
         const r = await call(`/${n.id}/register`, "POST", { messaging_product: "whatsapp", pin });
         line += r.ok && r.body?.success ? " → registered" : ` → register failed: ${r.error}`;
@@ -205,7 +205,7 @@ export async function connectWhatsApp(_prev: AdminState, formData: FormData): Pr
   if (numbers.length) await recordAdminEvent(pin ? "register" : "numbers", numbers.join(" | "));
 
   refresh();
-  const status = numbers.length ? ` · ${numbers.join(" | ").slice(0, 300)}` : "";
+  const status = numbers.length ? ` · ${numbers.join(" | ").slice(0, 600)}` : "";
   if (!done.length) return { error: fmt(m.admin.waFailed, { detail: failed.join(" | ").slice(0, 300) }) + status };
   return { ok: true, notice: `${m.admin.waConnected} (${done.join(", ")})${status}` };
 }
