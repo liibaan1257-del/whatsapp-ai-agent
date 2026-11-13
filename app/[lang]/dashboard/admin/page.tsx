@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import { BillingActions } from "@/components/admin/billing-actions";
 import { NewsletterBroadcast } from "@/components/admin/newsletter-broadcast";
 import { AdminPhoneForm } from "@/components/admin/phone-form";
+import { SetupReminders } from "@/components/admin/setup-reminders";
 import { WhatsAppConnect } from "@/components/admin/whatsapp-connect";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Button } from "@/components/ui/button";
@@ -96,9 +97,12 @@ async function Admin({
         title={t.title}
         description={t.description}
         actions={
-          <Button variant="outline" asChild>
-            <Link href="/dashboard/admin/analytics">{m.adminAnalytics.open}</Link>
-          </Button>
+          <div className="flex flex-wrap items-center gap-2">
+            <SetupReminders />
+            <Button variant="outline" asChild>
+              <Link href="/dashboard/admin/analytics">{m.adminAnalytics.open}</Link>
+            </Button>
+          </div>
         }
       />
       <form className="mb-4 flex max-w-md gap-2" role="search">

@@ -4,7 +4,8 @@ import { refresh } from "next/cache";
 import { after } from "next/server";
 import { sendConfirmationEmail } from "@/lib/auth/confirm-email";
 import { getOwner } from "@/lib/auth/session";
-import { isPlan } from "@/lib/billing";
+import { contactWhatsappLink, isPlan } from "@/lib/billing";
+import { contactEmail } from "@/lib/contact";
 import { configStatus, serverEnv } from "@/lib/env";
 import { fmt } from "@/lib/i18n/config";
 import { requestMessages } from "@/lib/i18n/server";
@@ -261,4 +262,73 @@ async function rewardReferrer(db: ReturnType<typeof createAdminClient>, business
       }),
     );
   }
+}
+
+const SETUP_WINDOW_DAYS = 21;
+
+/**
+ * Operator only: email every owner who is still on an active free trial,
+ * signed up in the last 3 weeks and hasn't added any service yet, with the
+ * Quick setup steps (Somali + English). Returns how many emails were sent.
+ */
+export async function sendSetupReminders(_prev: AdminState, _formData: FormData): Promise<AdminState> {
+  const m = await requestMessages();
+  const owner = await getOwner();
+  if (!owner?.isAdmin) return { error: m.admin.failed };
+  if (!configStatus().serviceRole) return { error: m.admin.notConfigured };
+
+  const now = Date.now();
+  const db = createAdminClient();
+  const { data: rows, error } = await db
+    .from("business_knowledge")
+    .select("owner_id, business_name, services, access_until")
+    .eq("plan", "trial")
+    .gt("access_until", new Date(now).toISOString())
+    .gte("created_at", new Date(now - SETUP_WINDOW_DAYS * 86_400_000).toISOString())
+    .limit(100);
+  if (error) return { error: m.admin.failed };
+  const pending = (rows ?? []).filter((r) => !Array.isArray(r.services) || r.services.length === 0);
+  if (!pending.length) return { ok: true, notice: fmt(m.admin.setupRemindersSent, { count: 0 }) };
+
+  const { data: profiles } = await db.from("profiles").select("id, email, full_name").in("id", pending.map((r) => r.owner_id));
+  const site = siteUrl();
+  const help = contactWhatsappLink("Salaan, waxaan u baahanahay caawimo dejinta ReplyBooker.");
+  let sent = 0;
+  for (const r of pending) {
+    const p = profiles?.find((x) => x.id === r.owner_id);
+    if (!p?.email) continue;
+    const name = (p.full_name ?? "").split(" ")[0];
+    const until = new Intl.DateTimeFormat("so", { day: "numeric", month: "short", timeZone: "Africa/Mogadishu" }).format(new Date(r.access_until));
+    const ok = await sendEmail({
+      to: p.email,
+      replyTo: contactEmail(),
+      subject: "Bot-kaaga WhatsApp 1 daqiiqo ayuu ku diyaar noqonayaa ⏱️ / Your WhatsApp bot is 1 minute away",
+      text: [
+        `Asc${name ? ` ${name}` : ""} 👋`,
+        "",
+        "Waa Liban, ReplyBooker. Waad ku mahadsantahay inaad isdiiwaangelisay 🙏",
+        "Bot-kaaga weli lama dejin. Hadda aad bay u fududahay, 1 daqiiqo ayuu qaadanayaa:",
+        "",
+        `1. Gal ${site}/dashboard/knowledge`,
+        '2. Sanduuqa "Dejin degdeg ah", ku qor dhowr jumladood: waxa aad iibiso, qiimaha, saacadaha iyo goobta',
+        '3. Riix "AI ha buuxiyo" ✨',
+        '4. Kadib "Tijaabi chat-ka" ku tijaabi bot-kaaga 💬',
+        "",
+        `Tijaabadaadu waa bilaash ilaa ${until}.`,
+        help ? `Caawimo ma rabtaa? WhatsApp: ${help}` : "Caawimo ma rabtaa? Iimaylkan uga jawaab.",
+        "",
+        "---",
+        "",
+        `Hi${name ? ` ${name}` : ""},`,
+        "",
+        "Your ReplyBooker bot isn't set up yet. It takes about a minute:",
+        `open ${site}/dashboard/knowledge, describe your business in the "Quick setup" box (what you sell, prices, hours, location), press "Fill in with AI", then try it in the Chat tester.`,
+        "",
+        "Liban, ReplyBooker",
+      ].join("\n"),
+    });
+    if (ok) sent++;
+  }
+  logger.info("admin_setup_reminders_sent", { by: owner.id, candidates: pending.length, sent });
+  return sent || !pending.length ? { ok: true, notice: fmt(m.admin.setupRemindersSent, { count: sent }) } : { error: m.admin.emailFailed };
 }
