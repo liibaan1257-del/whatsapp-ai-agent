@@ -11,8 +11,12 @@ import { siteUrl } from "@/lib/site";
 import { THEME_SCRIPT } from "@/lib/theme";
 import "../globals.css";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin", "latin-ext", "cyrillic"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+// Only the Latin subset is preloaded (covers en/so/fr/es/de/sw). Other scripts
+// (Cyrillic, Arabic, Chinese) use the system font, so the first paint doesn't
+// wait on extra font files.
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+// Mono is only used below the fold: no preload.
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"], preload: false });
 
 // One static version per language; proxy.ts picks it from the `lang` cookie / browser.
 export function generateStaticParams() {
