@@ -55,7 +55,7 @@ async function Admin({
   const db = createAdminClient();
   const { data: businesses } = await db
     .from("business_knowledge")
-    .select("id, owner_id, business_name, plan, access_until, created_at, whatsapp_phone_number_id, wa_request_number, wa_requested_at, referred_by")
+    .select("id, owner_id, business_name, plan, access_until, created_at, whatsapp_phone_number_id, wa_request_number, wa_requested_at, referred_by, owner_whatsapp")
     .order("created_at", { ascending: false })
     .limit(500);
   const ownerIds = (businesses ?? []).map((b) => b.owner_id);
@@ -142,6 +142,17 @@ async function Admin({
                         <div className="text-xs text-muted-foreground" dir="ltr">
                           {b.email}
                         </div>
+                        {b.owner_whatsapp && (
+                          <a
+                            href={`https://wa.me/${b.owner_whatsapp}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            dir="ltr"
+                            className="mt-1 inline-block rounded-md bg-emerald-500/15 px-2 py-0.5 text-xs font-medium text-emerald-700 hover:underline dark:text-emerald-400"
+                          >
+                            💬 +{b.owner_whatsapp}
+                          </a>
+                        )}
                         {b.referred_by && (
                           <div className="text-xs text-muted-foreground">🎁 {fmt(t.invitedBy, { name: nameOf.get(b.referred_by) ?? "?" })}</div>
                         )}

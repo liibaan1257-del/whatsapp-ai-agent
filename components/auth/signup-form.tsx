@@ -23,6 +23,7 @@ export function SignupForm() {
   const [fullName, setFullName] = useState("");
   const [businessName, setBusinessName] = useState("");
   const [email, setEmail] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
 
   if (state.notice) {
     return (
@@ -63,6 +64,22 @@ export function SignupForm() {
         onChange={(e) => setEmail(e.target.value)}
         error={state.fieldErrors?.email}
       />
+      <div className="space-y-1">
+        <Field
+          id="whatsapp"
+          label={m.auth.whatsapp}
+          type="tel"
+          inputMode="tel"
+          autoComplete="tel"
+          dir="ltr"
+          placeholder="+252 61 234 5678"
+          maxLength={40}
+          value={whatsapp}
+          onChange={(e) => setWhatsapp(e.target.value)}
+          error={state.fieldErrors?.whatsapp}
+        />
+        {!state.fieldErrors?.whatsapp && <p className="text-xs text-muted-foreground">{m.auth.whatsappHint}</p>}
+      </div>
       <Field
         id="password"
         label={m.auth.passwordNew}

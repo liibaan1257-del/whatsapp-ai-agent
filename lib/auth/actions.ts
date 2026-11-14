@@ -22,10 +22,19 @@ export type AuthState = {
   notice?: string;
   /** The password was right but the email is not confirmed yet: offer to resend the link. */
   unconfirmed?: boolean;
-  fieldErrors?: { email?: string; password?: string; fullName?: string; businessName?: string };
+  fieldErrors?: { email?: string; password?: string; fullName?: string; businessName?: string; whatsapp?: string };
 };
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+/** "+252 61-234 5678" / "00252…" → "252612345678"; "" when empty; null when not a plausible international number. */
+function normalizeWhatsapp(raw: string): string | null {
+  const s = raw.trim();
+  if (!s) return "";
+  if (!/^[+\d\s().-]+$/.test(s)) return null;
+  const digits = s.replace(/\D/g, "").replace(/^00/, "");
+  return /^[1-9]\d{6,14}$/.test(digits) ? digits : null;
+}
 const MIN_PASSWORD = 8;
 
 function checkEmail(email: string, m: Messages): string | undefined {
@@ -63,6 +72,7 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
   const businessName = String(formData.get("businessName") ?? "").replace(/\s+/g, " ").trim();
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const password = String(formData.get("password") ?? "");
+  const whatsapp = normalizeWhatsapp(String(formData.get("whatsapp") ?? "").slice(0, 40));
   // Only a name the runtime knows is passed on; the database checks it again.
   const tz = String(formData.get("timezone") ?? "").trim();
   const timezone = tz && tz.length <= 64 && isValidTimeZone(tz) ? tz : "UTC";
@@ -70,9 +80,10 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
   const fieldErrors: AuthState["fieldErrors"] = { email: checkEmail(email, m) };
   if (fullName.length > 100) fieldErrors.fullName = e.nameTooLong;
   if (businessName.length > 100) fieldErrors.businessName = e.nameTooLong;
+  if (whatsapp === null) fieldErrors.whatsapp = e.whatsappInvalid;
   if (password.length < MIN_PASSWORD) fieldErrors.password = fmt(e.passwordShort, { min: MIN_PASSWORD });
   else if (password.length > 72) fieldErrors.password = e.passwordLong;
-  if (fieldErrors.email || fieldErrors.password || fieldErrors.fullName || fieldErrors.businessName) return { fieldErrors };
+  if (fieldErrors.email || fieldErrors.password || fieldErrors.fullName || fieldErrors.businessName || fieldErrors.whatsapp) return { fieldErrors };
   if (!isSupabaseConfigured()) return { error: e.signUpNotConfigured };
 
   const h = await headers();
@@ -96,7 +107,7 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
   }
   // Tell the operator and welcome the new owner, after the response is sent.
   // The database trigger created the business row; name it (server-side, by the new user's id).
-  if (businessName && data.user) await nameNewBusiness(data.user.id, businessName);
+  if (data.user && (businessName || whatsapp)) await setupNewBusiness(data.user.id, businessName, whatsapp || null);
   if (data.user) await applyReferral(data.user.id);
   const who = [fullName.replace(/\s+/g, " "), businessName && `(${businessName})`].filter(Boolean).join(" ") || email;
   const locale = await requestLocale();
@@ -105,7 +116,7 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
     Promise.all([
       notifyOperator(
         `New ReplyBooker signup: ${who}`,
-        `${who} (${email}) just signed up.\nTime zone: ${timezone}\n\nSee all customers: ${siteUrl()}/dashboard/admin`,
+        `${who} (${email}) just signed up.\nTime zone: ${timezone}${whatsapp ? `\nWhatsApp: https://wa.me/${whatsapp}` : ""}\n\nSee all customers: ${siteUrl()}/dashboard/admin`,
       ),
       sendWelcome(email, fullName.replace(/\s+/g, " "), locale),
     ]),
@@ -263,9 +274,12 @@ async function applyReferral(ownerId: string) {
   }
 }
 
-async function nameNewBusiness(ownerId: string, businessName: string) {
+async function setupNewBusiness(ownerId: string, businessName: string, ownerWhatsapp: string | null) {
   try {
-    const { error } = await createAdminClient().from("business_knowledge").update({ business_name: businessName }).eq("owner_id", ownerId);
+    const { error } = await createAdminClient()
+      .from("business_knowledge")
+      .update({ ...(businessName ? { business_name: businessName } : {}), ...(ownerWhatsapp ? { owner_whatsapp: ownerWhatsapp } : {}) })
+      .eq("owner_id", ownerId);
     if (error) logger.warn("signup_business_name_failed", { code: error.code });
   } catch (error) {
     logger.warn("signup_business_name_failed", { error: String(error) });
