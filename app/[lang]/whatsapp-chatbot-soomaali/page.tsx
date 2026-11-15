@@ -73,6 +73,10 @@ const FAQ: { q: string; a: string }[] = [
     a: "Maya. Waxaad qoraysaa adeegyadaada, qiimahaaga, saacadaha shaqada iyo su'aalaha badanaa la weydiiyo. Kaaliyaha AI ayaa intaas ka jawaabaya.",
   },
   {
+    q: "Maxay ku kala duwan yihiin ReplyBooker iyo Meta AI ee WhatsApp?",
+    a: "Meta AI waa kaaliye AI shakhsi ah oo WhatsApp-ka ku jira, adigana ku caawiya (su'aalo, qoraal, sawirro). ReplyBooker waa kaaliye AI ganacsi: wuxuu macaamiishaada uga jawaabaa lambarka WhatsApp-ka ganacsigaaga, Af-Soomaali, isagoo isticmaalaya xogtaada (adeegyada, qiimayaasha, saacadaha, meesha), dalabaadka iyo ballamahana wuu qaataa, 24 saacadood.",
+  },
+  {
     q: "Lambarkee WhatsApp ah ayaa la isticmaalayaa?",
     a: "Lambarka ganacsigaaga, adigoo isticmaalaya WhatsApp Business API-ga rasmiga ah ee Meta. Lambarku waa inuusan ku jirin app-ka WhatsApp ee caadiga ah; waan kugu caawinaynaa dejinta.",
   },
