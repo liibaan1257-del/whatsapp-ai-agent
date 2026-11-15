@@ -8,6 +8,7 @@ import { PRICES_USD } from "@/lib/billing";
 import { LOCALES } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n/dictionaries";
 import { siteUrl } from "@/lib/site";
+import { SOMALI_LINKS } from "@/lib/somali-pages";
 
 /**
  * Somali-language landing page for "WhatsApp AI chatbot in Somali" searches.
@@ -258,6 +259,19 @@ export default function SomaliChatbotPage() {
               ))}
             </div>
           </div>
+        </section>
+
+        <section className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
+          <h2 className="text-xl font-semibold tracking-tight">Bogag kale oo Af-Soomaali ah</h2>
+          <ul className="mt-4 flex flex-wrap gap-2">
+            {SOMALI_LINKS.filter((l) => l.path !== PATH).map((l) => (
+              <li key={l.path}>
+                <Link href={l.path} className="inline-block rounded-full border px-3 py-1 text-sm hover:border-brand hover:text-brand">
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </section>
 
         <section className="border-t bg-brand/10">
