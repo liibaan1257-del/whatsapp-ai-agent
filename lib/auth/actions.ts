@@ -27,13 +27,29 @@ export type AuthState = {
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-/** "+252 61-234 5678" / "00252…" → "252612345678"; "" when empty; null when not a plausible international number. */
-function normalizeWhatsapp(raw: string): string | null {
+/** Country calling codes for the places owners sign up from, keyed by the visitor's country (Vercel IP header). */
+const CALLING_CODES: Record<string, string> = {
+  SO: "252", ET: "251", DJ: "253", KE: "254", UG: "256", TZ: "255", YE: "967", SA: "966", AE: "971", EG: "20",
+  TR: "90", GB: "44", SE: "46", NO: "47", DK: "45", FI: "358", DE: "49", NL: "31", BE: "32", FR: "33", IT: "39",
+  US: "1", CA: "1", AU: "61",
+};
+
+/**
+ * "+252 61-234 5678" / "00252…" → "252612345678". A local number ("061…", "61…") gets the calling code of the
+ * country the visitor signs up from. "" when empty; null when it can't be read as a full international number.
+ */
+function normalizeWhatsapp(raw: string, country: string): string | null {
   const s = raw.trim();
   if (!s) return "";
   if (!/^[+\d\s().-]+$/.test(s)) return null;
-  const digits = s.replace(/\D/g, "").replace(/^00/, "");
-  return /^[1-9]\d{6,14}$/.test(digits) ? digits : null;
+  const intl = s.startsWith("+") || s.replace(/[\s().-]/g, "").startsWith("00");
+  let digits = s.replace(/\D/g, "").replace(/^00/, "");
+  if (!intl) {
+    const code = CALLING_CODES[country];
+    if (code && !(digits.startsWith(code) && digits.length >= code.length + 8)) digits = code + digits.replace(/^0+/, "");
+    else if (!code && digits.startsWith("0")) return null;
+  }
+  return /^[1-9]\d{8,14}$/.test(digits) ? digits : null;
 }
 const MIN_PASSWORD = 8;
 
@@ -74,7 +90,6 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
   const password = String(formData.get("password") ?? "");
   // Optional and never blocks signup: a number we can't read is simply not saved.
   const whatsappTyped = String(formData.get("whatsapp") ?? "").replace(/[^+\d\s().-]/g, "").trim().slice(0, 40);
-  const whatsapp = normalizeWhatsapp(whatsappTyped) ?? "";
   // Only a name the runtime knows is passed on; the database checks it again.
   const tz = String(formData.get("timezone") ?? "").trim();
   const timezone = tz && tz.length <= 64 && isValidTimeZone(tz) ? tz : "UTC";
@@ -88,6 +103,7 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
   if (!isSupabaseConfigured()) return { error: e.signUpNotConfigured };
 
   const h = await headers();
+  const whatsapp = normalizeWhatsapp(whatsappTyped, (h.get("x-vercel-ip-country") ?? "").toUpperCase()) ?? "";
   const origin = h.get("origin") ?? `${h.get("x-forwarded-proto") ?? "https"}://${h.get("host")}`;
 
   // Created with the service role so Supabase's own mailer (limited, often
