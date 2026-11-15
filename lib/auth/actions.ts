@@ -72,7 +72,9 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
   const businessName = String(formData.get("businessName") ?? "").replace(/\s+/g, " ").trim();
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const password = String(formData.get("password") ?? "");
-  const whatsapp = normalizeWhatsapp(String(formData.get("whatsapp") ?? "").slice(0, 40));
+  // Optional and never blocks signup: a number we can't read is simply not saved.
+  const whatsappTyped = String(formData.get("whatsapp") ?? "").replace(/[^+\d\s().-]/g, "").trim().slice(0, 40);
+  const whatsapp = normalizeWhatsapp(whatsappTyped) ?? "";
   // Only a name the runtime knows is passed on; the database checks it again.
   const tz = String(formData.get("timezone") ?? "").trim();
   const timezone = tz && tz.length <= 64 && isValidTimeZone(tz) ? tz : "UTC";
@@ -80,10 +82,9 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
   const fieldErrors: AuthState["fieldErrors"] = { email: checkEmail(email, m) };
   if (fullName.length > 100) fieldErrors.fullName = e.nameTooLong;
   if (businessName.length > 100) fieldErrors.businessName = e.nameTooLong;
-  if (whatsapp === null) fieldErrors.whatsapp = e.whatsappInvalid;
   if (password.length < MIN_PASSWORD) fieldErrors.password = fmt(e.passwordShort, { min: MIN_PASSWORD });
   else if (password.length > 72) fieldErrors.password = e.passwordLong;
-  if (fieldErrors.email || fieldErrors.password || fieldErrors.fullName || fieldErrors.businessName || fieldErrors.whatsapp) return { fieldErrors };
+  if (fieldErrors.email || fieldErrors.password || fieldErrors.fullName || fieldErrors.businessName) return { fieldErrors };
   if (!isSupabaseConfigured()) return { error: e.signUpNotConfigured };
 
   const h = await headers();
@@ -116,7 +117,7 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
     Promise.all([
       notifyOperator(
         `New ReplyBooker signup: ${who}`,
-        `${who} (${email}) just signed up.\nTime zone: ${timezone}${whatsapp ? `\nWhatsApp: https://wa.me/${whatsapp}` : ""}\n\nSee all customers: ${siteUrl()}/dashboard/admin`,
+        `${who} (${email}) just signed up.\nTime zone: ${timezone}${whatsapp ? `\nWhatsApp: https://wa.me/${whatsapp}` : whatsappTyped ? `\nWhatsApp (as typed, no country code): ${whatsappTyped}` : ""}\n\nSee all customers: ${siteUrl()}/dashboard/admin`,
       ),
       sendWelcome(email, fullName.replace(/\s+/g, " "), locale),
     ]),
