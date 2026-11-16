@@ -1,7 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useActionState, useState } from "react";
 import { Sparkles } from "lucide-react";
 import { useI18n } from "@/components/i18n/provider";
 import { Button } from "@/components/ui/button";
@@ -28,14 +27,9 @@ const KINDS: { kind: Kind; emoji: string }[] = [
  */
 export function StartWizard() {
   const t = useI18n().m.onboarding;
-  const router = useRouter();
   const [kind, setKind] = useState<Kind | null>(null);
   const [text, setText] = useState("");
   const [state, action, pending] = useActionState<QuickSetupState, FormData>(quickSetup, {});
-
-  useEffect(() => {
-    if (state.ok) router.push("/dashboard/chat-test");
-  }, [state.ok, router]);
 
   const choose = (k: Kind) => {
     setKind(k);
@@ -74,6 +68,7 @@ export function StartWizard() {
 
         {kind ? (
           <form action={action} className="space-y-3">
+            <input type="hidden" name="then" value="chat-test" />
             <div>
               <p className="text-sm font-medium">{t.step2}</p>
               <p className="mb-2 text-xs text-muted-foreground">{t.step2Hint}</p>

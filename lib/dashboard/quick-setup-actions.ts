@@ -1,6 +1,7 @@
 "use server";
 
 import { refresh } from "next/cache";
+import { redirect } from "next/navigation";
 import { describeAiError, isAiConfigured } from "@/lib/ai/agent";
 import { draftKnowledge } from "@/lib/ai/quick-setup";
 import { getOwner } from "@/lib/auth/session";
@@ -85,6 +86,9 @@ export async function quickSetup(_prev: QuickSetupState, formData: FormData): Pr
     return { error: t.errFailed };
   }
   logger.info("quick_setup_done", { ownerId: owner.id, services: services.length, faqs: faqs.length });
+  // The start wizard goes straight to the Chat tester (it disappears from the
+  // overview as soon as services exist, so it can't navigate client-side).
+  if (formData.get("then") === "chat-test") redirect("/dashboard/chat-test");
   refresh();
   return { ok: true, added: { services: services.length, faqs: faqs.length } };
 }
