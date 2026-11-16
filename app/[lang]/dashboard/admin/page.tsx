@@ -6,6 +6,7 @@ import { BillingActions } from "@/components/admin/billing-actions";
 import { NewsletterBroadcast } from "@/components/admin/newsletter-broadcast";
 import { AdminPhoneForm } from "@/components/admin/phone-form";
 import { SetupReminders } from "@/components/admin/setup-reminders";
+import { ReminderTemplate } from "@/components/admin/reminder-template";
 import { WhatsAppConnect } from "@/components/admin/whatsapp-connect";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Button } from "@/components/ui/button";
@@ -216,6 +217,11 @@ async function Admin({
             <p className="text-sm text-muted-foreground">{t.waHelp}</p>
           </div>
           <WhatsAppConnect />
+          <div>
+            <h3 className="text-sm font-medium">{t.templateTitle}</h3>
+            <p className="mb-2 text-xs text-muted-foreground">{t.templateHelp}</p>
+            <ReminderTemplate />
+          </div>
           <div>
             <h3 className="mb-2 text-sm font-medium">{t.waEvents}</h3>
             {events?.length ? (

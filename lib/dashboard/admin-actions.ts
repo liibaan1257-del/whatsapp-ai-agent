@@ -332,3 +332,77 @@ export async function sendSetupReminders(_prev: AdminState, _formData: FormData)
   logger.info("admin_setup_reminders_sent", { by: owner.id, candidates: pending.length, sent });
   return sent || !pending.length ? { ok: true, notice: fmt(m.admin.setupRemindersSent, { count: sent }) } : { error: m.admin.emailFailed };
 }
+
+/** Body of the booking reminder template: {{1}} customer, {{2}} service, {{3}} business, {{4}} date and time (see lib/reminders.ts). */
+const REMINDER_TEMPLATE = {
+  name: "appointment_reminder",
+  language: "en",
+  body: "Hi {{1}}, this is a reminder of your {{2}} appointment at {{3}} on {{4}}. Reply to this message if you need to change it.",
+  example: ["Amina", "Haircut", "Bella Hair Studio", "Mon 16 Nov, 3:00 PM"],
+};
+
+/**
+ * Operator: creates the booking reminder template on the WhatsApp Business
+ * Account (Meta must approve it), or reports its status when it already exists.
+ * The account is the one last subscribed with "Connect".
+ */
+export async function createReminderTemplate(_prev: AdminState, _formData: FormData): Promise<AdminState> {
+  const m = await requestMessages();
+  const owner = await getOwner();
+  if (!owner?.isAdmin) return { error: m.admin.failed };
+  const token = serverEnv.whatsappAccessToken();
+  if (!token) return { error: m.admin.waNoToken };
+
+  const { data: event } = await createAdminClient()
+    .from("webhook_events")
+    .select("detail")
+    .eq("outcome", "subscribed_apps")
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  const waba = /waba (\d{5,25})/.exec(event?.detail ?? "")?.[1];
+  if (!waba) return { error: m.admin.templateNoWaba };
+
+  const graph = `${(process.env.WHATSAPP_API_BASE ?? "https://graph.facebook.com").replace(/\/+$/, "")}/${serverEnv.whatsappGraphVersion()}`;
+  const call = async (path: string, init?: { method: "POST"; json: object }) => {
+    try {
+      const res = await fetch(`${graph}${path}`, {
+        method: init?.method ?? "GET",
+        headers: { Authorization: `Bearer ${token}`, ...(init ? { "Content-Type": "application/json" } : {}) },
+        body: init ? JSON.stringify(init.json) : undefined,
+        signal: AbortSignal.timeout(15_000),
+      });
+      const body = await res.json().catch(() => null);
+      const error = body?.error ? [body.error.code, body.error.error_user_msg ?? body.error.message].filter(Boolean).join(": ") : res.ok ? "" : `status ${res.status}`;
+      return { ok: res.ok && !body?.error, body, error };
+    } catch (error) {
+      return { ok: false, body: null, error: error instanceof Error ? error.name : "network_error" };
+    }
+  };
+
+  const t = REMINDER_TEMPLATE;
+  const existing = await call(`/${waba}/message_templates?name=${t.name}&fields=name,status,language`);
+  const found = ((existing.body?.data ?? []) as { name?: string; status?: string; language?: string }[]).find(
+    (x) => x.name === t.name && x.language === t.language,
+  );
+  if (found) {
+    await recordAdminEvent("template_status", `${t.name} ${t.language} ${found.status ?? "?"}`);
+    return { ok: true, notice: fmt(m.admin.templateExists, { status: found.status ?? "?" }) };
+  }
+
+  const created = await call(`/${waba}/message_templates`, {
+    method: "POST",
+    json: {
+      name: t.name,
+      language: t.language,
+      category: "UTILITY",
+      components: [{ type: "BODY", text: t.body, example: { body_text: [t.example] } }],
+    },
+  });
+  if (!created.ok) {
+    await recordAdminEvent("template_failed", `${t.name}: ${created.error}`);
+    return { error: fmt(m.admin.templateFailed, { detail: created.error.slice(0, 300) }) };
+  }
+  await recordAdminEvent("template_created", `${t.name} ${t.language} ${created.body?.status ?? "PENDING"}`);
+  return { ok: true, notice: fmt(m.admin.templateCreated, { status: created.body?.status ?? "PENDING" }) };
+}
