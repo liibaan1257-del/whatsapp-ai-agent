@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { CalendarClock, CalendarCheck, CircleCheck, MessagesSquare, Sparkles } from "lucide-react";
 import { LiveRefresh } from "@/components/dashboard/live-refresh";
+import { StartWizard } from "@/components/onboarding/start-wizard";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -69,6 +70,8 @@ async function Overview({ locale, m }: { locale: Locale; m: Messages }) {
         description={owner.fullName ? fmt(o.greeting, { name: owner.fullName }) : o.greetingNoName}
         actions={<LiveRefresh businessId={owner.businessId} tables={["conversations", "messages", "bookings"]} />}
       />
+
+      {knowledge && knowledge.services.length === 0 ? <StartWizard /> : null}
 
       {!setupDone ? (
         <Card className="mb-6 border-brand/30">
