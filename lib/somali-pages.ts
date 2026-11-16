@@ -32,12 +32,12 @@ export const SOMALI_STEPS: { title: string; text: string }[] = [
     text: "\"Xogta ganacsiga\" → \"Dejin degdeg ah\": dhowr jumladood ku qor waxa aad iibiso, qiimaha, saacadaha iyo goobta. AI-ga ayaa buuxinaya adeegyada iyo su'aalaha.",
   },
   { title: "Tijaabi chat-ka", text: "\"Tijaabi chat-ka\" ku weydii su'aal sidii macmiil oo kale, oo arag jawaabta Af-Soomaaliga ah." },
-  { title: "WhatsApp-ka ku xidh", text: "Lambar WhatsApp ah oo ganacsiga u gaar ah ayaan kuu xidhaynaa. Kadib bot-kaagu wuxuu macaamiishaada uga jawaabayaa 24 saacadood." },
+  { title: "WhatsApp-ka ku xidh", text: "Marka aad bixiso bisha 1aad, lambar WhatsApp ah oo ganacsiga u gaar ah ayaan kuu xidhaynaa. Kadib bot-kaagu wuxuu macaamiishaada uga jawaabayaa 24 saacadood." },
 ];
 
 const PRICE_FAQ: Faq = {
   q: "Immisa ayay ku kacaysaa?",
-  a: `14 maalmood waa bilaash, kaar looma baahna. Kadib Starter waa $${PRICES_USD.starter} bishii (500 jawaabood AI), Pro-na waa $${PRICES_USD.pro} bishii (2,000 jawaabood AI).`,
+  a: `14 maalmood waa bilaash, kaar looma baahna. Kadib Starter waa $${PRICES_USD.starter} bishii (500 jawaabood AI), Pro-na waa $${PRICES_USD.pro} bishii (2,000 jawaabood AI). Ku xidhidda WhatsApp-ku waxay bilaabantaa marka aad bixiso bisha 1aad.`,
 };
 
 const NUMBER_FAQ: Faq = {

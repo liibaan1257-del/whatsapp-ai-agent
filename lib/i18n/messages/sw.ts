@@ -463,7 +463,7 @@ export const sw: Messages = {
     endedOn: "Uliisha tarehe {date}",
     usage: "Majibu ya AI mwezi huu",
     usageValue: "{used} kati ya {limit}",
-    prices: "Starter: $19/mwezi au $190/mwaka (majibu 500 ya AI) · Pro: $49/mwezi au $490/mwaka (majibu 2,000 ya AI)",
+    prices: "Starter: $20/mwezi au $200/mwaka (majibu 500 ya AI) · Pro: $49/mwezi au $490/mwaka (majibu 2,000 ya AI)",
     howToPay: "Lipa kwa Mobile Money, Waafi au uhamisho wa benki: wasiliana nasi na tunawasha mpango wako mara moja.",
     payTo: "Tuma malipo kwa mojawapo ya akaunti hizi, kisha ututumie risiti kwenye WhatsApp:",
     plans: {
@@ -569,6 +569,8 @@ export const sw: Messages = {
     setPhone: "Hifadhi",
   },
   waRequest: {
+    payFirst: "Connecting WhatsApp starts with the first month: ${price} (Starter). Your free trial covers the dashboard and the Chat tester.",
+    payFirstHelp: "Send the payment, then request the connection below and send us the receipt on WhatsApp. We connect your number within 24 hours.",
     verifyEmailFirst: "Thibitisha barua pepe yako kwanza (angalia kisanduku cha kijani juu ya ukurasa), kisha unganisha WhatsApp.",
     title: "Unganisha WhatsApp yako",
     hint: "Tuambie namba ambayo wateja wako wataandikia. Tunaiunganisha kwa ajili yako, kwa kawaida ndani ya saa 24, na kuanzia hapo AI hujibu kupitia namba hiyo.",

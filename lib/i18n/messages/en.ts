@@ -117,7 +117,7 @@ export const en = {
     plans: {
       trial: {
         name: "Free trial",
-        desc: "14 days to try everything.",
+        desc: "14 days to try your bot in the dashboard. WhatsApp connects on a paid plan.",
       },
       starter: {
         name: "Starter",
@@ -461,7 +461,7 @@ export const en = {
     endedOn: "Ended on {date}",
     usage: "AI replies this month",
     usageValue: "{used} of {limit}",
-    prices: "Starter: $19/month or $190/year (500 AI replies) · Pro: $49/month or $490/year (2,000 AI replies)",
+    prices: "Starter: $20/month or $200/year (500 AI replies) · Pro: $49/month or $490/year (2,000 AI replies)",
     howToPay: "Pay by Mobile Money, Waafi or bank transfer: contact us and we activate your plan right away.",
     payTo: "Send the payment to one of these accounts, then send us the receipt on WhatsApp:",
     plans: {
@@ -567,6 +567,8 @@ export const en = {
     setPhone: "Save",
   },
   waRequest: {
+    payFirst: "Connecting WhatsApp starts with the first month: ${price} (Starter). Your free trial covers the dashboard and the Chat tester.",
+    payFirstHelp: "Send the payment, then request the connection below and send us the receipt on WhatsApp. We connect your number within 24 hours.",
     verifyEmailFirst: "Confirm your email first (see the green box at the top of the page), then connect WhatsApp.",
     title: "Connect your WhatsApp",
     hint: "Tell us which number your customers should message. We connect it for you, usually within 24 hours, and from then on the AI answers on it.",
@@ -705,7 +707,7 @@ export const en = {
       },
       {
         title: "3. Free trial and plans",
-        body: "New accounts get a 14-day free trial. After that the service continues on a paid plan (Starter or Pro). Each plan includes a monthly number of AI replies; when access ends or the replies are used up, the AI stops answering until the plan is renewed, but your messages are still saved.",
+        body: "New accounts get a 14-day free trial of the dashboard and Chat tester; connecting a WhatsApp number requires a paid plan. After that the service continues on a paid plan (Starter or Pro). Each plan includes a monthly number of AI replies; when access ends or the replies are used up, the AI stops answering until the plan is renewed, but your messages are still saved.",
       },
       {
         title: "4. Payment and refunds",

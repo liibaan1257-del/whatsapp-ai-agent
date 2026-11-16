@@ -63,6 +63,7 @@ async function KnowledgeEditor({ locale, m }: { locale: Locale; m: Messages }) {
           connected={Boolean(knowledge.whatsapp_phone_number_id || knowledge.twilio_whatsapp_number)}
           requestNumber={request?.wa_request_number ?? null}
           requestedAt={request?.wa_requested_at ?? null}
+          paid={owner.plan !== "trial"}
         />
       )}
       <QuickSetupCard highlight={knowledge.services.length === 0} />

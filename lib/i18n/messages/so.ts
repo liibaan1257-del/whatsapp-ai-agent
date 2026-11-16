@@ -118,7 +118,7 @@ export const so: Messages = {
     plans: {
       trial: {
         name: "Tijaabo bilaash ah",
-        desc: "14 maalmood oo aad wax walba ku tijaabiso.",
+        desc: "14 maalmood oo aad bot-kaaga ku tijaabiso dashboard-ka. WhatsApp-ku wuxuu ku xidhmaa qorshe lacag leh.",
       },
       starter: {
         name: "Starter",
@@ -460,7 +460,7 @@ export const so: Messages = {
     endedOn: "Wuxuu dhammaaday {date}",
     usage: "Jawaabaha AI bishan",
     usageValue: "{used} ka mid ah {limit}",
-    prices: "Starter: $19 bishii ama $190 sannadkii (500 jawaabood AI) · Pro: $49 bishii ama $490 sannadkii (2,000 jawaabood AI)",
+    prices: "Starter: $20 bishii ama $200 sannadkii (500 jawaabood AI) · Pro: $49 bishii ama $490 sannadkii (2,000 jawaabood AI)",
     howToPay: "Ku bixi Mobile Money, Waafi ama bank transfer: nala soo xiriir, isla markiiba qorshahaaga ayaan shidaynaa.",
     payTo: "Lacagta u dir mid ka mid ah account-yadan, kadib rasiidka WhatsApp noogu soo dir:",
     plans: {
@@ -566,6 +566,8 @@ export const so: Messages = {
     setPhone: "Keydi",
   },
   waRequest: {
+    payFirst: "Ku xidhidda WhatsApp-ku waxay ku bilaabantaa bisha 1aad: ${price} (Starter). Tijaabada bilaashka ah waxaa ku jira dashboard-ka iyo Tijaabi chat-ka.",
+    payFirstHelp: "Lacagta dir, kadib hoos ka codso xidhiidhka, rasiidkana WhatsApp-ka noogu soo dir. Lambarkaaga 24 saacadood gudahood ayaan kuu xidhaynaa.",
     verifyEmailFirst: "Marka hore xaqiiji email-kaaga (fiiri sanduuqa cagaaran ee bogga korkiisa), kadibna WhatsApp xir.",
     title: "Ku xidh WhatsApp-kaaga",
     hint: "Noo sheeg lambarka ay macaamiishaadu u qorayaan. Annaga ayaa kuu xidhaya, badanaa 24 saacadood gudahood, kadibna AI-ga ayaa ka jawaabaya.",
@@ -704,7 +706,7 @@ export const so: Messages = {
       },
       {
         title: "3. Tijaabada bilaashka ah iyo qorshayaasha",
-        body: "Akoon kasta oo cusub wuxuu helaa 14 maalmood oo tijaabo bilaash ah. Kadib adeeggu wuxuu ku socdaa qorshe lacag leh (Starter ama Pro). Qorshe kastaa wuxuu leeyahay tiro jawaabo AI ah bishii; marka waqtigu dhammaado ama jawaabaha la isticmaalo, AI-gu wuu joojiyaa ilaa qorshaha la cusboonaysiiyo, laakiin fariimahaagu weli waa la kaydinayaa.",
+        body: "Akoon kasta oo cusub wuxuu helaa 14 maalmood oo tijaabo bilaash ah (dashboard-ka iyo Tijaabi chat-ka); ku xidhidda lambar WhatsApp waxay u baahan tahay qorshe lacag leh. Kadib adeeggu wuxuu ku socdaa qorshe lacag leh (Starter ama Pro). Qorshe kastaa wuxuu leeyahay tiro jawaabo AI ah bishii; marka waqtigu dhammaado ama jawaabaha la isticmaalo, AI-gu wuu joojiyaa ilaa qorshaha la cusboonaysiiyo, laakiin fariimahaagu weli waa la kaydinayaa.",
       },
       {
         title: "4. Lacag bixinta iyo celinta",

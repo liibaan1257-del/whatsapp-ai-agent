@@ -460,7 +460,7 @@ export const de: Messages = {
     endedOn: "Beendet am {date}",
     usage: "KI-Antworten diesen Monat",
     usageValue: "{used} von {limit}",
-    prices: "Starter: 19 $/Monat oder 190 $/Jahr (500 KI-Antworten) · Pro: 49 $/Monat oder 490 $/Jahr (2.000 KI-Antworten)",
+    prices: "Starter: 20 $/Monat oder 200 $/Jahr (500 KI-Antworten) · Pro: 49 $/Monat oder 490 $/Jahr (2.000 KI-Antworten)",
     howToPay: "Bezahlen Sie per Mobile Money, Waafi oder Banküberweisung: Kontaktieren Sie uns, wir aktivieren Ihren Tarif sofort.",
     payTo: "Senden Sie die Zahlung an eines dieser Konten und schicken Sie uns dann den Beleg per WhatsApp:",
     plans: {
@@ -566,6 +566,8 @@ export const de: Messages = {
     setPhone: "Speichern",
   },
   waRequest: {
+    payFirst: "Connecting WhatsApp starts with the first month: ${price} (Starter). Your free trial covers the dashboard and the Chat tester.",
+    payFirstHelp: "Send the payment, then request the connection below and send us the receipt on WhatsApp. We connect your number within 24 hours.",
     verifyEmailFirst: "Bestätigen Sie zuerst Ihre E-Mail (siehe grüner Kasten oben auf der Seite), dann verbinden Sie WhatsApp.",
     title: "WhatsApp verbinden",
     hint: "Sag uns, an welche Nummer deine Kunden schreiben sollen. Wir verbinden sie für dich, meist innerhalb von 24 Stunden, danach antwortet die KI darauf.",

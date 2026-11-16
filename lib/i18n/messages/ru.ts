@@ -463,7 +463,7 @@ export const ru: Messages = {
     endedOn: "Закончился {date}",
     usage: "Ответы ИИ в этом месяце",
     usageValue: "{used} из {limit}",
-    prices: "Starter: $19/мес. или $190/год (500 ответов ИИ) · Pro: $49/мес. или $490/год (2 000 ответов ИИ)",
+    prices: "Starter: $20/мес. или $200/год (500 ответов ИИ) · Pro: $49/мес. или $490/год (2 000 ответов ИИ)",
     howToPay: "Оплата через Mobile Money, Waafi или банковским переводом: свяжитесь с нами, и мы сразу активируем ваш тариф.",
     payTo: "Отправьте оплату на один из этих счетов, затем пришлите нам квитанцию в WhatsApp:",
     plans: {
@@ -569,6 +569,8 @@ export const ru: Messages = {
     setPhone: "Сохранить",
   },
   waRequest: {
+    payFirst: "Connecting WhatsApp starts with the first month: ${price} (Starter). Your free trial covers the dashboard and the Chat tester.",
+    payFirstHelp: "Send the payment, then request the connection below and send us the receipt on WhatsApp. We connect your number within 24 hours.",
     verifyEmailFirst: "Сначала подтвердите e-mail (см. зелёный блок вверху страницы), затем подключите WhatsApp.",
     title: "Подключите свой WhatsApp",
     hint: "Сообщите нам, на какой номер должны писать ваши клиенты. Мы подключим его за вас, обычно в течение 24 часов, и с этого момента на нём будет отвечать ИИ.",

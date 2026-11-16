@@ -57,7 +57,7 @@ const STEPS: { title: string; text: string }[] = [
   { title: "Isdiiwaangeli bilaash", text: "Gal replybooker.com, samee akoon. 14 maalmood waa bilaash, kaar looma baahna." },
   { title: "Ku qor ganacsigaaga", text: "\"Xogta ganacsiga\" → \"Dejin degdeg ah\": dhowr jumladood ku qor waxa aad iibiso, qiimaha, saacadaha iyo goobta, kadibna riix \"AI ha buuxiyo\". AI-ga ayaa buuxinaya adeegyada iyo su'aalaha." },
   { title: "Tijaabi chat-ka", text: "\"Tijaabi chat-ka\" ku weydii su'aal sida macmiil oo kale, tusaale \"Bariisku immisa waaye?\", oo arag jawaabta Af-Soomaaliga ah." },
-  { title: "WhatsApp-ka ku xidh", text: "Lambar WhatsApp Business ah oo cusub ayaan kuu xidhaynaa. Kadib chatbot-kaagu wuxuu macaamiishaada uga jawaabayaa 24 saac." },
+  { title: "WhatsApp-ka ku xidh", text: "Marka aad bixiso bisha 1aad, lambar WhatsApp Business ah oo cusub ayaan kuu xidhaynaa. Kadib chatbot-kaagu wuxuu macaamiishaada uga jawaabayaa 24 saac." },
 ];
 
 const FAQ: { q: string; a: string }[] = [
@@ -83,7 +83,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "Immisa ayay ku kacaysaa?",
-    a: `14 maalmood waa bilaash, kaarna looma baahna. Kadib Starter waa $${PRICES_USD.starter} bishii (500 jawaabood AI), Pro-na waa $${PRICES_USD.pro} bishii (2,000 jawaabood AI).`,
+    a: `14 maalmood waa bilaash, kaarna looma baahna. Kadib Starter waa $${PRICES_USD.starter} bishii (500 jawaabood AI), Pro-na waa $${PRICES_USD.pro} bishii (2,000 jawaabood AI). Ku xidhidda WhatsApp-ku waxay bilaabantaa marka aad bixiso bisha 1aad.`,
   },
   {
     q: "Ma joojin karaa AI-ga haddii aan rabo inaan anigu jawaabo?",

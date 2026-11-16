@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PRICES_USD } from "@/lib/billing";
+import { PAYMENT_ACCOUNTS } from "@/lib/contact";
 import { fmt } from "@/lib/i18n/config";
 import { requestWhatsAppConnection, type WhatsAppRequestState } from "@/lib/dashboard/whatsapp-actions";
 
@@ -15,10 +17,13 @@ export function WhatsAppRequestCard({
   connected,
   requestNumber,
   requestedAt,
+  paid,
 }: {
   connected: boolean;
   requestNumber: string | null;
   requestedAt: string | null;
+  /** On a paid plan. During the free trial, connecting WhatsApp needs the first month paid. */
+  paid: boolean;
 }) {
   const { m, locale } = useI18n();
   const t = m.waRequest;
@@ -44,6 +49,19 @@ export function WhatsAppRequestCard({
         <CardDescription>{t.hint}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
+        {!paid ? (
+          <div className="rounded-lg border border-amber-500/40 bg-amber-500/10 p-3 text-sm">
+            <p className="font-medium">{fmt(t.payFirst, { price: PRICES_USD.starter })}</p>
+            <ul className="mt-2 space-y-1">
+              {PAYMENT_ACCOUNTS.map((a) => (
+                <li key={a.method}>
+                  <span className="font-medium">{a.method}:</span> <span dir="ltr">{a.number}</span> ({a.name})
+                </li>
+              ))}
+            </ul>
+            <p className="mt-2 text-xs text-muted-foreground">{t.payFirstHelp}</p>
+          </div>
+        ) : null}
         {pendingRequest ? (
           <div className="space-y-3">
             <p role="status" className="rounded-lg border border-brand/40 bg-brand/10 p-3 text-sm">

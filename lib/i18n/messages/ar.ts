@@ -460,7 +460,7 @@ export const ar: Messages = {
     endedOn: "انتهى في {date}",
     usage: "ردود الذكاء الاصطناعي هذا الشهر",
     usageValue: "{used} من {limit}",
-    prices: "Starter: ‏19$ شهريًا أو 190$ سنويًا (500 رد) · Pro: ‏49$ شهريًا أو 490$ سنويًا (2000 رد)",
+    prices: "Starter: ‏20$ شهريًا أو 200$ سنويًا (500 رد) · Pro: ‏49$ شهريًا أو 490$ سنويًا (2000 رد)",
     howToPay: "ادفع عبر Mobile Money أو Waafi أو تحويل بنكي: تواصل معنا وسنفعّل خطتك فورًا.",
     payTo: "أرسل الدفعة إلى أحد هذه الحسابات، ثم أرسل لنا الإيصال على واتساب:",
     plans: {
@@ -566,6 +566,8 @@ export const ar: Messages = {
     setPhone: "حفظ",
   },
   waRequest: {
+    payFirst: "Connecting WhatsApp starts with the first month: ${price} (Starter). Your free trial covers the dashboard and the Chat tester.",
+    payFirstHelp: "Send the payment, then request the connection below and send us the receipt on WhatsApp. We connect your number within 24 hours.",
     verifyEmailFirst: "أكّد بريدك الإلكتروني أولًا (انظر المربع الأخضر أعلى الصفحة)، ثم اربط واتساب.",
     title: "اربط واتساب الخاص بك",
     hint: "أخبرنا بالرقم الذي سيراسله عملاؤك. نربطه لك، عادةً خلال 24 ساعة، وبعدها يرد الذكاء الاصطناعي عليه.",

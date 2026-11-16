@@ -460,7 +460,7 @@ export const fr: Messages = {
     endedOn: "Terminé le {date}",
     usage: "Réponses IA ce mois-ci",
     usageValue: "{used} sur {limit}",
-    prices: "Starter : 19 $/mois ou 190 $/an (500 réponses IA) · Pro : 49 $/mois ou 490 $/an (2 000 réponses IA)",
+    prices: "Starter : 20 $/mois ou 200 $/an (500 réponses IA) · Pro : 49 $/mois ou 490 $/an (2 000 réponses IA)",
     howToPay: "Payez par Mobile Money, Waafi ou virement bancaire : contactez-nous et nous activons votre abonnement tout de suite.",
     payTo: "Envoyez le paiement sur l’un de ces comptes, puis envoyez-nous le reçu sur WhatsApp :",
     plans: {
@@ -566,6 +566,8 @@ export const fr: Messages = {
     setPhone: "Enregistrer",
   },
   waRequest: {
+    payFirst: "Connecting WhatsApp starts with the first month: ${price} (Starter). Your free trial covers the dashboard and the Chat tester.",
+    payFirstHelp: "Send the payment, then request the connection below and send us the receipt on WhatsApp. We connect your number within 24 hours.",
     verifyEmailFirst: "Confirmez d'abord votre e-mail (voir l'encadré vert en haut de la page), puis connectez WhatsApp.",
     title: "Connectez votre WhatsApp",
     hint: "Indiquez-nous le numéro auquel vos clients écriront. Nous le connectons pour vous, généralement sous 24 heures, puis l'IA y répond.",

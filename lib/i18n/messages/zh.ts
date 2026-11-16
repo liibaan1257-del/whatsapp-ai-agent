@@ -463,7 +463,7 @@ export const zh: Messages = {
     endedOn: "已于 {date} 到期",
     usage: "本月 AI 回复",
     usageValue: "{used} / {limit}",
-    prices: "入门版：19 美元/月或 190 美元/年（500 条 AI 回复）· 专业版：49 美元/月或 490 美元/年（2,000 条 AI 回复）",
+    prices: "入门版：20 美元/月或 200 美元/年（500 条 AI 回复）· 专业版：49 美元/月或 490 美元/年（2,000 条 AI 回复）",
     howToPay: "可通过 Mobile Money、Waafi 或银行转账付款：联系我们，我们会立即为您开通套餐。",
     payTo: "请将款项转入以下任一账户，然后通过 WhatsApp 将收据发给我们：",
     plans: {
@@ -569,6 +569,8 @@ export const zh: Messages = {
     setPhone: "保存",
   },
   waRequest: {
+    payFirst: "Connecting WhatsApp starts with the first month: ${price} (Starter). Your free trial covers the dashboard and the Chat tester.",
+    payFirstHelp: "Send the payment, then request the connection below and send us the receipt on WhatsApp. We connect your number within 24 hours.",
     verifyEmailFirst: "请先确认您的邮箱（见页面顶部的绿色框），再连接 WhatsApp。",
     title: "连接您的 WhatsApp",
     hint: "告诉我们客户应向哪个号码发送消息。我们会为您完成连接，通常在 24 小时内，此后 AI 将通过该号码回复。",
