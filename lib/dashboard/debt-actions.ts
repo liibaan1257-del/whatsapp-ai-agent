@@ -3,6 +3,7 @@
 import { refresh } from "next/cache";
 import { headers } from "next/headers";
 import { getOwner } from "@/lib/auth/session";
+import { isPaid } from "@/lib/billing";
 import { requestMessages } from "@/lib/i18n/server";
 import { logger } from "@/lib/logger";
 import { normalizeWhatsapp } from "@/lib/phone";
@@ -46,7 +47,7 @@ export async function addDebt(_prev: DebtState, formData: FormData): Promise<Deb
     return { error: t.failed };
   }
   // Keep the customer in the list for next time (an existing number is left as is).
-  if (phone) {
+  if (phone && isPaid(owner.plan, owner.accessUntil)) {
     await supabase
       .from("customers")
       .upsert({ business_id: owner.businessId, name, phone_number: phone }, { onConflict: "business_id,phone_number", ignoreDuplicates: true });

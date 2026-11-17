@@ -3,6 +3,7 @@
 import { refresh } from "next/cache";
 import { headers } from "next/headers";
 import { getOwner } from "@/lib/auth/session";
+import { isPaid } from "@/lib/billing";
 import { fmt } from "@/lib/i18n/config";
 import { requestMessages } from "@/lib/i18n/server";
 import { logger } from "@/lib/logger";
@@ -28,6 +29,7 @@ export async function addCustomers(_prev: CustomerState, formData: FormData): Pr
   const t = m.debts;
   const owner = await getOwner();
   if (!owner) return { error: m.common.signInAgain };
+  if (!isPaid(owner.plan, owner.accessUntil)) return { error: t.lockedBody };
 
   const country = ((await headers()).get("x-vercel-ip-country") ?? "").toUpperCase();
   const bulk = String(formData.get("lines") ?? "");

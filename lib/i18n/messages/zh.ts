@@ -143,7 +143,7 @@ export const zh: Messages = {
     ],
     bookFeatures: [
       "Debt book with totals and overdue list",
-      "One-tap WhatsApp reminders",
+      "Customer list + send to all on WhatsApp",
       "No AI bot (upgrade any time)",
     ],
     choose: "立即开始",
@@ -889,6 +889,9 @@ export const zh: Messages = {
     next: "Next ➜",
     progress: "{done} of {total} sent",
     noneToSend: "Nobody to send to yet.",
+    lockedTitle: "Customer list & send to everyone",
+    lockedBody: "Save all your customers and send WhatsApp messages and debt reminders to everyone in one screen. Available on paid plans: Debt book $5/month or Starter $20/month.",
+    lockedCta: "Choose a plan",
     errors: {
       partAmount: "Enter an amount above 0 and no more than what is left.",
       name: "Enter the customer's name.",

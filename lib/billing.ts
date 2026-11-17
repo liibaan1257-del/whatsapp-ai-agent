@@ -23,6 +23,11 @@ export function hasBot(plan: string): boolean {
   return plan === "starter" || plan === "pro";
 }
 
+/** On a paid plan that hasn't run out (the free trial doesn't count). Paid-only features check this. */
+export function isPaid(plan: string, accessUntil: string | Date, now: Date = new Date()): boolean {
+  return plan !== "trial" && isPlan(plan) && new Date(accessUntil).getTime() > now.getTime();
+}
+
 export function isPlan(value: unknown): value is Plan {
   return typeof value === "string" && value in PLANS;
 }

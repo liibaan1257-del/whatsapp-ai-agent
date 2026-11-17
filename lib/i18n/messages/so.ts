@@ -142,7 +142,7 @@ export const so: Messages = {
     ],
     bookFeatures: [
       "Buugga Deynta: wadarta iyo kuwa dib u dhacay",
-      "Xasuusin WhatsApp ah hal riix",
+      "Liiska macaamiisha + u dir dhammaan WhatsApp",
       "Bot AI ma laha (goor kasta u kac)",
     ],
     choose: "Bilow",
@@ -885,6 +885,9 @@ export const so: Messages = {
     next: "Kan xiga ➜",
     progress: "{done} / {total} la diray",
     noneToSend: "Weli cid loo diro ma jirto.",
+    lockedTitle: "Liiska Macaamiisha iyo U dir dhammaan",
+    lockedBody: "Kaydi dhammaan macaamiishaada, una dir fariimo WhatsApp iyo xasuusin deyn dhammaantood hal shaashad. Waxay ku jirtaa qorshayaasha lacagta leh: Buug $5 bishii ama Starter $20 bishii.",
+    lockedCta: "Dooro qorshe",
     errors: {
       partAmount: "Geli lacag ka badan 0, oo aan ka badnayn inta haray.",
       name: "Geli magaca macmiilka.",

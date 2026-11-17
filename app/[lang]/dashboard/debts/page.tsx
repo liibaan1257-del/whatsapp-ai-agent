@@ -11,7 +11,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import Link from "next/link";
+import { Lock } from "lucide-react";
 import { requireOwner } from "@/lib/auth/session";
+import { isPaid } from "@/lib/billing";
 import { deletePayment } from "@/lib/dashboard/debt-actions";
 import { getKnowledge } from "@/lib/dashboard/data";
 import { fmt, type Locale } from "@/lib/i18n/config";
@@ -49,7 +52,8 @@ export default async function DebtsPage({ params }: PageProps<"/[lang]/dashboard
 
 async function Debts({ locale, m }: { locale: Locale; m: Messages }) {
   const t = m.debts;
-  await requireOwner("/dashboard/debts");
+  const owner = await requireOwner("/dashboard/debts");
+  const paidPlan = isPaid(owner.plan, owner.accessUntil);
   const knowledge = await getKnowledge();
   const currency = knowledge?.currency ?? "USD";
   const business = knowledge?.business_name || "";
@@ -74,7 +78,7 @@ async function Debts({ locale, m }: { locale: Locale; m: Messages }) {
   for (const p of (payData ?? []) as Payment[]) payments.set(p.debt_id, [...(payments.get(p.debt_id) ?? []), p]);
   const paidSum = (d: Debt) => (payments.get(d.id) ?? []).reduce((s, p) => s + Number(p.amount), 0);
   const leftOf = (d: Debt) => Math.max(0, Math.round((Number(d.amount) - paidSum(d)) * 100) / 100);
-  const { data: custData } = await supabase.from("customers").select("id, name, phone_number").order("name").limit(2000);
+  const { data: custData } = !paidPlan ? { data: [] } : await supabase.from("customers").select("id, name, phone_number").order("name").limit(2000);
   const customers = (custData ?? []) as { id: string; name: string; phone_number: string }[];
   const open = debts.filter((d) => d.status === "open");
   const paid = debts.filter((d) => d.status === "paid").slice(0, 50);
@@ -205,6 +209,7 @@ async function Debts({ locale, m }: { locale: Locale; m: Messages }) {
         <AddDebt currency={currency} customers={customers.map((c) => ({ name: c.name, phone: c.phone_number }))} />
       </div>
 
+      {paidPlan ? (
       <div className="mb-6 grid gap-6 lg:grid-cols-2">
         <BulkSend
           reminders={open
@@ -219,6 +224,22 @@ async function Debts({ locale, m }: { locale: Locale; m: Messages }) {
           })}
         />
       </div>
+      ) : (
+        <Card className="mb-6 border-dashed">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Lock className="size-5 text-brand" aria-hidden="true" />
+              {t.lockedTitle}
+            </CardTitle>
+            <CardDescription>{t.lockedBody}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button variant="brand" asChild>
+              <Link href="/dashboard/settings#plan">{t.lockedCta}</Link>
+            </Button>
+          </CardContent>
+        </Card>
+      )}
 
       <Card className="mb-6">
         <CardHeader>
