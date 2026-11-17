@@ -866,7 +866,7 @@ export const so: Messages = {
     customersHint: "Magacyada iyo lambarrada WhatsApp ee macaamiishaada. Deyn kasta oo lambar leh si toos ah ayaa halkan loogu daraa.",
     addCustomer: "Ku dar macmiil",
     bulkToggle: "Ku dar qaar badan hal mar",
-    bulkHint: "Hal macmiil sadar kasta: magac, lambar (tusaale: Cali Axmed, 0612345678).",
+    bulkHint: "Ku qor magaca iyo lambarka, hal macmiil sadar kasta (Enter riix si aad sadar cusub u bilowdo):",
     bulkPlaceholder: "Cali Axmed, 0612345678\nHodan Cabdi, 0637770000",
     saveCustomers: "Kaydi macaamiisha",
     customersAdded: "{count} macmiil ayaa la kaydiyay ✓",

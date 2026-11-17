@@ -1,11 +1,10 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState } from "react";
 import { Contact, Trash2 } from "lucide-react";
 import { useI18n } from "@/components/i18n/provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { addCustomers, deleteCustomer, type CustomerState } from "@/lib/dashboard/customer-actions";
 
@@ -14,7 +13,6 @@ export type CustomerRow = { id: string; name: string; phone: string; owes: strin
 /** Customer list: add one, paste many ("name, number" per line), remove. */
 export function CustomersCard({ customers }: { customers: CustomerRow[] }) {
   const t = useI18n().m.debts;
-  const [bulk, setBulk] = useState(false);
   const [state, action, pending] = useActionState<CustomerState, FormData>(addCustomers, {});
 
   return (
@@ -29,23 +27,13 @@ export function CustomersCard({ customers }: { customers: CustomerRow[] }) {
       </CardHeader>
       <CardContent className="space-y-4">
         <form key={state.notice ?? "form"} action={action} className="space-y-3">
-          {bulk ? (
-            <>
-              <p className="text-sm text-muted-foreground">{t.bulkHint}</p>
-              <Textarea name="lines" rows={6} dir="ltr" placeholder={t.bulkPlaceholder} aria-label={t.bulkToggle} required />
-            </>
-          ) : (
-            <div className="grid gap-2 sm:grid-cols-[1fr_1fr]">
-              <Input name="name" required maxLength={100} placeholder={t.namePlaceholder} aria-label={t.name} />
-              <Input name="phone" required type="tel" inputMode="tel" dir="ltr" maxLength={40} placeholder="061 234 5678" aria-label={t.phone} />
-            </div>
-          )}
+          <label htmlFor="customer_lines" className="text-sm text-muted-foreground">
+            {t.bulkHint}
+          </label>
+          <Textarea id="customer_lines" name="lines" rows={4} dir="ltr" placeholder={t.bulkPlaceholder} required />
           <div className="flex flex-wrap items-center gap-3">
             <Button type="submit" variant="brand" size="sm" disabled={pending}>
-              {bulk ? t.saveCustomers : t.addCustomer}
-            </Button>
-            <Button type="button" variant="outline" size="sm" onClick={() => setBulk((b) => !b)}>
-              {bulk ? t.addCustomer : t.bulkToggle}
+              {t.saveCustomers}
             </Button>
             {state.error ? (
               <p role="alert" className="text-sm text-destructive">

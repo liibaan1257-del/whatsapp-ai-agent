@@ -868,7 +868,7 @@ export const en = {
     customersHint: "Your customers' names and WhatsApp numbers. Every debt with a number is added here automatically.",
     addCustomer: "Add customer",
     bulkToggle: "Add many at once",
-    bulkHint: "One customer per line: name, number (for example: Ali Ahmed, 0612345678).",
+    bulkHint: "Type the name and number, one customer per line (press Enter for a new line):",
     bulkPlaceholder: "Ali Ahmed, 0612345678\nHodan Abdi, 0637770000",
     saveCustomers: "Save customers",
     customersAdded: "{count} customers saved ✓",

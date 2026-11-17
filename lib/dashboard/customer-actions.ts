@@ -15,12 +15,14 @@ const MAX_LINES = 500;
 
 export type CustomerState = { ok?: boolean; notice?: string; error?: string };
 
-/** "Cali Axmed, 0612345678" / "Cali Axmed 061 234 5678" / "Cali: +252…" → name and raw number. */
-function splitLine(line: string): { name: string; phone: string } | null {
-  const m = line.trim().match(/^(.*?)[\s,;:\t|-]+(\+?[\d][\d\s().-]{5,})$/);
-  if (!m) return null;
-  const name = m[1].replace(/\s+/g, " ").trim().slice(0, 100);
-  return name ? { name, phone: m[2] } : null;
+/** One "name number" pair: a name without digits, then a number (6+ digits, spaces/dashes allowed). */
+const PAIR = /([^\d\n,;:|]+?)[\s,;:|-]+(\+?\d[\d\s().-]{4,}\d)/g;
+
+/** All name/number pairs in the text, several per line allowed ("Cali, 061… Hodan 063…"). */
+function pairs(text: string): { name: string; phone: string }[] {
+  return [...text.matchAll(PAIR)]
+    .map((m) => ({ name: m[1].replace(/\s+/g, " ").replace(/^[\s,;:|-]+|[\s,;:|-]+$/g, "").slice(0, 100), phone: m[2] }))
+    .filter((p) => p.name);
 }
 
 /** Add one customer (name + phone) or many (one "name, number" per line). Existing numbers are skipped. */
@@ -32,23 +34,22 @@ export async function addCustomers(_prev: CustomerState, formData: FormData): Pr
   if (!isPaid(owner.plan, owner.accessUntil)) return { error: t.lockedBody };
 
   const country = ((await headers()).get("x-vercel-ip-country") ?? "").toUpperCase();
-  const bulk = String(formData.get("lines") ?? "");
-  const raw = bulk
-    ? bulk.split(/\r?\n/).map((l) => l.trim()).filter(Boolean)
-    : [`${String(formData.get("name") ?? "").trim()}, ${String(formData.get("phone") ?? "").trim()}`];
-  if (raw.length > MAX_LINES) return { error: fmt(t.errors.customersTooMany, { max: MAX_LINES }) };
+  const text = String(formData.get("lines") ?? "").slice(0, 50_000);
+  const found = pairs(text);
+  if (found.length > MAX_LINES) return { error: fmt(t.errors.customersTooMany, { max: MAX_LINES }) };
 
   const rows = new Map<string, { business_id: string; name: string; phone_number: string }>();
   let bad = 0;
-  for (const line of raw) {
-    const parts = splitLine(line);
-    const phone = parts ? normalizeWhatsapp(parts.phone.slice(0, 40), country) : null;
-    if (!parts || !phone) {
+  for (const p of found) {
+    const phone = normalizeWhatsapp(p.phone.slice(0, 40), country);
+    if (!phone) {
       bad++;
       continue;
     }
-    rows.set(phone, { business_id: owner.businessId, name: parts.name, phone_number: phone });
+    rows.set(phone, { business_id: owner.businessId, name: p.name, phone_number: phone });
   }
+  // Lines with no number at all are skipped too.
+  bad += text.split(/\r?\n/).filter((l) => l.trim() && !/\d{5}/.test(l.replace(/[\s().-]/g, ""))).length;
   if (!rows.size) return { error: t.errors.customers };
 
   const supabase = await createClient();
