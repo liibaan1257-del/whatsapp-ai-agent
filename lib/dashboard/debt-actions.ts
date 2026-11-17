@@ -1,23 +1,16 @@
 "use server";
 
 import { refresh } from "next/cache";
+import { headers } from "next/headers";
 import { getOwner } from "@/lib/auth/session";
 import { requestMessages } from "@/lib/i18n/server";
 import { logger } from "@/lib/logger";
+import { normalizeWhatsapp } from "@/lib/phone";
 import { createClient } from "@/lib/supabase/server";
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export type DebtState = { ok?: boolean; error?: string };
-
-/** "+252 61-234 5678" / "00252…" → "252612345678"; "" when empty; null when not a full international number. */
-function phoneDigits(raw: string): string | null {
-  const s = raw.trim();
-  if (!s) return "";
-  if (!/^[+\d\s().-]+$/.test(s)) return null;
-  const digits = s.replace(/\D/g, "").replace(/^00/, "");
-  return /^[1-9]\d{6,14}$/.test(digits) ? digits : null;
-}
 
 /** Owner adds a debt to their own book (RLS: business_id must be theirs). */
 export async function addDebt(_prev: DebtState, formData: FormData): Promise<DebtState> {
@@ -30,7 +23,8 @@ export async function addDebt(_prev: DebtState, formData: FormData): Promise<Deb
   const amount = Number(String(formData.get("amount") ?? "").replace(/[, ]/g, ""));
   const note = String(formData.get("note") ?? "").trim();
   const due = String(formData.get("due") ?? "").trim();
-  const phone = phoneDigits(String(formData.get("phone") ?? "").slice(0, 40));
+  const country = ((await headers()).get("x-vercel-ip-country") ?? "").toUpperCase();
+  const phone = normalizeWhatsapp(String(formData.get("phone") ?? "").slice(0, 40), country);
 
   if (!name || name.length > 100) return { error: t.name };
   if (!Number.isFinite(amount) || amount <= 0 || amount >= 10_000_000) return { error: t.amount };
@@ -50,6 +44,12 @@ export async function addDebt(_prev: DebtState, formData: FormData): Promise<Deb
   if (error) {
     logger.error("debt_add_failed", { ownerId: owner.id, code: error.code });
     return { error: t.failed };
+  }
+  // Keep the customer in the list for next time (an existing number is left as is).
+  if (phone) {
+    await supabase
+      .from("customers")
+      .upsert({ business_id: owner.businessId, name, phone_number: phone }, { onConflict: "business_id,phone_number", ignoreDuplicates: true });
   }
   refresh();
   return { ok: true };

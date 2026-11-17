@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { addDebt, type DebtState } from "@/lib/dashboard/debt-actions";
 
 /** Form to add a debt: customer, phone (for the WhatsApp reminder), amount, note, due date. */
-export function AddDebt({ currency }: { currency: string }) {
+export function AddDebt({ currency, customers = [] }: { currency: string; customers?: { name: string; phone: string }[] }) {
   const t = useI18n().m.debts;
   const [state, action, pending] = useActionState<DebtState, FormData>(addDebt, {});
   const form = useRef<HTMLFormElement>(null);
@@ -30,11 +30,30 @@ export function AddDebt({ currency }: { currency: string }) {
         <form ref={form} action={action} className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="debt_name">{t.name}</Label>
-            <Input id="debt_name" name="name" required maxLength={100} placeholder={t.namePlaceholder} />
+            <Input
+              id="debt_name"
+              name="name"
+              required
+              maxLength={100}
+              placeholder={t.namePlaceholder}
+              list="debt_customers"
+              autoComplete="off"
+              onChange={(e) => {
+                // Picking a saved customer fills in their number.
+                const c = customers.find((x) => x.name === e.target.value);
+                const phone = form.current?.elements.namedItem("phone");
+                if (c && phone instanceof HTMLInputElement) phone.value = `+${c.phone}`;
+              }}
+            />
+            <datalist id="debt_customers">
+              {customers.map((c) => (
+                <option key={c.phone} value={c.name} />
+              ))}
+            </datalist>
           </div>
           <div className="space-y-2">
             <Label htmlFor="debt_phone">{t.phone}</Label>
-            <Input id="debt_phone" name="phone" type="tel" inputMode="tel" dir="ltr" maxLength={40} placeholder="+252 61 234 5678" />
+            <Input id="debt_phone" name="phone" type="tel" inputMode="tel" dir="ltr" maxLength={40} placeholder="061 234 5678" />
           </div>
           <div className="space-y-2">
             <Label htmlFor="debt_amount">

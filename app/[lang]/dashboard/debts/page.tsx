@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { X } from "lucide-react";
 import { AddDebt } from "@/components/debts/add-debt";
+import { BulkSend } from "@/components/debts/bulk-send";
+import { CustomersCard } from "@/components/debts/customers-card";
 import { DebtActions } from "@/components/debts/debt-actions";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Badge } from "@/components/ui/badge";
@@ -72,6 +74,8 @@ async function Debts({ locale, m }: { locale: Locale; m: Messages }) {
   for (const p of (payData ?? []) as Payment[]) payments.set(p.debt_id, [...(payments.get(p.debt_id) ?? []), p]);
   const paidSum = (d: Debt) => (payments.get(d.id) ?? []).reduce((s, p) => s + Number(p.amount), 0);
   const leftOf = (d: Debt) => Math.max(0, Math.round((Number(d.amount) - paidSum(d)) * 100) / 100);
+  const { data: custData } = await supabase.from("customers").select("id, name, phone_number").order("name").limit(2000);
+  const customers = (custData ?? []) as { id: string; name: string; phone_number: string }[];
   const open = debts.filter((d) => d.status === "open");
   const paid = debts.filter((d) => d.status === "paid").slice(0, 50);
 
@@ -80,6 +84,16 @@ async function Debts({ locale, m }: { locale: Locale; m: Messages }) {
   const today = new Date().toISOString().slice(0, 10);
   const totalOpen = open.reduce((s, d) => s + leftOf(d), 0);
   const overdue = open.filter((d) => d.due_date && d.due_date < today);
+
+  const reminderText = (d: Debt) =>
+    fmt(business ? t.reminderText : t.reminderTextNoName, {
+      name: d.customer_name,
+      business,
+      amount: money.format(leftOf(d)),
+      note: d.note ? ` (${d.note})` : "",
+    });
+  const owedByPhone = new Map<string, number>();
+  for (const d of open) if (d.phone_number) owedByPhone.set(d.phone_number, (owedByPhone.get(d.phone_number) ?? 0) + leftOf(d));
 
   const remindLink = (d: Debt) => {
     if (!d.phone_number) return null;
@@ -188,7 +202,22 @@ async function Debts({ locale, m }: { locale: Locale; m: Messages }) {
       </div>
 
       <div className="mb-6">
-        <AddDebt currency={currency} />
+        <AddDebt currency={currency} customers={customers.map((c) => ({ name: c.name, phone: c.phone_number }))} />
+      </div>
+
+      <div className="mb-6 grid gap-6 lg:grid-cols-2">
+        <BulkSend
+          reminders={open
+            .filter((d) => d.phone_number && leftOf(d) > 0)
+            .map((d) => ({ key: d.id, debtId: d.id, name: d.customer_name, phone: d.phone_number as string, text: reminderText(d) }))}
+          customers={customers.map((c) => ({ key: c.id, name: c.name, phone: c.phone_number }))}
+        />
+        <CustomersCard
+          customers={customers.map((c) => {
+            const owed = owedByPhone.get(c.phone_number);
+            return { id: c.id, name: c.name, phone: c.phone_number, owes: owed ? fmt(t.owes, { amount: money.format(owed) }) : null };
+          })}
+        />
       </div>
 
       <Card className="mb-6">
