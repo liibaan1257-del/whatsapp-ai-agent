@@ -298,12 +298,12 @@ export const SOMALI_PAGES = {
     path: "/buugga-deynta",
     lang: "so",
     alternate: { lang: "en", path: "/debt-book-app" },
-    title: "Buugga Deynta: qor deymaha macaamiisha, WhatsApp ku xasuusi",
+    title: "Buugga Deynta App: qor deymaha macaamiisha, WhatsApp ku xasuusi",
     description:
-      "Buugga Deynta (Buugga Daynta) oo online ah, Af-Soomaali: qor deymaha macaamiisha, arag wadarta iyo kuwa dib u dhacay, una dir xasuusin WhatsApp ah hal riix. App la'aan, 14 maalmood bilaash.",
+      "Buugga Deynta (Buugga Daynta) oo online ah, Af-Soomaali: qor deymaha macaamiisha, arag wadarta iyo kuwa dib u dhacay, una dir xasuusin WhatsApp ah hal riix. App online ah, telefoon kasta, soo dejin la'aan. 14 maalmood bilaash.",
     kicker: "Buugga Deynta",
     intro:
-      "Dukaanno badan deymaha waxay ku qoraan buug warqad ah: wuu lumaa, wuu qoyaa, mana xasuusato cidda wakhtigeedu dhaafay. ReplyBooker wuxuu kuu siinayaa Buugga Deynta (qaar waxay u qoraan Buugga Daynta ama buug deyn), oo telefoon kasta iyo kombiyuutar ka shaqeeya, app la'aan: macmiil kasta iyo lacagtiisa ku qor, wadarta isla markiiba arag, kadibna \"Xasuusi\" riix si WhatsApp-kaagu ugu furmo fariin xasuusin ah oo diyaar ah.",
+      "Dukaanno badan deymaha waxay ku qoraan buug warqad ah: wuu lumaa, wuu qoyaa, mana xasuusato cidda wakhtigeedu dhaafay. ReplyBooker wuxuu kuu siinayaa Buugga Deynta (qaar waxay u qoraan Buugga Daynta ama buug deyn), oo ah app online ah: telefoon kasta iyo kombiyuutar ayuu ka shaqeeyaa, waxba ma soo dejinaysid: macmiil kasta iyo lacagtiisa ku qor, wadarta isla markiiba arag, kadibna \"Xasuusi\" riix si WhatsApp-kaagu ugu furmo fariin xasuusin ah oo diyaar ah.",
     chatLabel: "Tusaale: xasuusinta deynta",
     chatName: "Dukaanka Barwaaqo",
     chat: [
@@ -331,6 +331,10 @@ export const SOMALI_PAGES = {
       {
         q: "Buugga Deynta iyo Buugga Daynta ma isku mid baa?",
         a: "Haa. Labadaba waa buug deyn: halka aad ku qorto deymaha macaamiisha (dayn ama deyn, labadaba waa sax). ReplyBooker-ka waa online: app ma soo dejinaysid, telefoon kasta ama kombiyuutar ayaad ka furaysaa, wuxuuna leeyahay xasuusin WhatsApp ah iyo, haddii aad rabto, bot AI ah oo macaamiishaada uga jawaaba.",
+      },
+      {
+        q: "Ma jiraa APK ama app la soo dejiyo?",
+        a: "Uma baahnid. Buugga Deynta waa app online ah: telefoonkaaga browser-ka (Chrome ama Safari) ka fur replybooker.com, gal akoonkaaga, kadib menu-ga ka dooro \"Add to Home screen\" (Ku dar shaashadda hore). Astaanta ReplyBooker ayaa ka soo muuqanaysa shaashaddaada, wuxuuna u furmayaa sida app kale oo kasta. APK ma soo dejinaysid, booska telefoonkana ma qaadanayo.",
       },
       {
         q: "Xasuusintu ma lacag baa?",
