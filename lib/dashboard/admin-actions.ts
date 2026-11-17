@@ -10,7 +10,8 @@ import { configStatus, serverEnv } from "@/lib/env";
 import { fmt } from "@/lib/i18n/config";
 import { requestMessages } from "@/lib/i18n/server";
 import { logger } from "@/lib/logger";
-import { sendEmail, sendWelcome } from "@/lib/notify";
+import { notifyOperator, sendEmail, sendWelcome } from "@/lib/notify";
+import { recordEvent } from "@/lib/security/events";
 import { siteUrl } from "@/lib/site";
 import { createAdminClient } from "@/lib/supabase/admin";
 
@@ -55,6 +56,7 @@ export async function updateBilling(_prev: AdminState, formData: FormData): Prom
     return { error: m.admin.failed };
   }
   logger.info("admin_billing_updated", { by: owner.id, businessId: id, op, ...update });
+  await auditAdmin(db, id, op === "plan" ? `plan → ${plan}` : op === "pause" ? "paused" : `+1 ${op}`);
   if (op === "month" || op === "year") await rewardReferrer(db, id);
   refresh();
   return { ok: true };
@@ -79,6 +81,7 @@ export async function deleteBusinessAccount(_prev: AdminState, formData: FormDat
   const { data: profile } = await db.from("profiles").select("is_platform_admin").eq("id", business.owner_id).maybeSingle();
   if (business.owner_id === owner.id || profile?.is_platform_admin) return { error: m.admin.cannotDeleteAdmin };
 
+  await auditAdmin(db, id, "account deleted");
   // Deleting the login removes the profile, business and everything under it (foreign keys cascade).
   const { error } = await db.auth.admin.deleteUser(business.owner_id);
   if (error) {
@@ -208,6 +211,20 @@ export async function connectWhatsApp(_prev: AdminState, formData: FormData): Pr
   const status = numbers.length ? ` · ${numbers.join(" | ").slice(0, 600)}` : "";
   if (!done.length) return { error: fmt(m.admin.waFailed, { detail: failed.join(" | ").slice(0, 300) }) + status };
   return { ok: true, notice: `${m.admin.waConnected} (${done.join(", ")})${status}` };
+}
+
+/**
+ * Every billing change and account deletion is logged and emailed to the
+ * operator, so an action they didn't take (a stolen admin login) shows up at once.
+ */
+async function auditAdmin(db: ReturnType<typeof createAdminClient>, businessId: string, action: string) {
+  const { data } = await db.from("business_knowledge").select("business_name").eq("id", businessId).maybeSingle();
+  const summary = `${data?.business_name || businessId}: ${action}`;
+  await recordEvent("admin", "", summary);
+  await notifyOperator(
+    `🛠️ Admin: ${summary}`,
+    `Ficil Admin ah ayaa la sameeyay / An admin action was taken:\n\n${summary}\nTime: ${new Date().toISOString()}\n\nHaddii aadan adigu samayn, isla markiiba password-ka beddel oo 2FA shid.\nIf this wasn't you, change your password and turn on 2FA now.`,
+  );
 }
 
 async function recordAdminEvent(outcome: string, detail: string) {

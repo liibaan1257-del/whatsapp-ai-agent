@@ -12,6 +12,7 @@ import { requestLocale, requestMessages } from "@/lib/i18n/server";
 import { isValidTimeZone } from "@/lib/knowledge";
 import { logger } from "@/lib/logger";
 import { notifyOperator, sendWelcome } from "@/lib/notify";
+import { alertOperator, LIMITS, overLimit, recordEvent, visitorKey } from "@/lib/security/events";
 import { isReferralCode, REFERRAL_COOKIE, REFERRAL_TRIAL_DAYS } from "@/lib/referral";
 import { siteUrl } from "@/lib/site";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -70,9 +71,22 @@ export async function login(_prev: AuthState, formData: FormData): Promise<AuthS
   if (fieldErrors.email || fieldErrors.password) return { fieldErrors };
   if (!isSupabaseConfigured()) return { error: e.signInNotConfigured };
 
+  // Too many wrong passwords from this visitor: refuse before asking Supabase.
+  const visitor = await visitorKey();
+  if (await overLimit("login_failed", visitor, LIMITS.loginFailed)) {
+    await recordEvent("login_blocked", visitor);
+    await alertOperator(
+      `login_blocked:${visitor}`,
+      "Login isku-dayo badan",
+      `Qof ayaa ${LIMITS.loginFailed.max}+ jeer password khaldan isku dayay ${LIMITS.loginFailed.minutes} daqiiqo gudahood, waana la xannibay.\nA visitor tried ${LIMITS.loginFailed.max}+ wrong passwords in ${LIMITS.loginFailed.minutes} minutes and was blocked.\n\nLast email tried: ${email}\nTime: ${new Date().toISOString()}`,
+    );
+    return { error: e.tooManyAttempts };
+  }
+
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) {
+    if (error.code === "invalid_credentials") await recordEvent("login_failed", visitor);
     if (error.code === "email_not_confirmed") return { error: e.emailNotConfirmed, unconfirmed: true };
     if (error.code === "over_request_rate_limit") return { error: e.tooManyAttempts };
     if (error.code === "invalid_credentials") return { error: e.invalidCredentials };
@@ -101,6 +115,13 @@ export async function signup(_prev: AuthState, formData: FormData): Promise<Auth
   else if (password.length > 72) fieldErrors.password = e.passwordLong;
   if (fieldErrors.email || fieldErrors.password || fieldErrors.fullName || fieldErrors.businessName) return { fieldErrors };
   if (!isSupabaseConfigured()) return { error: e.signUpNotConfigured };
+
+  const visitor = await visitorKey();
+  if (await overLimit("signup", visitor, LIMITS.signup)) {
+    await alertOperator(`signup_limit:${visitor}`, "Is-diiwaangelin badan", `Hal qof ayaa ${LIMITS.signup.max}+ akoon sameeyay saacad gudaheed, waana la joojiyay.\nOne visitor created ${LIMITS.signup.max}+ accounts in an hour and was stopped.\n\nLast email: ${email}\nTime: ${new Date().toISOString()}`);
+    return { error: e.tooManyAttempts };
+  }
+  await recordEvent("signup", visitor);
 
   const h = await headers();
   const whatsapp = normalizeWhatsapp(whatsappTyped, (h.get("x-vercel-ip-country") ?? "").toUpperCase()) ?? "";
@@ -159,6 +180,10 @@ export async function requestPasswordReset(_prev: AuthState, formData: FormData)
   const emailError = checkEmail(email, m);
   if (emailError) return { fieldErrors: { email: emailError } };
   if (!isSupabaseConfigured()) return { error: e.signInNotConfigured };
+
+  const visitor = await visitorKey();
+  if (await overLimit("password_reset", visitor, LIMITS.passwordReset)) return { error: e.tooManyAttempts };
+  await recordEvent("password_reset", visitor);
 
   const h = await headers();
   const origin = h.get("origin") ?? `${h.get("x-forwarded-proto") ?? "https"}://${h.get("host")}`;

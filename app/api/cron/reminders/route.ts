@@ -2,6 +2,7 @@ import { connection, type NextRequest } from "next/server";
 import { serverEnv } from "@/lib/env";
 import { logger } from "@/lib/logger";
 import { sendMonthlyReports } from "@/lib/monthly-report";
+import { sendSecurityDigest } from "@/lib/security/events";
 import { sendDueReminders } from "@/lib/reminders";
 import { sendTrialEndingEmails } from "@/lib/trial-reminders";
 import { safeEqual } from "@/lib/whatsapp/meta";
@@ -32,5 +33,9 @@ export async function GET(request: NextRequest) {
     logger.error("monthly_report_failed", { error: String(error) });
     return { monthlyReports: 0 };
   });
-  return Response.json({ ...summary, ...trial, ...monthly });
+  const security = await sendSecurityDigest().catch((error) => {
+    logger.warn("security_digest_failed", { error: String(error) });
+    return { securityDigest: false };
+  });
+  return Response.json({ ...summary, ...trial, ...monthly, ...security });
 }
