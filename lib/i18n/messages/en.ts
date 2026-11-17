@@ -2,7 +2,7 @@
 export const en = {
   meta: {
     appName: "ReplyBooker",
-    description: "ReplyBooker is an AI receptionist for WhatsApp: it answers your customers 24/7 in their own language and books appointments automatically. 14-day free trial.",
+    description: "ReplyBooker is an AI receptionist for WhatsApp: it answers your customers 24/7 in their own language and books appointments automatically. 7-day money-back guarantee.",
     dashboard: "Dashboard",
   },
   common: {
@@ -46,12 +46,12 @@ export const en = {
     badge: "AI assistant for WhatsApp",
     heroTitle: "Your business answers on WhatsApp, 24/7",
     heroSubtitle: "An AI agent that replies to your customers in their own language, explains your services and prices, and books appointments while you work or sleep.",
-    ctaStart: "Start free for 14 days",
+    ctaStart: "Get started",
     ctaWhatsapp: "Talk to us on WhatsApp",
     tryDemo: "Try it now on WhatsApp",
     tryDemoHint: "Message our demo salon and watch the AI answer and book in seconds.",
     tryDemoText: "Hi! How much is a haircut?",
-    noCard: "No card needed. Ready in 10 minutes.",
+    noCard: "7-day money-back guarantee. Ready in 10 minutes.",
     videoTitle: "See it in 40 seconds",
     demo: {
       business: "Bella Salon",
@@ -93,7 +93,7 @@ export const en = {
     steps: [
       {
         title: "Create your account",
-        body: "Sign up free and add your services, prices and opening hours.",
+        body: "Sign up and add your services, prices and opening hours.",
       },
       {
         title: "Test the agent",
@@ -105,8 +105,9 @@ export const en = {
       },
     ],
     pricingTitle: "Simple pricing",
-    pricingSubtitle: "Start free. Pay by Mobile Money, Waafi or bank transfer.",
-    referralNote: "Invited by another business? Your free trial is 30 days.",
+    guarantee: "✅ 7-day money-back guarantee: if it doesn't help, we refund you in full.",
+    pricingSubtitle: "Pay by Mobile Money, Waafi or bank transfer.",
+    referralNote: "Invite a business: you get a free month when they subscribe.",
     yearly: "or {price}/year (2 months free)",
     perMonth: "/month",
     perYear: "/year",
@@ -157,7 +158,7 @@ export const en = {
       whatsapp: "Send receipt on WhatsApp",
       step3: "We activate your plan right away.",
       noAccount: "No account yet?",
-      signup: "Create a free account first",
+      signup: "Create an account first",
       close: "Close",
       message: "Hi, I paid for the {plan} plan ({monthly}/month or {yearly}/year). Here is my receipt. My account email: ",
     },
@@ -177,7 +178,7 @@ export const en = {
       },
       {
         q: "How do I pay?",
-        a: "After the free trial, pay monthly by Mobile Money, Waafi or bank transfer. Contact us on WhatsApp and we activate your plan right away.",
+        a: "Pay monthly by Mobile Money, Waafi or bank transfer. Contact us on WhatsApp and we activate your plan right away.",
       },
       {
         q: "Is my data safe?",
@@ -185,7 +186,7 @@ export const en = {
       },
     ],
     finalTitle: "Let your WhatsApp work for you",
-    finalBody: "Start your free 14-day trial today. No card needed.",
+    finalBody: "Start today. If it doesn't help your business within 7 days, we refund you in full.",
     rights: "All rights reserved.",
   },
   auth: {
@@ -210,7 +211,7 @@ export const en = {
     confirmFailed: "That confirmation link is invalid or expired. Sign in or sign up again.",
     checkEmail: "Check {email} for a confirmation link, then sign in.",
     accountDeleted: "Your account and all its data have been deleted.",
-    referralBonus: "You were invited: your free trial is 30 days.",
+    referralBonus: "You were invited by another business on ReplyBooker.",
     resendConfirmation: "Resend confirmation email",
     resendingConfirmation: "Sending…",
     confirmationResent: "We sent a new confirmation link to {email}. Check your inbox and spam folder.",
@@ -218,7 +219,7 @@ export const en = {
     verifyBanner: "Confirm your email: we sent a link to {email}. You need it before connecting WhatsApp.",
     verifyWait: "Please wait a minute before sending another email.",
     openGmail: "Open Gmail",
-    signupPerks: ["14 days free", "No card needed", "Ready in 10 minutes"],
+    signupPerks: ["7-day money-back guarantee", "Pay by Mobile Money", "Ready in 10 minutes"],
     forgot: "Forgot password?",
     forgotTitle: "Reset your password",
     forgotDescription: "Enter your email and we'll send you a link to set a new password.",
@@ -475,6 +476,8 @@ export const en = {
     trialLeft: "Free trial: {days} days left.",
     trialLastDay: "Free trial: today is the last day.",
     expired: "Your access has ended: your AI agent no longer replies to customers. Contact us to continue.",
+    payToStart: "Choose a plan to start: the Debt book, WhatsApp bot and reminders open once you pay. 7-day money-back guarantee.",
+    choosePlan: "Choose a plan",
     expiresSoon: "Your plan ends in {days} days. Contact us to renew.",
     contact: "Contact us on WhatsApp",
     contactEmail: "Email us",
@@ -595,7 +598,7 @@ export const en = {
     setPhone: "Save",
   },
   waRequest: {
-    payFirst: "Connecting WhatsApp starts with the first month: ${price} (Starter). Your free trial covers the dashboard and the Chat tester.",
+    payFirst: "Connecting WhatsApp starts with the first month: ${price} (Starter). Until then you can try the Chat tester.",
     payFirstHelp: "Send the payment, then request the connection below and send us the receipt on WhatsApp. We connect your number within 24 hours.",
     verifyEmailFirst: "Confirm your email first (see the green box at the top of the page), then connect WhatsApp.",
     title: "Connect your WhatsApp",
@@ -618,7 +621,7 @@ export const en = {
     otherTitle: "Also made for",
     badge: "For {plural}",
     title: "AI WhatsApp receptionist for {plural}",
-    description: "ReplyBooker answers your customers on WhatsApp 24/7 in their own language, explains your prices and books appointments automatically. Built for {plural}. 14-day free trial.",
+    description: "ReplyBooker answers your customers on WhatsApp 24/7 in their own language, explains your prices and books appointments automatically. Built for {plural}. 7-day money-back guarantee.",
     heroSubtitle: "Customers message you on WhatsApp while you're busy, closed or asleep. ReplyBooker answers them in seconds, in their own language, and books the appointment for you.",
     benefitsTitle: "Why {plural} use ReplyBooker",
     benefits: [
@@ -627,7 +630,7 @@ export const en = {
       "Answers in Somali, Swahili, English, Arabic, French, Spanish, Russian, Chinese and more."
     ],
     exampleTitle: "What your customers will see",
-    ctaTitle: "Try it free for 14 days",
+    ctaTitle: "Start today, 7-day money-back guarantee",
     list: {
       salon: {
         name: "Hair salons",
@@ -689,12 +692,12 @@ export const en = {
   },
   referral: {
     title: "Invite a business, get a free month",
-    hint: "Share your link. The business you invite gets a 30-day free trial instead of 14 days, and you get 1 free month as soon as they subscribe.",
+    hint: "Share your link. You get 1 free month as soon as the business you invite subscribes.",
     linkLabel: "Your invite link",
     copy: "Copy link",
     copied: "Copied!",
     share: "Share on WhatsApp",
-    shareText: "I use ReplyBooker: an AI that answers my customers on WhatsApp and books appointments. Try it free for 30 days: {link}",
+    shareText: "I use ReplyBooker: an AI that answers my customers on WhatsApp and books appointments. Have a look: {link}",
     stats: "{signups} signed up · {rewards} free months earned",
   },
   newsletter: {
@@ -734,8 +737,8 @@ export const en = {
         body: "You must give a correct email and keep your password safe. You are responsible for everything done with your account. One account is for one business.",
       },
       {
-        title: "3. Free trial and plans",
-        body: "New accounts get a 14-day free trial of the dashboard and Chat tester; connecting a WhatsApp number requires a paid plan. After that the service continues on a paid plan (Starter or Pro). Each plan includes a monthly number of AI replies; when access ends or the replies are used up, the AI stops answering until the plan is renewed, but your messages are still saved.",
+        title: "3. Plans and refunds",
+        body: "The service runs on a paid plan (Debt book, Starter or Pro); new accounts can use the Chat tester before paying. If you are not satisfied, ask for a refund within 7 days of your first payment and we refund it in full. Each plan includes a monthly number of AI replies; when access ends or the replies are used up, the AI stops answering until the plan is renewed, but your messages are still saved.",
       },
       {
         title: "4. Payment and refunds",
@@ -913,6 +916,8 @@ export const en = {
       bank: "Bank",
       other: "Mobile money",
     },
+    bookLockedTitle: "The debt book opens on a paid plan",
+    bookLockedBody: "Record what customers owe, remind them on WhatsApp and track part payments. Debt book $5/month or Starter $20/month, with a 7-day money-back guarantee.",
     errors: {
       pay: "Pick a method and enter the number (at least 3 characters).",
       partAmount: "Enter an amount above 0 and no more than what is left.",

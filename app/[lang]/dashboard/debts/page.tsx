@@ -15,7 +15,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import Link from "next/link";
 import { Lock } from "lucide-react";
 import { requireOwner } from "@/lib/auth/session";
-import { isPaid } from "@/lib/billing";
+import { isActive, isPaid } from "@/lib/billing";
 import { payCode } from "@/lib/pay";
 import { deletePayment } from "@/lib/dashboard/debt-actions";
 import { getKnowledge } from "@/lib/dashboard/data";
@@ -56,6 +56,7 @@ async function Debts({ locale, m }: { locale: Locale; m: Messages }) {
   const t = m.debts;
   const owner = await requireOwner("/dashboard/debts");
   const paidPlan = isPaid(owner.plan, owner.accessUntil);
+  if (!isActive(owner.accessUntil)) return <BookLocked t={t} />;
   const knowledge = await getKnowledge();
   const currency = knowledge?.currency ?? "USD";
   const business = knowledge?.business_name || "";
@@ -272,6 +273,29 @@ async function Debts({ locale, m }: { locale: Locale; m: Messages }) {
           <CardContent>{table(paid, true)}</CardContent>
         </Card>
       ) : null}
+    </>
+  );
+}
+
+/** Shown instead of the debt book until the owner pays (or while a plan has run out). */
+function BookLocked({ t }: { t: Messages["debts"] }) {
+  return (
+    <>
+      <PageHeader title={t.title} description={t.description} />
+      <Card className="border-dashed">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Lock className="size-5 text-brand" aria-hidden="true" />
+            {t.bookLockedTitle}
+          </CardTitle>
+          <CardDescription>{t.bookLockedBody}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Button variant="brand" asChild>
+            <Link href="/dashboard/settings#plan">{t.lockedCta}</Link>
+          </Button>
+        </CardContent>
+      </Card>
     </>
   );
 }

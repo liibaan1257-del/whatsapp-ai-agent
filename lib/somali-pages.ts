@@ -32,7 +32,7 @@ export type SomaliPage = {
 
 /** Shared setup steps (also the HowTo structured data). */
 export const SOMALI_STEPS: { title: string; text: string }[] = [
-  { title: "Isdiiwaangeli bilaash", text: "Gal replybooker.com oo samee akoon. 14 maalmood waa bilaash, kaar looma baahna." },
+  { title: "Isdiiwaangeli oo dooro qorshe", text: "Gal replybooker.com oo samee akoon, kadib dooro qorshe (Buug $5 ama Starter $20) oo ku bixi EVC / Mobile Money. Dammaanad 7 maalmood: haddii aadan ku qancin, lacagtaada ayaa laguu celinayaa." },
   {
     title: "Ku qor ganacsigaaga",
     text: "\"Xogta ganacsiga\" → \"Dejin degdeg ah\": dhowr jumladood ku qor waxa aad iibiso, qiimaha, saacadaha iyo goobta. AI-ga ayaa buuxinaya adeegyada iyo su'aalaha.",
@@ -43,7 +43,7 @@ export const SOMALI_STEPS: { title: string; text: string }[] = [
 
 const PRICE_FAQ: Faq = {
   q: "Immisa ayay ku kacaysaa?",
-  a: `14 maalmood waa bilaash, kaar looma baahna. Kadib Starter waa $${PRICES_USD.starter} bishii (500 jawaabood AI), Pro-na waa $${PRICES_USD.pro} bishii (2,000 jawaabood AI). Ku xidhidda WhatsApp-ku waxay bilaabantaa marka aad bixiso bisha 1aad.`,
+  a: `Buug (Buugga Deynta) waa $${PRICES_USD.book} bishii, Starter waa $${PRICES_USD.starter} bishii (500 jawaabood AI), Pro-na waa $${PRICES_USD.pro} bishii (2,000 jawaabood AI). Dammaanad 7 maalmood: haddii aadan ku qancin, lacagtaada oo dhan ayaa laguu celinayaa. Ku xidhidda WhatsApp-ku waxay bilaabantaa marka aad bixiso bisha 1aad.`,
 };
 
 const NUMBER_FAQ: Faq = {
@@ -56,7 +56,7 @@ export const SOMALI_PAGES = {
     path: "/whatsapp-business-af-soomaali",
     title: "WhatsApp Business Af-Soomaali: AI macaamiisha u jawaaba",
     description:
-      "Ku dar kaaliye AI ah WhatsApp Business-kaaga: macaamiishaada Af-Soomaali ugu jawaab 24 saacadood, qiimaha u sheeg, dalabaadka iyo ballamahana qaado. 14 maalmood bilaash.",
+      "Ku dar kaaliye AI ah WhatsApp Business-kaaga: macaamiishaada Af-Soomaali ugu jawaab 24 saacadood, qiimaha u sheeg, dalabaadka iyo ballamahana qaado. Dammaanad 7 maalmood: lacag-celin.",
     kicker: "WhatsApp Business + AI",
     intro:
       "WhatsApp Business app-ku wuxuu leeyahay fariimo toos ah oo kooban (away message, greeting). ReplyBooker wuu ka sii fog yahay: AI ayaa akhriya su'aal kasta oo macmiilka, Af-Soomaali ayuu uga jawaabaa isagoo isticmaalaya xogtaada, dalabaadka iyo ballamahana wuu qaataa.",
@@ -96,7 +96,7 @@ export const SOMALI_PAGES = {
     path: "/ai-af-soomaali",
     title: "AI ku hadla Af-Soomaali: kaaliye ganacsigaaga u shaqeeya",
     description:
-      "AI ku hadla Af-Soomaali dabiici ah oo macaamiishaada WhatsApp-ka uga jawaaba 24 saacadood: qiimaha, dalabaadka iyo ballamaha. Kood uma baahnid. 14 maalmood bilaash.",
+      "AI ku hadla Af-Soomaali dabiici ah oo macaamiishaada WhatsApp-ka uga jawaaba 24 saacadood: qiimaha, dalabaadka iyo ballamaha. Kood uma baahnid. Dammaanad 7 maalmood: lacag-celin.",
     kicker: "AI Af-Soomaali",
     intro:
       "AI-ga maanta wuu fahmaa oo ku hadlaa Af-Soomaali. ReplyBooker wuxuu awooddaas u isticmaalaa ganacsigaaga: macmiil kasta oo WhatsApp-ka kuu soo qora wuxuu helayaa jawaab Af-Soomaali ah oo degdeg ah, adigoo aan qorin wax code ah.",
@@ -139,7 +139,7 @@ export const SOMALI_PAGES = {
     path: "/sida-loo-sameeyo-bot-whatsapp",
     title: "Sida loo sameeyo bot WhatsApp ah (Af-Soomaali, code la'aan)",
     description:
-      "Tallaabo tallaabo: sida loo sameeyo bot WhatsApp ah oo Af-Soomaali macaamiishaada ugu jawaaba, code la'aan, 2 daqiiqo gudahood. 14 maalmood bilaash.",
+      "Tallaabo tallaabo: sida loo sameeyo bot WhatsApp ah oo Af-Soomaali macaamiishaada ugu jawaaba, code la'aan, 2 daqiiqo gudahood. Dammaanad 7 maalmood: lacag-celin.",
     kicker: "Hagaha 2026",
     intro:
       "Uma baahnid barnaamij-sameeye ama code. Hagahan wuxuu ku tusayaa 4 tallaabo oo fudud oo aad ku samaynayso bot WhatsApp ah oo Af-Soomaali ku hadla, kaasoo macaamiishaada u jawaaba, qiimaha u sheega, dalabaadkana qaata.",
@@ -153,7 +153,7 @@ export const SOMALI_PAGES = {
     ],
     benefitsTitle: "Waxa aad u baahan tahay",
     benefits: [
-      "Akoon ReplyBooker (bilaash 14 maalmood).",
+      "Akoon ReplyBooker (laga bilaabo $5 bishii).",
       "Liiska waxa aad iibiso iyo qiimayaashooda.",
       "Saacadaha aad furan tahay iyo goobta.",
       "Lambar WhatsApp ah oo ganacsiga u gaar ah (SIM cusub ayaa fiican).",
@@ -179,7 +179,7 @@ export const SOMALI_PAGES = {
     path: "/bot-whatsapp-dukaan",
     title: "Bot WhatsApp ah oo dukaankaaga u shaqeeya (Af-Soomaali)",
     description:
-      "Bot WhatsApp ah oo dukaankaaga macaamiishiisa Af-Soomaali ugu jawaaba: qiimaha alaabta, waxa la heli karo iyo dalabaadka, 24 saacadood. 14 maalmood bilaash.",
+      "Bot WhatsApp ah oo dukaankaaga macaamiishiisa Af-Soomaali ugu jawaaba: qiimaha alaabta, waxa la heli karo iyo dalabaadka, 24 saacadood. Dammaanad 7 maalmood: lacag-celin.",
     kicker: "Dukaamada",
     intro:
       "Macaamiishu waxay weydiiyaan isla su'aalaha maalin kasta: \"Ma haysaan?\", \"Waa immisa?\", \"Ma keentaan?\". Bot-ka ReplyBooker ayaa ka jawaaba si degdeg ah oo Af-Soomaali ah, dalabkana wuu qaataa, adigoo macaamiisha dukaanka joogta u adeegaya.",
@@ -219,7 +219,7 @@ export const SOMALI_PAGES = {
     path: "/bot-whatsapp-makhaayad",
     title: "Bot WhatsApp ah oo makhaayaddaada dalabaadka qaata",
     description:
-      "Bot WhatsApp ah oo makhaayaddaada u qaata dalabaadka cuntada, menu-ga iyo qiimaha u sheega macaamiisha, Af-Soomaali, 24 saacadood. 14 maalmood bilaash.",
+      "Bot WhatsApp ah oo makhaayaddaada u qaata dalabaadka cuntada, menu-ga iyo qiimaha u sheega macaamiisha, Af-Soomaali, 24 saacadood. Dammaanad 7 maalmood: lacag-celin.",
     kicker: "Makhaayadaha",
     intro:
       "Waqtiga qadada gacmahaagu way mashquul yihiin, WhatsApp-kuna wuu buuxsamaa. Bot-ka ReplyBooker ayaa macaamiisha u sheega menu-ga iyo qiimaha, dalabkana qaata, si aanad u lumin macmiil kaliya maxaa yeelay cidna uma jawaabin.",
@@ -259,7 +259,7 @@ export const SOMALI_PAGES = {
     path: "/ballan-qabsasho-whatsapp",
     title: "Ballan qabsasho WhatsApp ah oo toos ah (Af-Soomaali)",
     description:
-      "Macaamiishaadu ha ku qabsadaan ballamaha WhatsApp-ka, Af-Soomaali, 24 saacadood: salon, rugaha caafimaadka, garaashka iyo adeeg kasta. 14 maalmood bilaash.",
+      "Macaamiishaadu ha ku qabsadaan ballamaha WhatsApp-ka, Af-Soomaali, 24 saacadood: salon, rugaha caafimaadka, garaashka iyo adeeg kasta. Dammaanad 7 maalmood: lacag-celin.",
     kicker: "Ballamaha",
     intro:
       "Ballan kasta oo telefoonka lagu qabsado wakhti ayay kaa qaadataa. ReplyBooker wuxuu macmiilka WhatsApp-ka ugu qabtaa ballanta Af-Soomaali: wuxuu weydiiyaa adeegga iyo wakhtiga, wuxuu hubiyaa saacadahaaga shaqada, ballantana dashboard-ka ayuu kuu dhigaa.",
@@ -300,7 +300,7 @@ export const SOMALI_PAGES = {
     alternate: { lang: "en", path: "/debt-book-app" },
     title: "Buugga Deynta App: qor deymaha macaamiisha, WhatsApp ku xasuusi",
     description:
-      "Buugga Deynta (Buugga Daynta) oo online ah, Af-Soomaali: qor deymaha macaamiisha, arag wadarta iyo kuwa dib u dhacay, una dir xasuusin WhatsApp ah hal riix. App online ah, telefoon kasta, soo dejin la'aan. 14 maalmood bilaash.",
+      "Buugga Deynta (Buugga Daynta) oo online ah, Af-Soomaali: qor deymaha macaamiisha, arag wadarta iyo kuwa dib u dhacay, una dir xasuusin WhatsApp ah hal riix. App online ah, telefoon kasta, soo dejin la'aan. Dammaanad 7 maalmood: lacag-celin.",
     kicker: "Buugga Deynta",
     intro:
       "Dukaanno badan deymaha waxay ku qoraan buug warqad ah: wuu lumaa, wuu qoyaa, mana xasuusato cidda wakhtigeedu dhaafay. ReplyBooker wuxuu kuu siinayaa Buugga Deynta (qaar waxay u qoraan Buugga Daynta ama buug deyn), oo ah app online ah: telefoon kasta iyo kombiyuutar ayuu ka shaqeeyaa, waxba ma soo dejinaysid: macmiil kasta iyo lacagtiisa ku qor, wadarta isla markiiba arag, kadibna \"Xasuusi\" riix si WhatsApp-kaagu ugu furmo fariin xasuusin ah oo diyaar ah.",
@@ -322,7 +322,7 @@ export const SOMALI_PAGES = {
     ],
     stepsTitle: "Sidee loo isticmaalaa Buugga Deynta?",
     steps: [
-      { title: "Isdiiwaangeli bilaash", text: "Gal replybooker.com oo samee akoon. 14 maalmood waa bilaash, kaar looma baahna." },
+      { title: "Isdiiwaangeli oo dooro Buug", text: "Gal replybooker.com oo samee akoon, kadib dooro qorshaha Buug ($5 bishii). Dammaanad 7 maalmood: lacag-celin." },
       { title: "Fur \"Buugga Deynta\"", text: "Dashboard-ka menu-giisa ka dooro \"Buugga Deynta\"." },
       { title: "Ku dar deyn", text: "Qor magaca macmiilka, WhatsApp-kiisa, lacagta, waxa uu qaatay iyo goorta uu bixinayo." },
       { title: "Xasuusi oo xir", text: "\"Xasuusi\" riix si fariinta WhatsApp-ka ugu furmo. Marka uu bixiyo, \"Waa la bixiyay\" riix." },
@@ -354,7 +354,7 @@ export const SOMALI_PAGES = {
       },
       {
         q: "Immisa ayay ku kacaysaa?",
-        a: `14 maalmood waa bilaash, kaar looma baahna. Kadib qorshaha Buug (Buugga Deynta oo keliya) waa $${PRICES_USD.book} bishii ama $${YEARLY_PRICES_USD.book} sannadkii. Haddii aad bot-ka AI-na rabto, Starter waa $${PRICES_USD.starter} bishii, Buugga Deyntana wuu ku jiraa.`,
+        a: `Dammaanad 7 maalmood: haddii aadan ku qancin, lacagtaada ayaa laguu celinayaa. Qorshaha Buug (Buugga Deynta oo keliya) waa $${PRICES_USD.book} bishii ama $${YEARLY_PRICES_USD.book} sannadkii. Haddii aad bot-ka AI-na rabto, Starter waa $${PRICES_USD.starter} bishii, Buugga Deyntana wuu ku jiraa.`,
       },
     ],
   },
@@ -365,7 +365,7 @@ export const SOMALI_PAGES = {
     alternate: { lang: "so", path: "/buugga-deynta" },
     title: "Debt Book App: track customer credit and remind on WhatsApp",
     description:
-      "A simple online debt book (credit ledger) for small shops: record what customers owe, see the total and overdue debts, and send a WhatsApp payment reminder in one tap. Free for 14 days.",
+      "A simple online debt book (credit ledger) for small shops: record what customers owe, see the total and overdue debts, and send a WhatsApp payment reminder in one tap. 7-day money-back guarantee.",
     kicker: "Debt book",
     intro:
       "Many shops still track customer credit in a paper notebook: it gets lost, it gets wet, and nobody remembers who is overdue. ReplyBooker's debt book keeps every customer and amount in one place, shows the total owed at a glance, and opens WhatsApp with a ready, polite reminder when you tap Remind.",
@@ -387,7 +387,7 @@ export const SOMALI_PAGES = {
     ],
     stepsTitle: "How to use the debt book",
     steps: [
-      { title: "Sign up free", text: "Create an account at replybooker.com. 14 days free, no card needed." },
+      { title: "Sign up and pick a plan", text: "Create an account at replybooker.com and choose the Debt book plan ($5/month). 7-day money-back guarantee." },
       { title: "Open \"Debt book\"", text: "Pick \"Debt book\" in the dashboard menu." },
       { title: "Add a debt", text: "Enter the customer's name, WhatsApp number, amount, note and due date." },
       { title: "Remind and close", text: "Tap Remind to open the WhatsApp message. When they pay, tap Paid." },
@@ -411,7 +411,7 @@ export const SOMALI_PAGES = {
       },
       {
         q: "How much does it cost?",
-        a: `14 days free, no card needed. After that the Debt book plan is $${PRICES_USD.book}/month or $${YEARLY_PRICES_USD.book}/year. If you also want the AI bot, Starter is $${PRICES_USD.starter}/month and includes the debt book.`,
+        a: `7-day money-back guarantee. The Debt book plan is $${PRICES_USD.book}/month or $${YEARLY_PRICES_USD.book}/year. If you also want the AI bot, Starter is $${PRICES_USD.starter}/month and includes the debt book.`,
       },
     ],
   },

@@ -95,8 +95,9 @@ export async function handleCustomerMessage(msg: IncomingMessage): Promise<Engin
   const knowledge = parseKnowledge(row);
   if (!knowledge.ai_enabled) return { status: "ai_disabled", conversationId: conv.id };
 
-  // Plan: access must not have ended, and the month's AI replies must be left.
-  if (!isActive(String(row.access_until ?? 0))) {
+  // Plan: access must not have ended (the dashboard's Chat tester works before the first payment),
+  // and the month's AI replies must be left.
+  if (msg.channel !== "test" && !isActive(String(row.access_until ?? 0))) {
     logger.info("agent_inactive", { businessId: msg.businessId });
     return { status: "inactive", conversationId: conv.id };
   }

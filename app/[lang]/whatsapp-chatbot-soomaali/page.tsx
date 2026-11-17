@@ -19,7 +19,7 @@ import { SOMALI_LINKS } from "@/lib/somali-pages";
 const PATH = "/whatsapp-chatbot-soomaali";
 const TITLE = "WhatsApp AI Chatbot ku hadla Af-Soomaali";
 const DESCRIPTION =
-  "ReplyBooker waa kaaliye AI ah oo WhatsApp-ka macaamiishaada Af-Soomaali ugaga jawaaba 24/7, qiimahaaga sharxa, ballamahana qabta. 14 maalmood bilaash, kaar looma baahna.";
+  "ReplyBooker waa kaaliye AI ah oo WhatsApp-ka macaamiishaada Af-Soomaali ugaga jawaaba 24/7, qiimahaaga sharxa, ballamahana qabta. Dammaanad 7 maalmood: lacag-celin.";
 
 const CHAT: { from: "customer" | "bot"; text: string; booked?: boolean }[] = [
   { from: "customer", text: "Asc, xagee joogtaan? Shixnad Nairobi ilaa Muqdisho immisa ayay ku kacaysaa?" },
@@ -54,7 +54,7 @@ const BUSINESSES = [
 const REGIONS = ["Soomaaliya", "Somaliland", "Kenya", "Uganda", "Itoobiya", "Jabuuti", "Qurbajoogta (Yurub, Maraykan, Khaliijka)"];
 
 const STEPS: { title: string; text: string }[] = [
-  { title: "Isdiiwaangeli bilaash", text: "Gal replybooker.com, samee akoon. 14 maalmood waa bilaash, kaar looma baahna." },
+  { title: "Isdiiwaangeli", text: "Gal replybooker.com, samee akoon, kadib dooro qorshe. Dammaanad 7 maalmood: lacag-celin." },
   { title: "Ku qor ganacsigaaga", text: "\"Xogta ganacsiga\" → \"Dejin degdeg ah\": dhowr jumladood ku qor waxa aad iibiso, qiimaha, saacadaha iyo goobta, kadibna riix \"AI ha buuxiyo\". AI-ga ayaa buuxinaya adeegyada iyo su'aalaha." },
   { title: "Tijaabi chat-ka", text: "\"Tijaabi chat-ka\" ku weydii su'aal sida macmiil oo kale, tusaale \"Bariisku immisa waaye?\", oo arag jawaabta Af-Soomaaliga ah." },
   { title: "WhatsApp-ka ku xidh", text: "Marka aad bixiso bisha 1aad, lambar WhatsApp Business ah oo cusub ayaan kuu xidhaynaa. Kadib chatbot-kaagu wuxuu macaamiishaada uga jawaabayaa 24 saac." },
@@ -63,7 +63,7 @@ const STEPS: { title: string; text: string }[] = [
 const FAQ: { q: string; a: string }[] = [
   {
     q: "Sidee loo sameeyaa WhatsApp chatbot Af-Soomaali ah?",
-    a: "ReplyBooker code uma baahna: 1) isdiiwaangeli bilaash, 2) \"Dejin degdeg ah\" ku qor waxa aad iibiso iyo qiimaha, AI-ga ayaa buuxinaya, 3) \"Tijaabi chat-ka\" ku tijaabi, 4) lambarkaaga WhatsApp ayaan kuu xidhaynaa. Inta badan hal daqiiqo ayuu bot-ku ku diyaar noqdaa.",
+    a: "ReplyBooker code uma baahna: 1) isdiiwaangeli, 2) \"Dejin degdeg ah\" ku qor waxa aad iibiso iyo qiimaha, AI-ga ayaa buuxinaya, 3) \"Tijaabi chat-ka\" ku tijaabi, 4) lambarkaaga WhatsApp ayaan kuu xidhaynaa. Inta badan hal daqiiqo ayuu bot-ku ku diyaar noqdaa.",
   },
   {
     q: "Chatbot-ku ma si fiican ayuu Af-Soomaali u yaqaan?",
@@ -83,7 +83,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "Immisa ayay ku kacaysaa?",
-    a: `14 maalmood waa bilaash, kaarna looma baahna. Kadib Starter waa $${PRICES_USD.starter} bishii (500 jawaabood AI), Pro-na waa $${PRICES_USD.pro} bishii (2,000 jawaabood AI). Ku xidhidda WhatsApp-ku waxay bilaabantaa marka aad bixiso bisha 1aad.`,
+    a: `Dammaanad 7 maalmood: haddii aadan ku qancin, lacagtaada ayaa laguu celinayaa. Starter waa $${PRICES_USD.starter} bishii (500 jawaabood AI), Pro-na waa $${PRICES_USD.pro} bishii (2,000 jawaabood AI). Ku xidhidda WhatsApp-ku waxay bilaabantaa marka aad bixiso bisha 1aad.`,
   },
   {
     q: "Ma joojin karaa AI-ga haddii aan rabo inaan anigu jawaabo?",
@@ -276,7 +276,7 @@ export default function SomaliChatbotPage() {
 
         <section className="border-t bg-brand/10">
           <div className="mx-auto max-w-6xl px-4 py-16 text-center sm:px-6">
-            <h2 className="text-3xl font-semibold tracking-tight">Maanta bilow, 14 maalmood bilaash</h2>
+            <h2 className="text-3xl font-semibold tracking-tight">Maanta bilow · dammaanad 7 maalmood</h2>
             <p className="mt-2 text-muted-foreground">{m.landing.finalBody}</p>
             <div className="mt-6 flex justify-center">
               <Button variant="brand" size="lg" asChild>

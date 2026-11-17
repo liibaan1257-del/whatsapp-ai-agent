@@ -47,12 +47,12 @@ export const so: Messages = {
     badge: "Kaaliye AI ah oo WhatsApp",
     heroTitle: "Ganacsigaagu wuxuu ku jawaabaa WhatsApp, 24/7",
     heroSubtitle: "Wakiil AI ah oo macaamiishaada ugu jawaaba luqaddooda, u sharxa adeegyadaada iyo qiimayaashooda, oo ballamaha qabta inta aad shaqaynayso ama hurdo.",
-    ctaStart: "Bilow bilaash, 14 maalmood",
+    ctaStart: "Bilow hadda",
     ctaWhatsapp: "WhatsApp nagala soo xiriir",
     tryDemo: "Hadda ku tijaabi WhatsApp",
     tryDemoHint: "Fariin u dir salon-kayaga tijaabada ah oo arag sida AI-gu ugu jawaabo oo u qabto ballan ilbiriqsiyo gudahood.",
     tryDemoText: "Salaan! Timo-jaridku waa immisa?",
-    noCard: "Kaar looma baahna. 10 daqiiqo ayuu ku diyaar yahay.",
+    noCard: "Dammaanad 7 maalmood: lacag-celin. 10 daqiiqo ayuu ku diyaar yahay.",
     videoTitle: "Ku arag 40 ilbiriqsi",
     demo: {
       business: "Bella Salon",
@@ -94,7 +94,7 @@ export const so: Messages = {
     steps: [
       {
         title: "Samee akoonkaaga",
-        body: "Bilaash isku diiwaangeli, kadib geli adeegyadaada, qiimayaasha iyo saacadaha shaqada.",
+        body: "Isku diiwaangeli, kadib geli adeegyadaada, qiimayaasha iyo saacadaha shaqada.",
       },
       {
         title: "Tijaabi wakiilka",
@@ -106,8 +106,9 @@ export const so: Messages = {
       },
     ],
     pricingTitle: "Qiimo fudud",
-    pricingSubtitle: "Bilaash ku bilow. Ku bixi Mobile Money, Waafi ama bank transfer.",
-    referralNote: "Ganacsi kale ma kuu soo gudbiyay? Tijaabadaadu waa 30 maalmood oo bilaash ah.",
+    guarantee: "✅ Dammaanad 7 maalmood: haddii aadan ku qancin, lacagtaada oo dhan ayaa laguu celinayaa.",
+    pricingSubtitle: "Ku bixi Mobile Money, EVC, Waafi ama bank.",
+    referralNote: "Ganacsi kale soo gudbi: bil bilaash ah ayaad helaysaa marka ay bixiyaan.",
     yearly: "ama {price} sannadkii (2 bilood bilaash)",
     perMonth: "/bishii",
     perYear: "/sanadkii",
@@ -158,7 +159,7 @@ export const so: Messages = {
       whatsapp: "Rasiidka WhatsApp ku dir",
       step3: "Isla markiiba ayaan qorshahaaga kuu furaynaa.",
       noAccount: "Akoon ma lihid?",
-      signup: "Marka hore samee akoon bilaash ah",
+      signup: "Marka hore samee akoon",
       close: "Xir",
       message: "Asc, waxaan bixiyay qorshaha {plan} ({monthly} bishii ama {yearly} sannadkii). Waa kan rasiidka. Email-ka akoonkayga: ",
     },
@@ -178,7 +179,7 @@ export const so: Messages = {
       },
       {
         q: "Sideen u bixiyaa?",
-        a: "Tijaabada bilaashka ah kadib, bil kasta ku bixi Mobile Money, Waafi ama bank transfer. WhatsApp nagala soo xiriir, isla markiiba qorshahaaga ayaan shidaynaa.",
+        a: "Bil kasta ku bixi Mobile Money, Waafi ama bank transfer. WhatsApp nagala soo xiriir, isla markiiba qorshahaaga ayaan shidaynaa.",
       },
       {
         q: "Xogtaydu ma ammaan baa?",
@@ -186,7 +187,7 @@ export const so: Messages = {
       },
     ],
     finalTitle: "WhatsApp-kaagu ha kuu shaqeeyo",
-    finalBody: "Maanta bilow tijaabadaada 14-ka maalmood ee bilaashka ah. Kaar looma baahna.",
+    finalBody: "Maanta bilow. Haddii 7 maalmood gudahood uusan ganacsigaaga caawin, lacagtaada oo dhan ayaa laguu celinayaa.",
     rights: "Xuquuqda oo dhan way dhowran tahay.",
   },
   auth: {
@@ -211,7 +212,7 @@ export const so: Messages = {
     confirmFailed: "Linkiga xaqiijinta ma shaqaynayo ama wuu dhacay. Gal ama mar kale is diiwaangeli.",
     checkEmail: "Fiiri {email}: waxaan kuu dirnay link xaqiijin ah. Kadib gal.",
     accountDeleted: "Akoonkaaga iyo xogtiisa oo dhan waa la tirtiray.",
-    referralBonus: "Waa lagu martiqaaday: tijaabadaada bilaashka ahi waa 30 maalmood.",
+    referralBonus: "Ganacsi kale oo ReplyBooker isticmaala ayaa kuu soo gudbiyay.",
     resendConfirmation: "Dib u dir email-ka xaqiijinta",
     resendingConfirmation: "Waa la dirayaa…",
     confirmationResent: "Link xaqiijin cusub ayaan u dirnay {email}. Fiiri Inbox-ka iyo Spam-ka.",
@@ -219,7 +220,7 @@ export const so: Messages = {
     verifyBanner: "Xaqiiji email-kaaga: link ayaan u dirnay {email}. Waxaad u baahan tahay ka hor intaadan WhatsApp xirin.",
     verifyWait: "Fadlan daqiiqad sug ka hor intaadan email kale dirin.",
     openGmail: "Fur Gmail",
-    signupPerks: ["14 maalmood bilaash", "Kaar looma baahna", "10 daqiiqo ayuu ku diyaar yahay"],
+    signupPerks: ["Dammaanad 7 maalmood: lacag-celin", "Ku bixi Mobile Money / EVC", "10 daqiiqo ayuu ku diyaar yahay"],
     forgot: "Furaha sirta ma illowday?",
     forgotTitle: "Dib u dhig furaha sirta",
     forgotDescription: "Geli email-kaaga, waxaan kuu soo diraynaa link aad ku dejiso furaha sirta cusub.",
@@ -474,6 +475,8 @@ export const so: Messages = {
     trialLeft: "Tijaabo bilaash ah: {days} maalmood ayaa ka hadhay.",
     trialLastDay: "Tijaabo bilaash ah: maanta waa maalinta ugu dambeysa.",
     expired: "Waqtigaagu wuu dhammaaday: wakiilkaaga AI kama jawaabayo macaamiisha. Nala soo xiriir si aad u sii wadato.",
+    payToStart: "Dooro qorshe si aad u bilowdo: Buugga Deynta, bot-ka WhatsApp iyo xasuusinta waxay furmayaan marka aad bixiso. Dammaanad 7 maalmood: lacag-celin.",
+    choosePlan: "Dooro qorshe",
     expiresSoon: "Qorshahaagu wuxuu dhammaanayaa {days} maalmood gudahood. Nala soo xiriir si aad u cusboonaysiiso.",
     contact: "WhatsApp nagala soo xiriir",
     contactEmail: "Email noo soo dir",
@@ -594,7 +597,7 @@ export const so: Messages = {
     setPhone: "Keydi",
   },
   waRequest: {
-    payFirst: "Ku xidhidda WhatsApp-ku waxay ku bilaabantaa bisha 1aad: ${price} (Starter). Tijaabada bilaashka ah waxaa ku jira dashboard-ka iyo Tijaabi chat-ka.",
+    payFirst: "Ku xidhidda WhatsApp-ku waxay ku bilaabantaa bisha 1aad: ${price} (Starter). Inta ka horreysa, Tijaabi chat-ka ayaad ku tijaabin kartaa.",
     payFirstHelp: "Lacagta dir, kadib hoos ka codso xidhiidhka, rasiidkana WhatsApp-ka noogu soo dir. Lambarkaaga 24 saacadood gudahood ayaan kuu xidhaynaa.",
     verifyEmailFirst: "Marka hore xaqiiji email-kaaga (fiiri sanduuqa cagaaran ee bogga korkiisa), kadibna WhatsApp xir.",
     title: "Ku xidh WhatsApp-kaaga",
@@ -617,7 +620,7 @@ export const so: Messages = {
     otherTitle: "Sidoo kale waxaa loogu talagalay",
     badge: "{plural}",
     title: "Qaabilaad AI ah oo WhatsApp ah: {plural}",
-    description: "ReplyBooker wuxuu macaamiishaada uga jawaabaa WhatsApp 24/7 luqaddooda, wuxuu sharxaa qiimahaaga, wuxuuna si toos ah u qabtaa ballamaha. Loo sameeyay {plural}. 14 maalmood bilaash.",
+    description: "ReplyBooker wuxuu macaamiishaada uga jawaabaa WhatsApp 24/7 luqaddooda, wuxuu sharxaa qiimahaaga, wuxuuna si toos ah u qabtaa ballamaha. Loo sameeyay {plural}. Dammaanad 7 maalmood.",
     heroSubtitle: "Macaamiishu waxay kuu soo qoraan WhatsApp marka aad mashquul tahay, xidhan tahay ama hurdo. ReplyBooker wuxuu uga jawaabaa ilbiriqsiyo gudahood, luqaddooda, wuxuuna kuu qabtaa ballanta.",
     benefitsTitle: "Sababta {plural} u isticmaalaan ReplyBooker",
     benefits: [
@@ -626,7 +629,7 @@ export const so: Messages = {
       "Wuxuu ku jawaabaa Soomaali, Sawaaxili, Ingiriisi, Carabi, Faransiis, Isbaanish, Ruush, Shiinees iyo kuwo kale."
     ],
     exampleTitle: "Waxa macaamiishaadu arki doonaan",
-    ctaTitle: "Bilaash ku tijaabi 14 maalmood",
+    ctaTitle: "Maanta bilow, dammaanad 7 maalmood",
     list: {
       salon: {
         name: "Salonnada timaha",
@@ -688,12 +691,12 @@ export const so: Messages = {
   },
   referral: {
     title: "Martiqaad ganacsi, hel bil bilaash ah",
-    hint: "La wadaag link-gaaga. Ganacsiga aad martiqaadto wuxuu helayaa 30 maalmood oo bilaash ah (halkii 14), adiguna waxaad helaysaa 1 bil oo bilaash ah marka ay bixiyaan.",
+    hint: "La wadaag link-gaaga. Waxaad helaysaa 1 bil oo bilaash ah marka ganacsiga aad martiqaaddo uu bixiyo.",
     linkLabel: "Link-gaaga martiqaadka",
     copy: "Koobi garee",
     copied: "Waa la koobiyay!",
     share: "Ku wadaag WhatsApp",
-    shareText: "Waxaan isticmaalaa ReplyBooker: AI uga jawaaba macaamiishayda WhatsApp, una qabta ballamaha. Bilaash ku tijaabi 30 maalmood: {link}",
+    shareText: "Waxaan isticmaalaa ReplyBooker: AI uga jawaaba macaamiishayda WhatsApp, una qabta ballamaha. Eeg: {link}",
     stats: "{signups} ayaa isdiiwaangeliyay · {rewards} bilood oo bilaash ah ayaad heshay",
   },
   newsletter: {
@@ -733,8 +736,8 @@ export const so: Messages = {
         body: "Waa inaad bixisaa email sax ah oo aad ilaalisaa furaha sirta. Adiga ayaa mas'uul ka ah wax kasta oo akoonkaaga lagu sameeyo. Hal akoon waa hal ganacsi.",
       },
       {
-        title: "3. Tijaabada bilaashka ah iyo qorshayaasha",
-        body: "Akoon kasta oo cusub wuxuu helaa 14 maalmood oo tijaabo bilaash ah (dashboard-ka iyo Tijaabi chat-ka); ku xidhidda lambar WhatsApp waxay u baahan tahay qorshe lacag leh. Kadib adeeggu wuxuu ku socdaa qorshe lacag leh (Starter ama Pro). Qorshe kastaa wuxuu leeyahay tiro jawaabo AI ah bishii; marka waqtigu dhammaado ama jawaabaha la isticmaalo, AI-gu wuu joojiyaa ilaa qorshaha la cusboonaysiiyo, laakiin fariimahaagu weli waa la kaydinayaa.",
+        title: "3. Qorshayaasha iyo lacag-celinta",
+        body: "Adeeggu wuxuu ku socdaa qorshe lacag leh (Buug, Starter ama Pro); akoonnada cusub waxay isticmaali karaan Tijaabi chat-ka ka hor intaysan bixin. Haddii aadan ku qancin, codso lacag-celin 7 maalmood gudahood marka aad bixiso, lacagta oo dhan ayaa laguu celinayaa. Qorshe kastaa wuxuu leeyahay tiro jawaabo AI ah bishii; marka waqtigu dhammaado ama jawaabaha la isticmaalo, AI-gu wuu joojiyaa ilaa qorshaha la cusboonaysiiyo, laakiin fariimahaagu weli waa la kaydinayaa.",
       },
       {
         title: "4. Lacag bixinta iyo celinta",
@@ -911,6 +914,8 @@ export const so: Messages = {
       bank: "Bangi",
       other: "Mobile money",
     },
+    bookLockedTitle: "Buugga Deynta wuxuu furmayaa marka aad bixiso",
+    bookLockedBody: "Qor deymaha macaamiisha, WhatsApp ku xasuusi, lacag qayb ahna la soco. Buug $5 bishii ama Starter $20 bishii. Dammaanad 7 maalmood: haddii aadan ku qancin, lacagtaada ayaa laguu celinayaa.",
     errors: {
       pay: "Dooro habka oo geli lambarka (ugu yaraan 3 xaraf).",
       partAmount: "Geli lacag ka badan 0, oo aan ka badnayn inta haray.",

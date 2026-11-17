@@ -188,7 +188,7 @@ export function SomaliLanding({ slug }: { slug: SomaliPageSlug }) {
 
         <section className="border-t bg-brand/10">
           <div className="mx-auto max-w-6xl px-4 py-16 text-center sm:px-6">
-            <h2 className="text-3xl font-semibold tracking-tight">{en ? "Start today, free for 14 days" : "Maanta bilow, 14 maalmood bilaash"}</h2>
+            <h2 className="text-3xl font-semibold tracking-tight">{en ? "Start today · 7-day money-back guarantee" : "Maanta bilow · dammaanad 7 maalmood"}</h2>
             <p className="mt-2 text-muted-foreground">{m.landing.finalBody}</p>
             <div className="mt-6 flex justify-center">
               <Button variant="brand" size="lg" asChild>

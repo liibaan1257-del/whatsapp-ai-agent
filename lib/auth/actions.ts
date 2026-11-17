@@ -14,7 +14,7 @@ import { logger } from "@/lib/logger";
 import { notifyOperator, sendWelcome } from "@/lib/notify";
 import { normalizeWhatsapp } from "@/lib/phone";
 import { alertOperator, LIMITS, overLimit, recordEvent, visitorKey } from "@/lib/security/events";
-import { isReferralCode, REFERRAL_COOKIE, REFERRAL_TRIAL_DAYS } from "@/lib/referral";
+import { isReferralCode, REFERRAL_COOKIE } from "@/lib/referral";
 import { siteUrl } from "@/lib/site";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
@@ -283,7 +283,7 @@ async function applyReferral(ownerId: string) {
     if (!referrer || referrer.owner_id === ownerId) return;
     const { error } = await db
       .from("business_knowledge")
-      .update({ referred_by: referrer.id, access_until: new Date(Date.now() + REFERRAL_TRIAL_DAYS * 86_400_000).toISOString() })
+      .update({ referred_by: referrer.id })
       .eq("owner_id", ownerId)
       .is("referred_by", null);
     if (error) logger.warn("signup_referral_failed", { code: error.code });

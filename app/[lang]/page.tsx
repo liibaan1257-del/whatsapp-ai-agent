@@ -168,10 +168,10 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             <div className="text-center">
               <h2 className="text-3xl font-semibold tracking-tight">{t.pricingTitle}</h2>
               <p className="mt-2 text-muted-foreground">{t.pricingSubtitle}</p>
-              <p className="mt-1 text-sm text-brand">🎁 {t.referralNote}</p>
+              <p className="mt-1 text-sm font-medium text-brand">{t.guarantee}</p>
             </div>
-            <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-              {PLAN_NAMES.map((plan) => {
+            <div className="mt-10 grid gap-4 md:grid-cols-3">
+              {PLAN_NAMES.filter((plan) => plan !== "trial").map((plan) => {
                 const popular = plan === "starter";
                 return (
                   <div key={plan} className={cn("flex flex-col rounded-xl border bg-card p-6", popular && "border-brand ring-1 ring-brand")}>

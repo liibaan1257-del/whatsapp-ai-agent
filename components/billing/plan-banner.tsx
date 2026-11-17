@@ -11,6 +11,17 @@ import { cn } from "@/lib/utils";
 export function PlanBanner({ m, plan, accessUntil, email }: { m: Messages; plan: string; accessUntil: string; email: string | null }) {
   const days = daysLeft(accessUntil);
   const b = m.billing;
+  // Never paid (no free trial since Nov 2026): point to the plans.
+  if (plan === "trial" && days < 0) {
+    return (
+      <div role="status" className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-brand/30 bg-brand/10 px-4 py-3 text-sm">
+        <p>{b.payToStart}</p>
+        <Button variant="brand" size="sm" asChild>
+          <Link href="/dashboard/settings#plan">{b.choosePlan}</Link>
+        </Button>
+      </div>
+    );
+  }
   let text: string | null = null;
   if (days < 0) text = b.expired;
   else if (plan === "trial") text = days <= 1 ? b.trialLastDay : fmt(b.trialLeft, { days });
