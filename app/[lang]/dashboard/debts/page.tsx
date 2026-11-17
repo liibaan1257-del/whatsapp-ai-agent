@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { X } from "lucide-react";
 import { AddDebt } from "@/components/debts/add-debt";
 import { DebtActions } from "@/components/debts/debt-actions";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { requireOwner } from "@/lib/auth/session";
+import { deletePayment } from "@/lib/dashboard/debt-actions";
 import { getKnowledge } from "@/lib/dashboard/data";
 import { fmt, type Locale } from "@/lib/i18n/config";
 import { getMessages, type Messages } from "@/lib/i18n/dictionaries";
@@ -31,6 +34,8 @@ type Debt = {
   created_at: string;
 };
 
+type Payment = { id: string; debt_id: string; amount: number; created_at: string };
+
 export default async function DebtsPage({ params }: PageProps<"/[lang]/dashboard/debts">) {
   const locale = localeFrom((await params).lang);
   return (
@@ -53,13 +58,27 @@ async function Debts({ locale, m }: { locale: Locale; m: Messages }) {
     .order("created_at", { ascending: false })
     .limit(300);
   const debts = (data ?? []) as Debt[];
+  const { data: payData } = debts.length
+    ? await supabase
+        .from("debt_payments")
+        .select("id, debt_id, amount, created_at")
+        .in(
+          "debt_id",
+          debts.map((d) => d.id),
+        )
+        .order("created_at")
+    : { data: [] };
+  const payments = new Map<string, Payment[]>();
+  for (const p of (payData ?? []) as Payment[]) payments.set(p.debt_id, [...(payments.get(p.debt_id) ?? []), p]);
+  const paidSum = (d: Debt) => (payments.get(d.id) ?? []).reduce((s, p) => s + Number(p.amount), 0);
+  const leftOf = (d: Debt) => Math.max(0, Math.round((Number(d.amount) - paidSum(d)) * 100) / 100);
   const open = debts.filter((d) => d.status === "open");
   const paid = debts.filter((d) => d.status === "paid").slice(0, 50);
 
   const money = new Intl.NumberFormat(locale, { style: "currency", currency, maximumFractionDigits: 2 });
   const day = new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeZone: "UTC" });
   const today = new Date().toISOString().slice(0, 10);
-  const totalOpen = open.reduce((s, d) => s + Number(d.amount), 0);
+  const totalOpen = open.reduce((s, d) => s + leftOf(d), 0);
   const overdue = open.filter((d) => d.due_date && d.due_date < today);
 
   const remindLink = (d: Debt) => {
@@ -67,7 +86,7 @@ async function Debts({ locale, m }: { locale: Locale; m: Messages }) {
     const text = fmt(business ? t.reminderText : t.reminderTextNoName, {
       name: d.customer_name,
       business,
-      amount: money.format(Number(d.amount)),
+      amount: money.format(leftOf(d)),
       note: d.note ? ` (${d.note})` : "",
     });
     return `https://wa.me/${d.phone_number}?text=${encodeURIComponent(text)}`;
@@ -98,11 +117,30 @@ async function Debts({ locale, m }: { locale: Locale; m: Messages }) {
                   </div>
                 ) : null}
                 {d.note ? <div className="text-xs text-muted-foreground">{d.note}</div> : null}
+                {(payments.get(d.id) ?? []).map((p) => (
+                  <form key={p.id} action={deletePayment} className="flex items-center gap-1 text-xs text-brand">
+                    <input type="hidden" name="id" value={p.id} />
+                    <input type="hidden" name="debtId" value={d.id} />
+                    <span>{fmt(t.paymentLine, { amount: money.format(Number(p.amount)), date: day.format(new Date(p.created_at)) })}</span>
+                    <Button type="submit" variant="ghost" size="sm" className="h-5 px-1" aria-label={t.undoPayment} title={t.undoPayment}>
+                      <X aria-hidden="true" className="size-3" />
+                    </Button>
+                  </form>
+                ))}
                 {!isPaid && d.reminded_at ? (
                   <div className="text-xs text-muted-foreground">{fmt(t.remindedOn, { date: day.format(new Date(d.reminded_at)) })}</div>
                 ) : null}
               </TableCell>
-              <TableCell className="text-right font-semibold tabular-nums">{money.format(Number(d.amount))}</TableCell>
+              <TableCell className="text-right tabular-nums">
+                {!isPaid && paidSum(d) > 0 ? (
+                  <>
+                    <div className="font-semibold">{fmt(t.left, { left: money.format(leftOf(d)) })}</div>
+                    <div className="text-xs text-muted-foreground">{fmt(t.ofTotal, { total: money.format(Number(d.amount)) })}</div>
+                  </>
+                ) : (
+                  <span className="font-semibold">{money.format(Number(d.amount))}</span>
+                )}
+              </TableCell>
               <TableCell className="hidden sm:table-cell">
                 {isPaid ? (
                   d.paid_at ? day.format(new Date(d.paid_at)) : "—"
@@ -116,7 +154,7 @@ async function Debts({ locale, m }: { locale: Locale; m: Messages }) {
                 )}
               </TableCell>
               <TableCell>
-                <DebtActions id={d.id} paid={isPaid} remindLink={isPaid ? null : remindLink(d)} />
+                <DebtActions id={d.id} paid={isPaid} left={leftOf(d)} remindLink={isPaid ? null : remindLink(d)} />
               </TableCell>
             </TableRow>
           );

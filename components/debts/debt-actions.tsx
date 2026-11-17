@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { Check, MessageCircle, RotateCcw, Trash2 } from "lucide-react";
 import { useI18n } from "@/components/i18n/provider";
+import { PartPayment } from "@/components/debts/part-payment";
 import { Button } from "@/components/ui/button";
 import { updateDebt } from "@/lib/dashboard/debt-actions";
 
@@ -11,7 +12,7 @@ import { updateDebt } from "@/lib/dashboard/debt-actions";
  * (wa.me), so nothing is sent by ReplyBooker and no template is needed, and
  * records when the reminder was last sent.
  */
-export function DebtActions({ id, paid, remindLink }: { id: string; paid: boolean; remindLink: string | null }) {
+export function DebtActions({ id, paid, left, remindLink }: { id: string; paid: boolean; left: number; remindLink: string | null }) {
   const t = useI18n().m.debts;
   const remindForm = useRef<HTMLFormElement>(null);
   return (
@@ -28,6 +29,7 @@ export function DebtActions({ id, paid, remindLink }: { id: string; paid: boolea
           </Button>
         </form>
       ) : null}
+      {!paid ? <PartPayment id={id} left={left} /> : null}
       <form action={updateDebt}>
         <input type="hidden" name="id" value={id} />
         <input type="hidden" name="op" value={paid ? "open" : "paid"} />

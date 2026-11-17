@@ -77,3 +77,46 @@ export async function updateDebt(formData: FormData): Promise<void> {
   if (result?.error) logger.error("debt_update_failed", { ownerId: owner.id, op, code: result.error.code });
   refresh();
 }
+
+/** Record a part payment; marks the debt paid once nothing is left. */
+export async function addPayment(_prev: DebtState, formData: FormData): Promise<DebtState> {
+  const m = await requestMessages();
+  const t = m.debts.errors;
+  const owner = await getOwner();
+  if (!owner) return { error: m.common.signInAgain };
+  const id = String(formData.get("id") ?? "");
+  const amount = Math.round(Number(String(formData.get("amount") ?? "").replace(/[, ]/g, "")) * 100) / 100;
+  if (!UUID.test(id)) return { error: t.failed };
+
+  const supabase = await createClient();
+  const [{ data: debt }, { data: paid }] = await Promise.all([
+    supabase.from("debts").select("amount, status").eq("id", id).maybeSingle(),
+    supabase.from("debt_payments").select("amount").eq("debt_id", id),
+  ]);
+  if (!debt || debt.status !== "open") return { error: t.failed };
+  const left = Math.round((Number(debt.amount) - (paid ?? []).reduce((s, p) => s + Number(p.amount), 0)) * 100) / 100;
+  if (!Number.isFinite(amount) || amount <= 0 || amount > left) return { error: t.partAmount };
+
+  const { error } = await supabase.from("debt_payments").insert({ debt_id: id, business_id: owner.businessId, amount });
+  if (error) {
+    logger.error("debt_payment_failed", { ownerId: owner.id, code: error.code });
+    return { error: t.failed };
+  }
+  if (amount >= left) await supabase.from("debts").update({ status: "paid", paid_at: new Date().toISOString() }).eq("id", id);
+  refresh();
+  return { ok: true };
+}
+
+/** Undo a part payment (the debt goes back to open). */
+export async function deletePayment(formData: FormData): Promise<void> {
+  const owner = await getOwner();
+  if (!owner) return;
+  const id = String(formData.get("id") ?? "");
+  const debtId = String(formData.get("debtId") ?? "");
+  if (!UUID.test(id) || !UUID.test(debtId)) return;
+  const supabase = await createClient();
+  const { error } = await supabase.from("debt_payments").delete().eq("id", id).eq("debt_id", debtId);
+  if (error) logger.error("debt_payment_delete_failed", { ownerId: owner.id, code: error.code });
+  else await supabase.from("debts").update({ status: "open", paid_at: null }).eq("id", debtId);
+  refresh();
+}
