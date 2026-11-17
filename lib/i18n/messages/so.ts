@@ -120,6 +120,10 @@ export const so: Messages = {
         name: "Tijaabo bilaash ah",
         desc: "14 maalmood oo aad bot-kaaga ku tijaabiso dashboard-ka. WhatsApp-ku wuxuu ku xidhmaa qorshe lacag leh.",
       },
+      book: {
+        name: "Buug",
+        desc: "Buugga Deynta oo keliya: qor deymaha macaamiisha, WhatsApp-na ku xasuusi.",
+      },
       starter: {
         name: "Starter",
         desc: "Ganacsi yar.",
@@ -134,6 +138,12 @@ export const so: Messages = {
       "Xogta ganacsiga iyo Chat tester",
       "Dashboard-ka ballamaha",
       "Dhammaan 9-ka luqadood",
+      "Buugga Deynta",
+    ],
+    bookFeatures: [
+      "Buugga Deynta: wadarta iyo kuwa dib u dhacay",
+      "Xasuusin WhatsApp ah hal riix",
+      "Bot AI ma laha (goor kasta u kac)",
     ],
     choose: "Bilow",
     faqTitle: "Su'aalaha badanaa la is weydiiyo",
@@ -461,11 +471,12 @@ export const so: Messages = {
     endedOn: "Wuxuu dhammaaday {date}",
     usage: "Jawaabaha AI bishan",
     usageValue: "{used} ka mid ah {limit}",
-    prices: "Starter: $20 bishii ama $200 sannadkii (500 jawaabood AI) · Pro: $49 bishii ama $490 sannadkii (2,000 jawaabood AI)",
+    prices: "Buug: $5 bishii ama $50 sannadkii (Buugga Deynta) · Starter: $20 bishii ama $200 sannadkii (500 jawaabood AI) · Pro: $49 bishii ama $490 sannadkii (2,000 jawaabood AI)",
     howToPay: "Ku bixi Mobile Money, Waafi ama bank transfer: nala soo xiriir, isla markiiba qorshahaaga ayaan shidaynaa.",
     payTo: "Lacagta u dir mid ka mid ah account-yadan, kadib rasiidka WhatsApp noogu soo dir:",
     plans: {
       trial: "Tijaabo bilaash ah",
+      book: "Buug",
       starter: "Starter",
       pro: "Pro",
     },

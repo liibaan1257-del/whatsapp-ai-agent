@@ -169,7 +169,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
               <p className="mt-2 text-muted-foreground">{t.pricingSubtitle}</p>
               <p className="mt-1 text-sm text-brand">🎁 {t.referralNote}</p>
             </div>
-            <div className="mt-10 grid gap-4 md:grid-cols-3">
+            <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               {PLAN_NAMES.map((plan) => {
                 const popular = plan === "starter";
                 return (
@@ -196,7 +196,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
                       </div>
                     ) : null}
                     <ul className="mt-5 flex-1 space-y-2 text-sm">
-                      {[fmt(t.repliesPerMonth, { n: PLANS[plan].replies.toLocaleString(locale) }), ...t.planFeatures].map((line) => (
+                      {(plan === "book" ? t.bookFeatures : [fmt(t.repliesPerMonth, { n: PLANS[plan].replies.toLocaleString(locale) }), ...t.planFeatures]).map((line) => (
                         <li key={line} className="flex items-start gap-2">
                           <Check className="mt-0.5 size-4 shrink-0 text-brand" aria-hidden="true" />
                           {line}

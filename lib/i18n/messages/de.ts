@@ -120,6 +120,10 @@ export const de: Messages = {
         name: "Kostenloser Test",
         desc: "14 Tage, um alles auszuprobieren.",
       },
+      book: {
+        name: "Debt book",
+        desc: "Only the debt book: track what customers owe and remind them on WhatsApp.",
+      },
       starter: {
         name: "Starter",
         desc: "Für ein kleines Unternehmen.",
@@ -134,6 +138,12 @@ export const de: Messages = {
       "Wissensdatenbank und Chat-Test",
       "Buchungs-Dashboard",
       "Alle 9 Sprachen",
+      "Debt book",
+    ],
+    bookFeatures: [
+      "Debt book with totals and overdue list",
+      "One-tap WhatsApp reminders",
+      "No AI bot (upgrade any time)",
     ],
     choose: "Loslegen",
     faqTitle: "Häufige Fragen",
@@ -461,11 +471,12 @@ export const de: Messages = {
     endedOn: "Beendet am {date}",
     usage: "KI-Antworten diesen Monat",
     usageValue: "{used} von {limit}",
-    prices: "Starter: 20 $/Monat oder 200 $/Jahr (500 KI-Antworten) · Pro: 49 $/Monat oder 490 $/Jahr (2.000 KI-Antworten)",
+    prices: "Debt book: $5/month or $50/year · Starter: 20 $/Monat oder 200 $/Jahr (500 KI-Antworten) · Pro: 49 $/Monat oder 490 $/Jahr (2.000 KI-Antworten)",
     howToPay: "Bezahlen Sie per Mobile Money, Waafi oder Banküberweisung: Kontaktieren Sie uns, wir aktivieren Ihren Tarif sofort.",
     payTo: "Senden Sie die Zahlung an eines dieser Konten und schicken Sie uns dann den Beleg per WhatsApp:",
     plans: {
       trial: "Kostenloser Test",
+      book: "Debt book",
       starter: "Starter",
       pro: "Pro",
     },

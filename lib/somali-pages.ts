@@ -4,7 +4,7 @@
  * Somali, rendered by components/marketing/somali-landing.tsx.
  */
 
-import { PRICES_USD } from "@/lib/billing";
+import { PRICES_USD, YEARLY_PRICES_USD } from "@/lib/billing";
 
 export type ChatLine = { from: "customer" | "bot"; text: string; booked?: boolean };
 export type Faq = { q: string; a: string };
@@ -346,7 +346,7 @@ export const SOMALI_PAGES = {
       },
       {
         q: "Immisa ayay ku kacaysaa?",
-        a: `14 maalmood waa bilaash, kaar looma baahna. Kadib Starter waa $${PRICES_USD.starter} bishii, wuxuuna ka mid yahay ReplyBooker oo dhan (bot-ka AI, ballamaha iyo Buugga Deynta).`,
+        a: `14 maalmood waa bilaash, kaar looma baahna. Kadib qorshaha Buug (Buugga Deynta oo keliya) waa $${PRICES_USD.book} bishii ama $${YEARLY_PRICES_USD.book} sannadkii. Haddii aad bot-ka AI-na rabto, Starter waa $${PRICES_USD.starter} bishii, Buugga Deyntana wuu ku jiraa.`,
       },
     ],
   },
@@ -403,7 +403,7 @@ export const SOMALI_PAGES = {
       },
       {
         q: "How much does it cost?",
-        a: `14 days free, no card needed. After that Starter is $${PRICES_USD.starter}/month and includes all of ReplyBooker (the AI bot, bookings and the debt book).`,
+        a: `14 days free, no card needed. After that the Debt book plan is $${PRICES_USD.book}/month or $${YEARLY_PRICES_USD.book}/year. If you also want the AI bot, Starter is $${PRICES_USD.starter}/month and includes the debt book.`,
       },
     ],
   },

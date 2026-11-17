@@ -50,7 +50,7 @@ async function Settings({ m, locale }: { m: Messages; locale: Locale }) {
   const limit = replyLimit(owner.plan);
   const ended = daysLeft(owner.accessUntil) < 0;
   const until = new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(new Date(owner.accessUntil));
-  const percent = Math.min(100, Math.round(((used ?? 0) / limit) * 100));
+  const percent = limit ? Math.min(100, Math.round(((used ?? 0) / limit) * 100)) : 0;
   const referral = await referralStats(owner.businessId);
   return (
     <div className="space-y-6">
@@ -67,13 +67,17 @@ async function Settings({ m, locale }: { m: Messages; locale: Locale }) {
             <dd className="font-medium">{isPlan(owner.plan) ? b.plans[owner.plan] : owner.plan}</dd>
             <dt className="text-muted-foreground">{b.activeUntil}</dt>
             <dd className={ended ? "font-medium text-destructive" : ""}>{ended ? fmt(b.endedOn, { date: until }) : until}</dd>
-            <dt className="text-muted-foreground">{b.usage}</dt>
-            <dd>
+            {limit ? (
+              <>
+                <dt className="text-muted-foreground">{b.usage}</dt>
+                <dd>
               <span>{fmt(b.usageValue, { used: used ?? 0, limit })}</span>
               <span className="mt-1.5 block h-2 max-w-xs overflow-hidden rounded-full bg-muted" aria-hidden="true">
                 <span className={`block h-full ${percent >= 100 ? "bg-destructive" : "bg-brand"}`} style={{ width: `${percent}%` }} />
               </span>
-            </dd>
+                </dd>
+              </>
+            ) : null}
           </dl>
           <p className="text-xs text-muted-foreground">{b.prices}</p>
           <div className="space-y-2 rounded-lg border p-3 text-sm">

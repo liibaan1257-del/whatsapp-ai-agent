@@ -120,6 +120,10 @@ export const fr: Messages = {
         name: "Essai gratuit",
         desc: "14 jours pour tout essayer.",
       },
+      book: {
+        name: "Debt book",
+        desc: "Only the debt book: track what customers owe and remind them on WhatsApp.",
+      },
       starter: {
         name: "Starter",
         desc: "Pour une petite entreprise.",
@@ -134,6 +138,12 @@ export const fr: Messages = {
       "Base de connaissances et testeur de chat",
       "Tableau des réservations",
       "Les 9 langues",
+      "Debt book",
+    ],
+    bookFeatures: [
+      "Debt book with totals and overdue list",
+      "One-tap WhatsApp reminders",
+      "No AI bot (upgrade any time)",
     ],
     choose: "Commencer",
     faqTitle: "Questions fréquentes",
@@ -461,11 +471,12 @@ export const fr: Messages = {
     endedOn: "Terminé le {date}",
     usage: "Réponses IA ce mois-ci",
     usageValue: "{used} sur {limit}",
-    prices: "Starter : 20 $/mois ou 200 $/an (500 réponses IA) · Pro : 49 $/mois ou 490 $/an (2 000 réponses IA)",
+    prices: "Debt book: $5/month or $50/year · Starter : 20 $/mois ou 200 $/an (500 réponses IA) · Pro : 49 $/mois ou 490 $/an (2 000 réponses IA)",
     howToPay: "Payez par Mobile Money, Waafi ou virement bancaire : contactez-nous et nous activons votre abonnement tout de suite.",
     payTo: "Envoyez le paiement sur l’un de ces comptes, puis envoyez-nous le reçu sur WhatsApp :",
     plans: {
       trial: "Essai gratuit",
+      book: "Debt book",
       starter: "Starter",
       pro: "Pro",
     },

@@ -6,15 +6,22 @@ import { contactWhatsapp } from "@/lib/contact";
  */
 export const PLANS = {
   trial: { replies: 200 },
+  /** Debt book only: no AI bot. */
+  book: { replies: 0 },
   starter: { replies: 500 },
   pro: { replies: 2000 },
 } as const;
 export type Plan = keyof typeof PLANS;
 /** Monthly price in USD shown on the home page (payment itself is manual). */
-export const PRICES_USD: Record<Plan, number> = { trial: 0, starter: 20, pro: 49 };
+export const PRICES_USD: Record<Plan, number> = { trial: 0, book: 5, starter: 20, pro: 49 };
 /** Yearly price in USD: two months free. */
-export const YEARLY_PRICES_USD: Record<Plan, number> = { trial: 0, starter: 200, pro: 490 };
+export const YEARLY_PRICES_USD: Record<Plan, number> = { trial: 0, book: 50, starter: 200, pro: 490 };
 export const PLAN_NAMES = Object.keys(PLANS) as Plan[];
+
+/** Plans that include the WhatsApp AI bot (and so may connect a WhatsApp number). */
+export function hasBot(plan: string): boolean {
+  return plan === "starter" || plan === "pro";
+}
 
 export function isPlan(value: unknown): value is Plan {
   return typeof value === "string" && value in PLANS;

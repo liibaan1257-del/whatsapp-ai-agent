@@ -121,6 +121,10 @@ export const zh: Messages = {
         name: "免费试用",
         desc: "14 天体验全部功能。",
       },
+      book: {
+        name: "Debt book",
+        desc: "Only the debt book: track what customers owe and remind them on WhatsApp.",
+      },
       starter: {
         name: "入门版",
         desc: "适合小型商家。",
@@ -135,6 +139,12 @@ export const zh: Messages = {
       "知识库和对话测试",
       "预约管理控制台",
       "全部 9 种语言",
+      "Debt book",
+    ],
+    bookFeatures: [
+      "Debt book with totals and overdue list",
+      "One-tap WhatsApp reminders",
+      "No AI bot (upgrade any time)",
     ],
     choose: "立即开始",
     faqTitle: "常见问题",
@@ -464,11 +474,12 @@ export const zh: Messages = {
     endedOn: "已于 {date} 到期",
     usage: "本月 AI 回复",
     usageValue: "{used} / {limit}",
-    prices: "入门版：20 美元/月或 200 美元/年（500 条 AI 回复）· 专业版：49 美元/月或 490 美元/年（2,000 条 AI 回复）",
+    prices: "Debt book: $5/month or $50/year · 入门版：20 美元/月或 200 美元/年（500 条 AI 回复）· 专业版：49 美元/月或 490 美元/年（2,000 条 AI 回复）",
     howToPay: "可通过 Mobile Money、Waafi 或银行转账付款：联系我们，我们会立即为您开通套餐。",
     payTo: "请将款项转入以下任一账户，然后通过 WhatsApp 将收据发给我们：",
     plans: {
       trial: "免费试用",
+      book: "Debt book",
       starter: "入门版",
       pro: "专业版",
     },

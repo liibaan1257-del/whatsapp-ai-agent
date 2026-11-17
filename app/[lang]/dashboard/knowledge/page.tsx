@@ -7,6 +7,7 @@ import { QuickSetupCard } from "@/components/knowledge/quick-setup-card";
 import { WhatsAppRequestCard } from "@/components/knowledge/whatsapp-request";
 import { Skeleton } from "@/components/ui/skeleton";
 import { requireOwner } from "@/lib/auth/session";
+import { hasBot } from "@/lib/billing";
 import { getKnowledge, getWhatsAppRequest } from "@/lib/dashboard/data";
 import { configStatus } from "@/lib/env";
 import type { Locale } from "@/lib/i18n/config";
@@ -63,7 +64,7 @@ async function KnowledgeEditor({ locale, m }: { locale: Locale; m: Messages }) {
           connected={Boolean(knowledge.whatsapp_phone_number_id || knowledge.twilio_whatsapp_number)}
           requestNumber={request?.wa_request_number ?? null}
           requestedAt={request?.wa_requested_at ?? null}
-          paid={owner.plan !== "trial"}
+          paid={hasBot(owner.plan)}
         />
       )}
       <QuickSetupCard highlight={knowledge.services.length === 0} />

@@ -119,6 +119,10 @@ export const en = {
         name: "Free trial",
         desc: "14 days to try your bot in the dashboard. WhatsApp connects on a paid plan.",
       },
+      book: {
+        name: "Debt book",
+        desc: "Only the debt book: track what customers owe and remind them on WhatsApp.",
+      },
       starter: {
         name: "Starter",
         desc: "For a small business.",
@@ -133,6 +137,12 @@ export const en = {
       "Knowledge base and chat tester",
       "Bookings dashboard",
       "All 9 languages",
+      "Debt book",
+    ],
+    bookFeatures: [
+      "Debt book with totals and overdue list",
+      "One-tap WhatsApp reminders",
+      "No AI bot (upgrade any time)",
     ],
     choose: "Get started",
     faqTitle: "Frequently asked questions",
@@ -462,11 +472,12 @@ export const en = {
     endedOn: "Ended on {date}",
     usage: "AI replies this month",
     usageValue: "{used} of {limit}",
-    prices: "Starter: $20/month or $200/year (500 AI replies) · Pro: $49/month or $490/year (2,000 AI replies)",
+    prices: "Debt book: $5/month or $50/year · Starter: $20/month or $200/year (500 AI replies) · Pro: $49/month or $490/year (2,000 AI replies)",
     howToPay: "Pay by Mobile Money, Waafi or bank transfer: contact us and we activate your plan right away.",
     payTo: "Send the payment to one of these accounts, then send us the receipt on WhatsApp:",
     plans: {
       trial: "Free trial",
+      book: "Debt book",
       starter: "Starter",
       pro: "Pro",
     },

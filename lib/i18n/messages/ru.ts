@@ -121,6 +121,10 @@ export const ru: Messages = {
         name: "Пробный период",
         desc: "14 дней, чтобы попробовать всё.",
       },
+      book: {
+        name: "Debt book",
+        desc: "Only the debt book: track what customers owe and remind them on WhatsApp.",
+      },
       starter: {
         name: "Starter",
         desc: "Для небольшого бизнеса.",
@@ -135,6 +139,12 @@ export const ru: Messages = {
       "База знаний и тестовый чат",
       "Панель записей",
       "Все 9 языков",
+      "Debt book",
+    ],
+    bookFeatures: [
+      "Debt book with totals and overdue list",
+      "One-tap WhatsApp reminders",
+      "No AI bot (upgrade any time)",
     ],
     choose: "Начать",
     faqTitle: "Часто задаваемые вопросы",
@@ -464,11 +474,12 @@ export const ru: Messages = {
     endedOn: "Закончился {date}",
     usage: "Ответы ИИ в этом месяце",
     usageValue: "{used} из {limit}",
-    prices: "Starter: $20/мес. или $200/год (500 ответов ИИ) · Pro: $49/мес. или $490/год (2 000 ответов ИИ)",
+    prices: "Debt book: $5/month or $50/year · Starter: $20/мес. или $200/год (500 ответов ИИ) · Pro: $49/мес. или $490/год (2 000 ответов ИИ)",
     howToPay: "Оплата через Mobile Money, Waafi или банковским переводом: свяжитесь с нами, и мы сразу активируем ваш тариф.",
     payTo: "Отправьте оплату на один из этих счетов, затем пришлите нам квитанцию в WhatsApp:",
     plans: {
       trial: "Пробный период",
+      book: "Debt book",
       starter: "Starter",
       pro: "Pro",
     },

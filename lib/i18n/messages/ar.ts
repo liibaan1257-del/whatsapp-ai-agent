@@ -120,6 +120,10 @@ export const ar: Messages = {
         name: "تجربة مجانية",
         desc: "14 يومًا لتجربة كل شيء.",
       },
+      book: {
+        name: "Debt book",
+        desc: "Only the debt book: track what customers owe and remind them on WhatsApp.",
+      },
       starter: {
         name: "Starter",
         desc: "للأنشطة التجارية الصغيرة.",
@@ -134,6 +138,12 @@ export const ar: Messages = {
       "قاعدة المعرفة وتجربة المحادثة",
       "لوحة الحجوزات",
       "جميع اللغات التسع",
+      "Debt book",
+    ],
+    bookFeatures: [
+      "Debt book with totals and overdue list",
+      "One-tap WhatsApp reminders",
+      "No AI bot (upgrade any time)",
     ],
     choose: "ابدأ الآن",
     faqTitle: "الأسئلة الشائعة",
@@ -461,11 +471,12 @@ export const ar: Messages = {
     endedOn: "انتهى في {date}",
     usage: "ردود الذكاء الاصطناعي هذا الشهر",
     usageValue: "{used} من {limit}",
-    prices: "Starter: ‏20$ شهريًا أو 200$ سنويًا (500 رد) · Pro: ‏49$ شهريًا أو 490$ سنويًا (2000 رد)",
+    prices: "دفتر الديون: ‏5$ شهريًا أو 50$ سنويًا · Starter: ‏20$ شهريًا أو 200$ سنويًا (500 رد) · Pro: ‏49$ شهريًا أو 490$ سنويًا (2000 رد)",
     howToPay: "ادفع عبر Mobile Money أو Waafi أو تحويل بنكي: تواصل معنا وسنفعّل خطتك فورًا.",
     payTo: "أرسل الدفعة إلى أحد هذه الحسابات، ثم أرسل لنا الإيصال على واتساب:",
     plans: {
       trial: "تجربة مجانية",
+      book: "Debt book",
       starter: "Starter",
       pro: "Pro",
     },
