@@ -830,7 +830,7 @@ export const fr: Messages = {
   },
   shop: {
     title: "Your shop page",
-    description: "A free page for your business and a QR poster: customers scan it and message you on WhatsApp.",
+    description: "A page for your business and a QR poster: customers scan it and message you on WhatsApp.",
     slug: "Page address",
     slugHint: "Letters, numbers and dashes, e.g. barwaaqo-shop.",
     whatsapp: "WhatsApp number customers message",

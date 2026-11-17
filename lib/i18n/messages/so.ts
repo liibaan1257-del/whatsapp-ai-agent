@@ -830,7 +830,7 @@ export const so: Messages = {
   },
   shop: {
     title: "Bogga dukaankaaga",
-    description: "Bog bilaash ah oo ganacsigaaga u gaar ah iyo boodh QR ah: macaamiishu scan ayay gareeyaan, kadibna WhatsApp ayay kuugu soo qoraan.",
+    description: "Bog ganacsigaaga u gaar ah iyo boodh QR ah: macaamiishu scan ayay gareeyaan, kadibna WhatsApp ayay kuugu soo qoraan.",
     slug: "Cinwaanka bogga",
     slugHint: "Xarfo, lambarro iyo jiitin (-), tusaale: dukaanka-barwaaqo.",
     whatsapp: "Lambarka WhatsApp ee macaamiishu u qoraan",
