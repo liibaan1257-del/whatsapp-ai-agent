@@ -6,6 +6,7 @@ import { getOwner } from "@/lib/auth/session";
 import { isPaid } from "@/lib/billing";
 import { requestMessages } from "@/lib/i18n/server";
 import { logger } from "@/lib/logger";
+import { isPayMethod } from "@/lib/pay";
 import { normalizeWhatsapp } from "@/lib/phone";
 import { createClient } from "@/lib/supabase/server";
 
@@ -120,4 +121,24 @@ export async function deletePayment(formData: FormData): Promise<void> {
   if (error) logger.error("debt_payment_delete_failed", { ownerId: owner.id, code: error.code });
   else await supabase.from("debts").update({ status: "open", paid_at: null }).eq("id", debtId);
   refresh();
+}
+
+/** How customers pay: method + number, added to debt reminders. Empty method clears it. */
+export async function savePayDetails(_prev: DebtState, formData: FormData): Promise<DebtState> {
+  const m = await requestMessages();
+  const owner = await getOwner();
+  if (!owner) return { error: m.common.signInAgain };
+  const method = String(formData.get("pay_method") ?? "");
+  const number = String(formData.get("pay_number") ?? "").replace(/\s+/g, " ").trim().slice(0, 60);
+  if (method && (!isPayMethod(method) || number.length < 3)) return { error: m.debts.errors.pay };
+  const { error } = await (await createClient())
+    .from("business_knowledge")
+    .update({ pay_method: method || null, pay_number: method ? number : null })
+    .eq("id", owner.businessId);
+  if (error) {
+    logger.error("pay_details_failed", { ownerId: owner.id, code: error.code });
+    return { error: m.debts.errors.failed };
+  }
+  refresh();
+  return { ok: true };
 }

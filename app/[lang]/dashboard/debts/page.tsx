@@ -4,6 +4,7 @@ import { X } from "lucide-react";
 import { AddDebt } from "@/components/debts/add-debt";
 import { BulkSend } from "@/components/debts/bulk-send";
 import { CustomersCard } from "@/components/debts/customers-card";
+import { PayDetails } from "@/components/debts/pay-details";
 import { DebtActions } from "@/components/debts/debt-actions";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Badge } from "@/components/ui/badge";
@@ -15,6 +16,7 @@ import Link from "next/link";
 import { Lock } from "lucide-react";
 import { requireOwner } from "@/lib/auth/session";
 import { isPaid } from "@/lib/billing";
+import { payCode } from "@/lib/pay";
 import { deletePayment } from "@/lib/dashboard/debt-actions";
 import { getKnowledge } from "@/lib/dashboard/data";
 import { fmt, type Locale } from "@/lib/i18n/config";
@@ -64,6 +66,9 @@ async function Debts({ locale, m }: { locale: Locale; m: Messages }) {
     .order("created_at", { ascending: false })
     .limit(300);
   const debts = (data ?? []) as Debt[];
+  const { data: payRow } = await supabase.from("business_knowledge").select("pay_method, pay_number").eq("id", owner.businessId).maybeSingle();
+  const payMethod = (payRow?.pay_method as string | null) ?? null;
+  const payNumber = (payRow?.pay_number as string | null) ?? null;
   const { data: payData } = debts.length
     ? await supabase
         .from("debt_payments")
@@ -89,13 +94,17 @@ async function Debts({ locale, m }: { locale: Locale; m: Messages }) {
   const totalOpen = open.reduce((s, d) => s + leftOf(d), 0);
   const overdue = open.filter((d) => d.due_date && d.due_date < today);
 
+  const payLine = (amount: number) => {
+    const code = payCode(payMethod, payNumber, amount, currency);
+    return code && payMethod ? `\n\n${fmt(t.payLine, { method: t.payMethods[payMethod as keyof typeof t.payMethods], code })}` : "";
+  };
   const reminderText = (d: Debt) =>
     fmt(business ? t.reminderText : t.reminderTextNoName, {
       name: d.customer_name,
       business,
       amount: money.format(leftOf(d)),
       note: d.note ? ` (${d.note})` : "",
-    });
+    }) + payLine(leftOf(d));
   const owedByPhone = new Map<string, number>();
   for (const d of open) if (d.phone_number) owedByPhone.set(d.phone_number, (owedByPhone.get(d.phone_number) ?? 0) + leftOf(d));
 
@@ -107,7 +116,7 @@ async function Debts({ locale, m }: { locale: Locale; m: Messages }) {
       amount: money.format(leftOf(d)),
       note: d.note ? ` (${d.note})` : "",
     });
-    return `https://wa.me/${d.phone_number}?text=${encodeURIComponent(text)}`;
+    return `https://wa.me/${d.phone_number}?text=${encodeURIComponent(text + payLine(leftOf(d)))}`;
   };
 
   const table = (rows: Debt[], isPaid: boolean) => (
@@ -203,6 +212,10 @@ async function Debts({ locale, m }: { locale: Locale; m: Messages }) {
             <CardTitle className={overdue.length ? "text-3xl tabular-nums text-destructive" : "text-3xl tabular-nums"}>{overdue.length}</CardTitle>
           </CardHeader>
         </Card>
+      </div>
+
+      <div className="mb-6">
+        <PayDetails method={payMethod} number={payNumber} currency={currency} />
       </div>
 
       <div className="mb-6">
