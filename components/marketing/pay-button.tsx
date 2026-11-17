@@ -7,12 +7,27 @@ import { useI18n } from "@/components/i18n/provider";
 import { Button } from "@/components/ui/button";
 import { fmt } from "@/lib/i18n/config";
 import { contactWhatsapp, PAYMENT_ACCOUNTS } from "@/lib/contact";
+import { payCode } from "@/lib/pay";
 
 /**
  * Pricing card button for a paid plan: opens a dialog with the price, the
  * payment accounts and a WhatsApp link to send the receipt (billing is manual).
  */
-export function PayButton({ planName, monthly, yearly, popular }: { planName: string; monthly: string; yearly: string; popular: boolean }) {
+export function PayButton({
+  planName,
+  monthly,
+  yearly,
+  monthlyUsd,
+  yearlyUsd,
+  popular,
+}: {
+  planName: string;
+  monthly: string;
+  yearly: string;
+  monthlyUsd: number;
+  yearlyUsd: number;
+  popular: boolean;
+}) {
   const t = useI18n().m.landing.pay;
   const dialog = useRef<HTMLDialogElement>(null);
   const contact = contactWhatsapp();
@@ -55,6 +70,27 @@ export function PayButton({ planName, monthly, yearly, popular }: { planName: st
                       {a.number}
                     </p>
                     <p className="text-xs text-muted-foreground">{a.name}</p>
+                    {a.method === "EVC Plus" ? (
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {[
+                          { label: t.dialMonthly, amount: monthlyUsd },
+                          { label: t.dialYearly, amount: yearlyUsd },
+                        ].map(({ label, amount }) => {
+                          const code = payCode("evc", a.number, amount, "USD");
+                          return code ? (
+                            <a
+                              key={label}
+                              href={`tel:${encodeURIComponent(code)}`}
+                              className="rounded-md border border-brand/40 bg-brand/10 px-2 py-1 font-mono text-xs text-brand hover:bg-brand/20"
+                              dir="ltr"
+                            >
+                              📲 {label} {code}
+                            </a>
+                          ) : null;
+                        })}
+                        <p className="w-full text-xs text-muted-foreground">{t.dialHint}</p>
+                      </div>
+                    ) : null}
                   </li>
                 ))}
               </ul>

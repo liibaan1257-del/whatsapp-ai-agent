@@ -147,6 +147,9 @@ export const so: Messages = {
     ],
     choose: "Bilow",
     pay: {
+      dialMonthly: "Bishii:",
+      dialYearly: "Sannadkii:",
+      dialHint: "Telefoonka ka riix si aad u garaacdo, kadib PIN-kaaga geli.",
       button: "Bixi hadda",
       title: "Bixi qorshaha {plan}",
       price: "{monthly} bishii ama {yearly} sannadkii",

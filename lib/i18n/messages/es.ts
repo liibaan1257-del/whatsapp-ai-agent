@@ -147,6 +147,9 @@ export const es: Messages = {
     ],
     choose: "Empezar",
     pay: {
+      dialMonthly: "Monthly:",
+      dialYearly: "Yearly:",
+      dialHint: "Tap on your phone to dial it, then enter your PIN.",
       button: "Pay now",
       title: "Pay for {plan}",
       price: "{monthly}/month or {yearly}/year",

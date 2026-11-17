@@ -209,6 +209,8 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
                         planName={t.plans[plan].name}
                         monthly={money.format(PRICES_USD[plan])}
                         yearly={money.format(YEARLY_PRICES_USD[plan])}
+                        monthlyUsd={PRICES_USD[plan]}
+                        yearlyUsd={YEARLY_PRICES_USD[plan]}
                         popular={popular}
                       />
                     ) : (
