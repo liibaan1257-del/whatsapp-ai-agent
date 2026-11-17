@@ -29,7 +29,7 @@ export function DebtActions({ id, paid, left, remindLink }: { id: string; paid: 
           </Button>
         </form>
       ) : null}
-      {!paid ? <PartPayment id={id} left={left} /> : null}
+      {!paid ? <PartPayment key={left} id={id} left={left} /> : null}
       <form action={updateDebt}>
         <input type="hidden" name="id" value={id} />
         <input type="hidden" name="op" value={paid ? "open" : "paid"} />

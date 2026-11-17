@@ -35,9 +35,9 @@ export function PartPayment({ id, left }: { id: string; left: number }) {
         inputMode="decimal"
         dir="ltr"
         aria-label={t.partAmount}
-        placeholder={t.partAmount}
+        placeholder="0.00"
         max={left}
-        className="h-8 w-28"
+        className="h-8 w-24"
       />
       <Button type="submit" variant="brand" size="sm" disabled={pending}>
         {t.save}
