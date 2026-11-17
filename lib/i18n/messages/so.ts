@@ -881,7 +881,7 @@ export const so: Messages = {
     messageLabel: "Fariintaada ({name} waxaa lagu beddelayaa magaca macmiil kasta)",
     messageDefault: "Asc {name} 👋 ",
     send: "Dir",
-    sent: "La diray ✓",
+    sent: "La diray",
     next: "Kan xiga ➜",
     progress: "{done} / {total} la diray",
     addCustomersFirst: "Marka hore macaamiil ku dar \"Liiska Macaamiisha\" (tallaabada 1 👈), kadib halkan ayay ka soo muuqanayaan.",

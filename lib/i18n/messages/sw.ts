@@ -885,7 +885,7 @@ export const sw: Messages = {
     messageLabel: "Your message ({name} is replaced with each customer's name)",
     messageDefault: "Hi {name} 👋 ",
     send: "Send",
-    sent: "Sent ✓",
+    sent: "Sent",
     next: "Next ➜",
     progress: "{done} of {total} sent",
     addCustomersFirst: "First add customers in the \"Customer list\" (step 1 👈); they show up here.",
