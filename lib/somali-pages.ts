@@ -22,6 +22,12 @@ export type SomaliPage = {
   benefits: string[];
   stepsTitle: string;
   faq: Faq[];
+  /** Page-specific steps; defaults to SOMALI_STEPS (connecting the WhatsApp bot). */
+  steps?: { title: string; text: string }[];
+  /** Page language; defaults to Somali. */
+  lang?: "so" | "en";
+  /** The same page in the other language (hreflang). */
+  alternate?: { lang: "so" | "en"; path: string };
 };
 
 /** Shared setup steps (also the HowTo structured data). */
@@ -288,6 +294,119 @@ export const SOMALI_PAGES = {
       PRICE_FAQ,
     ],
   },
+  "buugga-deynta": {
+    path: "/buugga-deynta",
+    lang: "so",
+    alternate: { lang: "en", path: "/debt-book-app" },
+    title: "Buugga Deynta: qor deymaha macaamiisha, WhatsApp ku xasuusi",
+    description:
+      "Buug deyn oo online ah oo Af-Soomaali ah: qor lacagta macaamiishu kugu leeyihiin, arag wadarta iyo kuwa dib u dhacay, una dir xasuusin WhatsApp ah hal riix. 14 maalmood bilaash.",
+    kicker: "Buugga Deynta",
+    intro:
+      "Dukaanno badan deymaha waxay ku qoraan buug warqad ah: wuu lumaa, wuu qoyaa, mana xasuusato cidda wakhtigeedu dhaafay. ReplyBooker wuxuu kuu siinayaa Buugga Deynta: macmiil kasta iyo lacagtiisa ku qor, wadarta isla markiiba arag, kadibna \"Xasuusi\" riix si WhatsApp-kaagu ugu furmo fariin xasuusin ah oo diyaar ah.",
+    chatLabel: "Tusaale: xasuusinta deynta",
+    chatName: "Dukaanka Barwaaqo",
+    chat: [
+      { from: "bot", text: "Asc Cali 👋 Waa Dukaanka Barwaaqo. Xasuusin yar: $15 ayaad nagu leedahay (2 kiish bariis). Fadlan noo sheeg goorta aad bixin karto. Mahadsanid 🙏" },
+      { from: "customer", text: "Wcs, waan ka xumahay dib u dhaca. Berri ayaan EVC kuugu soo dirayaa." },
+      { from: "bot", text: "Mahadsanid Cali 🙏 Waan sugaynaa." },
+    ],
+    benefitsTitle: "Waxa Buugga Deyntu kuu qabanayo",
+    benefits: [
+      "Macmiil kasta, lacagta, waxa uu qaatay iyo goorta uu bixinayo hal meel ayaad ku qorataa.",
+      "Wadarta lacagta lagugu leeyahay iyo inta deyn ee furan isla markiiba ayaad aragtaa.",
+      "Deymaha wakhtigoodu dhaafay waxay ku muuqdaan casaan, mid kuma dhaafayo.",
+      "\"Xasuusi\": WhatsApp-kaaga ayaa ku furmaya fariin edeb leh oo diyaar ah. Adiga ayaa diraya, waana bilaash.",
+      "\"Waa la bixiyay\" riix marka uu bixiyo, taariikhdana waa la kaydiyaa.",
+      "Telefoonka ama kombiyuutarka ka isticmaal. Xogtaadu waa mid kuu gaar ah, cid kale ma arkayso.",
+    ],
+    stepsTitle: "Sidee loo isticmaalaa Buugga Deynta?",
+    steps: [
+      { title: "Isdiiwaangeli bilaash", text: "Gal replybooker.com oo samee akoon. 14 maalmood waa bilaash, kaar looma baahna." },
+      { title: "Fur \"Buugga Deynta\"", text: "Dashboard-ka menu-giisa ka dooro \"Buugga Deynta\"." },
+      { title: "Ku dar deyn", text: "Qor magaca macmiilka, WhatsApp-kiisa, lacagta, waxa uu qaatay iyo goorta uu bixinayo." },
+      { title: "Xasuusi oo xir", text: "\"Xasuusi\" riix si fariinta WhatsApp-ka ugu furmo. Marka uu bixiyo, \"Waa la bixiyay\" riix." },
+    ],
+    faq: [
+      {
+        q: "Xasuusintu ma lacag baa?",
+        a: "Maya. \"Xasuusi\" wuxuu WhatsApp-kaaga ku furaa fariin diyaar ah, adigaana ka diraya lambarkaaga. Meta iyo ReplyBooker midkoodna lacag kaagama qaadanayo fariintaas.",
+      },
+      {
+        q: "Macmiilku miyuu arkayaa buuggayga?",
+        a: "Maya. Buugga waxaa arka adiga oo keliya (akoonkaaga). Macmiilku wuxuu helayaa fariinta xasuusinta ee aad u dirto oo keliya.",
+      },
+      {
+        q: "Lacag aan doolar ahayn ma qori karaa?",
+        a: "Haa. Lacagta waxaa loo qoraa lacagta aad ku dooratay \"Xogta ganacsiga\" (tusaale USD, KES, UGX ama ETB).",
+      },
+      {
+        q: "Bot-ka WhatsApp ma u baahanahay si aan u isticmaalo?",
+        a: "Maya. Buugga Deynta isagaa iskiis u shaqeeya. Haddii aad rabto, waxaad sidoo kale ku dari kartaa bot AI ah oo macaamiishaada 24 saacadood uga jawaaba.",
+      },
+      {
+        q: "Immisa ayay ku kacaysaa?",
+        a: `14 maalmood waa bilaash, kaar looma baahna. Kadib Starter waa $${PRICES_USD.starter} bishii, wuxuuna ka mid yahay ReplyBooker oo dhan (bot-ka AI, ballamaha iyo Buugga Deynta).`,
+      },
+    ],
+  },
+
+  "debt-book-app": {
+    path: "/debt-book-app",
+    lang: "en",
+    alternate: { lang: "so", path: "/buugga-deynta" },
+    title: "Debt Book App: track customer credit and remind on WhatsApp",
+    description:
+      "A simple online debt book (credit ledger) for small shops: record what customers owe, see the total and overdue debts, and send a WhatsApp payment reminder in one tap. Free for 14 days.",
+    kicker: "Debt book",
+    intro:
+      "Many shops still track customer credit in a paper notebook: it gets lost, it gets wet, and nobody remembers who is overdue. ReplyBooker's debt book keeps every customer and amount in one place, shows the total owed at a glance, and opens WhatsApp with a ready, polite reminder when you tap Remind.",
+    chatLabel: "Example: a payment reminder",
+    chatName: "Barwaaqo Shop",
+    chat: [
+      { from: "bot", text: "Hi Ali 👋 This is Barwaaqo Shop. A friendly reminder: you owe us $15 (2 bags of rice). Please let us know when you can pay. Thank you 🙏" },
+      { from: "customer", text: "Sorry for the delay! I'll send it by mobile money tomorrow." },
+      { from: "bot", text: "Thank you Ali 🙏 Talk soon." },
+    ],
+    benefitsTitle: "What the debt book does for you",
+    benefits: [
+      "Record each customer, the amount, what they took and when they'll pay.",
+      "See the total owed to you and the number of open debts instantly.",
+      "Overdue debts are highlighted in red, so none slip through.",
+      "Remind opens your own WhatsApp with a polite, ready message. You send it, for free.",
+      "Tap Paid when they pay; the date is saved.",
+      "Works on phone or computer. Your data is private to your account.",
+    ],
+    stepsTitle: "How to use the debt book",
+    steps: [
+      { title: "Sign up free", text: "Create an account at replybooker.com. 14 days free, no card needed." },
+      { title: "Open \"Debt book\"", text: "Pick \"Debt book\" in the dashboard menu." },
+      { title: "Add a debt", text: "Enter the customer's name, WhatsApp number, amount, note and due date." },
+      { title: "Remind and close", text: "Tap Remind to open the WhatsApp message. When they pay, tap Paid." },
+    ],
+    faq: [
+      {
+        q: "Do reminders cost anything?",
+        a: "No. Remind opens WhatsApp on your phone with the message filled in, and you send it from your own number. Neither Meta nor ReplyBooker charges for it.",
+      },
+      {
+        q: "Can customers see my debt book?",
+        a: "No. Only you (your account) can see it. Customers only receive the reminder you send.",
+      },
+      {
+        q: "Can I use my local currency?",
+        a: "Yes. Amounts use the currency you set in Business info (for example USD, KES, UGX or ETB).",
+      },
+      {
+        q: "Do I need the WhatsApp bot to use it?",
+        a: "No. The debt book works on its own. If you want, you can also add an AI bot that answers your customers on WhatsApp 24/7.",
+      },
+      {
+        q: "How much does it cost?",
+        a: `14 days free, no card needed. After that Starter is $${PRICES_USD.starter}/month and includes all of ReplyBooker (the AI bot, bookings and the debt book).`,
+      },
+    ],
+  },
 } satisfies Record<string, SomaliPage>;
 
 export type SomaliPageSlug = keyof typeof SOMALI_PAGES;
@@ -301,4 +420,8 @@ export const SOMALI_LINKS: { path: string; label: string }[] = [
   { path: "/bot-whatsapp-dukaan", label: "Bot WhatsApp dukaan" },
   { path: "/bot-whatsapp-makhaayad", label: "Bot WhatsApp makhaayad" },
   { path: "/ballan-qabsasho-whatsapp", label: "Ballan qabsasho WhatsApp" },
+  { path: "/buugga-deynta", label: "Buugga Deynta" },
 ];
+
+/** English landing pages built with the same component (sitemap). */
+export const ENGLISH_LINKS: { path: string; label: string }[] = [{ path: "/debt-book-app", label: "Debt book app" }];

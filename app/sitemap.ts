@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { INDUSTRIES } from "@/lib/industries";
 import { siteUrl } from "@/lib/site";
-import { SOMALI_LINKS } from "@/lib/somali-pages";
+import { ENGLISH_LINKS, SOMALI_LINKS } from "@/lib/somali-pages";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteUrl();
@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/terms`, changeFrequency: "yearly", priority: 0.2 },
     { url: `${base}/privacy`, changeFrequency: "yearly", priority: 0.2 },
     ...SOMALI_LINKS.map((l) => ({ url: `${base}${l.path}`, changeFrequency: "monthly" as const, priority: 0.8 })),
+    ...ENGLISH_LINKS.map((l) => ({ url: `${base}${l.path}`, changeFrequency: "monthly" as const, priority: 0.8 })),
     ...INDUSTRIES.map((slug) => ({ url: `${base}/for/${slug}`, changeFrequency: "monthly" as const, priority: 0.7 })),
   ];
 }

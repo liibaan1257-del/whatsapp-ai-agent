@@ -6,7 +6,7 @@ import { SiteHeader } from "@/components/marketing/site-header";
 import { Button } from "@/components/ui/button";
 import { getMessages } from "@/lib/i18n/dictionaries";
 import { siteUrl } from "@/lib/site";
-import { SOMALI_LINKS, SOMALI_PAGES, SOMALI_STEPS, type SomaliPage, type SomaliPageSlug } from "@/lib/somali-pages";
+import { ENGLISH_LINKS, SOMALI_LINKS, SOMALI_PAGES, SOMALI_STEPS, type SomaliPage, type SomaliPageSlug } from "@/lib/somali-pages";
 
 /** Metadata for a Somali landing page: one Somali page at one canonical URL, whatever the visitor's language. */
 export function somaliPageMetadata(slug: SomaliPageSlug): Metadata {
@@ -14,11 +14,14 @@ export function somaliPageMetadata(slug: SomaliPageSlug): Metadata {
   return {
     title: p.title,
     description: p.description,
-    alternates: { canonical: p.path },
+    alternates: {
+      canonical: p.path,
+      ...(p.alternate ? { languages: { [p.lang ?? "so"]: p.path, [p.alternate.lang]: p.alternate.path } } : {}),
+    },
     openGraph: {
       type: "website",
       siteName: "ReplyBooker",
-      locale: "so_SO",
+      locale: p.lang === "en" ? "en_US" : "so_SO",
       title: p.title,
       description: p.description,
       url: p.path,
@@ -30,7 +33,10 @@ export function somaliPageMetadata(slug: SomaliPageSlug): Metadata {
 /** A Somali landing page built from lib/somali-pages.ts (header and footer in Somali too). */
 export function SomaliLanding({ slug }: { slug: SomaliPageSlug }) {
   const p: SomaliPage = SOMALI_PAGES[slug];
-  const m = getMessages("so");
+  const lang = p.lang ?? "so";
+  const en = lang === "en";
+  const m = getMessages(lang);
+  const steps = p.steps ?? SOMALI_STEPS;
   const url = `${siteUrl()}${p.path}`;
   const jsonLd = [
     {
@@ -39,7 +45,7 @@ export function SomaliLanding({ slug }: { slug: SomaliPageSlug }) {
       name: p.title,
       description: p.description,
       url,
-      inLanguage: "so",
+      inLanguage: lang,
       provider: { "@type": "Organization", name: "ReplyBooker", url: siteUrl() },
       availableLanguage: ["so", "en", "ar"],
     },
@@ -47,20 +53,20 @@ export function SomaliLanding({ slug }: { slug: SomaliPageSlug }) {
       "@context": "https://schema.org",
       "@type": "HowTo",
       name: p.stepsTitle,
-      inLanguage: "so",
-      step: SOMALI_STEPS.map((st, i) => ({ "@type": "HowToStep", position: i + 1, name: st.title, text: st.text })),
+      inLanguage: lang,
+      step: steps.map((st, i) => ({ "@type": "HowToStep", position: i + 1, name: st.title, text: st.text })),
     },
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      inLanguage: "so",
+      inLanguage: lang,
       mainEntity: p.faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
     },
   ];
-  const related = SOMALI_LINKS.filter((l) => l.path !== p.path);
+  const related = (en ? ENGLISH_LINKS : SOMALI_LINKS).filter((l) => l.path !== p.path);
 
   return (
-    <div className="flex flex-1 flex-col" lang="so">
+    <div className="flex flex-1 flex-col" lang={lang}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <SiteHeader m={m} />
       <main className="flex-1">
@@ -123,9 +129,9 @@ export function SomaliLanding({ slug }: { slug: SomaliPageSlug }) {
 
         <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
           <h2 className="text-center text-3xl font-semibold tracking-tight">{p.stepsTitle}</h2>
-          <p className="mt-2 text-center text-muted-foreground">4 tallaabo, code la&apos;aan.</p>
+          <p className="mt-2 text-center text-muted-foreground">{en ? "4 steps, no code." : "4 tallaabo, code la\u2019aan."}</p>
           <ol className="mt-8 grid gap-4 sm:grid-cols-2">
-            {SOMALI_STEPS.map((st, i) => (
+            {steps.map((st, i) => (
               <li key={st.title} className="flex gap-4 rounded-xl border bg-card p-5">
                 <span className="grid size-9 shrink-0 place-items-center rounded-full bg-brand font-semibold text-brand-foreground">{i + 1}</span>
                 <div>
@@ -139,7 +145,7 @@ export function SomaliLanding({ slug }: { slug: SomaliPageSlug }) {
 
         <section className="border-t bg-muted/30">
           <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
-            <h2 className="text-center text-3xl font-semibold tracking-tight">Su&apos;aalaha badanaa la is weydiiyo</h2>
+            <h2 className="text-center text-3xl font-semibold tracking-tight">{en ? "Frequently asked questions" : "Su\u2019aalaha badanaa la is weydiiyo"}</h2>
             <div className="mt-8 space-y-3">
               {p.faq.map((f) => (
                 <details key={f.q} className="rounded-xl border bg-card p-5">
@@ -151,9 +157,17 @@ export function SomaliLanding({ slug }: { slug: SomaliPageSlug }) {
           </div>
         </section>
 
+        {p.alternate || related.length ? (
         <section className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
-          <h2 className="text-xl font-semibold tracking-tight">Bogag kale oo Af-Soomaali ah</h2>
+          <h2 className="text-xl font-semibold tracking-tight">{en ? "Also available" : "Bogag kale oo Af-Soomaali ah"}</h2>
           <ul className="mt-4 flex flex-wrap gap-2">
+            {p.alternate && en ? (
+              <li>
+                <Link href={p.alternate.path} lang="so" className="inline-block rounded-full border px-3 py-1 text-sm hover:border-brand hover:text-brand">
+                  Af-Soomaali: Buugga Deynta
+                </Link>
+              </li>
+            ) : null}
             {related.map((l) => (
               <li key={l.path}>
                 <Link href={l.path} className="inline-block rounded-full border px-3 py-1 text-sm hover:border-brand hover:text-brand">
@@ -161,12 +175,20 @@ export function SomaliLanding({ slug }: { slug: SomaliPageSlug }) {
                 </Link>
               </li>
             ))}
+            {p.alternate && !en ? (
+              <li>
+                <Link href={p.alternate.path} lang="en" className="inline-block rounded-full border px-3 py-1 text-sm hover:border-brand hover:text-brand">
+                  English: Debt book app
+                </Link>
+              </li>
+            ) : null}
           </ul>
         </section>
+        ) : null}
 
         <section className="border-t bg-brand/10">
           <div className="mx-auto max-w-6xl px-4 py-16 text-center sm:px-6">
-            <h2 className="text-3xl font-semibold tracking-tight">Maanta bilow, 14 maalmood bilaash</h2>
+            <h2 className="text-3xl font-semibold tracking-tight">{en ? "Start today, free for 14 days" : "Maanta bilow, 14 maalmood bilaash"}</h2>
             <p className="mt-2 text-muted-foreground">{m.landing.finalBody}</p>
             <div className="mt-6 flex justify-center">
               <Button variant="brand" size="lg" asChild>
