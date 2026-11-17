@@ -884,6 +884,7 @@ export const so: Messages = {
     sent: "La diray ✓",
     next: "Kan xiga ➜",
     progress: "{done} / {total} la diray",
+    addCustomersFirst: "Marka hore macaamiil ku dar \"Liiska Macaamiisha\" (tallaabada 1 👈), kadib halkan ayay ka soo muuqanayaan.",
     noneToSend: "Weli cid loo diro ma jirto.",
     lockedTitle: "Liiska Macaamiisha iyo U dir dhammaan",
     lockedBody: "Kaydi dhammaan macaamiishaada, una dir fariimo WhatsApp iyo xasuusin deyn dhammaantood hal shaashad. Waxay ku jirtaa qorshayaasha lacagta leh: Buug $5 bishii ama Starter $20 bishii.",

@@ -884,6 +884,7 @@ export const fr: Messages = {
     sent: "Sent ✓",
     next: "Next ➜",
     progress: "{done} of {total} sent",
+    addCustomersFirst: "First add customers in the \"Customer list\" (step 1 👈); they show up here.",
     noneToSend: "Nobody to send to yet.",
     lockedTitle: "Customer list & send to everyone",
     lockedBody: "Save all your customers and send WhatsApp messages and debt reminders to everyone in one screen. Available on paid plans: Debt book $5/month or Starter $20/month.",

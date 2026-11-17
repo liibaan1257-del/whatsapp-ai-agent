@@ -22,6 +22,7 @@ export function CustomersCard({ customers }: { customers: CustomerRow[] }) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Contact className="size-5 text-brand" aria-hidden="true" />
+          <span className="grid size-6 place-items-center rounded-full bg-brand text-xs font-bold text-brand-foreground">1</span>
           {t.customersTitle} <span className="text-sm font-normal text-muted-foreground">({customers.length})</span>
         </CardTitle>
         <CardDescription>{t.customersHint}</CardDescription>
@@ -43,7 +44,7 @@ export function CustomersCard({ customers }: { customers: CustomerRow[] }) {
             <Button type="submit" variant="brand" size="sm" disabled={pending}>
               {bulk ? t.saveCustomers : t.addCustomer}
             </Button>
-            <Button type="button" variant="ghost" size="sm" onClick={() => setBulk((b) => !b)}>
+            <Button type="button" variant="outline" size="sm" onClick={() => setBulk((b) => !b)}>
               {bulk ? t.addCustomer : t.bulkToggle}
             </Button>
             {state.error ? (

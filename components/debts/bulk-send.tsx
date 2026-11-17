@@ -44,6 +44,7 @@ export function BulkSend({ reminders, customers }: { reminders: Item[]; customer
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
+          <span className="grid size-6 place-items-center rounded-full bg-brand text-xs font-bold text-brand-foreground">2</span>
           <Send className="size-5 text-brand" aria-hidden="true" />
           {t.sendTitle}
         </CardTitle>
@@ -118,7 +119,7 @@ export function BulkSend({ reminders, customers }: { reminders: Item[]; customer
             </ul>
           </>
         ) : (
-          <p className="text-sm text-muted-foreground">{t.noneToSend}</p>
+          <p className="rounded-lg border border-dashed p-3 text-sm text-muted-foreground">{tab === "message" ? t.addCustomersFirst : t.noneToSend}</p>
         )}
       </CardContent>
     </Card>

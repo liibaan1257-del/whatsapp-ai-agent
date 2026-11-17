@@ -211,17 +211,17 @@ async function Debts({ locale, m }: { locale: Locale; m: Messages }) {
 
       {paidPlan ? (
       <div className="mb-6 grid gap-6 lg:grid-cols-2">
-        <BulkSend
-          reminders={open
-            .filter((d) => d.phone_number && leftOf(d) > 0)
-            .map((d) => ({ key: d.id, debtId: d.id, name: d.customer_name, phone: d.phone_number as string, text: reminderText(d) }))}
-          customers={customers.map((c) => ({ key: c.id, name: c.name, phone: c.phone_number }))}
-        />
         <CustomersCard
           customers={customers.map((c) => {
             const owed = owedByPhone.get(c.phone_number);
             return { id: c.id, name: c.name, phone: c.phone_number, owes: owed ? fmt(t.owes, { amount: money.format(owed) }) : null };
           })}
+        />
+        <BulkSend
+          reminders={open
+            .filter((d) => d.phone_number && leftOf(d) > 0)
+            .map((d) => ({ key: d.id, debtId: d.id, name: d.customer_name, phone: d.phone_number as string, text: reminderText(d) }))}
+          customers={customers.map((c) => ({ key: c.id, name: c.name, phone: c.phone_number }))}
         />
       </div>
       ) : (
