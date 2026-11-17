@@ -300,10 +300,10 @@ export const SOMALI_PAGES = {
     alternate: { lang: "en", path: "/debt-book-app" },
     title: "Buugga Deynta: qor deymaha macaamiisha, WhatsApp ku xasuusi",
     description:
-      "Buug deyn oo online ah oo Af-Soomaali ah: qor lacagta macaamiishu kugu leeyihiin, arag wadarta iyo kuwa dib u dhacay, una dir xasuusin WhatsApp ah hal riix. 14 maalmood bilaash.",
+      "Buugga Deynta (Buugga Daynta) oo online ah, Af-Soomaali: qor deymaha macaamiisha, arag wadarta iyo kuwa dib u dhacay, una dir xasuusin WhatsApp ah hal riix. App la'aan, 14 maalmood bilaash.",
     kicker: "Buugga Deynta",
     intro:
-      "Dukaanno badan deymaha waxay ku qoraan buug warqad ah: wuu lumaa, wuu qoyaa, mana xasuusato cidda wakhtigeedu dhaafay. ReplyBooker wuxuu kuu siinayaa Buugga Deynta: macmiil kasta iyo lacagtiisa ku qor, wadarta isla markiiba arag, kadibna \"Xasuusi\" riix si WhatsApp-kaagu ugu furmo fariin xasuusin ah oo diyaar ah.",
+      "Dukaanno badan deymaha waxay ku qoraan buug warqad ah: wuu lumaa, wuu qoyaa, mana xasuusato cidda wakhtigeedu dhaafay. ReplyBooker wuxuu kuu siinayaa Buugga Deynta (qaar waxay u qoraan Buugga Daynta ama buug deyn), oo telefoon kasta iyo kombiyuutar ka shaqeeya, app la'aan: macmiil kasta iyo lacagtiisa ku qor, wadarta isla markiiba arag, kadibna \"Xasuusi\" riix si WhatsApp-kaagu ugu furmo fariin xasuusin ah oo diyaar ah.",
     chatLabel: "Tusaale: xasuusinta deynta",
     chatName: "Dukaanka Barwaaqo",
     chat: [
@@ -328,6 +328,10 @@ export const SOMALI_PAGES = {
       { title: "Xasuusi oo xir", text: "\"Xasuusi\" riix si fariinta WhatsApp-ka ugu furmo. Marka uu bixiyo, \"Waa la bixiyay\" riix." },
     ],
     faq: [
+      {
+        q: "Buugga Deynta iyo Buugga Daynta ma isku mid baa?",
+        a: "Haa. Labadaba waa buug deyn: halka aad ku qorto deymaha macaamiisha (dayn ama deyn, labadaba waa sax). ReplyBooker-ka waa online: app ma soo dejinaysid, telefoon kasta ama kombiyuutar ayaad ka furaysaa, wuxuuna leeyahay xasuusin WhatsApp ah iyo, haddii aad rabto, bot AI ah oo macaamiishaada uga jawaaba.",
+      },
       {
         q: "Xasuusintu ma lacag baa?",
         a: "Maya. \"Xasuusi\" wuxuu WhatsApp-kaaga ku furaa fariin diyaar ah, adigaana ka diraya lambarkaaga. Meta iyo ReplyBooker midkoodna lacag kaagama qaadanayo fariintaas.",
