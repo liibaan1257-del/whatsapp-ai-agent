@@ -146,6 +146,19 @@ export const so: Messages = {
       "Bot AI ma laha (goor kasta u kac)",
     ],
     choose: "Bilow",
+    pay: {
+      button: "Bixi hadda",
+      title: "Bixi qorshaha {plan}",
+      price: "{monthly} bishii ama {yearly} sannadkii",
+      step1: "Lacagta u dir mid ka mid ah account-yadan:",
+      step2: "Rasiidka iyo email-ka akoonkaaga noogu soo dir WhatsApp.",
+      whatsapp: "Rasiidka WhatsApp ku dir",
+      step3: "Isla markiiba ayaan qorshahaaga kuu furaynaa.",
+      noAccount: "Akoon ma lihid?",
+      signup: "Marka hore samee akoon bilaash ah",
+      close: "Xir",
+      message: "Asc, waxaan bixiyay qorshaha {plan} ({monthly} bishii ama {yearly} sannadkii). Waa kan rasiidka. Email-ka akoonkayga: ",
+    },
     faqTitle: "Su'aalaha badanaa la is weydiiyo",
     faqs: [
       {

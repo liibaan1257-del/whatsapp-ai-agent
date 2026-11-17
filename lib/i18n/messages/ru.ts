@@ -147,6 +147,19 @@ export const ru: Messages = {
       "No AI bot (upgrade any time)",
     ],
     choose: "Начать",
+    pay: {
+      button: "Pay now",
+      title: "Pay for {plan}",
+      price: "{monthly}/month or {yearly}/year",
+      step1: "Send the payment to one of these accounts:",
+      step2: "Send us the receipt and your account email on WhatsApp.",
+      whatsapp: "Send receipt on WhatsApp",
+      step3: "We activate your plan right away.",
+      noAccount: "No account yet?",
+      signup: "Create a free account first",
+      close: "Close",
+      message: "Hi, I paid for the {plan} plan ({monthly}/month or {yearly}/year). Here is my receipt. My account email: ",
+    },
     faqTitle: "Часто задаваемые вопросы",
     faqs: [
       {

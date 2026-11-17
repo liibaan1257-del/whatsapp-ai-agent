@@ -17,6 +17,7 @@ import { SiteHeader } from "@/components/marketing/site-header";
 import { Button } from "@/components/ui/button";
 import { contactWhatsappLink, PLAN_NAMES, PLANS, PRICES_USD, YEARLY_PRICES_USD } from "@/lib/billing";
 import { PAYMENT_ACCOUNTS } from "@/lib/contact";
+import { PayButton } from "@/components/marketing/pay-button";
 import { fmt } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n/dictionaries";
 import { localeFrom } from "@/lib/i18n/server";
@@ -203,9 +204,18 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
                         </li>
                       ))}
                     </ul>
-                    <Button variant={popular ? "brand" : "outline"} className="mt-6" asChild>
-                      <Link href="/signup">{t.choose}</Link>
-                    </Button>
+                    {PRICES_USD[plan] ? (
+                      <PayButton
+                        planName={t.plans[plan].name}
+                        monthly={money.format(PRICES_USD[plan])}
+                        yearly={money.format(YEARLY_PRICES_USD[plan])}
+                        popular={popular}
+                      />
+                    ) : (
+                      <Button variant={popular ? "brand" : "outline"} className="mt-6" asChild>
+                        <Link href="/signup">{t.choose}</Link>
+                      </Button>
+                    )}
                   </div>
                 );
               })}
