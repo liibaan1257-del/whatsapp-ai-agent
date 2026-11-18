@@ -23,4 +23,5 @@ export const PAYMENT_ACCOUNTS = [
   { method: "EVC Plus", number: "0618710974", name: "Liban Salah Abdullahi" },
   { method: "Salaam Somali Bank", number: "38458446", name: "Liban Salah Abdullahi" },
   { method: "Premier Bank", number: "0615690242", name: "Cabdullahi Sheikh Ahmed Mahomuud" },
+  { method: "Dahabshiil", number: "315021254101", name: "Abdullahi Ahmed Mohamud" },
 ] as const;
