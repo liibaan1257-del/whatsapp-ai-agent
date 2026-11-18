@@ -218,8 +218,11 @@ export async function connectWhatsApp(_prev: AdminState, formData: FormData): Pr
  * operator, so an action they didn't take (a stolen admin login) shows up at once.
  */
 async function auditAdmin(db: ReturnType<typeof createAdminClient>, businessId: string, action: string) {
-  const { data } = await db.from("business_knowledge").select("business_name").eq("id", businessId).maybeSingle();
-  const summary = `${data?.business_name || businessId}: ${action}`;
+  const { data } = await db.from("business_knowledge").select("business_name, owner_id").eq("id", businessId).maybeSingle();
+  // No business name yet: show the owner's email so the alert is readable.
+  let label = data?.business_name || "";
+  if (!label && data?.owner_id) label = (await db.auth.admin.getUserById(String(data.owner_id))).data.user?.email ?? "";
+  const summary = `${label || businessId}: ${action}`;
   await recordEvent("admin", "", summary);
   await notifyOperator(
     `🛠️ Admin: ${summary}`,
