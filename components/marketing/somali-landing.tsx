@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CalendarCheck, Check, MessageCircle } from "lucide-react";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
+import { WhatsAppCta, WhatsAppFloat } from "@/components/marketing/whatsapp-cta";
 import { Button } from "@/components/ui/button";
 import { getMessages } from "@/lib/i18n/dictionaries";
 import { siteUrl } from "@/lib/site";
@@ -64,6 +65,8 @@ export function SomaliLanding({ slug }: { slug: SomaliPageSlug }) {
     },
   ];
   const related = (en ? ENGLISH_LINKS : SOMALI_LINKS).filter((l) => l.path !== p.path);
+  const waLabel = en ? "Message us on WhatsApp" : "WhatsApp-ka nagala soo xiriir";
+  const waText = en ? `Hi, I'm interested in ReplyBooker 👋 (${p.path})` : `Asc, ReplyBooker ayaan rabaa 👋 (${p.path})`;
 
   return (
     <div className="flex flex-1 flex-col" lang={lang}>
@@ -78,8 +81,9 @@ export function SomaliLanding({ slug }: { slug: SomaliPageSlug }) {
             </span>
             <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-5xl">{p.title}</h1>
             <p className="max-w-xl text-lg text-pretty text-muted-foreground">{p.intro}</p>
-            <div className="flex flex-wrap gap-3">
-              <Button variant="brand" size="lg" asChild>
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <WhatsAppCta label={waLabel} text={waText} className="w-full py-4 text-lg sm:w-auto" />
+              <Button variant="outline" size="lg" asChild>
                 <Link href="/signup">{m.landing.ctaStart}</Link>
               </Button>
             </div>
@@ -190,8 +194,9 @@ export function SomaliLanding({ slug }: { slug: SomaliPageSlug }) {
           <div className="mx-auto max-w-6xl px-4 py-16 text-center sm:px-6">
             <h2 className="text-3xl font-semibold tracking-tight">{en ? "Start today · 7-day money-back guarantee" : "Maanta bilow · dammaanad 7 maalmood"}</h2>
             <p className="mt-2 text-muted-foreground">{m.landing.finalBody}</p>
-            <div className="mt-6 flex justify-center">
-              <Button variant="brand" size="lg" asChild>
+            <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <WhatsAppCta label={waLabel} text={waText} className="py-4 text-lg" />
+              <Button variant="outline" size="lg" asChild>
                 <Link href="/signup">{m.landing.ctaStart}</Link>
               </Button>
             </div>
@@ -199,6 +204,7 @@ export function SomaliLanding({ slug }: { slug: SomaliPageSlug }) {
         </section>
       </main>
       <SiteFooter m={m} />
+      <WhatsAppFloat label={waLabel} text={waText} />
     </div>
   );
 }

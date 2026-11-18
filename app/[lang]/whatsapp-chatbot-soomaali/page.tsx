@@ -3,12 +3,16 @@ import Link from "next/link";
 import { CalendarCheck, Check, Globe, MessageCircle } from "lucide-react";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
+import { WhatsAppCta, WhatsAppFloat } from "@/components/marketing/whatsapp-cta";
 import { Button } from "@/components/ui/button";
 import { PRICES_USD } from "@/lib/billing";
 import { LOCALES } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n/dictionaries";
 import { siteUrl } from "@/lib/site";
 import { SOMALI_LINKS } from "@/lib/somali-pages";
+
+const WA_LABEL = "WhatsApp-ka nagala soo xiriir";
+const WA_TEXT = "Asc, ReplyBooker ayaan rabaa 👋 (whatsapp-chatbot-soomaali)";
 
 /**
  * Somali-language landing page for "WhatsApp AI chatbot in Somali" searches.
@@ -156,8 +160,9 @@ export default function SomaliChatbotPage() {
               Macaamiishaadu WhatsApp ayay kuugu qoraan habeen iyo maalin. ReplyBooker wuxuu Af-Soomaali ugaga jawaabaa daqiiqado gudahood, wuxuu u
               sheegaa qiimahaaga, wuxuuna u qabtaa ballamaha, xataa marka aad seexato.
             </p>
-            <div className="flex flex-wrap gap-3">
-              <Button variant="brand" size="lg" asChild>
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <WhatsAppCta label={WA_LABEL} text={WA_TEXT} className="w-full py-4 text-lg sm:w-auto" />
+              <Button variant="outline" size="lg" asChild>
                 <Link href="/signup">{m.landing.ctaStart}</Link>
               </Button>
             </div>
@@ -278,8 +283,9 @@ export default function SomaliChatbotPage() {
           <div className="mx-auto max-w-6xl px-4 py-16 text-center sm:px-6">
             <h2 className="text-3xl font-semibold tracking-tight">Maanta bilow · dammaanad 7 maalmood</h2>
             <p className="mt-2 text-muted-foreground">{m.landing.finalBody}</p>
-            <div className="mt-6 flex justify-center">
-              <Button variant="brand" size="lg" asChild>
+            <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <WhatsAppCta label={WA_LABEL} text={WA_TEXT} className="py-4 text-lg" />
+              <Button variant="outline" size="lg" asChild>
                 <Link href="/signup">{m.landing.ctaStart}</Link>
               </Button>
             </div>
@@ -287,6 +293,7 @@ export default function SomaliChatbotPage() {
         </section>
       </main>
       <SiteFooter m={m} />
+      <WhatsAppFloat label={WA_LABEL} text={WA_TEXT} />
     </div>
   );
 }
