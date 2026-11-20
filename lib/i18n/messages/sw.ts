@@ -206,6 +206,7 @@ export const sw: Messages = {
     yourName: "Jina lako",
     whatsapp: "Namba ya WhatsApp (si lazima)",
     whatsappHint: "Ili tukusaidie kuweka mipangilio. Weka msimbo wa nchi, mfano +254 712 345 678.",
+    addWhatsappOptional: "Ongeza namba ya WhatsApp (hiari)",
     email: "Barua pepe",
     password: "Nenosiri",
     passwordNew: "Nenosiri (herufi 8+)",

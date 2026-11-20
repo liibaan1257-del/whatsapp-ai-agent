@@ -205,6 +205,7 @@ export const de: Messages = {
     yourName: "Ihr Name",
     whatsapp: "WhatsApp-Nummer (optional)",
     whatsappHint: "Damit wir Ihnen bei der Einrichtung helfen können. Mit Ländervorwahl, z. B. +49 151 2345678.",
+    addWhatsappOptional: "WhatsApp-Nummer hinzufügen (optional)",
     email: "E-Mail",
     password: "Passwort",
     passwordNew: "Passwort (mind. 8 Zeichen)",

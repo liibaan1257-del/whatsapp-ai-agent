@@ -20,10 +20,9 @@ function withTimeZone(fd: FormData): FormData {
 export function SignupForm() {
   const { m } = useI18n();
   const [state, action, pending] = useActionState<AuthState, FormData>(signup, {});
-  const [fullName, setFullName] = useState("");
-  const [businessName, setBusinessName] = useState("");
   const [email, setEmail] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
+  const [showWhatsapp, setShowWhatsapp] = useState(false);
 
   if (state.notice) {
     return (
@@ -34,26 +33,10 @@ export function SignupForm() {
   }
 
   return (
+    // Only email + password are required to create the account; the business
+    // name and other details are collected later in the dashboard. Keeping the
+    // form this short is deliberate: cold visitors from ads abandon long forms.
     <form action={(fd) => action(withTimeZone(fd))} className="space-y-4" noValidate>
-      <Field
-        id="fullName"
-        label={m.auth.yourName}
-        autoComplete="name"
-        maxLength={100}
-        value={fullName}
-        onChange={(e) => setFullName(e.target.value)}
-        error={state.fieldErrors?.fullName}
-      />
-      <Field
-        id="businessName"
-        label={m.knowledge.businessName}
-        placeholder={m.knowledge.businessNamePlaceholder}
-        autoComplete="organization"
-        maxLength={120}
-        value={businessName}
-        onChange={(e) => setBusinessName(e.target.value)}
-        error={state.fieldErrors?.businessName}
-      />
       <Field
         id="email"
         label={m.auth.email}
@@ -64,22 +47,6 @@ export function SignupForm() {
         onChange={(e) => setEmail(e.target.value)}
         error={state.fieldErrors?.email}
       />
-      <div className="space-y-1">
-        <Field
-          id="whatsapp"
-          label={m.auth.whatsapp}
-          type="tel"
-          inputMode="tel"
-          autoComplete="tel"
-          dir="ltr"
-          placeholder="+252 61 234 5678"
-          maxLength={40}
-          value={whatsapp}
-          onChange={(e) => setWhatsapp(e.target.value)}
-          error={state.fieldErrors?.whatsapp}
-        />
-        {!state.fieldErrors?.whatsapp && <p className="text-xs text-muted-foreground">{m.auth.whatsappHint}</p>}
-      </div>
       <Field
         id="password"
         label={m.auth.passwordNew}
@@ -89,6 +56,32 @@ export function SignupForm() {
         minLength={8}
         error={state.fieldErrors?.password}
       />
+      {showWhatsapp ? (
+        <div className="space-y-1">
+          <Field
+            id="whatsapp"
+            label={m.auth.whatsapp}
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            dir="ltr"
+            placeholder="+252 61 234 5678"
+            maxLength={40}
+            value={whatsapp}
+            onChange={(e) => setWhatsapp(e.target.value)}
+            error={state.fieldErrors?.whatsapp}
+          />
+          {!state.fieldErrors?.whatsapp && <p className="text-xs text-muted-foreground">{m.auth.whatsappHint}</p>}
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setShowWhatsapp(true)}
+          className="text-sm font-medium text-brand underline-offset-4 hover:underline"
+        >
+          {m.auth.addWhatsappOptional}
+        </button>
+      )}
       {state.error ? (
         <p role="alert" className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
           {state.error}

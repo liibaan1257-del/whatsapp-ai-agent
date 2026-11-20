@@ -205,6 +205,7 @@ export const ar: Messages = {
     yourName: "اسمك",
     whatsapp: "رقم واتساب (اختياري)",
     whatsappHint: "لنساعدك في الإعداد. أضف رمز الدولة، مثل +252 61 234 5678.",
+    addWhatsappOptional: "أضف رقم واتساب (اختياري)",
     email: "البريد الإلكتروني",
     password: "كلمة المرور",
     passwordNew: "كلمة المرور (8 أحرف على الأقل)",

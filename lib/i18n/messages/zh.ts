@@ -206,6 +206,7 @@ export const zh: Messages = {
     yourName: "您的姓名",
     whatsapp: "WhatsApp 号码（选填）",
     whatsappHint: "方便我们协助您完成设置。请包含国家代码，例如 +86 138 0013 8000。",
+    addWhatsappOptional: "添加 WhatsApp 号码（可选）",
     email: "电子邮箱",
     password: "密码",
     passwordNew: "密码（至少 8 个字符）",

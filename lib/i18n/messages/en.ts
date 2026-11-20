@@ -204,6 +204,7 @@ export const en = {
     yourName: "Your name",
     whatsapp: "WhatsApp number (optional)",
     whatsappHint: "So we can help you set up. Include the country code, e.g. +252 61 234 5678.",
+    addWhatsappOptional: "Add a WhatsApp number (optional)",
     email: "Email",
     password: "Password",
     passwordNew: "Password (8+ characters)",

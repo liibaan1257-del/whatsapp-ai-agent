@@ -205,6 +205,7 @@ export const so: Messages = {
     yourName: "Magacaaga",
     whatsapp: "Lambarka WhatsApp (ikhtiyaari)",
     whatsappHint: "Si aan kaaga caawinno dejinta. Ku dar furaha dalka, tusaale +252 61 234 5678.",
+    addWhatsappOptional: "Ku dar lambar WhatsApp (ikhtiyaari)",
     email: "Email",
     password: "Furaha sirta (password)",
     passwordNew: "Furaha sirta (ugu yaraan 8 xaraf)",

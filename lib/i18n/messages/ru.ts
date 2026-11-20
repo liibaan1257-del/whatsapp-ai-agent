@@ -206,6 +206,7 @@ export const ru: Messages = {
     yourName: "Ваше имя",
     whatsapp: "Номер WhatsApp (необязательно)",
     whatsappHint: "Чтобы мы помогли с настройкой. С кодом страны, например +7 912 345 67 89.",
+    addWhatsappOptional: "Добавить номер WhatsApp (необязательно)",
     email: "Эл. почта",
     password: "Пароль",
     passwordNew: "Пароль (не менее 8 символов)",

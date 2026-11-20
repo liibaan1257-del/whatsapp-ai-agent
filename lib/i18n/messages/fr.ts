@@ -205,6 +205,7 @@ export const fr: Messages = {
     yourName: "Votre nom",
     whatsapp: "Numéro WhatsApp (facultatif)",
     whatsappHint: "Pour vous aider à la configuration. Avec l’indicatif du pays, ex. +33 6 12 34 56 78.",
+    addWhatsappOptional: "Ajouter un numéro WhatsApp (facultatif)",
     email: "E-mail",
     password: "Mot de passe",
     passwordNew: "Mot de passe (8 caractères min.)",
