@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CalendarCheck, Check, Globe, MessageCircle } from "lucide-react";
+import { Suspense } from "react";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
+import { SocialProof } from "@/components/marketing/social-proof";
 import { WhatsAppCta, WhatsAppFloat } from "@/components/marketing/whatsapp-cta";
 import { Button } from "@/components/ui/button";
 import { PRICES_USD } from "@/lib/billing";
@@ -167,6 +169,9 @@ export default function SomaliChatbotPage() {
               </Button>
             </div>
             <p className="text-sm text-muted-foreground">{m.landing.noCard}</p>
+            <Suspense fallback={null}>
+              <SocialProof businesses="{n}+ ganacsi ayaa horey u isticmaala" freeSetup="🎁 Dejinta BILAASH ayaan kuu samaynaa" />
+            </Suspense>
           </div>
           <div className="mx-auto w-full max-w-sm">
             <p className="mb-3 text-center text-sm font-medium text-muted-foreground">Tusaale: shirkad cargo ah</p>
