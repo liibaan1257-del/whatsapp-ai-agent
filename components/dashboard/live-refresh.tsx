@@ -9,7 +9,7 @@ import { createClient } from "@/lib/supabase/client";
  * Re-renders the page when this business's conversations, messages or
  * bookings change (Supabase Realtime; RLS limits events to the owner's data).
  */
-export function LiveRefresh({ businessId, tables }: { businessId: string; tables: ("conversations" | "messages" | "bookings")[] }) {
+export function LiveRefresh({ businessId, tables }: { businessId: string; tables: ("conversations" | "messages" | "bookings" | "orders")[] }) {
   const router = useRouter();
   const { m } = useI18n();
   const [status, setStatus] = useState<"connecting" | "live" | "offline">("connecting");

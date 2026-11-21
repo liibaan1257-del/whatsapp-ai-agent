@@ -58,6 +58,24 @@ const AgentOutput = z.object({
     })
     .nullable()
     .describe("Only when the customer has explicitly confirmed every booking detail in this conversation; otherwise null."),
+  order: z
+    .object({
+      items: z
+        .array(
+          z.object({
+            name: z.string().describe("The item or menu name the customer is buying. Copy it from the business's list where it matches."),
+            quantity: z.coerce.number().int().min(1).describe("How many of this item."),
+          }),
+        )
+        .min(1)
+        .describe("The goods or food the customer wants to buy."),
+      customer_name: z.string(),
+      note: z.string().describe("Delivery address or any special request; empty if none."),
+    })
+    .nullable()
+    .describe(
+      "Only when the customer has explicitly confirmed an order of goods or food to buy (for example at a shop or restaurant). Use this for purchases, and `booking` for appointments. Otherwise null.",
+    ),
 });
 export type AgentOutput = z.infer<typeof AgentOutput>;
 
@@ -77,6 +95,7 @@ What you do:
 - Answer questions about the business, its services, prices, opening hours, FAQs and booking policy, using only the business information below. If something isn't covered, say you'll check with the team instead of guessing. Never invent services, prices, discounts or availability.
 - Help customers book appointments. To book you need: the service (one from the list), the date, the start time and the customer's name. In "booking", write the service name exactly as it appears in the list, even when you talk to the customer in another language. Ask for whatever is missing, one or two questions at a time. Bookings must be in the future and inside opening hours.
 - Before booking, repeat the details back (service, day and date, time, name) and ask the customer to confirm. Only fill in "booking" after the customer clearly says yes to those exact details. Then reply that the booking request is received and the team will confirm it. Never claim a booking is final.
+- Take orders for businesses that sell goods or food (shops, restaurants). To take an order you need the items and quantities and the customer's name; ask for a delivery address only if the business delivers. Use the item names from the business's list where they match. Repeat the order back (items, quantities and, when you know them, prices and total) and ask the customer to confirm. Only fill in "order" after the customer clearly says yes. Then reply that the order is received and the team will prepare it. Use "order" for buying goods or food, and "booking" for appointments — never both for the same message.
 
 Style:
 - This is WhatsApp: short, friendly, plain text. A few short lines at most. No markdown headings or tables; simple numbered lists are fine.
@@ -147,7 +166,7 @@ export async function runAgent(
   );
   const refused = response.stop_reason === "refusal" || !response.parsed_output;
   const output: AgentOutput = refused
-    ? { reply: REFUSAL_REPLY, intent: "other", customer_name: null, language: "en", booking: null }
+    ? { reply: REFUSAL_REPLY, intent: "other", customer_name: null, language: "en", booking: null, order: null }
     : { ...response.parsed_output!, reply: response.parsed_output!.reply.trim() || REFUSAL_REPLY };
 
   return {

@@ -42,3 +42,38 @@ export async function notifyOwnerOfBooking(
     logger.warn("owner_booking_notify_failed", { error: String(error) });
   }
 }
+
+type OrderLine = { name: string; quantity: number; unitPrice: number | null; lineTotal: number | null };
+
+/** Emails the owner that the AI took a WhatsApp order, so they can prepare it. Best effort. */
+export async function notifyOwnerOfOrder(
+  businessId: string,
+  order: { customerName: string; phone: string; lines: OrderLine[]; total: number; currency: string; note: string },
+): Promise<void> {
+  try {
+    const to = await ownerEmail(businessId);
+    if (!to) return;
+    const money = (n: number) => `${order.currency} ${n.toFixed(2)}`;
+    const itemLines = order.lines.map(
+      (l) => `• ${l.quantity} × ${l.name}${l.lineTotal != null ? ` = ${money(l.lineTotal)}` : ""}`,
+    );
+    await sendEmail({
+      to,
+      subject: `New order / Dalab cusub: ${order.customerName}${order.total > 0 ? ` – ${money(order.total)}` : ""}`,
+      text: [
+        "New order from WhatsApp / Dalab cusub oo WhatsApp ka timid",
+        "",
+        `Customer / Macmiil: ${order.customerName} (+${order.phone})`,
+        "",
+        "Items / Alaabta:",
+        ...itemLines,
+        ...(order.total > 0 ? ["", `Total / Wadarta: ${money(order.total)}`] : []),
+        ...(order.note ? ["", `Note / Qoraal: ${order.note}`] : []),
+        "",
+        `See orders / Eeg dalabada: ${siteUrl()}/dashboard/orders`,
+      ].join("\n"),
+    });
+  } catch (error) {
+    logger.warn("owner_order_notify_failed", { error: String(error) });
+  }
+}

@@ -2,10 +2,11 @@ import "server-only";
 import { after } from "next/server";
 import { describeAiError, isAiConfigured, runAgent, type ChatTurn, type Intent } from "@/lib/ai/agent";
 import { checkBooking } from "@/lib/ai/booking";
+import { checkOrder } from "@/lib/ai/order";
 import { isActive, monthStart, replyLimit } from "@/lib/billing";
 import { parseKnowledge } from "@/lib/knowledge";
 import { logger } from "@/lib/logger";
-import { notifyOwnerOfBooking } from "@/lib/owner-notify";
+import { notifyOwnerOfBooking, notifyOwnerOfOrder } from "@/lib/owner-notify";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 /**
@@ -143,7 +144,7 @@ export async function handleCustomerMessage(msg: IncomingMessage): Promise<Engin
     return { status: "error", conversationId: conv.id, code };
   }
   let { reply } = result.output;
-  const { intent, booking, customer_name, language } = result.output;
+  const { intent, booking, order, customer_name, language } = result.output;
 
   // Remember the customer's name and language (used for automatic messages later).
   const convUpdate: Record<string, string> = {};
@@ -216,6 +217,40 @@ export async function handleCustomerMessage(msg: IncomingMessage): Promise<Engin
     }
   }
 
+  // 5b. A confirmed order (goods or food). Simpler than a booking: no slot to
+  // clash on. Prices are computed server-side from the business's own list.
+  let orderId: string | null = null;
+  if (order) {
+    const check = checkOrder(knowledge, order);
+    if (check.ok) {
+      const { data: saved, error } = await db
+        .from("orders")
+        .insert({
+          business_id: msg.businessId,
+          conversation_id: conv.id,
+          customer_name: check.customerName,
+          phone_number: msg.customerPhone,
+          items: check.lines,
+          total: check.total,
+          currency: check.currency,
+          note: check.note,
+        })
+        .select("id")
+        .single();
+      if (error || !saved) {
+        logger.error("order_insert_failed", { conversationId: conv.id, code: error?.code });
+      } else {
+        orderId = saved.id;
+        if (msg.channel === "whatsapp") {
+          const placed = { customerName: check.customerName, phone: msg.customerPhone, lines: check.lines, total: check.total, currency: check.currency, note: check.note };
+          after(() => notifyOwnerOfOrder(msg.businessId, placed));
+        }
+      }
+    } else {
+      logger.info("order_rejected", { conversationId: conv.id, reason: check.reason });
+    }
+  }
+
   // 6. Save and return the reply.
   const { error: replyError } = await db.from("messages").insert({
     conversation_id: conv.id,
@@ -231,6 +266,7 @@ export async function handleCustomerMessage(msg: IncomingMessage): Promise<Engin
     channel: msg.channel,
     intent,
     bookingId,
+    orderId,
     refused: result.refused,
     model: result.model,
     outputTokens: result.usage.outputTokens,
