@@ -4,6 +4,7 @@ import { de } from "./messages/de";
 import { en, type Messages } from "./messages/en";
 import { es } from "./messages/es";
 import { fr } from "./messages/fr";
+import { lg } from "./messages/lg";
 import { ru } from "./messages/ru";
 import { so } from "./messages/so";
 import { sw } from "./messages/sw";
@@ -11,7 +12,7 @@ import { zh } from "./messages/zh";
 
 export type { Messages };
 
-const DICTIONARIES: Record<Locale, Messages> = { en, es, fr, de, ar, so, sw, ru, zh };
+const DICTIONARIES: Record<Locale, Messages> = { en, es, fr, de, ar, so, sw, lg, ru, zh };
 
 export function getMessages(locale: Locale): Messages {
   return DICTIONARIES[locale];
