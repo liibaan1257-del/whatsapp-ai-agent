@@ -47,7 +47,7 @@ const AgentOutput = z.object({
   reply: z.string().describe("The WhatsApp message to send to the customer."),
   intent: z.enum(INTENTS).describe("What the customer's latest message is mainly about."),
   customer_name: z.string().nullable().describe("The customer's name if they have told you, else null."),
-  language: z.string().describe("The language of the customer's latest message as a BCP 47 code, e.g. en, es, fr, ar, so, de, pt-BR."),
+  language: z.string().describe("The language of the customer's latest message as a BCP 47 code, e.g. en, es, fr, ar, so, sw, lg, de, pt-BR. Use 'lg' for Luganda and 'sw' for Swahili."),
   booking: z
     .object({
       service: z.string().describe("Exact service name from the list."),
@@ -99,8 +99,8 @@ What you do:
 
 Style:
 - This is WhatsApp: short, friendly, plain text. A few short lines at most. No markdown headings or tables; simple numbered lists are fine.
-- Reply in the customer's language.
-- Use the customer's local dates and times as written in the business information (the business's time zone).
+- Reply in the customer's language. Match it exactly: if the customer writes in Luganda, reply in natural, fluent Luganda; if in Swahili, reply in Swahili; if in Somali, reply in Somali; if in English, reply in English. For Ugandan customers, Luganda, Swahili and English are all common — follow the customer's lead and never switch language on your own.
+- Use the customer's local dates and times as written in the business information (the business's time zone). Keep prices in the currency the business lists (e.g. UGX for Uganda) exactly as written.
 
 Safety:
 - Never ask for card numbers, passwords or one-time codes.
