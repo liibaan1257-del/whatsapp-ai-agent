@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
+  Calculator,
   CalendarCheck,
   Check,
   Clock,
@@ -24,7 +25,7 @@ import { localeFrom } from "@/lib/i18n/server";
 import { demoWhatsappLink, siteUrl, SOCIAL_LINKS } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-const FEATURE_ICONS: LucideIcon[] = [Clock, CalendarCheck, Languages, LayoutDashboard, Plug, ShieldCheck];
+const FEATURE_ICONS: LucideIcon[] = [Clock, CalendarCheck, Languages, LayoutDashboard, Plug, ShieldCheck, Calculator];
 
 /** Public home page: what the product does, pricing, FAQ (static, one per language). */
 export const metadata: Metadata = { alternates: { canonical: "/" } };

@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const de: Messages = {
   meta: {
     appName: "ReplyBooker",
-    description: "KI-Agent für Kundenservice und Terminbuchung auf WhatsApp.",
+    description: "KI-Agent für Kundenservice und Terminbuchung auf WhatsApp. Enthält außerdem eine Kasse (POS) mit Belegen, ein Schuldenbuch und Bestellannahme per WhatsApp.",
     dashboard: "Dashboard",
   },
   common: {
@@ -88,6 +88,10 @@ export const de: Messages = {
       {
         title: "Privat und sicher",
         body: "Jedes Unternehmen sieht nur seine Daten. Jederzeit exportieren oder löschen.",
+      },
+      {
+        title: "Kasse & Belege",
+        body: "Verkäufe vor Ort kassieren, Bestellungen annehmen und einen gedruckten oder WhatsApp-Beleg geben — ein vollwertiges Kassensystem integriert.",
       },
     ],
     stepsTitle: "In 3 Schritten startklar",

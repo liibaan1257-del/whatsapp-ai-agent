@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const es: Messages = {
   meta: {
     appName: "ReplyBooker",
-    description: "Agente de IA para atención al cliente y reservas en WhatsApp.",
+    description: "Agente de IA para atención al cliente y reservas en WhatsApp. Incluye además una caja (TPV) con recibos, un libro de deudas y pedidos por WhatsApp.",
     dashboard: "Panel",
   },
   common: {
@@ -88,6 +88,10 @@ export const es: Messages = {
       {
         title: "Privado y seguro",
         body: "Cada negocio solo ve sus datos. Expórtalos o bórralos cuando quieras.",
+      },
+      {
+        title: "Caja y recibos",
+        body: "Cobra ventas presenciales, toma pedidos y entrega un recibo impreso o por WhatsApp: un TPV completo integrado.",
       },
     ],
     stepsTitle: "En marcha en 3 pasos",

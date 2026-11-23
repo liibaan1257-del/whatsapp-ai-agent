@@ -2,7 +2,7 @@
 export const en = {
   meta: {
     appName: "ReplyBooker",
-    description: "ReplyBooker is an AI receptionist for WhatsApp: it answers your customers 24/7 in their own language and books appointments automatically. 7-day money-back guarantee.",
+    description: "ReplyBooker is an AI receptionist for WhatsApp: it answers your customers 24/7 in their own language and books appointments automatically. 7-day money-back guarantee. It also includes a built-in cashier (POS) with receipts, a debt book and WhatsApp order-taking.",
     dashboard: "Dashboard",
   },
   common: {
@@ -87,6 +87,10 @@ export const en = {
       {
         title: "Private and secure",
         body: "Each business sees only its own data. Delete or export it any time.",
+      },
+      {
+        title: "Cashier & receipts",
+        body: "Ring up in-person sales, take orders and give a printed or WhatsApp receipt — a full POS built in.",
       },
     ],
     stepsTitle: "Up and running in 3 steps",

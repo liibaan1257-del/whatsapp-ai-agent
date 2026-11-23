@@ -4,7 +4,7 @@ import type { Messages } from "./en";
 export const sw: Messages = {
   meta: {
     appName: "ReplyBooker",
-    description: "ReplyBooker ni mhudumu wa AI kwa WhatsApp: anajibu wateja wako saa 24 kwa lugha yao na anapanga miadi kiotomatiki. Jaribio la bure la siku 14.",
+    description: "ReplyBooker ni mhudumu wa AI kwa WhatsApp: anajibu wateja wako saa 24 kwa lugha yao na anapanga miadi kiotomatiki. Jaribio la bure la siku 14. Pia ina keshia (POS) yenye risiti, daftari la madeni na kupokea oda kwa WhatsApp.",
     dashboard: "Dashibodi",
   },
   common: {
@@ -89,6 +89,10 @@ export const sw: Messages = {
       {
         title: "Faragha na usalama",
         body: "Kila biashara huona data yake pekee. Ifute au ipakue wakati wowote.",
+      },
+      {
+        title: "Keshia na risiti",
+        body: "Rekodi mauzo ya papo kwa papo, pokea oda na toa risiti ya kuchapisha au WhatsApp — POS kamili iliyojengwa ndani.",
       },
     ],
     stepsTitle: "Tayari kwa hatua 3",

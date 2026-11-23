@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const fr: Messages = {
   meta: {
     appName: "ReplyBooker",
-    description: "Agent IA de service client et de réservation pour WhatsApp.",
+    description: "Agent IA de service client et de réservation pour WhatsApp. Comprend aussi une caisse (POS) avec reçus, un carnet de dettes et la prise de commandes sur WhatsApp.",
     dashboard: "Tableau de bord",
   },
   common: {
@@ -88,6 +88,10 @@ export const fr: Messages = {
       {
         title: "Privé et sécurisé",
         body: "Chaque entreprise ne voit que ses données. Exportez-les ou supprimez-les à tout moment.",
+      },
+      {
+        title: "Caisse et reçus",
+        body: "Encaissez les ventes en personne, prenez les commandes et donnez un reçu imprimé ou par WhatsApp : une caisse complète intégrée.",
       },
     ],
     stepsTitle: "Opérationnel en 3 étapes",

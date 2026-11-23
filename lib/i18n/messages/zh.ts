@@ -4,7 +4,7 @@ import type { Messages } from "./en";
 export const zh: Messages = {
   meta: {
     appName: "ReplyBooker",
-    description: "ReplyBooker 是一款 WhatsApp AI 前台助理：全天候用客户的语言回复消息，并自动安排预约。14 天免费试用。",
+    description: "ReplyBooker 是一款 WhatsApp AI 前台助理：全天候用客户的语言回复消息，并自动安排预约。14 天免费试用。 还内置收银台（POS）、收据、欠账簿和 WhatsApp 接单。",
     dashboard: "控制台",
   },
   common: {
@@ -89,6 +89,10 @@ export const zh: Messages = {
       {
         title: "私密且安全",
         body: "每个商家只能看到自己的数据。可随时删除或导出。",
+      },
+      {
+        title: "收银台与收据",
+        body: "即时结算当面销售、接收订单，并提供打印或 WhatsApp 收据——内置完整 POS。",
       },
     ],
     stepsTitle: "3 步即可上线",

@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const so: Messages = {
   meta: {
     appName: "ReplyBooker",
-    description: "Wakiil AI ah oo macaamiisha u adeega oo ballamaha ku qabta WhatsApp.",
+    description: "Wakiil AI ah oo macaamiisha u adeega oo ballamaha ku qabta WhatsApp. Waxa kale oo ku jira cashir (POS) oo rasiid leh, buug deyn iyo dalab-qaadis WhatsApp.",
     dashboard: "Dashboard",
   },
   common: {
@@ -88,6 +88,10 @@ export const so: Messages = {
       {
         title: "Gaar ah oo ammaan ah",
         body: "Ganacsi kastaa wuxuu arkaa xogtiisa oo keliya. Mar kasta waad soo dejisan kartaa ama tirtiri kartaa.",
+      },
+      {
+        title: "Cashir & rasiid",
+        body: "Diiwaangeli iibka gacanta, qaado dalabka oo bixi rasiid daabacan ama WhatsApp — POS buuxa oo ku dhisan.",
       },
     ],
     stepsTitle: "3 tallaabo ayuu ku shaqaynayaa",

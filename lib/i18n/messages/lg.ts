@@ -5,7 +5,7 @@ export const lg: Messages = {
   meta: {
     appName: "ReplyBooker",
     description:
-      "ReplyBooker ye receptionist wa AI ku WhatsApp: addamu bakasitoma bo essaawa 24/7 mu lulimi lwabwe era akuumira ekiseera ky'appointment mu bwewunzise. Guarantee ya okuzzibwa ssente mu nnaku 7.",
+      "ReplyBooker ye receptionist wa AI ku WhatsApp: addamu bakasitoma bo essaawa 24/7 mu lulimi lwabwe era akuumira ekiseera ky'appointment mu bwewunzise. Guarantee ya okuzzibwa ssente mu nnaku 7. Erimu ne kasa (POS) ne risiiti, ekitabo ky'amabanja n'okutwala oda ku WhatsApp.",
     dashboard: "Dashboard",
   },
   common: {
@@ -91,6 +91,10 @@ export const lg: Messages = {
       {
         title: "Ya kyama era nnywevu",
         body: "Buli bizinensi erabawo data yaayo yokka. Gisangule oba giggyeeko ekiseera kyonna.",
+      },
+      {
+        title: "Kasa ne risiiti",
+        body: "Wandiika okutunda okw'omu maaso, twala oda era owe risiiti ey'okuprint oba eya WhatsApp — POS enzijjuvu.",
       },
     ],
     stepsTitle: "Tandika mu matendeka 3",
