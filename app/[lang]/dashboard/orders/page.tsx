@@ -77,6 +77,7 @@ async function Orders({
   let query = supabase
     .from("orders")
     .select("id, customer_name, phone_number, items, total, currency, note, status, created_at")
+    .eq("source", "ai")
     .order("created_at", { ascending: false })
     .limit(LIMIT);
   if (view !== "all") query = query.eq("status", view);
