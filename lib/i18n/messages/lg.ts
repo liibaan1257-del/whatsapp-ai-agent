@@ -132,6 +132,10 @@ export const lg: Messages = {
         name: "Ekitabo ky'amabanja",
         desc: "Ekitabo ky'amabanja kyokka: kuuma bakasitoma kye bakubanja era obajjukize ku WhatsApp.",
       },
+      cashier: {
+        name: "Kasa",
+        desc: "Kasa yokka (POS): wandiika okutunda era print oba weereza risiiti. Tewali bot ya AI.",
+      },
       starter: {
         name: "Starter",
         desc: "Eri bizinensi entono.",
@@ -152,6 +156,12 @@ export const lg: Messages = {
       "Ekitabo ky'amabanja n'omugatte n'olukalala lw'ebiyise ekiseera",
       "Olukalala lwa bakasitoma + weereza bonna ku WhatsApp",
       "Tewali AI bot (osobola kugulumiza ekiseera kyonna)",
+    ],
+    cashierFeatures: [
+      "Kasa ne namba za risiiti",
+      "Print oba weereza risiiti ku WhatsApp",
+      "Omugatte gw'okutunda kwa buli lunaku",
+      "Tewali bot ya AI (gulumiza ekiseera kyonna)",
     ],
     choose: "Tandika",
     pay: {
@@ -310,6 +320,9 @@ export const lg: Messages = {
     sendWhatsapp: "Weereza ku WhatsApp",
     newSale: "Okutunda okupya",
     recent: "Okutunda okusembyeyo",
+    lockedTitle: "Kasa eggulawo ku pulaani esasulwa",
+    lockedBody: "Wandiika okutunda okw'omu maaso era print oba weereza risiiti. Kasa $10/mwezi, oba Starter $20/mwezi eri byonna.",
+    lockedCta: "Londa pulaani",
   },
   nav: {
     label: "Dashboard",
@@ -555,6 +568,7 @@ export const lg: Messages = {
     plans: {
       trial: "Okugezesa kwa bwereere",
       book: "Ekitabo ky'amabanja",
+      cashier: "Kasa",
       starter: "Starter",
       pro: "Pro",
     },

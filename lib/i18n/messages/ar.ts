@@ -129,6 +129,10 @@ export const ar: Messages = {
         name: "Debt book",
         desc: "Only the debt book: track what customers owe and remind them on WhatsApp.",
       },
+      cashier: {
+        name: "الصندوق",
+        desc: "الصندوق فقط (POS): سجّل المبيعات واطبع أو أرسل الإيصالات. بدون بوت ذكاء اصطناعي.",
+      },
       starter: {
         name: "Starter",
         desc: "للأنشطة التجارية الصغيرة.",
@@ -149,6 +153,12 @@ export const ar: Messages = {
       "Debt book with totals and overdue list",
       "Customer list + send to all on WhatsApp",
       "No AI bot (upgrade any time)",
+    ],
+    cashierFeatures: [
+      "صندوق بأرقام إيصالات",
+      "اطبع أو أرسل الإيصالات عبر واتساب",
+      "إجمالي المبيعات اليومي",
+      "بدون بوت ذكاء اصطناعي (يمكن الترقية في أي وقت)",
     ],
     choose: "ابدأ الآن",
     pay: {
@@ -307,6 +317,9 @@ export const ar: Messages = {
     sendWhatsapp: "إرسال عبر واتساب",
     newSale: "بيع جديد",
     recent: "المبيعات الأخيرة",
+    lockedTitle: "يفتح الصندوق مع خطة مدفوعة",
+    lockedBody: "سجّل المبيعات المباشرة واطبع أو أرسل الإيصالات. الصندوق 10$/شهر، أو Starter 20$/شهر لكل شيء.",
+    lockedCta: "اختر خطة",
   },
   nav: {
     label: "لوحة التحكم",
@@ -550,6 +563,7 @@ export const ar: Messages = {
     plans: {
       trial: "تجربة مجانية",
       book: "Debt book",
+      cashier: "الصندوق",
       starter: "Starter",
       pro: "Pro",
     },

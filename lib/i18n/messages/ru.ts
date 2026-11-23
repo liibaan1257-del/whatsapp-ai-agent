@@ -130,6 +130,10 @@ export const ru: Messages = {
         name: "Debt book",
         desc: "Only the debt book: track what customers owe and remind them on WhatsApp.",
       },
+      cashier: {
+        name: "Касса",
+        desc: "Только касса (POS): проводите продажи и печатайте или отправляйте чеки. Без ИИ-бота.",
+      },
       starter: {
         name: "Starter",
         desc: "Для небольшого бизнеса.",
@@ -150,6 +154,12 @@ export const ru: Messages = {
       "Debt book with totals and overdue list",
       "Customer list + send to all on WhatsApp",
       "No AI bot (upgrade any time)",
+    ],
+    cashierFeatures: [
+      "Касса с номерами чеков",
+      "Печать или отправка чеков в WhatsApp",
+      "Итог продаж за день",
+      "Без ИИ-бота (можно улучшить в любое время)",
     ],
     choose: "Начать",
     pay: {
@@ -308,6 +318,9 @@ export const ru: Messages = {
     sendWhatsapp: "Отправить в WhatsApp",
     newSale: "Новая продажа",
     recent: "Недавние продажи",
+    lockedTitle: "Касса открывается на платном тарифе",
+    lockedBody: "Проводите продажи на месте и печатайте или отправляйте чеки. Касса $10/мес или Starter $20/мес за всё.",
+    lockedCta: "Выбрать тариф",
   },
   nav: {
     label: "Панель управления",
@@ -553,6 +566,7 @@ export const ru: Messages = {
     plans: {
       trial: "Пробный период",
       book: "Debt book",
+      cashier: "Касса",
       starter: "Starter",
       pro: "Pro",
     },

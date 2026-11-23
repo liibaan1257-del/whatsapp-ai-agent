@@ -129,6 +129,10 @@ export const so: Messages = {
         name: "Buug",
         desc: "Buugga Deynta oo keliya: qor deymaha macaamiisha, WhatsApp-na ku xasuusi.",
       },
+      cashier: {
+        name: "Cashir",
+        desc: "Cashir kaliya (POS): diiwaangeli iibka oo daabac ama dir rasiid. Bot AI ma leh.",
+      },
       starter: {
         name: "Starter",
         desc: "Ganacsi yar.",
@@ -149,6 +153,12 @@ export const so: Messages = {
       "Buugga Deynta: wadarta iyo kuwa dib u dhacay",
       "Liiska macaamiisha + u dir dhammaan WhatsApp",
       "Bot AI ma laha (goor kasta u kac)",
+    ],
+    cashierFeatures: [
+      "Cashir oo leh lambar rasiid",
+      "Daabac ama WhatsApp ku dir rasiid",
+      "Wadarta iibka maalinle",
+      "Bot AI ma leh (upgrade mar kasta)",
     ],
     choose: "Bilow",
     pay: {
@@ -307,6 +317,9 @@ export const so: Messages = {
     sendWhatsapp: "Dir WhatsApp",
     newSale: "Iib cusub",
     recent: "Iibkii dhawaa",
+    lockedTitle: "Cashir-ku wuxuu ku furmaa plan bixiya",
+    lockedBody: "Diiwaangeli iibka gacanta oo daabac ama dir rasiid. Cashir $10/bil, ama Starter $20/bil wax walba.",
+    lockedCta: "Dooro plan",
   },
   nav: {
     label: "Dashboard",
@@ -550,6 +563,7 @@ export const so: Messages = {
     plans: {
       trial: "Tijaabo bilaash ah",
       book: "Buug",
+      cashier: "Cashir",
       starter: "Starter",
       pro: "Pro",
     },

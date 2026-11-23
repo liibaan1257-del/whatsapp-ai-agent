@@ -130,6 +130,10 @@ export const sw: Messages = {
         name: "Debt book",
         desc: "Only the debt book: track what customers owe and remind them on WhatsApp.",
       },
+      cashier: {
+        name: "Keshia",
+        desc: "Keshia pekee (POS): rekodi mauzo na chapisha au tuma risiti. Hakuna bot ya AI.",
+      },
       starter: {
         name: "Starter",
         desc: "Kwa biashara ndogo.",
@@ -150,6 +154,12 @@ export const sw: Messages = {
       "Debt book with totals and overdue list",
       "Customer list + send to all on WhatsApp",
       "No AI bot (upgrade any time)",
+    ],
+    cashierFeatures: [
+      "Keshia yenye nambari za risiti",
+      "Chapisha au tuma risiti kwa WhatsApp",
+      "Jumla ya mauzo ya kila siku",
+      "Hakuna bot ya AI (pandisha wakati wowote)",
     ],
     choose: "Anza sasa",
     pay: {
@@ -308,6 +318,9 @@ export const sw: Messages = {
     sendWhatsapp: "Tuma WhatsApp",
     newSale: "Mauzo mapya",
     recent: "Mauzo ya hivi karibuni",
+    lockedTitle: "Keshia hufunguka kwenye mpango unaolipiwa",
+    lockedBody: "Rekodi mauzo ya papo kwa papo na chapisha au tuma risiti. Keshia $10/mwezi, au Starter $20/mwezi kwa kila kitu.",
+    lockedCta: "Chagua mpango",
   },
   nav: {
     label: "Dashibodi",
@@ -553,6 +566,7 @@ export const sw: Messages = {
     plans: {
       trial: "Jaribio la bure",
       book: "Debt book",
+      cashier: "Keshia",
       starter: "Starter",
       pro: "Pro",
     },

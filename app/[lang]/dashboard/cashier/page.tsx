@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Suspense } from "react";
+import { Lock } from "lucide-react";
 import { CashierClient } from "@/components/dashboard/cashier-client";
 import { LiveRefresh } from "@/components/dashboard/live-refresh";
 import { PageHeader } from "@/components/dashboard/page-header";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { hasCashier, isPaid } from "@/lib/billing";
 import { requireOwner } from "@/lib/auth/session";
 import { getKnowledge } from "@/lib/dashboard/data";
 import { formatDateTime } from "@/lib/format";
@@ -50,6 +54,29 @@ async function Cashier({ locale }: { locale: Locale }) {
   const tz = knowledge?.timezone ?? "UTC";
   const tf = knowledge?.time_format ?? "24h";
   const businessName = knowledge?.business_name || m.meta.appName;
+
+  // Cashier is a paid feature (its own $10 plan, or included in Starter/Pro).
+  if (!(isPaid(owner.plan, owner.accessUntil) && hasCashier(owner.plan))) {
+    return (
+      <div className="space-y-6">
+        <PageHeader title={t.title} description={t.subtitle} />
+        <Card className="border-dashed">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Lock className="size-5 text-brand" aria-hidden="true" />
+              {t.lockedTitle}
+            </CardTitle>
+            <CardDescription>{t.lockedBody}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button variant="brand" asChild>
+              <Link href="/dashboard/settings#plan">{t.lockedCta}</Link>
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   const services = (knowledge?.services ?? []).map((s) => ({ name: s.name, price: parsePrice(s.price) }));
 

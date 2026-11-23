@@ -129,6 +129,10 @@ export const es: Messages = {
         name: "Debt book",
         desc: "Only the debt book: track what customers owe and remind them on WhatsApp.",
       },
+      cashier: {
+        name: "Caja",
+        desc: "Solo la caja (TPV): cobra ventas e imprime o envía recibos. Sin bot de IA.",
+      },
       starter: {
         name: "Starter",
         desc: "Para un negocio pequeño.",
@@ -149,6 +153,12 @@ export const es: Messages = {
       "Debt book with totals and overdue list",
       "Customer list + send to all on WhatsApp",
       "No AI bot (upgrade any time)",
+    ],
+    cashierFeatures: [
+      "Caja con números de recibo",
+      "Imprime o envía recibos por WhatsApp",
+      "Total de ventas diario",
+      "Sin bot de IA (mejora cuando quieras)",
     ],
     choose: "Empezar",
     pay: {
@@ -307,6 +317,9 @@ export const es: Messages = {
     sendWhatsapp: "Enviar por WhatsApp",
     newSale: "Nueva venta",
     recent: "Ventas recientes",
+    lockedTitle: "La caja se abre con un plan de pago",
+    lockedBody: "Cobra ventas presenciales e imprime o envía recibos. Caja $10/mes, o Starter $20/mes por todo.",
+    lockedCta: "Elegir un plan",
   },
   nav: {
     label: "Panel",
@@ -550,6 +563,7 @@ export const es: Messages = {
     plans: {
       trial: "Prueba gratis",
       book: "Debt book",
+      cashier: "Caja",
       starter: "Starter",
       pro: "Pro",
     },

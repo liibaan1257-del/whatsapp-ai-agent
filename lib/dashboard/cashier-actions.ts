@@ -2,6 +2,7 @@
 
 import { refresh } from "next/cache";
 import { getOwner } from "@/lib/auth/session";
+import { hasCashier, isPaid } from "@/lib/billing";
 import { getKnowledge } from "@/lib/dashboard/data";
 import { logger } from "@/lib/logger";
 import { createClient } from "@/lib/supabase/server";
@@ -26,6 +27,7 @@ export type RecordSaleResult =
 export async function recordSale(input: RecordSaleInput): Promise<RecordSaleResult> {
   const owner = await getOwner();
   if (!owner) return { ok: false, error: "auth" };
+  if (!(isPaid(owner.plan, owner.accessUntil) && hasCashier(owner.plan))) return { ok: false, error: "plan" };
 
   const knowledge = await getKnowledge();
   const currency = knowledge?.currency ?? "USD";

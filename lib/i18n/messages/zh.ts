@@ -130,6 +130,10 @@ export const zh: Messages = {
         name: "Debt book",
         desc: "Only the debt book: track what customers owe and remind them on WhatsApp.",
       },
+      cashier: {
+        name: "收银台",
+        desc: "仅收银台（POS）：结算销售并打印或发送收据。无 AI 机器人。",
+      },
       starter: {
         name: "入门版",
         desc: "适合小型商家。",
@@ -150,6 +154,12 @@ export const zh: Messages = {
       "Debt book with totals and overdue list",
       "Customer list + send to all on WhatsApp",
       "No AI bot (upgrade any time)",
+    ],
+    cashierFeatures: [
+      "带收据编号的收银台",
+      "打印或通过 WhatsApp 发送收据",
+      "每日销售总额",
+      "无 AI 机器人（可随时升级）",
     ],
     choose: "立即开始",
     pay: {
@@ -308,6 +318,9 @@ export const zh: Messages = {
     sendWhatsapp: "通过 WhatsApp 发送",
     newSale: "新销售",
     recent: "近期销售",
+    lockedTitle: "收银台需付费套餐开启",
+    lockedBody: "结算当面销售并打印或发送收据。收银台 $10/月，或 Starter $20/月畅享全部。",
+    lockedCta: "选择套餐",
   },
   nav: {
     label: "控制台",
@@ -553,6 +566,7 @@ export const zh: Messages = {
     plans: {
       trial: "免费试用",
       book: "Debt book",
+      cashier: "收银台",
       starter: "入门版",
       pro: "专业版",
     },

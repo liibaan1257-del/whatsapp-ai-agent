@@ -128,6 +128,10 @@ export const en = {
         name: "Debt book",
         desc: "Only the debt book: track what customers owe and remind them on WhatsApp.",
       },
+      cashier: {
+        name: "Cashier",
+        desc: "Just the cashier (POS): ring up sales and print or send receipts. No AI bot.",
+      },
       starter: {
         name: "Starter",
         desc: "For a small business.",
@@ -147,6 +151,12 @@ export const en = {
     bookFeatures: [
       "Debt book with totals and overdue list",
       "Customer list + send to all on WhatsApp",
+      "No AI bot (upgrade any time)",
+    ],
+    cashierFeatures: [
+      "Cashier with running receipt numbers",
+      "Print or send receipts on WhatsApp",
+      "Daily sales total",
       "No AI bot (upgrade any time)",
     ],
     choose: "Get started",
@@ -306,6 +316,9 @@ export const en = {
     sendWhatsapp: "Send on WhatsApp",
     newSale: "New sale",
     recent: "Recent sales",
+    lockedTitle: "The cashier opens on a paid plan",
+    lockedBody: "Ring up in-person sales and print or send receipts. Cashier $10/month, or Starter $20/month for everything.",
+    lockedCta: "Choose a plan",
   },
   nav: {
     label: "Dashboard",
@@ -551,6 +564,7 @@ export const en = {
     plans: {
       trial: "Free trial",
       book: "Debt book",
+      cashier: "Cashier",
       starter: "Starter",
       pro: "Pro",
     },

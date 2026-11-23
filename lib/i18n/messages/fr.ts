@@ -129,6 +129,10 @@ export const fr: Messages = {
         name: "Debt book",
         desc: "Only the debt book: track what customers owe and remind them on WhatsApp.",
       },
+      cashier: {
+        name: "Caisse",
+        desc: "La caisse seule (POS) : encaissez les ventes et imprimez ou envoyez des reçus. Sans bot IA.",
+      },
       starter: {
         name: "Starter",
         desc: "Pour une petite entreprise.",
@@ -149,6 +153,12 @@ export const fr: Messages = {
       "Debt book with totals and overdue list",
       "Customer list + send to all on WhatsApp",
       "No AI bot (upgrade any time)",
+    ],
+    cashierFeatures: [
+      "Caisse avec numéros de reçu",
+      "Imprimez ou envoyez les reçus sur WhatsApp",
+      "Total des ventes du jour",
+      "Sans bot IA (évoluez à tout moment)",
     ],
     choose: "Commencer",
     pay: {
@@ -307,6 +317,9 @@ export const fr: Messages = {
     sendWhatsapp: "Envoyer sur WhatsApp",
     newSale: "Nouvelle vente",
     recent: "Ventes récentes",
+    lockedTitle: "La caisse s'ouvre avec un forfait payant",
+    lockedBody: "Encaissez les ventes en personne et imprimez ou envoyez des reçus. Caisse 10 $/mois, ou Starter 20 $/mois pour tout.",
+    lockedCta: "Choisir un forfait",
   },
   nav: {
     label: "Tableau de bord",
@@ -550,6 +563,7 @@ export const fr: Messages = {
     plans: {
       trial: "Essai gratuit",
       book: "Debt book",
+      cashier: "Caisse",
       starter: "Starter",
       pro: "Pro",
     },
