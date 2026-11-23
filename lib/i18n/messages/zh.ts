@@ -298,6 +298,7 @@ export const zh: Messages = {
     error: "无法保存销售，请重试。",
     saved: "销售已记录 ✓",
     receipt: "收据",
+    receiptNo: "收据编号",
     thankYou: "谢谢！",
     print: "打印",
     sendWhatsapp: "通过 WhatsApp 发送",

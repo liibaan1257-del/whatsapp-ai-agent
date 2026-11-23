@@ -297,6 +297,7 @@ export const fr: Messages = {
     error: "Impossible d'enregistrer la vente. Réessayez.",
     saved: "Vente enregistrée ✓",
     receipt: "Reçu",
+    receiptNo: "N° de reçu",
     thankYou: "Merci !",
     print: "Imprimer",
     sendWhatsapp: "Envoyer sur WhatsApp",

@@ -297,6 +297,7 @@ export const ar: Messages = {
     error: "تعذّر حفظ البيع. حاول مرة أخرى.",
     saved: "تم تسجيل البيع ✓",
     receipt: "إيصال",
+    receiptNo: "رقم الإيصال",
     thankYou: "شكراً!",
     print: "طباعة",
     sendWhatsapp: "إرسال عبر واتساب",

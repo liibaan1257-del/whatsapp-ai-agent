@@ -297,6 +297,7 @@ export const es: Messages = {
     error: "No se pudo guardar la venta. Inténtalo de nuevo.",
     saved: "Venta registrada ✓",
     receipt: "Recibo",
+    receiptNo: "N.º de recibo",
     thankYou: "¡Gracias!",
     print: "Imprimir",
     sendWhatsapp: "Enviar por WhatsApp",

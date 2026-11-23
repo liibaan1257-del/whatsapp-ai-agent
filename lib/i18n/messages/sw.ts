@@ -298,6 +298,7 @@ export const sw: Messages = {
     error: "Imeshindwa kuhifadhi mauzo. Jaribu tena.",
     saved: "Mauzo yamerekodiwa ✓",
     receipt: "Risiti",
+    receiptNo: "Nambari ya risiti",
     thankYou: "Asante!",
     print: "Chapisha",
     sendWhatsapp: "Tuma WhatsApp",

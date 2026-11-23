@@ -296,6 +296,7 @@ export const en = {
     error: "Couldn't save the sale. Try again.",
     saved: "Sale recorded ✓",
     receipt: "Receipt",
+    receiptNo: "Receipt no.",
     thankYou: "Thank you!",
     print: "Print",
     sendWhatsapp: "Send on WhatsApp",

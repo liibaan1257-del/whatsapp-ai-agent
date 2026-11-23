@@ -297,6 +297,7 @@ export const so: Messages = {
     error: "Iibka lama kaydin. Isku day mar kale.",
     saved: "Iibka waa la diiwaangeliyay ✓",
     receipt: "Rasiid",
+    receiptNo: "Lambarka rasiidka",
     thankYou: "Mahadsanid!",
     print: "Daabac",
     sendWhatsapp: "Dir WhatsApp",

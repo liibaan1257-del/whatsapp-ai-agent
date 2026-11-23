@@ -298,6 +298,7 @@ export const ru: Messages = {
     error: "Не удалось сохранить продажу. Попробуйте снова.",
     saved: "Продажа записана ✓",
     receipt: "Чек",
+    receiptNo: "№ чека",
     thankYou: "Спасибо!",
     print: "Печать",
     sendWhatsapp: "Отправить в WhatsApp",

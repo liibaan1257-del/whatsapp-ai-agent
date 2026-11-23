@@ -30,7 +30,7 @@ export function CashierClient({
   const [customAmount, setCustomAmount] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [receipt, setReceipt] = useState<{ id: string; createdAt: string; lines: SaleLine[]; total: number } | null>(null);
+  const [receipt, setReceipt] = useState<{ id: string; receiptNo: number; createdAt: string; lines: SaleLine[]; total: number } | null>(null);
 
   const money = useMemo(() => {
     return (n: number) => {
@@ -91,7 +91,7 @@ export function CashierClient({
     });
     setSubmitting(false);
     if (res.ok) {
-      setReceipt({ id: res.id, createdAt: res.createdAt, lines: res.lines, total: res.total });
+      setReceipt({ id: res.id, receiptNo: res.receiptNo, createdAt: res.createdAt, lines: res.lines, total: res.total });
       setCart([]);
       setCustomer("");
     } else {
@@ -99,15 +99,15 @@ export function CashierClient({
     }
   }
 
-  function receiptText(r: { createdAt: string; lines: SaleLine[]; total: number }): string {
+  function receiptText(r: { receiptNo: number; createdAt: string; lines: SaleLine[]; total: number }): string {
     const d = new Date(r.createdAt).toLocaleString(locale);
     const items = r.lines
       .map((l) => `${l.quantity} x ${l.name}${l.lineTotal != null ? "  " + money(l.lineTotal) : ""}`)
       .join("\n");
-    return `${businessName}\n${t.receipt} - ${d}\n\n${items}\n\n${t.total}: ${money(r.total)}\n\n${t.thankYou}`;
+    return `${businessName}\n${t.receipt} #${r.receiptNo} - ${d}\n\n${items}\n\n${t.total}: ${money(r.total)}\n\n${t.thankYou}`;
   }
 
-  function printReceipt(r: { createdAt: string; lines: SaleLine[]; total: number }) {
+  function printReceipt(r: { receiptNo: number; createdAt: string; lines: SaleLine[]; total: number }) {
     const w = window.open("", "_blank", "width=380,height=560");
     if (!w) return;
     const d = new Date(r.createdAt).toLocaleString(locale);
@@ -124,7 +124,7 @@ export function CashierClient({
       table{width:100%;border-collapse:collapse;font-size:14px}td{padding:4px 0;border-bottom:1px dashed #ddd}
       .tot{display:flex;justify-content:space-between;font-weight:700;font-size:16px;margin-top:10px}
       .ty{text-align:center;margin-top:14px;font-size:13px}</style></head>
-      <body><h2>${escapeHtml(businessName)}</h2><div class="muted">${t.receipt} · ${d}</div>
+      <body><h2>${escapeHtml(businessName)}</h2><div class="muted">${t.receipt} #${r.receiptNo} · ${d}</div>
       <table>${rows}</table><div class="tot"><span>${t.total}</span><span>${money(r.total)}</span></div>
       <div class="ty">${t.thankYou}</div></body></html>`,
     );
@@ -254,6 +254,9 @@ export function CashierClient({
                 </span>
                 <p className="text-lg font-bold">{t.saved}</p>
                 <p className="font-semibold">{businessName}</p>
+                <p className="text-sm font-medium text-brand">
+                  {t.receiptNo} #{receipt.receiptNo}
+                </p>
                 <p className="text-xs text-muted-foreground">{new Date(receipt.createdAt).toLocaleString(locale)}</p>
               </div>
 

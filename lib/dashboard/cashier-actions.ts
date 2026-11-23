@@ -15,7 +15,7 @@ export type RecordSaleInput = {
 };
 export type SaleLine = { name: string; quantity: number; unitPrice: number | null; lineTotal: number | null };
 export type RecordSaleResult =
-  | { ok: true; id: string; createdAt: string; lines: SaleLine[]; total: number; currency: string }
+  | { ok: true; id: string; receiptNo: number; createdAt: string; lines: SaleLine[]; total: number; currency: string }
   | { ok: false; error: string };
 
 /**
@@ -69,6 +69,13 @@ export async function recordSale(input: RecordSaleInput): Promise<RecordSaleResu
     return { ok: false, error: "save" };
   }
 
+  // A simple running receipt number: how many cashier sales this business has now
+  // (RLS limits the count to the owner's own orders).
+  const { count } = await supabase
+    .from("orders")
+    .select("id", { count: "exact", head: true })
+    .eq("source", "cashier");
+
   refresh();
-  return { ok: true, id: data.id, createdAt: data.created_at, lines, total, currency };
+  return { ok: true, id: data.id, receiptNo: count ?? 1, createdAt: data.created_at, lines, total, currency };
 }

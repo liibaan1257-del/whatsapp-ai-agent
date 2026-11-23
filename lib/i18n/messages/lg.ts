@@ -300,6 +300,7 @@ export const lg: Messages = {
     error: "Tekisoboye kutereka kutunda. Gezaako nate.",
     saved: "Okutunda kuwandiikiddwa ✓",
     receipt: "Risiiti",
+    receiptNo: "Namba ya risiiti",
     thankYou: "Weebale!",
     print: "Print",
     sendWhatsapp: "Weereza ku WhatsApp",
