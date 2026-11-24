@@ -30,6 +30,11 @@ export function hasCashier(plan: string): boolean {
   return plan === "cashier" || plan === "starter" || plan === "pro";
 }
 
+/** Plans where the cashier keeps working offline (a Starter/Pro upsell; the $5 cashier is online-only). */
+export function hasOfflineCashier(plan: string): boolean {
+  return plan === "starter" || plan === "pro";
+}
+
 /** On a paid plan that hasn't run out (the free trial doesn't count). Paid-only features check this. */
 export function isPaid(plan: string, accessUntil: string | Date, now: Date = new Date()): boolean {
   return plan !== "trial" && isPlan(plan) && new Date(accessUntil).getTime() > now.getTime();

@@ -147,6 +147,7 @@ export const en = {
       "Bookings dashboard",
       "All 9 languages",
       "Debt book",
+      "Cashier that works offline",
     ],
     bookFeatures: [
       "Debt book with totals and overdue list",
@@ -321,6 +322,7 @@ export const en = {
     syncedNote: "All sales synced ✓",
     savedOffline: "Saved on this device ✓",
     willSync: "Will sync when you're back online",
+    offlineUpgrade: "No internet — offline selling is on the Starter plan ($20). Connect to the internet to record this sale.",
     lockedTitle: "The cashier opens on a paid plan",
     lockedBody: "Ring up in-person sales and print or send receipts. Cashier $5/month, or Starter $20/month for everything.",
     lockedCta: "Choose a plan",

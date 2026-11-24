@@ -149,6 +149,7 @@ export const sw: Messages = {
       "Dashibodi ya miadi",
       "Lugha zote 9",
       "Debt book",
+      "Keshia inayofanya kazi nje ya mtandao",
     ],
     bookFeatures: [
       "Debt book with totals and overdue list",
@@ -323,6 +324,7 @@ export const sw: Messages = {
     syncedNote: "Mauzo yote yamesawazishwa ✓",
     savedOffline: "Imehifadhiwa kwenye kifaa hiki ✓",
     willSync: "Yatasawazishwa mtandao utakaporejea",
+    offlineUpgrade: "Hakuna mtandao — mauzo nje ya mtandao yako kwenye Starter ($20). Unganisha mtandao ili kurekodi mauzo haya.",
     lockedTitle: "Keshia hufunguka kwenye mpango unaolipiwa",
     lockedBody: "Rekodi mauzo ya papo kwa papo na chapisha au tuma risiti. Keshia $5/mwezi, au Starter $20/mwezi kwa kila kitu.",
     lockedCta: "Chagua mpango",

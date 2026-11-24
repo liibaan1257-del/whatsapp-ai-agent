@@ -148,6 +148,7 @@ export const es: Messages = {
       "Panel de reservas",
       "Los 9 idiomas",
       "Debt book",
+      "Caja que funciona sin conexión",
     ],
     bookFeatures: [
       "Debt book with totals and overdue list",
@@ -322,6 +323,7 @@ export const es: Messages = {
     syncedNote: "Todas las ventas sincronizadas ✓",
     savedOffline: "Guardado en este dispositivo ✓",
     willSync: "Se sincronizará cuando vuelvas a estar en línea",
+    offlineUpgrade: "Sin internet — la venta sin conexión está en el plan Starter ($20). Conéctate para registrar esta venta.",
     lockedTitle: "La caja se abre con un plan de pago",
     lockedBody: "Cobra ventas presenciales e imprime o envía recibos. Caja $5/mes, o Starter $20/mes por todo.",
     lockedCta: "Elegir un plan",

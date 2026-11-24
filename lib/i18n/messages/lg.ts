@@ -151,6 +151,7 @@ export const lg: Messages = {
       "Dashboard ya appointment",
       "Ennimi zonna 9",
       "Ekitabo ky'amabanja",
+      "Kasa ekolera awatali yintaneti",
     ],
     bookFeatures: [
       "Ekitabo ky'amabanja n'omugatte n'olukalala lw'ebiyise ekiseera",
@@ -325,6 +326,7 @@ export const lg: Messages = {
     syncedNote: "Okutunda kwonna kusawaziddwa ✓",
     savedOffline: "Kuterekeddwa ku kyuma kino ✓",
     willSync: "Kunaasawazibwa yintaneti bw'ekomawo",
+    offlineUpgrade: "Tewali yintaneti — okutunda awatali yintaneti kuli ku Starter ($20). Yunga ku yintaneti osobole okuwandiika okutunda kuno.",
     lockedTitle: "Kasa eggulawo ku pulaani esasulwa",
     lockedBody: "Wandiika okutunda okw'omu maaso era print oba weereza risiiti. Kasa $5/mwezi, oba Starter $20/mwezi eri byonna.",
     lockedCta: "Londa pulaani",

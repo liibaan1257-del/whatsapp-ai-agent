@@ -148,6 +148,7 @@ export const fr: Messages = {
       "Tableau des réservations",
       "Les 9 langues",
       "Debt book",
+      "Caisse qui fonctionne hors ligne",
     ],
     bookFeatures: [
       "Debt book with totals and overdue list",
@@ -322,6 +323,7 @@ export const fr: Messages = {
     syncedNote: "Toutes les ventes synchronisées ✓",
     savedOffline: "Enregistré sur cet appareil ✓",
     willSync: "Se synchronisera dès le retour en ligne",
+    offlineUpgrade: "Pas d'internet — la vente hors ligne est sur le forfait Starter (20 $). Connectez-vous pour enregistrer cette vente.",
     lockedTitle: "La caisse s'ouvre avec un forfait payant",
     lockedBody: "Encaissez les ventes en personne et imprimez ou envoyez des reçus. Caisse 5 $/mois, ou Starter 20 $/mois pour tout.",
     lockedCta: "Choisir un forfait",

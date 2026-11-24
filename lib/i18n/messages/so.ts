@@ -148,6 +148,7 @@ export const so: Messages = {
       "Dashboard-ka ballamaha",
       "Dhammaan 9-ka luqadood",
       "Buugga Deynta",
+      "Cashir offline shaqeeya",
     ],
     bookFeatures: [
       "Buugga Deynta: wadarta iyo kuwa dib u dhacay",
@@ -322,6 +323,7 @@ export const so: Messages = {
     syncedNote: "Dhammaan iibku waa la sync gareeyay ✓",
     savedOffline: "Qalabka ku kaydsan ✓",
     willSync: "Wuu is-sync gareeyaa marka internet soo noqdo",
+    offlineUpgrade: "Internet ma jiro — iibinta offline waxay ku jirtaa Starter ($20). Internet ku xir si aad iibkan u kaydiso.",
     lockedTitle: "Cashir-ku wuxuu ku furmaa plan bixiya",
     lockedBody: "Diiwaangeli iibka gacanta oo daabac ama dir rasiid. Cashir $5/bil, ama Starter $20/bil wax walba.",
     lockedCta: "Dooro plan",

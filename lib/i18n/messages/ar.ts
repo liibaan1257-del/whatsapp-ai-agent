@@ -148,6 +148,7 @@ export const ar: Messages = {
       "لوحة الحجوزات",
       "جميع اللغات التسع",
       "Debt book",
+      "صندوق يعمل دون اتصال",
     ],
     bookFeatures: [
       "Debt book with totals and overdue list",
@@ -322,6 +323,7 @@ export const ar: Messages = {
     syncedNote: "تمت مزامنة جميع المبيعات ✓",
     savedOffline: "محفوظ على هذا الجهاز ✓",
     willSync: "ستتم المزامنة عند عودة الاتصال",
+    offlineUpgrade: "لا يوجد إنترنت — البيع دون اتصال متاح في خطة Starter (20$). اتصل بالإنترنت لتسجيل هذه العملية.",
     lockedTitle: "يفتح الصندوق مع خطة مدفوعة",
     lockedBody: "سجّل المبيعات المباشرة واطبع أو أرسل الإيصالات. الصندوق 5$/شهر، أو Starter 20$/شهر لكل شيء.",
     lockedCta: "اختر خطة",

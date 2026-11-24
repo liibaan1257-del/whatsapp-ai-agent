@@ -25,11 +25,14 @@ export function CashierClient({
   currency,
   businessName,
   businessId,
+  offline,
 }: {
   services: Service[];
   currency: string;
   businessName: string;
   businessId: string;
+  /** Whether this plan keeps selling offline (Starter/Pro). The $5 cashier is online-only. */
+  offline: boolean;
 }) {
   const { m, locale } = useI18n();
   const t = m.cashier;
@@ -226,7 +229,8 @@ export function CashierClient({
     const lines = buildLines();
 
     if (!navigator.onLine) {
-      saveOffline(lines);
+      if (offline) saveOffline(lines);
+      else setError(t.offlineUpgrade); // online-only plan ($5): can't sell without internet
       setSubmitting(false);
       return;
     }
@@ -245,8 +249,9 @@ export function CashierClient({
         setError(t.error);
       }
     } catch {
-      // Network died mid-sale: keep it on the device instead of losing it.
-      saveOffline(lines);
+      // Network died mid-sale.
+      if (offline) saveOffline(lines); // keep it on the device instead of losing it
+      else setError(t.offlineUpgrade);
     }
     setSubmitting(false);
   }
@@ -285,10 +290,17 @@ export function CashierClient({
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_380px]">
       {/* Connection / sync banner */}
-      {!online || pending > 0 ? (
-        <div className={`lg:col-span-2 flex items-center gap-2 rounded-xl border p-3 text-sm ${online ? "border-brand/30 bg-brand/5 text-brand" : "border-amber-500/30 bg-amber-500/10 text-amber-600"}`} role="status">
-          {online ? <RefreshCw className="size-4 animate-spin" /> : <WifiOff className="size-4" />}
-          <span>{online ? (pending > 0 ? fmt(t.pendingSync, { n: pending }) : t.syncedNote) : t.offlineNote}</span>
+      {offline ? (
+        !online || pending > 0 ? (
+          <div className={`lg:col-span-2 flex items-center gap-2 rounded-xl border p-3 text-sm ${online ? "border-brand/30 bg-brand/5 text-brand" : "border-amber-500/30 bg-amber-500/10 text-amber-600"}`} role="status">
+            {online ? <RefreshCw className="size-4 animate-spin" /> : <WifiOff className="size-4" />}
+            <span>{online ? (pending > 0 ? fmt(t.pendingSync, { n: pending }) : t.syncedNote) : t.offlineNote}</span>
+          </div>
+        ) : null
+      ) : !online ? (
+        <div className="lg:col-span-2 flex items-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 text-sm text-amber-600" role="status">
+          <WifiOff className="size-4" />
+          <span>{t.offlineUpgrade}</span>
         </div>
       ) : null}
 

@@ -8,7 +8,7 @@ import { PageHeader } from "@/components/dashboard/page-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { hasCashier, isPaid } from "@/lib/billing";
+import { hasCashier, hasOfflineCashier, isPaid } from "@/lib/billing";
 import { requireOwner } from "@/lib/auth/session";
 import { getKnowledge } from "@/lib/dashboard/data";
 import { formatDateTime } from "@/lib/format";
@@ -119,7 +119,7 @@ async function Cashier({ locale }: { locale: Locale }) {
         </Card>
       </div>
 
-      <CashierClient services={services} currency={currency} businessName={businessName} businessId={owner.businessId} />
+      <CashierClient services={services} currency={currency} businessName={businessName} businessId={owner.businessId} offline={hasOfflineCashier(owner.plan)} />
 
       {recent && recent.length > 0 ? (
         <div className="space-y-2">

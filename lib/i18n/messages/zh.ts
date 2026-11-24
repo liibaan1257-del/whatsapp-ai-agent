@@ -149,6 +149,7 @@ export const zh: Messages = {
       "预约管理控制台",
       "全部 9 种语言",
       "Debt book",
+      "可离线使用的收银台",
     ],
     bookFeatures: [
       "Debt book with totals and overdue list",
@@ -323,6 +324,7 @@ export const zh: Messages = {
     syncedNote: "所有销售已同步 ✓",
     savedOffline: "已保存到本设备 ✓",
     willSync: "恢复联网后将自动同步",
+    offlineUpgrade: "无网络 — 离线销售在 Starter 套餐（$20）。请联网以记录此销售。",
     lockedTitle: "收银台需付费套餐开启",
     lockedBody: "结算当面销售并打印或发送收据。收银台 $5/月，或 Starter $20/月畅享全部。",
     lockedCta: "选择套餐",

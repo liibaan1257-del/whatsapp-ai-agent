@@ -148,6 +148,7 @@ export const de: Messages = {
       "Buchungs-Dashboard",
       "Alle 9 Sprachen",
       "Debt book",
+      "Kasse, die offline funktioniert",
     ],
     bookFeatures: [
       "Debt book with totals and overdue list",
@@ -322,6 +323,7 @@ export const de: Messages = {
     syncedNote: "Alle Verkäufe synchronisiert ✓",
     savedOffline: "Auf diesem Gerät gespeichert ✓",
     willSync: "Wird synchronisiert, sobald du wieder online bist",
+    offlineUpgrade: "Kein Internet — Offline-Verkauf gibt es im Starter-Tarif (20 $). Verbinde dich, um diesen Verkauf zu erfassen.",
     lockedTitle: "Die Kasse öffnet sich mit einem bezahlten Tarif",
     lockedBody: "Verkäufe vor Ort kassieren und Belege drucken oder senden. Kasse 5 $/Monat oder Starter 20 $/Monat für alles.",
     lockedCta: "Tarif wählen",
