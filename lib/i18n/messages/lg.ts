@@ -326,7 +326,7 @@ export const lg: Messages = {
     savedOffline: "Kuterekeddwa ku kyuma kino ✓",
     willSync: "Kunaasawazibwa yintaneti bw'ekomawo",
     lockedTitle: "Kasa eggulawo ku pulaani esasulwa",
-    lockedBody: "Wandiika okutunda okw'omu maaso era print oba weereza risiiti. Kasa $10/mwezi, oba Starter $20/mwezi eri byonna.",
+    lockedBody: "Wandiika okutunda okw'omu maaso era print oba weereza risiiti. Kasa $5/mwezi, oba Starter $20/mwezi eri byonna.",
     lockedCta: "Londa pulaani",
   },
   nav: {

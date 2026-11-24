@@ -323,7 +323,7 @@ export const fr: Messages = {
     savedOffline: "Enregistré sur cet appareil ✓",
     willSync: "Se synchronisera dès le retour en ligne",
     lockedTitle: "La caisse s'ouvre avec un forfait payant",
-    lockedBody: "Encaissez les ventes en personne et imprimez ou envoyez des reçus. Caisse 10 $/mois, ou Starter 20 $/mois pour tout.",
+    lockedBody: "Encaissez les ventes en personne et imprimez ou envoyez des reçus. Caisse 5 $/mois, ou Starter 20 $/mois pour tout.",
     lockedCta: "Choisir un forfait",
   },
   nav: {

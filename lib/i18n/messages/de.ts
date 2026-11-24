@@ -323,7 +323,7 @@ export const de: Messages = {
     savedOffline: "Auf diesem Gerät gespeichert ✓",
     willSync: "Wird synchronisiert, sobald du wieder online bist",
     lockedTitle: "Die Kasse öffnet sich mit einem bezahlten Tarif",
-    lockedBody: "Verkäufe vor Ort kassieren und Belege drucken oder senden. Kasse 10 $/Monat oder Starter 20 $/Monat für alles.",
+    lockedBody: "Verkäufe vor Ort kassieren und Belege drucken oder senden. Kasse 5 $/Monat oder Starter 20 $/Monat für alles.",
     lockedCta: "Tarif wählen",
   },
   nav: {

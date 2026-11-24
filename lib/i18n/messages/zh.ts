@@ -324,7 +324,7 @@ export const zh: Messages = {
     savedOffline: "已保存到本设备 ✓",
     willSync: "恢复联网后将自动同步",
     lockedTitle: "收银台需付费套餐开启",
-    lockedBody: "结算当面销售并打印或发送收据。收银台 $10/月，或 Starter $20/月畅享全部。",
+    lockedBody: "结算当面销售并打印或发送收据。收银台 $5/月，或 Starter $20/月畅享全部。",
     lockedCta: "选择套餐",
   },
   nav: {

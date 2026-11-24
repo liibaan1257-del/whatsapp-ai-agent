@@ -323,7 +323,7 @@ export const so: Messages = {
     savedOffline: "Qalabka ku kaydsan ✓",
     willSync: "Wuu is-sync gareeyaa marka internet soo noqdo",
     lockedTitle: "Cashir-ku wuxuu ku furmaa plan bixiya",
-    lockedBody: "Diiwaangeli iibka gacanta oo daabac ama dir rasiid. Cashir $10/bil, ama Starter $20/bil wax walba.",
+    lockedBody: "Diiwaangeli iibka gacanta oo daabac ama dir rasiid. Cashir $5/bil, ama Starter $20/bil wax walba.",
     lockedCta: "Dooro plan",
   },
   nav: {

@@ -322,7 +322,7 @@ export const en = {
     savedOffline: "Saved on this device ✓",
     willSync: "Will sync when you're back online",
     lockedTitle: "The cashier opens on a paid plan",
-    lockedBody: "Ring up in-person sales and print or send receipts. Cashier $10/month, or Starter $20/month for everything.",
+    lockedBody: "Ring up in-person sales and print or send receipts. Cashier $5/month, or Starter $20/month for everything.",
     lockedCta: "Choose a plan",
   },
   nav: {

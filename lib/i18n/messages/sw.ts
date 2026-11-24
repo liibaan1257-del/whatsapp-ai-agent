@@ -324,7 +324,7 @@ export const sw: Messages = {
     savedOffline: "Imehifadhiwa kwenye kifaa hiki ✓",
     willSync: "Yatasawazishwa mtandao utakaporejea",
     lockedTitle: "Keshia hufunguka kwenye mpango unaolipiwa",
-    lockedBody: "Rekodi mauzo ya papo kwa papo na chapisha au tuma risiti. Keshia $10/mwezi, au Starter $20/mwezi kwa kila kitu.",
+    lockedBody: "Rekodi mauzo ya papo kwa papo na chapisha au tuma risiti. Keshia $5/mwezi, au Starter $20/mwezi kwa kila kitu.",
     lockedCta: "Chagua mpango",
   },
   nav: {

@@ -323,7 +323,7 @@ export const es: Messages = {
     savedOffline: "Guardado en este dispositivo ✓",
     willSync: "Se sincronizará cuando vuelvas a estar en línea",
     lockedTitle: "La caja se abre con un plan de pago",
-    lockedBody: "Cobra ventas presenciales e imprime o envía recibos. Caja $10/mes, o Starter $20/mes por todo.",
+    lockedBody: "Cobra ventas presenciales e imprime o envía recibos. Caja $5/mes, o Starter $20/mes por todo.",
     lockedCta: "Elegir un plan",
   },
   nav: {

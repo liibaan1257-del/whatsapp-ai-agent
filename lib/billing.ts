@@ -15,9 +15,9 @@ export const PLANS = {
 } as const;
 export type Plan = keyof typeof PLANS;
 /** Monthly price in USD shown on the home page (payment itself is manual). */
-export const PRICES_USD: Record<Plan, number> = { trial: 0, book: 5, cashier: 10, starter: 20, pro: 49 };
+export const PRICES_USD: Record<Plan, number> = { trial: 0, book: 5, cashier: 5, starter: 20, pro: 49 };
 /** Yearly price in USD: two months free. */
-export const YEARLY_PRICES_USD: Record<Plan, number> = { trial: 0, book: 50, cashier: 100, starter: 200, pro: 490 };
+export const YEARLY_PRICES_USD: Record<Plan, number> = { trial: 0, book: 50, cashier: 50, starter: 200, pro: 490 };
 export const PLAN_NAMES = Object.keys(PLANS) as Plan[];
 
 /** Plans that include the WhatsApp AI bot (and so may connect a WhatsApp number). */
