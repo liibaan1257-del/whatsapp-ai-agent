@@ -20,6 +20,8 @@ export function contactWhatsapp(): { display: string; link: string } | null {
 
 /** Where customers send their payment (shown on the owner's Settings page). */
 export const PAYMENT_ACCOUNTS = [
+  { method: "MTN Mobile Money (Uganda)", number: "+256 788 653 618", name: "Liban Salah Abdullahi" },
+  { method: "Airtel Money (Uganda)", number: "+256 751 881 845", name: "Liban Salah Abdullahi" },
   { method: "EVC Plus", number: "0618710974", name: "Liban Salah Abdullahi" },
   { method: "Salaam Somali Bank", number: "38458446", name: "Liban Salah Abdullahi" },
   { method: "Premier Bank", number: "0615690242", name: "Cabdullahi Sheikh Ahmed Mahomuud" },
