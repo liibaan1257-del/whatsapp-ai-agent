@@ -13,6 +13,10 @@ export type RecordSaleInput = {
   customerName?: string;
   phone?: string;
   note?: string;
+  /** Client-generated id so re-syncing an offline sale can't duplicate it. */
+  clientId?: string;
+  /** When the sale really happened (offline sales keep their original time). */
+  at?: string;
 };
 export type SaleLine = { name: string; quantity: number; unitPrice: number | null; lineTotal: number | null };
 export type RecordSaleResult =
@@ -49,6 +53,16 @@ export async function recordSale(input: RecordSaleInput): Promise<RecordSaleResu
   });
   total = Number(total.toFixed(2));
 
+  // Keep an offline sale's original time if it is sane (last 7 days, not in the future).
+  const clientId = String(input.clientId ?? "").slice(0, 64) || null;
+  let createdAt: string | undefined;
+  if (input.at) {
+    const ts = new Date(input.at).getTime();
+    if (Number.isFinite(ts) && ts <= Date.now() + 60_000 && ts > Date.now() - 7 * 86_400_000) {
+      createdAt = new Date(ts).toISOString();
+    }
+  }
+
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("orders")
@@ -62,11 +76,23 @@ export async function recordSale(input: RecordSaleInput): Promise<RecordSaleResu
       note: String(input.note ?? "").trim().slice(0, 1000),
       status: "done",
       source: "cashier",
+      ...(clientId ? { client_id: clientId } : {}),
+      ...(createdAt ? { created_at: createdAt } : {}),
     })
     .select("id, created_at")
     .single();
 
   if (error || !data) {
+    // Duplicate client_id: this offline sale was already synced — treat as success so the queue clears.
+    if (error?.code === "23505" && clientId) {
+      const { data: existing } = await supabase
+        .from("orders")
+        .select("id, created_at")
+        .eq("business_id", owner.businessId)
+        .eq("client_id", clientId)
+        .maybeSingle();
+      if (existing) return { ok: true, id: existing.id, receiptNo: 0, createdAt: existing.created_at, lines, total, currency };
+    }
     logger.error("cashier_sale_failed", { code: error?.code });
     return { ok: false, error: "save" };
   }

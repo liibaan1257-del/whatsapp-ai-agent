@@ -1,27 +1,58 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Plus, Minus, Trash2, Receipt, Check, Printer, Send } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Plus, Minus, Trash2, Receipt, Check, Printer, Send, WifiOff, RefreshCw } from "lucide-react";
 import { useI18n } from "@/components/i18n/provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { fmt } from "@/lib/i18n/config";
 import { recordSale, type SaleLine } from "@/lib/dashboard/cashier-actions";
 
 type Service = { name: string; price: number | null };
 type CartLine = { name: string; unitPrice: number | null; quantity: number };
+type QueuedSale = {
+  clientId: string;
+  at: string;
+  lines: SaleLine[];
+  total: number;
+  customer: string;
+  phone: string;
+};
 
 export function CashierClient({
   services,
   currency,
   businessName,
+  businessId,
 }: {
   services: Service[];
   currency: string;
   businessName: string;
+  businessId: string;
 }) {
   const { m, locale } = useI18n();
   const t = m.cashier;
+
+  const SVC_KEY = `rb_cashier_svc_${businessId}`;
+  const QUEUE_KEY = `rb_cashier_queue_${businessId}`;
+  const NO_KEY = `rb_cashier_localno_${businessId}`;
+
+  // Services: keep a copy on the device so the till still works during an internet drop.
+  const [svc, setSvc] = useState<Service[]>(services);
+  useEffect(() => {
+    try {
+      if (services.length) {
+        localStorage.setItem(SVC_KEY, JSON.stringify(services));
+        setSvc(services);
+      } else {
+        const cached = localStorage.getItem(SVC_KEY);
+        if (cached) setSvc(JSON.parse(cached) as Service[]);
+      }
+    } catch {
+      /* storage unavailable */
+    }
+  }, [services, SVC_KEY]);
 
   const [cart, setCart] = useState<CartLine[]>([]);
   const [customer, setCustomer] = useState("");
@@ -30,7 +61,11 @@ export function CashierClient({
   const [customAmount, setCustomAmount] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [receipt, setReceipt] = useState<{ id: string; receiptNo: number; createdAt: string; lines: SaleLine[]; total: number } | null>(null);
+  const [receipt, setReceipt] = useState<{ receiptNo: number | string; createdAt: string; lines: SaleLine[]; total: number; pending: boolean } | null>(null);
+
+  const [online, setOnline] = useState(true);
+  const [pending, setPending] = useState(0);
+  const flushing = useRef(false);
 
   const money = useMemo(() => {
     return (n: number) => {
@@ -41,6 +76,69 @@ export function CashierClient({
       }
     };
   }, [locale, currency]);
+
+  const readQueue = useCallback((): QueuedSale[] => {
+    try {
+      return JSON.parse(localStorage.getItem(QUEUE_KEY) ?? "[]") as QueuedSale[];
+    } catch {
+      return [];
+    }
+  }, [QUEUE_KEY]);
+
+  const writeQueue = useCallback(
+    (q: QueuedSale[]) => {
+      try {
+        localStorage.setItem(QUEUE_KEY, JSON.stringify(q));
+      } catch {
+        /* ignore */
+      }
+      setPending(q.length);
+    },
+    [QUEUE_KEY],
+  );
+
+  // Send any device-saved sales to the server, one by one; keep only the ones that fail.
+  const flush = useCallback(async () => {
+    if (flushing.current) return;
+    const q = readQueue();
+    if (!q.length) return;
+    flushing.current = true;
+    const left: QueuedSale[] = [];
+    for (const s of q) {
+      try {
+        const res = await recordSale({
+          items: s.lines.map((l) => ({ name: l.name, quantity: l.quantity, unitPrice: l.unitPrice })),
+          customerName: s.customer,
+          phone: s.phone,
+          clientId: s.clientId,
+          at: s.at,
+        });
+        if (!res.ok) left.push(s);
+      } catch {
+        left.push(s);
+      }
+    }
+    writeQueue(left);
+    flushing.current = false;
+  }, [readQueue, writeQueue]);
+
+  // Track connection and sync whenever we come back online.
+  useEffect(() => {
+    setOnline(navigator.onLine);
+    setPending(readQueue().length);
+    const on = () => {
+      setOnline(true);
+      void flush();
+    };
+    const off = () => setOnline(false);
+    window.addEventListener("online", on);
+    window.addEventListener("offline", off);
+    if (navigator.onLine) void flush();
+    return () => {
+      window.removeEventListener("online", on);
+      window.removeEventListener("offline", off);
+    };
+  }, [flush, readQueue]);
 
   const total = cart.reduce((sum, l) => sum + (l.unitPrice != null ? l.unitPrice * l.quantity : 0), 0);
 
@@ -79,43 +177,92 @@ export function CashierClient({
     setCart((c) => c.filter((_, i) => i !== index));
   }
 
+  function nextLocalNo(): number {
+    try {
+      const n = (Number(localStorage.getItem(NO_KEY)) || 0) + 1;
+      localStorage.setItem(NO_KEY, String(n));
+      return n;
+    } catch {
+      return Math.floor(Date.now() / 1000) % 100000;
+    }
+  }
+
+  function uuid(): string {
+    try {
+      return crypto.randomUUID();
+    } catch {
+      return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    }
+  }
+
+  function buildLines(): SaleLine[] {
+    return cart.map((l) => ({
+      name: l.name,
+      quantity: l.quantity,
+      unitPrice: l.unitPrice,
+      lineTotal: l.unitPrice != null ? Number((l.unitPrice * l.quantity).toFixed(2)) : null,
+    }));
+  }
+
+  function saveOffline(lines: SaleLine[]) {
+    const sale: QueuedSale = {
+      clientId: uuid(),
+      at: new Date().toISOString(),
+      lines,
+      total: Number(total.toFixed(2)),
+      customer,
+      phone,
+    };
+    writeQueue([...readQueue(), sale]);
+    setReceipt({ receiptNo: `L${nextLocalNo()}`, createdAt: sale.at, lines, total: sale.total, pending: true });
+    setCart([]);
+    setCustomer("");
+  }
+
   async function submit() {
     if (!cart.length || submitting) return;
     setSubmitting(true);
     setError(null);
-    const res = await recordSale({
-      items: cart.map((l) => ({ name: l.name, quantity: l.quantity, unitPrice: l.unitPrice })),
-      customerName: customer,
-      phone,
-      note: "",
-    });
-    setSubmitting(false);
-    if (res.ok) {
-      setReceipt({ id: res.id, receiptNo: res.receiptNo, createdAt: res.createdAt, lines: res.lines, total: res.total });
-      setCart([]);
-      setCustomer("");
-    } else {
-      setError(t.error);
+    const lines = buildLines();
+
+    if (!navigator.onLine) {
+      saveOffline(lines);
+      setSubmitting(false);
+      return;
     }
+    try {
+      const res = await recordSale({
+        items: cart.map((l) => ({ name: l.name, quantity: l.quantity, unitPrice: l.unitPrice })),
+        customerName: customer,
+        phone,
+        clientId: uuid(),
+      });
+      if (res.ok) {
+        setReceipt({ receiptNo: res.receiptNo, createdAt: res.createdAt, lines: res.lines, total: res.total, pending: false });
+        setCart([]);
+        setCustomer("");
+      } else {
+        setError(t.error);
+      }
+    } catch {
+      // Network died mid-sale: keep it on the device instead of losing it.
+      saveOffline(lines);
+    }
+    setSubmitting(false);
   }
 
-  function receiptText(r: { receiptNo: number; createdAt: string; lines: SaleLine[]; total: number }): string {
+  function receiptText(r: { receiptNo: number | string; createdAt: string; lines: SaleLine[]; total: number }): string {
     const d = new Date(r.createdAt).toLocaleString(locale);
-    const items = r.lines
-      .map((l) => `${l.quantity} x ${l.name}${l.lineTotal != null ? "  " + money(l.lineTotal) : ""}`)
-      .join("\n");
+    const items = r.lines.map((l) => `${l.quantity} x ${l.name}${l.lineTotal != null ? "  " + money(l.lineTotal) : ""}`).join("\n");
     return `${businessName}\n${t.receipt} #${r.receiptNo} - ${d}\n\n${items}\n\n${t.total}: ${money(r.total)}\n\n${t.thankYou}`;
   }
 
-  function printReceipt(r: { receiptNo: number; createdAt: string; lines: SaleLine[]; total: number }) {
+  function printReceipt(r: { receiptNo: number | string; createdAt: string; lines: SaleLine[]; total: number }) {
     const w = window.open("", "_blank", "width=380,height=560");
     if (!w) return;
     const d = new Date(r.createdAt).toLocaleString(locale);
     const rows = r.lines
-      .map(
-        (l) =>
-          `<tr><td>${l.quantity} &times; ${escapeHtml(l.name)}</td><td style="text-align:right">${l.lineTotal != null ? money(l.lineTotal) : "—"}</td></tr>`,
-      )
+      .map((l) => `<tr><td>${l.quantity} &times; ${escapeHtml(l.name)}</td><td style="text-align:right">${l.lineTotal != null ? money(l.lineTotal) : "—"}</td></tr>`)
       .join("");
     w.document.write(
       `<!doctype html><html><head><meta charset="utf-8"><title>${t.receipt}</title>
@@ -137,16 +284,24 @@ export function CashierClient({
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_380px]">
+      {/* Connection / sync banner */}
+      {!online || pending > 0 ? (
+        <div className={`lg:col-span-2 flex items-center gap-2 rounded-xl border p-3 text-sm ${online ? "border-brand/30 bg-brand/5 text-brand" : "border-amber-500/30 bg-amber-500/10 text-amber-600"}`} role="status">
+          {online ? <RefreshCw className="size-4 animate-spin" /> : <WifiOff className="size-4" />}
+          <span>{online ? (pending > 0 ? fmt(t.pendingSync, { n: pending }) : t.syncedNote) : t.offlineNote}</span>
+        </div>
+      ) : null}
+
       {/* Menu / items */}
       <div className="space-y-3">
-        <p className="text-sm text-muted-foreground">{services.length ? t.tapHint : t.noItems}</p>
-        {services.length === 0 ? (
+        <p className="text-sm text-muted-foreground">{svc.length ? t.tapHint : t.noItems}</p>
+        {svc.length === 0 ? (
           <Card>
             <CardContent className="py-10 text-center text-sm text-muted-foreground">{t.addItemsLink}</CardContent>
           </Card>
         ) : (
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-            {services.map((s) => (
+            {svc.map((s) => (
               <button
                 key={s.name}
                 type="button"
@@ -154,9 +309,7 @@ export function CashierClient({
                 className="flex min-h-20 flex-col justify-between rounded-xl border bg-card p-3 text-left transition hover:border-brand hover:bg-brand/5 active:scale-[0.98]"
               >
                 <span className="font-medium leading-tight">{s.name}</span>
-                <span className="mt-2 text-sm font-semibold tabular-nums text-brand">
-                  {s.price != null ? money(s.price) : "—"}
-                </span>
+                <span className="mt-2 text-sm font-semibold tabular-nums text-brand">{s.price != null ? money(s.price) : "—"}</span>
               </button>
             ))}
           </div>
@@ -171,13 +324,7 @@ export function CashierClient({
             </div>
             <div className="w-28">
               <label className="mb-1 block text-xs text-muted-foreground">{t.customAmount}</label>
-              <Input
-                type="number"
-                inputMode="decimal"
-                value={customAmount}
-                onChange={(e) => setCustomAmount(e.target.value)}
-                placeholder="0"
-              />
+              <Input type="number" inputMode="decimal" value={customAmount} onChange={(e) => setCustomAmount(e.target.value)} placeholder="0" />
             </div>
             <Button type="button" variant="outline" onClick={addCustom}>
               <Plus className="size-4" /> {t.addCustom}
@@ -202,9 +349,7 @@ export function CashierClient({
                   <li key={i} className="flex items-center gap-2 border-b pb-2 text-sm">
                     <div className="flex-1">
                       <div className="font-medium">{l.name}</div>
-                      <div className="text-xs text-muted-foreground tabular-nums">
-                        {l.unitPrice != null ? money(l.unitPrice) : "—"}
-                      </div>
+                      <div className="text-xs text-muted-foreground tabular-nums">{l.unitPrice != null ? money(l.unitPrice) : "—"}</div>
                     </div>
                     <div className="flex items-center gap-1">
                       <Button type="button" size="icon" variant="outline" className="size-7" onClick={() => setQty(i, -1)}>
@@ -215,9 +360,7 @@ export function CashierClient({
                         <Plus className="size-3" />
                       </Button>
                     </div>
-                    <div className="w-20 text-right font-semibold tabular-nums">
-                      {l.unitPrice != null ? money(l.unitPrice * l.quantity) : "—"}
-                    </div>
+                    <div className="w-20 text-right font-semibold tabular-nums">{l.unitPrice != null ? money(l.unitPrice * l.quantity) : "—"}</div>
                     <Button type="button" size="icon" variant="ghost" className="size-7 text-destructive" onClick={() => removeLine(i)}>
                       <Trash2 className="size-3.5" />
                     </Button>
@@ -252,11 +395,12 @@ export function CashierClient({
                 <span className="flex size-12 items-center justify-center rounded-full bg-brand/15 text-brand">
                   <Check className="size-7" />
                 </span>
-                <p className="text-lg font-bold">{t.saved}</p>
+                <p className="text-lg font-bold">{receipt.pending ? t.savedOffline : t.saved}</p>
                 <p className="font-semibold">{businessName}</p>
                 <p className="text-sm font-medium text-brand">
                   {t.receiptNo} #{receipt.receiptNo}
                 </p>
+                {receipt.pending ? <p className="text-xs text-amber-600">{t.willSync}</p> : null}
                 <p className="text-xs text-muted-foreground">{new Date(receipt.createdAt).toLocaleString(locale)}</p>
               </div>
 
@@ -282,11 +426,7 @@ export function CashierClient({
                 </Button>
                 {waPhone ? (
                   <Button type="button" variant="outline" asChild>
-                    <a
-                      href={`https://wa.me/${waPhone}?text=${encodeURIComponent(receiptText(receipt))}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <a href={`https://wa.me/${waPhone}?text=${encodeURIComponent(receiptText(receipt))}`} target="_blank" rel="noopener noreferrer">
                       <Send className="size-4" /> {t.sendWhatsapp}
                     </a>
                   </Button>

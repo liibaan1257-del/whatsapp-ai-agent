@@ -119,7 +119,7 @@ async function Cashier({ locale }: { locale: Locale }) {
         </Card>
       </div>
 
-      <CashierClient services={services} currency={currency} businessName={businessName} />
+      <CashierClient services={services} currency={currency} businessName={businessName} businessId={owner.businessId} />
 
       {recent && recent.length > 0 ? (
         <div className="space-y-2">
