@@ -146,7 +146,7 @@ export const es: Messages = {
     planFeatures: [
       "Base de conocimiento y chat de prueba",
       "Panel de reservas",
-      "Los 9 idiomas",
+      "Los 10 idiomas",
       "Debt book",
       "Caja que funciona sin conexión",
     ],

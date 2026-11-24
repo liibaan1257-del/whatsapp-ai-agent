@@ -146,7 +146,7 @@ export const so: Messages = {
     planFeatures: [
       "Xogta ganacsiga iyo Chat tester",
       "Dashboard-ka ballamaha",
-      "Dhammaan 9-ka luqadood",
+      "Dhammaan 10-ka luqadood",
       "Buugga Deynta",
       "Cashir offline shaqeeya",
     ],

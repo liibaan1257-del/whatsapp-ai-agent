@@ -147,7 +147,7 @@ export const zh: Messages = {
     planFeatures: [
       "知识库和对话测试",
       "预约管理控制台",
-      "全部 9 种语言",
+      "全部 10 种语言",
       "Debt book",
       "可离线使用的收银台",
     ],

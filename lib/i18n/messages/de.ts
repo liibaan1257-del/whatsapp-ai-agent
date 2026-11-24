@@ -146,7 +146,7 @@ export const de: Messages = {
     planFeatures: [
       "Wissensdatenbank und Chat-Test",
       "Buchungs-Dashboard",
-      "Alle 9 Sprachen",
+      "Alle 10 Sprachen",
       "Debt book",
       "Kasse, die offline funktioniert",
     ],

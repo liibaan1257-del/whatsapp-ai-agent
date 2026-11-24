@@ -146,7 +146,7 @@ export const fr: Messages = {
     planFeatures: [
       "Base de connaissances et testeur de chat",
       "Tableau des réservations",
-      "Les 9 langues",
+      "Les 10 langues",
       "Debt book",
       "Caisse qui fonctionne hors ligne",
     ],

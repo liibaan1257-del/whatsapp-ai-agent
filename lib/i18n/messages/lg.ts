@@ -149,7 +149,7 @@ export const lg: Messages = {
     planFeatures: [
       "Knowledge base ne chat tester",
       "Dashboard ya appointment",
-      "Ennimi zonna 9",
+      "Ennimi zonna 10",
       "Ekitabo ky'amabanja",
       "Kasa ekolera awatali yintaneti",
     ],

@@ -147,7 +147,7 @@ export const sw: Messages = {
     planFeatures: [
       "Hifadhi ya maarifa na kijaribu cha gumzo",
       "Dashibodi ya miadi",
-      "Lugha zote 9",
+      "Lugha zote 10",
       "Debt book",
       "Keshia inayofanya kazi nje ya mtandao",
     ],

@@ -145,7 +145,7 @@ export const en = {
     planFeatures: [
       "Knowledge base and chat tester",
       "Bookings dashboard",
-      "All 9 languages",
+      "All 10 languages",
       "Debt book",
       "Cashier that works offline",
     ],
