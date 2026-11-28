@@ -3,7 +3,7 @@ import { after } from "next/server";
 import { describeAiError, isAiConfigured, runAgent, type ChatTurn, type Intent } from "@/lib/ai/agent";
 import { checkBooking } from "@/lib/ai/booking";
 import { checkOrder } from "@/lib/ai/order";
-import { isActive, monthStart, replyLimit } from "@/lib/billing";
+import { hasInventory, isActive, monthStart, replyLimit } from "@/lib/billing";
 import { parseKnowledge } from "@/lib/knowledge";
 import { logger } from "@/lib/logger";
 import { notifyOwnerOfBooking, notifyOwnerOfOrder } from "@/lib/owner-notify";
@@ -94,6 +94,11 @@ export async function handleCustomerMessage(msg: IncomingMessage): Promise<Engin
   const { data: row } = await db.from("business_knowledge").select("*").eq("id", msg.businessId).single();
   if (!row) return { status: "error", conversationId: conv.id, code: "business_not_found" };
   const knowledge = parseKnowledge(row);
+  const tracksStock = hasInventory(String(row.plan));
+  if (tracksStock) {
+    const { data: soldOut } = await db.from("inventory").select("item").eq("business_id", msg.businessId).lte("quantity", 0).limit(200);
+    knowledge.soldOut = (soldOut ?? []).map((r) => r.item);
+  }
   if (!knowledge.ai_enabled) return { status: "ai_disabled", conversationId: conv.id };
 
   // Plan: access must not have ended (the dashboard's Chat tester works before the first payment),
@@ -241,6 +246,13 @@ export async function handleCustomerMessage(msg: IncomingMessage): Promise<Engin
         logger.error("order_insert_failed", { conversationId: conv.id, code: error?.code });
       } else {
         orderId = saved.id;
+        if (tracksStock) {
+          const { error: stockError } = await db.rpc("inventory_deduct", {
+            p_business: msg.businessId,
+            p_items: check.lines.map((l) => ({ name: l.name, quantity: l.quantity })),
+          });
+          if (stockError) logger.error("stock_deduct_failed", { code: stockError.code });
+        }
         if (msg.channel === "whatsapp") {
           const placed = { customerName: check.customerName, phone: msg.customerPhone, lines: check.lines, total: check.total, currency: check.currency, note: check.note };
           after(() => notifyOwnerOfOrder(msg.businessId, placed));

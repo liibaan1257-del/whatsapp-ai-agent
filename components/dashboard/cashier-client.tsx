@@ -26,6 +26,7 @@ export function CashierClient({
   businessName,
   businessId,
   offline,
+  stock = {},
 }: {
   services: Service[];
   currency: string;
@@ -33,6 +34,8 @@ export function CashierClient({
   businessId: string;
   /** Whether this plan keeps selling offline (Starter/Pro). The $5 cashier is online-only. */
   offline: boolean;
+  /** Units left per item (lower-cased name → count), for plans with inventory. */
+  stock?: Record<string, number>;
 }) {
   const { m, locale } = useI18n();
   const t = m.cashier;
@@ -322,6 +325,11 @@ export function CashierClient({
               >
                 <span className="font-medium leading-tight">{s.name}</span>
                 <span className="mt-2 text-sm font-semibold tabular-nums text-brand">{s.price != null ? money(s.price) : "—"}</span>
+                {stock[s.name.toLowerCase()] != null ? (
+                  <span className={`text-xs tabular-nums ${stock[s.name.toLowerCase()] <= 0 ? "font-semibold text-destructive" : "text-muted-foreground"}`}>
+                    {stock[s.name.toLowerCase()] <= 0 ? m.stock.outBadge : fmt(m.stock.left, { n: String(stock[s.name.toLowerCase()]) })}
+                  </span>
+                ) : null}
               </button>
             ))}
           </div>

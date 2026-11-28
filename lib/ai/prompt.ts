@@ -17,6 +17,12 @@ export function describeBusiness(k: Knowledge): string {
     const bits = [s.price && `price ${formatPrice(s.price, k.currency)}`, `${s.duration_minutes} min`].filter(Boolean).join(", ");
     lines.push(`- ${s.name} (${bits})${s.description ? `: ${s.description}` : ""}`);
   }
+  if (k.soldOut?.length) {
+    lines.push(
+      "",
+      `Sold out right now (do not take orders for these; say they are finished for now and suggest something else): ${k.soldOut.join(", ")}`,
+    );
+  }
 
   lines.push("", "Opening hours:");
   for (const day of DAYS) {

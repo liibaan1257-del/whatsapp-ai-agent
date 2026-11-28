@@ -2,7 +2,7 @@
 
 import { refresh } from "next/cache";
 import { getOwner } from "@/lib/auth/session";
-import { hasCashier, isPaid } from "@/lib/billing";
+import { hasCashier, hasInventory, isPaid } from "@/lib/billing";
 import { getKnowledge } from "@/lib/dashboard/data";
 import { logger } from "@/lib/logger";
 import { createClient } from "@/lib/supabase/server";
@@ -95,6 +95,15 @@ export async function recordSale(input: RecordSaleInput): Promise<RecordSaleResu
     }
     logger.error("cashier_sale_failed", { code: error?.code });
     return { ok: false, error: "save" };
+  }
+
+  // Take the sold items out of stock (items without a stock row are ignored).
+  if (hasInventory(owner.plan)) {
+    const { error: stockError } = await supabase.rpc("inventory_deduct", {
+      p_business: owner.businessId,
+      p_items: lines.map((l) => ({ name: l.name, quantity: l.quantity })),
+    });
+    if (stockError) logger.error("stock_deduct_failed", { code: stockError.code });
   }
 
   // A simple running receipt number: how many cashier sales this business has now

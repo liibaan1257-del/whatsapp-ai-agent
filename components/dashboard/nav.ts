@@ -1,4 +1,4 @@
-import { BookOpen, Calculator, CalendarCheck, LayoutDashboard, MessagesSquare, NotebookPen, Settings, ShieldCheck, ShoppingBag, Store } from "lucide-react";
+import { BookOpen, Calculator, CalendarCheck, LayoutDashboard, MessagesSquare, NotebookPen, Package, Settings, ShieldCheck, ShoppingBag, Store } from "lucide-react";
 
 export const NAV = [
   { href: "/dashboard", key: "overview", icon: LayoutDashboard, exact: true },
@@ -7,6 +7,7 @@ export const NAV = [
   { href: "/dashboard/bookings", key: "bookings", icon: CalendarCheck, exact: false },
   { href: "/dashboard/orders", key: "orders", icon: ShoppingBag, exact: false },
   { href: "/dashboard/cashier", key: "cashier", icon: Calculator, exact: false },
+  { href: "/dashboard/stock", key: "stock", icon: Package, exact: false },
   { href: "/dashboard/debts", key: "debts", icon: NotebookPen, exact: false },
   { href: "/dashboard/shop", key: "shop", icon: Store, exact: false },
   { href: "/dashboard/settings", key: "settings", icon: Settings, exact: false },

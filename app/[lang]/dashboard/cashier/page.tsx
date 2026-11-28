@@ -8,7 +8,7 @@ import { PageHeader } from "@/components/dashboard/page-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { hasCashier, hasOfflineCashier, isPaid } from "@/lib/billing";
+import { hasCashier, hasInventory, hasOfflineCashier, isPaid } from "@/lib/billing";
 import { requireOwner } from "@/lib/auth/session";
 import { getKnowledge } from "@/lib/dashboard/data";
 import { formatDateTime } from "@/lib/format";
@@ -99,6 +99,12 @@ async function Cashier({ locale }: { locale: Locale }) {
     .order("created_at", { ascending: false })
     .limit(8);
 
+  const stock: Record<string, number> = {};
+  if (hasInventory(owner.plan)) {
+    const { data: inv } = await supabase.from("inventory").select("item, quantity").limit(500);
+    for (const r of inv ?? []) stock[r.item.toLowerCase()] = r.quantity;
+  }
+
   return (
     <div className="space-y-6">
       <LiveRefresh businessId={owner.businessId} tables={["orders"]} />
@@ -119,7 +125,7 @@ async function Cashier({ locale }: { locale: Locale }) {
         </Card>
       </div>
 
-      <CashierClient services={services} currency={currency} businessName={businessName} businessId={owner.businessId} offline={hasOfflineCashier(owner.plan)} />
+      <CashierClient services={services} currency={currency} businessName={businessName} businessId={owner.businessId} offline={hasOfflineCashier(owner.plan)} stock={stock} />
 
       {recent && recent.length > 0 ? (
         <div className="space-y-2">

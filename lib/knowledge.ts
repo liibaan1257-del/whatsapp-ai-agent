@@ -80,7 +80,8 @@ export const knowledgeSchema = z.object({
 export type Service = z.infer<typeof serviceSchema>;
 export type Opening = z.infer<typeof openingSchema>;
 export type Faq = z.infer<typeof faqSchema>;
-export type Knowledge = z.infer<typeof knowledgeSchema> & { id: string };
+/** soldOut: items whose stock is 0 (filled in by the agent engine, never stored on the row). */
+export type Knowledge = z.infer<typeof knowledgeSchema> & { id: string; soldOut?: string[] };
 export type TimeFormat = Knowledge["time_format"];
 
 /** Turns a business_knowledge row into a Knowledge object, dropping anything malformed. */
